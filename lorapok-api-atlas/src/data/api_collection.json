@@ -1,0 +1,2633 @@
+{
+  "info": {
+    "_postman_id": "885365d6-8e4d-4943-b692-48a179aaab79",
+    "name": "Famous Free APIs",
+    "description": "A collection of globally popular free public APIs created by Gemini.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "3124823",
+    "_collection_link": "https://www.postman.com/e-one-warriors/workspace/mcp-test/collection/3124823-885365d6-8e4d-4943-b692-48a179aaab79?action=share&source=collection_link&creator=3124823"
+  },
+  "item": [
+    {
+      "name": "Reference & Religion",
+      "item": [
+        {
+          "name": "Free Dictionary API",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.dictionaryapi.dev/api/v2/entries/en/hello",
+              "protocol": "https",
+              "host": [
+                "api",
+                "dictionaryapi",
+                "dev"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "entries",
+                "en",
+                "hello"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Bible API",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://bible-api.com/john 3:16",
+              "protocol": "https",
+              "host": [
+                "bible-api",
+                "com"
+              ],
+              "path": [
+                "john 3:16"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Al-Quran Cloud",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.alquran.cloud/v1/ayah/262",
+              "protocol": "https",
+              "host": [
+                "api",
+                "alquran",
+                "cloud"
+              ],
+              "path": [
+                "v1",
+                "ayah",
+                "262"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Science & Space",
+      "item": [
+        {
+          "name": "SpaceX Latest Launch",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.spacexdata.com/v4/launches/latest",
+              "protocol": "https",
+              "host": [
+                "api",
+                "spacexdata",
+                "com"
+              ],
+              "path": [
+                "v4",
+                "launches",
+                "latest"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "International Space Station Location",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://api.open-notify.org/iss-now.json",
+              "protocol": "http",
+              "host": [
+                "api",
+                "open-notify",
+                "org"
+              ],
+              "path": [
+                "iss-now.json"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Animals & Avatars",
+      "item": [
+        {
+          "name": "Shibe.online",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://shibe.online/api/shibes?count=1&urls=true&httpsUrls=true",
+              "protocol": "https",
+              "host": [
+                "shibe",
+                "online"
+              ],
+              "path": [
+                "api",
+                "shibes"
+              ],
+              "query": [
+                {
+                  "key": "count",
+                  "value": "1"
+                },
+                {
+                  "key": "urls",
+                  "value": "true"
+                },
+                {
+                  "key": "httpsUrls",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Robohash Avatar",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://robohash.org/lorapok",
+              "protocol": "https",
+              "host": [
+                "robohash",
+                "org"
+              ],
+              "path": [
+                "lorapok"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Quotes & Social",
+      "item": [
+        {
+          "name": "Random Quote (Quotable)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://zenquotes.io/api/random",
+              "protocol": "https",
+              "host": [
+                "zenquotes",
+                "io"
+              ],
+              "path": [
+                "api",
+                "random"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Kanye Rest (Quotes)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.kanye.rest",
+              "protocol": "https",
+              "host": [
+                "api",
+                "kanye",
+                "rest"
+              ],
+              "path": []
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Breaking Bad Quotes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.breakingbadquotes.xyz/v1/quotes",
+              "protocol": "https",
+              "host": [
+                "api",
+                "breakingbadquotes",
+                "xyz"
+              ],
+              "path": [
+                "v1",
+                "quotes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Anime Quotes (AnimeChan)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://animechan.xyz/api/random",
+              "protocol": "https",
+              "host": [
+                "animechan",
+                "xyz"
+              ],
+              "path": [
+                "api",
+                "random"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "YesNo.wtf API",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://yesno.wtf/api",
+              "protocol": "https",
+              "host": [
+                "yesno",
+                "wtf"
+              ],
+              "path": [
+                "api"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Music & Anime",
+      "item": [
+        {
+          "name": "Jikan API (Anime Search)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.jikan.moe/v4/random/anime",
+              "protocol": "https",
+              "host": [
+                "api",
+                "jikan",
+                "moe"
+              ],
+              "path": [
+                "v4",
+                "random",
+                "anime"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "iTunes Search (Music)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://itunes.apple.com/search?term=jack+johnson&limit=1",
+              "protocol": "https",
+              "host": [
+                "itunes",
+                "apple",
+                "com"
+              ],
+              "path": [
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "term",
+                  "value": "jack+johnson"
+                },
+                {
+                  "key": "limit",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Lyrics.ovh (Random)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.lyrics.ovh/v1/Coldplay/Adventure%20of%20a%20Lifetime",
+              "protocol": "https",
+              "host": [
+                "api",
+                "lyrics",
+                "ovh"
+              ],
+              "path": [
+                "v1",
+                "Coldplay",
+                "Adventure%20of%20a%20Lifetime"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Geodata & Maps",
+      "item": [
+        {
+          "name": "Nominatim (OpenStreetMap Search)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://nominatim.openstreetmap.org/search?q=London&format=json",
+              "protocol": "https",
+              "host": [
+                "nominatim",
+                "openstreetmap",
+                "org"
+              ],
+              "path": [
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "London"
+                },
+                {
+                  "key": "format",
+                  "value": "json"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Sunrise-Sunset API",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400",
+              "protocol": "https",
+              "host": [
+                "api",
+                "sunrise-sunset",
+                "org"
+              ],
+              "path": [
+                "json"
+              ],
+              "query": [
+                {
+                  "key": "lat",
+                  "value": "36.7201600"
+                },
+                {
+                  "key": "lng",
+                  "value": "-4.4203400"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Abstract Geolocation (Free Tier)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://ipgeolocation.abstractapi.com/v1/?api_key=FREE_KEY",
+              "protocol": "https",
+              "host": [
+                "ipgeolocation",
+                "abstractapi",
+                "com"
+              ],
+              "path": [
+                "v1",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "FREE_KEY"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "authLink": "https://app.abstractapi.com/users/signup"
+        }
+      ]
+    },
+    {
+      "name": "Art & Culture",
+      "item": [
+        {
+          "name": "Art Institute of Chicago",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.artic.edu/api/v1/artworks/129693",
+              "protocol": "https",
+              "host": [
+                "api",
+                "artic",
+                "edu"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "artworks",
+                "129693"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Met Museum API",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://collectionapi.metmuseum.org/public/collection/v1/objects/436535",
+              "protocol": "https",
+              "host": [
+                "collectionapi",
+                "metmuseum",
+                "org"
+              ],
+              "path": [
+                "public",
+                "collection",
+                "v1",
+                "objects",
+                "436535"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Harvard Art Museums",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.harvardartmuseums.org/object/287354?apikey=YOUR_API_KEY",
+              "protocol": "https",
+              "host": [
+                "api",
+                "harvardartmuseums",
+                "org"
+              ],
+              "path": [
+                "object",
+                "287354"
+              ],
+              "query": [
+                {
+                  "key": "apikey",
+                  "value": "YOUR_API_KEY"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "authLink": "https://www.harvardartmuseums.org/collections/api"
+        }
+      ]
+    },
+    {
+      "name": "Finance & Crypto",
+      "item": [
+        {
+          "name": "ExchangeRate-API (Free)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://open.er-api.com/v6/latest/USD",
+              "protocol": "https",
+              "host": [
+                "open",
+                "er-api",
+                "com"
+              ],
+              "path": [
+                "v6",
+                "latest",
+                "USD"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Binance 24h Ticker",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT",
+              "protocol": "https",
+              "host": [
+                "api",
+                "binance",
+                "com"
+              ],
+              "path": [
+                "api",
+                "v3",
+                "ticker",
+                "24hr"
+              ],
+              "query": [
+                {
+                  "key": "symbol",
+                  "value": "BTCUSDT"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Wall Street Bets API",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://tradestie.com/api/v1/apps/reddit",
+              "protocol": "https",
+              "host": [
+                "tradestie",
+                "com"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "apps",
+                "reddit"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Developer Utilities",
+      "item": [
+        {
+          "name": "UUID Generator",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://httpbin.org/uuid",
+              "protocol": "https",
+              "host": [
+                "httpbin",
+                "org"
+              ],
+              "path": [
+                "uuid"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "JSONPlaceholder (Users)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/users",
+              "protocol": "https",
+              "host": [
+                "jsonplaceholder",
+                "typicode",
+                "com"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Free-Geo-IP",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://freegeoip.app/json/",
+              "protocol": "https",
+              "host": [
+                "freegeoip",
+                "app"
+              ],
+              "path": [
+                "json",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "MyMemory Translation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.mymemory.translated.net/get?q=Hello&langpair=en|it",
+              "protocol": "https",
+              "host": [
+                "api",
+                "mymemory",
+                "translated",
+                "net"
+              ],
+              "path": [
+                "get"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "Hello"
+                },
+                {
+                  "key": "langpair",
+                  "value": "en|it"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Games & Fun",
+      "item": [
+        {
+          "name": "Open Trivia DB",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://opentdb.com/api.php?amount=1",
+              "protocol": "https",
+              "host": [
+                "opentdb",
+                "com"
+              ],
+              "path": [
+                "api.php"
+              ],
+              "query": [
+                {
+                  "key": "amount",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Free-To-Game API",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.freetogame.com/api/games",
+              "protocol": "https",
+              "host": [
+                "www",
+                "freetogame",
+                "com"
+              ],
+              "path": [
+                "api",
+                "games"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CheapShark (Game Deals)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.cheapshark.com/api/1.0/deals?upperPrice=15",
+              "protocol": "https",
+              "host": [
+                "www",
+                "cheapshark",
+                "com"
+              ],
+              "path": [
+                "api",
+                "1.0",
+                "deals"
+              ],
+              "query": [
+                {
+                  "key": "upperPrice",
+                  "value": "15"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Food & Coffee",
+      "item": [
+        {
+          "name": "Foodish (Random Food Image)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://foodish-api.com/api",
+              "protocol": "https",
+              "host": [
+                "foodish-api",
+                "com"
+              ],
+              "path": [
+                "api"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Random Coffee",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://coffee.alexwohlbruck.com/api/random",
+              "protocol": "https",
+              "host": [
+                "coffee",
+                "alexwohlbruck",
+                "com"
+              ],
+              "path": [
+                "api",
+                "random"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Travel & Cities",
+      "item": [
+        {
+          "name": "Teleport (City Quality of Life)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.teleport.org/api/cities/",
+              "protocol": "https",
+              "host": [
+                "api",
+                "teleport",
+                "org"
+              ],
+              "path": [
+                "api",
+                "cities",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Bike Index (Search Stolen Bikes)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://bikeindex.org/api/v3/search",
+              "protocol": "https",
+              "host": [
+                "bikeindex",
+                "org"
+              ],
+              "path": [
+                "api",
+                "v3",
+                "search"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Health & Environment",
+      "item": [
+        {
+          "name": "Disease.sh (Global Health Data)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://disease.sh/v3/covid-19/all",
+              "protocol": "https",
+              "host": [
+                "disease",
+                "sh"
+              ],
+              "path": [
+                "v3",
+                "covid-19",
+                "all"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Open AQ (Air Quality)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.openaq.org/v2/locations",
+              "protocol": "https",
+              "host": [
+                "api",
+                "openaq",
+                "org"
+              ],
+              "path": [
+                "v2",
+                "locations"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "AI & Fun Translations",
+      "item": [
+        {
+          "name": "Yoda Translation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.funtranslations.com/translate/yoda.json?text=I+am+Lorapok",
+              "protocol": "https",
+              "host": [
+                "api",
+                "funtranslations",
+                "com"
+              ],
+              "path": [
+                "translate",
+                "yoda.json"
+              ],
+              "query": [
+                {
+                  "key": "text",
+                  "value": "I+am+Lorapok"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Lorem Picsum (Random Images)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://picsum.photos/v2/list",
+              "protocol": "https",
+              "host": [
+                "picsum",
+                "photos"
+              ],
+              "path": [
+                "v2",
+                "list"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Sports & Events",
+      "item": [
+        {
+          "name": "BallDontLie (NBA Stats)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.balldontlie.io/api/v1/players/237",
+              "protocol": "https",
+              "host": [
+                "www",
+                "balldontlie",
+                "io"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "players",
+                "237"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Football-Data.org (Sample)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.football-data.org/v4/competitions",
+              "protocol": "https",
+              "host": [
+                "api",
+                "football-data",
+                "org"
+              ],
+              "path": [
+                "v4",
+                "competitions"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Transportation & Cars",
+      "item": [
+        {
+          "name": "NHTSA VIN Decoder",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVin/5UXWX7C5*BA?format=json",
+              "protocol": "https",
+              "host": [
+                "vpic",
+                "nhtsa",
+                "dot",
+                "gov"
+              ],
+              "path": [
+                "api",
+                "vehicles",
+                "DecodeVin",
+                "5UXWX7C5*BA"
+              ],
+              "query": [
+                {
+                  "key": "format",
+                  "value": "json"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "OpenSky Network (Flights)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://opensky-network.org/api/states/all",
+              "protocol": "https",
+              "host": [
+                "opensky-network",
+                "org"
+              ],
+              "path": [
+                "api",
+                "states",
+                "all"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Literature & Documents",
+      "item": [
+        {
+          "name": "Gutendex (Project Gutenberg)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://gutendex.com/books/",
+              "protocol": "https",
+              "host": [
+                "gutendex",
+                "com"
+              ],
+              "path": [
+                "books",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Google Books Search",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.googleapis.com/books/v1/volumes?q=isbn:0747532699",
+              "protocol": "https",
+              "host": [
+                "www",
+                "googleapis",
+                "com"
+              ],
+              "path": [
+                "books",
+                "v1",
+                "volumes"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "isbn:0747532699"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Advanced Testing & Mocks",
+      "item": [
+        {
+          "name": "Mocky.io (Sample)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://run.mocky.io/v3/8040d750-f92b-42e1-8f81-9b16893630f6",
+              "protocol": "https",
+              "host": [
+                "run",
+                "mocky",
+                "io"
+              ],
+              "path": [
+                "v3",
+                "8040d750-f92b-42e1-8f81-9b16893630f6"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Beeceptor (Mock Endpoints)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://echo.beeceptor.com",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "beeceptor",
+                "com"
+              ],
+              "path": []
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "E-commerce & Products",
+      "item": [
+        {
+          "name": "Fake Store API (Platzi)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://fakestoreapi.com/products/1",
+              "protocol": "https",
+              "host": [
+                "fakestoreapi",
+                "com"
+              ],
+              "path": [
+                "products",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Open Library Covers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://covers.openlibrary.org/b/id/240727-S.jpg",
+              "protocol": "https",
+              "host": [
+                "covers",
+                "openlibrary",
+                "org"
+              ],
+              "path": [
+                "b",
+                "id",
+                "240727-S.jpg"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "General & Misc",
+      "item": [
+        {
+          "name": "Get Random Cat Fact",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://catfact.ninja/fact",
+              "protocol": "https",
+              "host": [
+                "catfact",
+                "ninja"
+              ],
+              "path": [
+                "fact"
+              ]
+            },
+            "description": "Returns a random fact about cats."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Bitcoin Price (CoinGecko)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd",
+              "protocol": "https",
+              "host": [
+                "api",
+                "coingecko",
+                "com"
+              ],
+              "path": [
+                "api",
+                "v3",
+                "simple",
+                "price"
+              ],
+              "query": [
+                {
+                  "key": "ids",
+                  "value": "bitcoin"
+                },
+                {
+                  "key": "vs_currencies",
+                  "value": "usd"
+                }
+              ]
+            },
+            "description": "Returns the current Bitcoin price in USD using the CoinGecko API. This is a free public API that doesn't require authentication."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Public IP (IPify)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.ipify.org?format=json",
+              "protocol": "https",
+              "host": [
+                "api",
+                "ipify",
+                "org?format=json"
+              ],
+              "path": []
+            },
+            "description": "Returns your public IP address."
+          },
+          "response": []
+        },
+        {
+          "name": "Predict Age by Name (Agify)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.agify.io?name=michael",
+              "protocol": "https",
+              "host": [
+                "api",
+                "agify",
+                "io?name=michael"
+              ],
+              "path": []
+            },
+            "description": "Predicts the age of a person based on their name."
+          },
+          "response": []
+        },
+        {
+          "name": "Random Joke (Official Joke API)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://official-joke-api.appspot.com/random_joke",
+              "protocol": "https",
+              "host": [
+                "official-joke-api",
+                "appspot",
+                "com"
+              ],
+              "path": [
+                "random_joke"
+              ]
+            },
+            "description": "Returns a random joke."
+          },
+          "response": []
+        },
+        {
+          "name": "Get University Data (Hipolabs)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://universities.hipolabs.com/search?country=United+States",
+              "protocol": "http",
+              "host": [
+                "universities",
+                "hipolabs",
+                "com"
+              ],
+              "path": [
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "country",
+                  "value": "United+States"
+                }
+              ]
+            },
+            "description": "Returns a list of universities in a specified country."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Random Dog Image (Dog CEO)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://dog.ceo/api/breeds/image/random",
+              "protocol": "https",
+              "host": [
+                "dog",
+                "ceo"
+              ],
+              "path": [
+                "api",
+                "breeds",
+                "image",
+                "random"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Pokemon Info (PokeAPI)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://pokeapi.co/api/v2/pokemon/ditto",
+              "protocol": "https",
+              "host": [
+                "pokeapi",
+                "co"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "pokemon",
+                "ditto"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Predict Gender by Name (Genderize)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.genderize.io?name=luc",
+              "protocol": "https",
+              "host": [
+                "api",
+                "genderize",
+                "io?name=luc"
+              ],
+              "path": []
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Random User Data (RandomUser.me)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://randomuser.me/api/",
+              "protocol": "https",
+              "host": [
+                "randomuser",
+                "me"
+              ],
+              "path": [
+                "api",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Country Info (REST Countries)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://restcountries.com/v3.1/name/united",
+              "protocol": "https",
+              "host": [
+                "restcountries",
+                "com"
+              ],
+              "path": [
+                "v3.1",
+                "name",
+                "united"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Rick and Morty Character",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://rickandmortyapi.com/api/character/1",
+              "protocol": "https",
+              "host": [
+                "rickandmortyapi",
+                "com"
+              ],
+              "path": [
+                "api",
+                "character",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get NASA Astronomy Picture (NASA APOD)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY",
+              "protocol": "https",
+              "host": [
+                "api",
+                "nasa",
+                "gov"
+              ],
+              "path": [
+                "planetary",
+                "apod"
+              ],
+              "query": [
+                {
+                  "key": "api_key",
+                  "value": "DEMO_KEY"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "authLink": "https://api.nasa.gov/"
+        },
+        {
+          "name": "Get Fake Post (JSONPlaceholder)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/posts/1",
+              "protocol": "https",
+              "host": [
+                "jsonplaceholder",
+                "typicode",
+                "com"
+              ],
+              "path": [
+                "posts",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Book Data (Open Library)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://openlibrary.org/works/OL45804W.json",
+              "protocol": "https",
+              "host": [
+                "openlibrary",
+                "org"
+              ],
+              "path": [
+                "works",
+                "OL45804W.json"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search TV Shows (TV Maze)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tvmaze.com/search/shows?q=girls",
+              "protocol": "https",
+              "host": [
+                "api",
+                "tvmaze",
+                "com"
+              ],
+              "path": [
+                "search",
+                "shows"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "girls"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Ethereum Price (CoinGecko)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd",
+              "protocol": "https",
+              "host": [
+                "api",
+                "coingecko",
+                "com"
+              ],
+              "path": [
+                "api",
+                "v3",
+                "simple",
+                "price"
+              ],
+              "query": [
+                {
+                  "key": "ids",
+                  "value": "ethereum"
+                },
+                {
+                  "key": "vs_currencies",
+                  "value": "usd"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Random Advice (Advice Slip)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.adviceslip.com/advice",
+              "protocol": "https",
+              "host": [
+                "api",
+                "adviceslip",
+                "com"
+              ],
+              "path": [
+                "advice"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Math Fact (Numbers API)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://numbersapi.com/random/math",
+              "protocol": "http",
+              "host": [
+                "numbersapi",
+                "com"
+              ],
+              "path": [
+                "random",
+                "math"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Star Wars Character (SWAPI)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://swapi.py4e.com/api/people/1/",
+              "protocol": "https",
+              "host": [
+                "swapi",
+                "py4e",
+                "com"
+              ],
+              "path": [
+                "api",
+                "people",
+                "1",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get D&D Monster (D&D 5e API)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.dnd5eapi.co/api/monsters/aboleth",
+              "protocol": "https",
+              "host": [
+                "www",
+                "dnd5eapi",
+                "co"
+              ],
+              "path": [
+                "api",
+                "monsters",
+                "aboleth"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Food Product (Open Food Facts)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://world.openfoodfacts.org/api/v0/product/737628064502.json",
+              "protocol": "https",
+              "host": [
+                "world",
+                "openfoodfacts",
+                "org"
+              ],
+              "path": [
+                "api",
+                "v0",
+                "product",
+                "737628064502.json"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Zip Code Info (Zippopotam.us)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://api.zippopotamus.us/us/90210",
+              "protocol": "http",
+              "host": [
+                "api",
+                "zippopotamus",
+                "us"
+              ],
+              "path": [
+                "us",
+                "90210"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Crypto Ticker (CoinLore)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.coinlore.net/api/ticker/?id=90",
+              "protocol": "https",
+              "host": [
+                "api",
+                "coinlore",
+                "net"
+              ],
+              "path": [
+                "api",
+                "ticker",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "90"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Public Holidays (Nager.Date)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://date.nager.at/api/v3/PublicHolidays/2023/US",
+              "protocol": "https",
+              "host": [
+                "date",
+                "nager",
+                "at"
+              ],
+              "path": [
+                "api",
+                "v3",
+                "PublicHolidays",
+                "2023",
+                "US"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Shuffle New Deck (Deck of Cards)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1",
+              "protocol": "https",
+              "host": [
+                "deckofcardsapi",
+                "com"
+              ],
+              "path": [
+                "api",
+                "deck",
+                "new",
+                "shuffle",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "deck_count",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "HTTP Echo (HTTPBin)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://httpbin.org/get",
+              "protocol": "https",
+              "host": [
+                "httpbin",
+                "org"
+              ],
+              "path": [
+                "get"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Predict Nationality (Nationalize.io)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.nationalize.io?name=nathaniel",
+              "protocol": "https",
+              "host": [
+                "api",
+                "nationalize",
+                "io?name=nathaniel"
+              ],
+              "path": []
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Currency Rates (Frankfurter)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.frankfurter.app/latest",
+              "protocol": "https",
+              "host": [
+                "api",
+                "frankfurter",
+                "app"
+              ],
+              "path": [
+                "latest"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Weather Forecast (7Timer!)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.7timer.info/bin/astro.php?lon=113.2&lat=23.1&ac=0&unit=metric&output=json&tzshift=0",
+              "protocol": "https",
+              "host": [
+                "www",
+                "7timer",
+                "info"
+              ],
+              "path": [
+                "bin",
+                "astro.php"
+              ],
+              "query": [
+                {
+                  "key": "lon",
+                  "value": "113.2"
+                },
+                {
+                  "key": "lat",
+                  "value": "23.1"
+                },
+                {
+                  "key": "ac",
+                  "value": "0"
+                },
+                {
+                  "key": "unit",
+                  "value": "metric"
+                },
+                {
+                  "key": "output",
+                  "value": "json"
+                },
+                {
+                  "key": "tzshift",
+                  "value": "0"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "User List (ReqRes)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://reqres.in/api/users?page=2",
+              "protocol": "https",
+              "host": [
+                "reqres",
+                "in"
+              ],
+              "path": [
+                "api",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get GitHub User Info",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.github.com/users/octocat",
+              "protocol": "https",
+              "host": [
+                "api",
+                "github",
+                "com"
+              ],
+              "path": [
+                "users",
+                "octocat"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search Breweries (Open Brewery DB)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.openbrewerydb.org/v1/breweries?by_city=san_diego&per_page=3",
+              "protocol": "https",
+              "host": [
+                "api",
+                "openbrewerydb",
+                "org"
+              ],
+              "path": [
+                "v1",
+                "breweries"
+              ],
+              "query": [
+                {
+                  "key": "by_city",
+                  "value": "san_diego"
+                },
+                {
+                  "key": "per_page",
+                  "value": "3"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Random Cocktail (The Cocktail DB)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.thecocktaildb.com/api/json/v1/1/random.php",
+              "protocol": "https",
+              "host": [
+                "www",
+                "thecocktaildb",
+                "com"
+              ],
+              "path": [
+                "api",
+                "json",
+                "v1",
+                "1",
+                "random.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Random Meal (The Meal DB)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.themealdb.com/api/json/v1/1/random.php",
+              "protocol": "https",
+              "host": [
+                "www",
+                "themealdb",
+                "com"
+              ],
+              "path": [
+                "api",
+                "json",
+                "v1",
+                "1",
+                "random.php"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Potter Characters (Potter DB)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.potterdb.com/v1/characters",
+              "protocol": "https",
+              "host": [
+                "api",
+                "potterdb",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "characters"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Disney Characters (Disney API)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.disneyapi.dev/character",
+              "protocol": "https",
+              "host": [
+                "api",
+                "disneyapi",
+                "dev"
+              ],
+              "path": [
+                "character"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "IP Geolocation (IP-API)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://ip-api.com/json/",
+              "protocol": "http",
+              "host": [
+                "ip-api",
+                "com"
+              ],
+              "path": [
+                "json",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search Libraries (CDNJS)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.cdnjs.com/libraries?search=jquery",
+              "protocol": "https",
+              "host": [
+                "api",
+                "cdnjs",
+                "com"
+              ],
+              "path": [
+                "libraries"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "jquery"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "StackOverflow Tags",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.stackexchange.com/2.3/tags?order=desc&sort=popular&site=stackoverflow",
+              "protocol": "https",
+              "host": [
+                "api",
+                "stackexchange",
+                "com"
+              ],
+              "path": [
+                "2.3",
+                "tags"
+              ],
+              "query": [
+                {
+                  "key": "order",
+                  "value": "desc"
+                },
+                {
+                  "key": "sort",
+                  "value": "popular"
+                },
+                {
+                  "key": "site",
+                  "value": "stackoverflow"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Explore Projects (GitLab)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://gitlab.com/api/v4/projects",
+              "protocol": "https",
+              "host": [
+                "gitlab",
+                "com"
+              ],
+              "path": [
+                "api",
+                "v4",
+                "projects"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "City Weather (OpenWeather Sample)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.openweathermap.org/data/2.5/weather?q=London&appid=b1b15e88fa797225412465268487a38a",
+              "protocol": "https",
+              "host": [
+                "api",
+                "openweathermap",
+                "org"
+              ],
+              "path": [
+                "data",
+                "2.5",
+                "weather"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "London"
+                },
+                {
+                  "key": "appid",
+                  "value": "b1b15e88fa797225412465268487a38a"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "authLink": "https://home.openweathermap.org/users/sign_up"
+        },
+        {
+          "name": "Predict Age by Name",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.agify.io?name=bella",
+              "protocol": "https",
+              "host": [
+                "api",
+                "agify",
+                "io?name=bella"
+              ],
+              "path": []
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Find Something to Do (Bored API)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.boredapi.com/api/activity",
+              "protocol": "https",
+              "host": [
+                "www",
+                "boredapi",
+                "com"
+              ],
+              "path": [
+                "api",
+                "activity"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Top Coins by Volume (CryptoCompare)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://min-api.cryptocompare.com/data/top/totalvolfull?limit=10&tsym=USD",
+              "protocol": "https",
+              "host": [
+                "min-api",
+                "cryptocompare",
+                "com"
+              ],
+              "path": [
+                "data",
+                "top",
+                "totalvolfull"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "tsym",
+                  "value": "USD"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Bitcoin Assets (CoinCap)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.coincap.io/v2/assets/bitcoin",
+              "protocol": "https",
+              "host": [
+                "api",
+                "coincap",
+                "io"
+              ],
+              "path": [
+                "v2",
+                "assets",
+                "bitcoin"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "US Population Data (Data USA)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://datausa.io/api/data?drilldowns=Nation&measures=Population",
+              "protocol": "https",
+              "host": [
+                "datausa",
+                "io"
+              ],
+              "path": [
+                "api",
+                "data"
+              ],
+              "query": [
+                {
+                  "key": "drilldowns",
+                  "value": "Nation"
+                },
+                {
+                  "key": "measures",
+                  "value": "Population"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "True Random Integers (Random.org)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.random.org/integers/?num=1&min=1&max=100&col=1&base=10&format=plain&rnd=new",
+              "protocol": "https",
+              "host": [
+                "www",
+                "random",
+                "org"
+              ],
+              "path": [
+                "integers",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "num",
+                  "value": "1"
+                },
+                {
+                  "key": "min",
+                  "value": "1"
+                },
+                {
+                  "key": "max",
+                  "value": "100"
+                },
+                {
+                  "key": "col",
+                  "value": "1"
+                },
+                {
+                  "key": "base",
+                  "value": "10"
+                },
+                {
+                  "key": "format",
+                  "value": "plain"
+                },
+                {
+                  "key": "rnd",
+                  "value": "new"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Placeholder Image URL",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://picsum.photos/200/300",
+              "protocol": "https",
+              "host": [
+                "picsum",
+                "photos"
+              ],
+              "path": [
+                "200",
+                "300"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Current Time (World Time API)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://worldtimeapi.org/api/timezone/Etc/UTC",
+              "protocol": "http",
+              "host": [
+                "worldtimeapi",
+                "org"
+              ],
+              "path": [
+                "api",
+                "timezone",
+                "Etc",
+                "UTC"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Emoji Info",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://emoji-api.com/emojis?access_key=API_KEY",
+              "protocol": "https",
+              "host": [
+                "emoji-api",
+                "com"
+              ],
+              "path": [
+                "emojis"
+              ],
+              "query": [
+                {
+                  "key": "access_key",
+                  "value": "API_KEY"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "authLink": "https://emoji-api.com/"
+        },
+        {
+          "name": "Base64 Decode Tool",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://httpbin.org/base64/SFRUUEJJTiBpcyBhd2Vzb21l",
+              "protocol": "https",
+              "host": [
+                "httpbin",
+                "org"
+              ],
+              "path": [
+                "base64",
+                "SFRUUEJJTiBpcyBhd2Vzb21l"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Geek Joke",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://geek-jokes.sameerkumar.website/api?format=json",
+              "protocol": "https",
+              "host": [
+                "geek-jokes",
+                "sameerkumar",
+                "website"
+              ],
+              "path": [
+                "api"
+              ],
+              "query": [
+                {
+                  "key": "format",
+                  "value": "json"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Chuck Norris Fact",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.chucknorris.io/jokes/random",
+              "protocol": "https",
+              "host": [
+                "api",
+                "chucknorris",
+                "io"
+              ],
+              "path": [
+                "jokes",
+                "random"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Programming Joke (JokeAPI)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://v2.jokeapi.dev/joke/Programming?type=single",
+              "protocol": "https",
+              "host": [
+                "v2",
+                "jokeapi",
+                "dev"
+              ],
+              "path": [
+                "joke",
+                "Programming"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "single"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Random Dad Joke (icanhazdadjoke)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://icanhazdadjoke.com/",
+              "protocol": "https",
+              "host": [
+                "icanhazdadjoke",
+                "com"
+              ],
+              "path": [
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Evil Insult Generator",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://evilinsult.com/generate_insult.php?lang=en&type=json",
+              "protocol": "https",
+              "host": [
+                "evilinsult",
+                "com"
+              ],
+              "path": [
+                "generate_insult.php"
+              ],
+              "query": [
+                {
+                  "key": "lang",
+                  "value": "en"
+                },
+                {
+                  "key": "type",
+                  "value": "json"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
