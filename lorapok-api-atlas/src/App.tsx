@@ -819,6 +819,97 @@ const ApiCard = ({ api, onClick }: { api: FlatApi; onClick: () => void }) => {
   )
 }
 
+// ─── Vaultie helpers ─────────────────────────────────────────────────────────
+
+// Strip <think>...</think> reasoning blocks from qwen3 output
+function stripThink(text: string): string {
+  return text.replace(/<think>[\s\S]*?<\/think>/g, '').replace(/^[\s\n]+/, '')
+}
+
+// Minimal markdown → JSX renderer (bold, inline code, code blocks, lists, links)
+function renderMarkdown(text: string): React.ReactNode {
+  const lines = text.split('\n')
+  const nodes: React.ReactNode[] = []
+  let i = 0
+
+  while (i < lines.length) {
+    const line = lines[i]
+
+    // Code block
+    if (line.startsWith('```')) {
+      const lang = line.slice(3).trim()
+      const codeLines: string[] = []
+      i++
+      while (i < lines.length && !lines[i].startsWith('```')) {
+        codeLines.push(lines[i]); i++
+      }
+      nodes.push(
+        <pre key={i} style={{ background: 'rgba(0,0,0,0.5)', border: '1px solid #1a3050', borderRadius: 8, padding: '10px 12px', fontSize: 11, fontFamily: 'monospace', color: '#34d399', overflowX: 'auto', margin: '6px 0', whiteSpace: 'pre' }}>
+          {lang && <div style={{ fontSize: 9, color: '#4a6278', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{lang}</div>}
+          {codeLines.join('\n')}
+        </pre>
+      )
+      i++; continue
+    }
+
+    // Heading
+    if (line.startsWith('### ')) { nodes.push(<div key={i} style={{ fontWeight: 800, fontSize: 13, color: '#38bdf8', margin: '8px 0 2px' }}>{inlineFormat(line.slice(4))}</div>); i++; continue }
+    if (line.startsWith('## '))  { nodes.push(<div key={i} style={{ fontWeight: 800, fontSize: 14, color: '#818cf8', margin: '8px 0 2px' }}>{inlineFormat(line.slice(3))}</div>); i++; continue }
+    if (line.startsWith('# '))   { nodes.push(<div key={i} style={{ fontWeight: 900, fontSize: 15, color: '#d4e4f7', margin: '8px 0 4px' }}>{inlineFormat(line.slice(2))}</div>); i++; continue }
+
+    // List item
+    if (/^[-*•]\s/.test(line)) {
+      nodes.push(
+        <div key={i} style={{ display: 'flex', gap: 6, margin: '2px 0' }}>
+          <span style={{ color: '#4ade80', flexShrink: 0, marginTop: 1 }}>▸</span>
+          <span>{inlineFormat(line.replace(/^[-*•]\s/, ''))}</span>
+        </div>
+      ); i++; continue
+    }
+
+    // Numbered list
+    if (/^\d+\.\s/.test(line)) {
+      const num = line.match(/^(\d+)\./)?.[1]
+      nodes.push(
+        <div key={i} style={{ display: 'flex', gap: 6, margin: '2px 0' }}>
+          <span style={{ color: '#818cf8', flexShrink: 0, minWidth: 16, fontWeight: 700 }}>{num}.</span>
+          <span>{inlineFormat(line.replace(/^\d+\.\s/, ''))}</span>
+        </div>
+      ); i++; continue
+    }
+
+    // Horizontal rule
+    if (/^---+$/.test(line.trim())) {
+      nodes.push(<hr key={i} style={{ border: 'none', borderTop: '1px solid #1a3050', margin: '8px 0' }} />); i++; continue
+    }
+
+    // Empty line → spacer
+    if (line.trim() === '') { nodes.push(<div key={i} style={{ height: 4 }} />); i++; continue }
+
+    // Normal paragraph
+    nodes.push(<div key={i} style={{ margin: '1px 0' }}>{inlineFormat(line)}</div>)
+    i++
+  }
+  return <>{nodes}</>
+}
+
+function inlineFormat(text: string): React.ReactNode {
+  // Split on **bold**, *italic*, `code`, [link](url)
+  const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`|\[[^\]]+\]\([^)]+\))/g)
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**'))
+      return <strong key={i} style={{ color: '#d4e4f7', fontWeight: 700 }}>{part.slice(2, -2)}</strong>
+    if (part.startsWith('*') && part.endsWith('*'))
+      return <em key={i} style={{ color: '#a5b4fc' }}>{part.slice(1, -1)}</em>
+    if (part.startsWith('`') && part.endsWith('`'))
+      return <code key={i} style={{ background: 'rgba(0,0,0,0.4)', border: '1px solid #1a3050', borderRadius: 4, padding: '1px 5px', fontSize: 11, fontFamily: 'monospace', color: '#34d399' }}>{part.slice(1, -1)}</code>
+    const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/)
+    if (linkMatch)
+      return <a key={i} href={linkMatch[2]} target="_blank" rel="noopener noreferrer" style={{ color: '#38bdf8', textDecoration: 'underline' }}>{linkMatch[1]}</a>
+    return part
+  })
+}
+
 // ─── Vaultie SVG Mascot ───────────────────────────────────────────────────────
 const VaultieSVG = ({ size = 60 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1045,12 +1136,12 @@ const Vaultie = () => {
           try {
             const delta = JSON.parse(data).choices?.[0]?.delta?.content || ''
             full += delta
-            setStreaming(full)
+            setStreaming(stripThink(full))
           } catch { /* skip malformed chunks */ }
         }
       }
 
-      const assistantMsg: VaultieMessage = { role: 'assistant', content: full || "Hmm, I got nothing back. Try again! 🐛" }
+      const assistantMsg: VaultieMessage = { role: 'assistant', content: stripThink(full) || "Hmm, I got nothing back. Try again! 🐛" }
       setMessages(prev => [...prev, assistantMsg])
       setStreaming('')
       if (user) saveChatMessage(user.uid, 'assistant', assistantMsg.content).catch(() => {})
@@ -1115,7 +1206,7 @@ const Vaultie = () => {
                     fontWeight: m.role === 'user' ? 600 : 400,
                     whiteSpace: 'pre-wrap',
                   }}>
-                    {m.content}
+                    {m.role === 'user' ? m.content : renderMarkdown(m.content)}
                   </div>
                 </div>
               ))}
@@ -1125,7 +1216,7 @@ const Vaultie = () => {
                 <div style={{ display: 'flex', justifyContent: 'flex-start', gap: 8, alignItems: 'flex-end' }}>
                   <div style={{ flexShrink: 0, marginBottom: 2 }}><VaultieSVG size={22} /></div>
                   <div style={{ maxWidth: '80%', padding: '9px 13px', borderRadius: '16px 16px 16px 4px', background: 'rgba(255,255,255,0.06)', border: '1px solid #1a3050', fontSize: 12, lineHeight: 1.65, color: '#d4e4f7', whiteSpace: 'pre-wrap' }}>
-                    {streaming}
+                    {renderMarkdown(streaming)}
                     <motion.span animate={{ opacity: [1, 0] }} transition={{ repeat: Infinity, duration: 0.5 }}
                       style={{ display: 'inline-block', width: 2, height: 12, background: '#34d399', marginLeft: 2, verticalAlign: 'middle', borderRadius: 1 }} />
                   </div>
