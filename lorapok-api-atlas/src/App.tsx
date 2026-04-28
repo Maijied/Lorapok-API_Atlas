@@ -464,7 +464,7 @@ const ApiModal = ({ api, onClose, user }: { api: FlatApi; onClose: () => void; u
         }
         // Default minimal body for known POST APIs if no body defined
         if (!body && api.url.includes('groq.com')) {
-          body = { model: 'llama3-8b-8192', messages: [{ role: 'user', content: 'Say hello in one sentence.' }] }
+          body = { model: 'qwen/qwen3-32b', messages: [{ role: 'user', content: 'Say hello in one sentence.' }] }
         }
       }
 
@@ -1014,14 +1014,14 @@ const Vaultie = () => {
           'Authorization': `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`,
         },
         body: JSON.stringify({
-          model: 'llama3-8b-8192',
+          model: 'qwen/qwen3-32b',
           messages: [
             { role: 'system', content: SYSTEM_PROMPT },
             ...apiMessages,
           ],
-          temperature: 1,
-          max_completion_tokens: 512,
-          top_p: 1,
+          temperature: 0.6,
+          max_completion_tokens: 4096,
+          top_p: 0.95,
           stream: true,
           stop: null,
         }),
