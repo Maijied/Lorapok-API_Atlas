@@ -92,7 +92,7 @@ function flattenCollection(): FlatApi[] {
       result.push({
         name: api.name,
         category: cat.name,
-        desc: api.request?.description || api.description || 'A powerful open-source API.',
+        desc: api.request?.description || api.description || `${cat.name} API — click to explore and test.`,
         url: api.request?.url?.raw || '',
         method: api.request?.method || 'GET',
         authLink: api.authLink,
@@ -751,7 +751,7 @@ const ApiModal = ({ api, onClose, user }: { api: FlatApi; onClose: () => void; u
                 {status === 'idle' && (needsKey && !apiKey ? 'Add your API key to run the test!' : 'Ready to test!')}
                 {status === 'thinking' && 'Digging into the data…'}
                 {status === 'happy' && 'Found it! Check the results!'}
-                {status === 'sad' && 'Darn! The API is acting up.'}
+                {status === 'sad' && (testResult?.error === 'CORS / Network Error' ? 'CORS blocked — use the cURL snippet instead.' : 'Darn! The API returned an error.')}
               </span>
             </div>
             <a href={effectiveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-xs transition-colors" style={{ color: '#38bdf8' }}

@@ -832,7 +832,8 @@
             "header": [],
             "url": {
               "raw": "https://shibe.online/api/shibes?count=1&urls=true&httpsUrls=true"
-            }
+            },
+            "description": "Random Shiba Inu dog images"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -855,7 +856,8 @@
               "path": [
                 "lorapok"
               ]
-            }
+            },
+            "description": "Generate unique robot or monster avatars from any text"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -1121,7 +1123,8 @@
                 "image",
                 "random"
               ]
-            }
+            },
+            "description": "Random dog breed images"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -1147,7 +1150,8 @@
                 "pokemon",
                 "ditto"
               ]
-            }
+            },
+            "description": "Detailed Pok\u00e9mon data from PokeAPI"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -1328,7 +1332,8 @@
                   "value": "YOUR_API_KEY"
                 }
               ]
-            }
+            },
+            "description": "Harvard Art Museums collection data"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -1360,7 +1365,8 @@
                 "latest",
                 "USD"
               ]
-            }
+            },
+            "description": "Free currency exchange rates"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -1393,7 +1399,8 @@
                   "value": "BTCUSDT"
                 }
               ]
-            }
+            },
+            "description": "Binance 24-hour price ticker for BTCUSDT"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -1419,7 +1426,8 @@
                 "apps",
                 "reddit"
               ]
-            }
+            },
+            "description": "Reddit WallStreetBets stock sentiment"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -1695,7 +1703,8 @@
                   "value": "usd"
                 }
               ]
-            }
+            },
+            "description": "Current Ethereum price in USD"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -1727,7 +1736,8 @@
                   "value": "90"
                 }
               ]
-            }
+            },
+            "description": "Cryptocurrency price ticker"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -1763,7 +1773,8 @@
                   "value": "USD"
                 }
               ]
-            }
+            },
+            "description": "Top cryptocurrencies by trading volume"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -1789,7 +1800,8 @@
                 "assets",
                 "bitcoin"
               ]
-            }
+            },
+            "description": "Bitcoin market data from CoinCap"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -2826,7 +2838,8 @@
               "path": [
                 "api"
               ]
-            }
+            },
+            "description": "Random yes or no answer with a GIF"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -3378,7 +3391,8 @@
               "path": [
                 "uuid"
               ]
-            }
+            },
+            "description": "Generate a UUID via HTTPBin"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -3402,7 +3416,8 @@
               "path": [
                 "users"
               ]
-            }
+            },
+            "description": "Fake user data for testing"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -3426,7 +3441,8 @@
                 "json",
                 ""
               ]
-            }
+            },
+            "description": "IP address geolocation lookup"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -3461,7 +3477,8 @@
                   "value": "en|it"
                 }
               ]
-            }
+            },
+            "description": "Free translation API with memory"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -3476,7 +3493,8 @@
             "header": [],
             "url": {
               "raw": "https://run.mocky.io/v3/8040d750-f92b-42e1-8f81-9b16893630f6"
-            }
+            },
+            "description": "Create and share mock HTTP responses"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -3491,7 +3509,8 @@
             "header": [],
             "url": {
               "raw": "https://echo.beeceptor.com"
-            }
+            },
+            "description": "Create mock REST API endpoints instantly"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -3878,7 +3897,8 @@
                 "io?name=luc"
               ],
               "path": []
-            }
+            },
+            "description": "Predict gender from a first name"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -3902,7 +3922,8 @@
                 "api",
                 ""
               ]
-            }
+            },
+            "description": "Generate random user profiles"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -3917,7 +3938,8 @@
             "header": [],
             "url": {
               "raw": "https://jsonplaceholder.typicode.com/posts/1"
-            }
+            },
+            "description": "Fake blog post data for testing"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -3940,7 +3962,8 @@
               "path": [
                 "get"
               ]
-            }
+            },
+            "description": "Echo HTTP request details back as JSON"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -3962,7 +3985,8 @@
                 "io?name=nathaniel"
               ],
               "path": []
-            }
+            },
+            "description": "Predict nationality from a name"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -3992,7 +4016,8 @@
                   "value": "2"
                 }
               ]
-            }
+            },
+            "description": "Paginated user list for UI testing"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -4017,7 +4042,8 @@
                 "users",
                 "octocat"
               ]
-            }
+            },
+            "description": "GitHub user profile and repository data"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -4047,7 +4073,8 @@
                   "value": "jquery"
                 }
               ]
-            }
+            },
+            "description": "Search JavaScript libraries on CDNJS"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -4086,7 +4113,8 @@
                   "value": "stackoverflow"
                 }
               ]
-            }
+            },
+            "description": "Popular tags on Stack Overflow"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -4111,7 +4139,8 @@
                 "v4",
                 "projects"
               ]
-            }
+            },
+            "description": "Search public GitLab projects"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -4133,7 +4162,8 @@
                 "io?name=bella"
               ],
               "path": []
-            }
+            },
+            "description": "Predict age from a first name via Agify"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -4188,7 +4218,8 @@
                   "value": "new"
                 }
               ]
-            }
+            },
+            "description": "True random integers from Random.org"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -4203,7 +4234,8 @@
             "header": [],
             "url": {
               "raw": "https://worldtimeapi.org/api/timezone/Etc/UTC"
-            }
+            },
+            "description": "Current time for any timezone"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -4232,7 +4264,8 @@
                   "value": "API_KEY"
                 }
               ]
-            }
+            },
+            "description": "Emoji metadata and information"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -4257,7 +4290,8 @@
                 "base64",
                 "SFRUUEJJTiBpcyBhd2Vzb21l"
               ]
-            }
+            },
+            "description": "Decode Base64 encoded strings via HTTPBin"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -5121,7 +5155,8 @@
                 "books",
                 ""
               ]
-            }
+            },
+            "description": "Free public domain ebooks"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -5153,7 +5188,8 @@
                   "value": "isbn:0747532699"
                 }
               ]
-            }
+            },
+            "description": "Search books by ISBN"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -5451,7 +5487,8 @@
             "header": [],
             "url": {
               "raw": "https://covers.openlibrary.org/b/id/240727-S.jpg"
-            }
+            },
+            "description": "Book cover images from Open Library"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -5763,7 +5800,8 @@
               "path": [
                 "latest"
               ]
-            }
+            },
+            "description": "Currency exchange rates via ECB"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -6568,7 +6606,8 @@
                 "works",
                 "OL45804W.json"
               ]
-            }
+            },
+            "description": "Book metadata from Open Library"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -6592,7 +6631,8 @@
                 "random",
                 "math"
               ]
-            }
+            },
+            "description": "Interesting math facts about numbers"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -7181,7 +7221,8 @@
             "header": [],
             "url": {
               "raw": "https://foodish-api.com/api/"
-            }
+            },
+            "description": "Random food images from Foodish"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -7196,7 +7237,8 @@
             "header": [],
             "url": {
               "raw": "https://api.sampleapis.com/coffee/hot"
-            }
+            },
+            "description": "Random coffee drink information"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -7424,7 +7466,8 @@
                 "product",
                 "737628064502.json"
               ]
-            }
+            },
+            "description": "Food product data by barcode"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -7459,7 +7502,8 @@
                   "value": "3"
                 }
               ]
-            }
+            },
+            "description": "Search breweries by city"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -7487,7 +7531,8 @@
                 "1",
                 "random.php"
               ]
-            }
+            },
+            "description": "Random cocktail recipe"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -7515,7 +7560,8 @@
                 "1",
                 "random.php"
               ]
-            }
+            },
+            "description": "Random meal recipe with ingredients"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -7802,7 +7848,8 @@
                 "2023",
                 "US"
               ]
-            }
+            },
+            "description": "Public holidays for any country"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -7836,7 +7883,8 @@
                   "value": "Population"
                 }
               ]
-            }
+            },
+            "description": "US national population statistics"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -8224,7 +8272,8 @@
                 "covid-19",
                 "all"
               ]
-            }
+            },
+            "description": "Global COVID-19 statistics"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -8249,7 +8298,8 @@
                 "v2",
                 "locations"
               ]
-            }
+            },
+            "description": "Open air quality data worldwide"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -9138,7 +9188,8 @@
             "header": [],
             "url": {
               "raw": "https://picsum.photos/200/300"
-            }
+            },
+            "description": "Simple placeholder image from Lorem Picsum"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -10057,7 +10108,8 @@
                   "value": "I+am+Lorapok"
                 }
               ]
-            }
+            },
+            "description": "Translate text to Yoda-speak"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -10081,7 +10133,8 @@
                 "v2",
                 "list"
               ]
-            }
+            },
+            "description": "Random placeholder images from Picsum"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -10496,7 +10549,8 @@
                   "value": "FREE_KEY"
                 }
               ]
-            }
+            },
+            "description": "IP geolocation with timezone and currency"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -10775,7 +10829,8 @@
                 "name",
                 "united"
               ]
-            }
+            },
+            "description": "Country information by name"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -10800,7 +10855,8 @@
                 "us",
                 "90210"
               ]
-            }
+            },
+            "description": "City and state info from US zip code"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -10824,7 +10880,8 @@
                 "json",
                 ""
               ]
-            }
+            },
+            "description": "IP address geolocation data"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -11575,7 +11632,8 @@
                 "character",
                 "1"
               ]
-            }
+            },
+            "description": "Rick and Morty character data"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -11606,7 +11664,8 @@
                   "value": "girls"
                 }
               ]
-            }
+            },
+            "description": "Search TV shows by name"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -11630,7 +11689,8 @@
               "path": [
                 "advice"
               ]
-            }
+            },
+            "description": "Random advice from Advice Slip"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -11657,7 +11717,8 @@
                 "1",
                 ""
               ]
-            }
+            },
+            "description": "Star Wars character data from SWAPI"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -11682,7 +11743,8 @@
                 "v1",
                 "characters"
               ]
-            }
+            },
+            "description": "Harry Potter universe characters"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -11706,7 +11768,8 @@
               "path": [
                 "character"
               ]
-            }
+            },
+            "description": "Disney character data and images"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -11731,7 +11794,8 @@
                 "api",
                 "activity"
               ]
-            }
+            },
+            "description": "Random activity suggestion when bored"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -11746,7 +11810,8 @@
             "header": [],
             "url": {
               "raw": "https://geek-jokes.sameerkumar.website/api?format=json"
-            }
+            },
+            "description": "Random geek and programming jokes"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -11771,7 +11836,8 @@
                 "jokes",
                 "random"
               ]
-            }
+            },
+            "description": "Random Chuck Norris facts and jokes"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -11802,7 +11868,8 @@
                   "value": "single"
                 }
               ]
-            }
+            },
+            "description": "Random programming jokes"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -11825,7 +11892,8 @@
               "path": [
                 ""
               ]
-            }
+            },
+            "description": "Random dad jokes in JSON format"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -11840,7 +11908,8 @@
             "header": [],
             "url": {
               "raw": "https://evilinsult.com/generate_insult.php?lang=en&type=json"
-            }
+            },
+            "description": "Generate random evil insults"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -14808,7 +14877,8 @@
                   "value": "DEMO_KEY"
                 }
               ]
-            }
+            },
+            "description": "NASA Astronomy Picture of the Day"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -14843,7 +14913,8 @@
                   "value": "1"
                 }
               ]
-            }
+            },
+            "description": "Random trivia questions"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -14858,7 +14929,8 @@
             "header": [],
             "url": {
               "raw": "https://www.freetogame.com/api/games?platform=pc"
-            }
+            },
+            "description": "Free-to-play game listings"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -14890,7 +14962,8 @@
                   "value": "15"
                 }
               ]
-            }
+            },
+            "description": "PC game deals under 5"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -14917,7 +14990,8 @@
                 "players",
                 "237"
               ]
-            }
+            },
+            "description": "NBA player and game statistics"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -14942,7 +15016,8 @@
                 "v4",
                 "competitions"
               ]
-            }
+            },
+            "description": "European football competition data"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -15251,7 +15326,8 @@
                 "monsters",
                 "aboleth"
               ]
-            }
+            },
+            "description": "D&D 5th Edition monster stats"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -15284,7 +15360,8 @@
                   "value": "1"
                 }
               ]
-            }
+            },
+            "description": "Shuffle a new deck of playing cards"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -16046,7 +16123,8 @@
             "header": [],
             "url": {
               "raw": "https://api.teleport.org/api/urban_areas/"
-            }
+            },
+            "description": "City quality of life scores"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -16061,7 +16139,8 @@
             "header": [],
             "url": {
               "raw": "https://bikeindex.org/api/v3/search?per_page=5&location=IP&distance=10&stolenness=stolen"
-            }
+            },
+            "description": "Search stolen bike registry"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -16095,7 +16174,8 @@
                   "value": "json"
                 }
               ]
-            }
+            },
+            "description": "Decode vehicle VIN numbers"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -16120,7 +16200,8 @@
                 "states",
                 "all"
               ]
-            }
+            },
+            "description": "Live aircraft tracking data"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -16695,7 +16776,8 @@
                   "value": "0"
                 }
               ]
-            }
+            },
+            "description": "Astronomy-focused weather forecast"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
@@ -16731,7 +16813,8 @@
                   "value": "b1b15e88fa797225412465268487a38a"
                 }
               ]
-            }
+            },
+            "description": "Current weather for any city"
           },
           "response": [],
           "createdAt": "2026-04-27T23:48:14.000Z",
