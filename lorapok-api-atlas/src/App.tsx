@@ -505,11 +505,33 @@ const ApiModal = ({ api, onClose, user }: { api: FlatApi; onClose: () => void; u
 
                   {/* Not signed in notice */}
                   {!user && (
-                    <div className="px-3 py-2.5 flex items-center gap-2" style={{ background: 'rgba(0,0,0,0.2)' }}>
-                      <Key size={12} style={{ color: '#4a6278' }} />
-                      <p className="text-[11px]" style={{ color: '#4a6278' }}>
-                        Sign in with Google to save your API keys securely in Firestore — synced across all your devices.
-                      </p>
+                    <div className="p-4" style={{ background: 'rgba(0,0,0,0.25)' }}>
+                      <div className="flex flex-col items-center gap-3 text-center py-2">
+                        <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'rgba(56,189,248,0.08)', border: '1px solid rgba(56,189,248,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <Key size={16} style={{ color: '#38bdf8' }} />
+                        </div>
+                        <div>
+                          <div className="text-xs font-bold mb-1" style={{ color: '#d4e4f7' }}>Save your API keys securely</div>
+                          <p className="text-[11px] leading-relaxed" style={{ color: '#4a6278' }}>
+                            Sign in with Google to store keys in Firebase Firestore — encrypted, private, and synced across all your devices.
+                          </p>
+                        </div>
+                        <button
+                          onClick={signInWithGoogle}
+                          className="flex items-center gap-2.5 font-semibold transition-all"
+                          style={{ padding: '8px 18px', borderRadius: 8, background: '#fff', border: 'none', color: '#1f2937', fontSize: 13, cursor: 'pointer', boxShadow: '0 1px 4px rgba(0,0,0,0.4)' }}
+                          onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 4px 14px rgba(0,0,0,0.5)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+                          onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.4)'; e.currentTarget.style.transform = 'translateY(0)' }}
+                        >
+                          <svg width="16" height="16" viewBox="0 0 48 48">
+                            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                          </svg>
+                          Continue with Google
+                        </button>
+                      </div>
                     </div>
                   )}
 
@@ -719,19 +741,28 @@ export default function App() {
 
           {/* Auth button */}
           <div style={{ position: 'absolute', top: 20, right: 24 }}>
-            {authLoading ? null : user ? (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 12px', borderRadius: 8, background: 'rgba(52,211,153,0.1)', border: '1px solid rgba(52,211,153,0.25)' }}>
+            {authLoading ? (
+              <div style={{ width: 120, height: 36, borderRadius: 8, background: 'rgba(255,255,255,0.04)', border: '1px solid #1a3050', animation: 'pulse 1.5s infinite' }} />
+            ) : user ? (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                {/* User pill */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 10px 5px 6px', borderRadius: 40, background: 'rgba(52,211,153,0.08)', border: '1px solid rgba(52,211,153,0.2)' }}>
                   {user.photoURL
-                    ? <img src={user.photoURL} alt="" style={{ width: 22, height: 22, borderRadius: '50%' }} />
-                    : <UserIcon size={14} style={{ color: '#34d399' }} />}
-                  <span style={{ fontSize: 12, color: '#34d399', fontWeight: 600, maxWidth: 140, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user.displayName || user.email}</span>
+                    ? <img src={user.photoURL} alt={user.displayName || ''} style={{ width: 26, height: 26, borderRadius: '50%', border: '2px solid rgba(52,211,153,0.4)' }} />
+                    : <div style={{ width: 26, height: 26, borderRadius: '50%', background: 'rgba(52,211,153,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><UserIcon size={13} style={{ color: '#34d399' }} /></div>
+                  }
+                  <div>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: '#d4e4f7', maxWidth: 130, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', lineHeight: 1.2 }}>{user.displayName || 'User'}</div>
+                    <div style={{ fontSize: 10, color: '#334d63', lineHeight: 1.2 }}>Signed in</div>
+                  </div>
                 </div>
+                {/* Sign out */}
                 <button
                   onClick={signOutUser}
-                  style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 8, background: 'transparent', border: '1px solid #1a3050', color: '#4a6278', fontSize: 12, cursor: 'pointer' }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#f87171'; e.currentTarget.style.color = '#f87171' }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#4a6278' }}
+                  title="Sign out"
+                  style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '7px 12px', borderRadius: 8, background: 'transparent', border: '1px solid #1a3050', color: '#4a6278', fontSize: 12, cursor: 'pointer', transition: 'all 0.15s' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#f87171'; e.currentTarget.style.color = '#f87171'; e.currentTarget.style.background = 'rgba(248,113,113,0.06)' }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#4a6278'; e.currentTarget.style.background = 'transparent' }}
                 >
                   <LogOut size={13} /> Sign out
                 </button>
@@ -739,13 +770,18 @@ export default function App() {
             ) : (
               <button
                 onClick={signInWithGoogle}
-                style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 16px', borderRadius: 8, background: 'rgba(56,189,248,0.1)', border: '1px solid rgba(56,189,248,0.3)', color: '#38bdf8', fontSize: 13, fontWeight: 700, cursor: 'pointer' }}
-                onMouseEnter={e => (e.currentTarget.style.background = 'rgba(56,189,248,0.18)')}
-                onMouseLeave={e => (e.currentTarget.style.background = 'rgba(56,189,248,0.1)')}
+                style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 16px 8px 12px', borderRadius: 10, background: '#fff', border: 'none', color: '#1f2937', fontSize: 13, fontWeight: 600, cursor: 'pointer', boxShadow: '0 1px 3px rgba(0,0,0,0.3)', transition: 'all 0.15s' }}
+                onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.4)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+                onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.3)'; e.currentTarget.style.transform = 'translateY(0)' }}
               >
-                <LogIn size={15} />
+                {/* Google G logo */}
+                <svg width="18" height="18" viewBox="0 0 48 48">
+                  <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                  <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                  <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                  <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                </svg>
                 Sign in with Google
-                <span style={{ fontSize: 10, opacity: 0.6, fontWeight: 400 }}>to save API keys</span>
               </button>
             )}
           </div>          <p style={{ color: '#4a6278', fontSize: 13, letterSpacing: '0.05em', margin: '0 0 20px' }}>
