@@ -68,7 +68,7 @@ API_REPAIRS = {
     "Get Country Info (REST Countries)": "https://restcountries.com/v3.1/name/united",
     "Get Rick and Morty Character": "https://rickandmortyapi.com/api/character/1",
     "Get NASA Astronomy Picture (NASA APOD)": "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY",
-    "Get Fake Post (JSONPlaceholder)": "https://jsonplaceholder.typicode.com/posts/1",
+    "Get Fake Post (JSONPlaceholder)": "https://jsonplaceholder.typicode.typicode.com/posts/1",
     "Get Book Data (Open Library)": "https://openlibrary.org/works/OL45804W.json",
     "Search TV Shows (TV Maze)": "https://api.tvmaze.com/search/shows?q=girls",
     "Get Ethereum Price (CoinGecko)": "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd",
@@ -111,7 +111,16 @@ API_REPAIRS = {
     "Chuck Norris Fact": "https://api.chucknorris.io/jokes/random",
     "Programming Joke (JokeAPI)": "https://v2.jokeapi.dev/joke/Programming?type=single",
     "Random Dad Joke (icanhazdadjoke)": "https://icanhazdadjoke.com/",
-    "Evil Insult Generator": "https://evilinsult.com/generate_insult.php?lang=en&type=json"
+    "Evil Insult Generator": "https://evilinsult.com/generate_insult.php?lang=en&type=json",
+    "Open-Meteo (Weather)": "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current_weather=true",
+    "DexScreener (Token Info)": "https://api.dexscreener.com/latest/dex/tokens/0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
+    "The Color API": "https://www.thecolorapi.com/id?hex=00FF00",
+    "Giphy Search": "https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=funny&limit=1",
+    "API Status Check": "https://apistatuscheck.com/api/v1/status/github",
+    "Instatus Pages": "https://api.instatus.com/v1/pages",
+    "GitHub Repo Details": "https://api.github.com/repos/facebook/react",
+    "GitLab Project Search": "https://gitlab.com/api/v4/projects?search=atlas",
+    "Google Fonts API": "https://www.googleapis.com/webfonts/v1/webfonts?key=YOUR_API_KEY"
 }
 
 API_AUTH_LINKS = {
@@ -119,19 +128,37 @@ API_AUTH_LINKS = {
     "Harvard Art Museums": "https://www.harvardartmuseums.org/collections/api",
     "Get NASA Astronomy Picture (NASA APOD)": "https://api.nasa.gov/",
     "City Weather (OpenWeather Sample)": "https://home.openweathermap.org/users/sign_up",
-    "Get Emoji Info": "https://emoji-api.com/"
+    "Get Emoji Info": "https://emoji-api.com/",
+    "Groq AI (Llama 3)": "https://console.groq.com/keys",
+    "OpenRouter (Unified AI)": "https://openrouter.ai/keys",
+    "Unsplash (Photos)": "https://unsplash.com/developers",
+    "TMDB (Trending Movies)": "https://www.themoviedb.org/settings/api",
+    "NASA Mars Rover Photos": "https://api.nasa.gov/",
+    "NewsAPI Top Headlines": "https://newsapi.org/register",
+    "Smithsonian Open Access": "https://www.si.edu/openaccess/devtools",
+    "Europeana Culture Search": "https://pro.europeana.eu/page/get-an-api-key",
+    "USDA Nutrition Search": "https://fdc.nal.usda.gov/api-key-signup.html",
+    "GlobalGiving Projects": "https://www.globalgiving.org/api/",
+    "Pantry (JSON Storage)": "https://getpantry.cloud/",
+    "Giphy Search": "https://developers.giphy.com/dashboard/",
+    "Instatus Pages": "https://instatus.com/developers",
+    "Google Fonts API": "https://developers.google.com/fonts/docs/developer_api",
+    "GitHub Repo Details": "https://docs.github.com/en/rest",
+    "GitLab Project Search": "https://docs.gitlab.com/ee/api/",
+    "API Status Check": "https://apistatuscheck.com/"
 }
 
 def repair_item(item):
     name = item.get("name")
+    
+    if name in API_AUTH_LINKS:
+        item["authLink"] = API_AUTH_LINKS[name]
+
     if name in API_REPAIRS:
         url = API_REPAIRS[name]
         if "request" not in item:
             item["request"] = {"method": "GET", "header": []}
         
-        if name in API_AUTH_LINKS:
-            item["authLink"] = API_AUTH_LINKS[name]
-
         item["request"]["url"] = {
             "raw": url,
             "protocol": url.split("://")[0] if "://" in url else "https",
@@ -164,17 +191,103 @@ def main():
         return
 
     with open(COLLECTION_PATH, "r") as f:
-        collection = json.load(f)
+        collection_raw = json.load(f)
+
+    # Handle wrapped collection from Postman API
+    if "collection" in collection_raw:
+        collection = collection_raw["collection"]
+    else:
+        collection = collection_raw
 
     categories = []
     loose_requests = []
 
-    for item in collection["item"]:
-        repair_item(item)
-        if "item" in item:
-            categories.append(item)
-        else:
-            loose_requests.append(item)
+    if "item" in collection:
+        for item in collection["item"]:
+            repair_item(item)
+            if "item" in item:
+                categories.append(item)
+            else:
+                loose_requests.append(item)
+
+    if loose_requests:
+        categories.append({
+            "name": "General & Misc",
+            "item": loose_requests
+        })
+
+    collection["item"] = categories
+
+    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
+    with open(OUTPUT_PATH, "w") as f:
+        json.dump(collection, f, indent=2)
+
+    print(f"Repaired and categorized collection saved to {OUTPUT_PATH}")
+
+if __name__ == "__main__":
+    main()
+
+def repair_item(item):
+    name = item.get("name")
+    
+    if name in API_AUTH_LINKS:
+        item["authLink"] = API_AUTH_LINKS[name]
+
+    if name in API_REPAIRS:
+        url = API_REPAIRS[name]
+        if "request" not in item:
+            item["request"] = {"method": "GET", "header": []}
+        
+        item["request"]["url"] = {
+            "raw": url,
+            "protocol": url.split("://")[0] if "://" in url else "https",
+            "host": url.split("://")[1].split("/")[0].split(".") if "://" in url else url.split("/")[0].split("."),
+            "path": url.split("://")[1].split("/")[1:] if "://" in url and "/" in url.split("://")[1] else []
+        }
+        
+        if "?" in url:
+            path_part = item["request"]["url"]["path"][-1] if item["request"]["url"]["path"] else ""
+            if "?" in path_part:
+                clean_path = path_part.split("?")[0]
+                query_str = path_part.split("?")[1]
+                if item["request"]["url"]["path"]:
+                    item["request"]["url"]["path"][-1] = clean_path
+                
+                query_params = []
+                for param in query_str.split("&"):
+                    if "=" in param:
+                        k, v = param.split("=")
+                        query_params.append({"key": k, "value": v})
+                item["request"]["url"]["query"] = query_params
+
+    if "item" in item:
+        for sub_item in item["item"]:
+            repair_item(sub_item)
+
+def main():
+    if not os.path.exists(COLLECTION_PATH):
+        print(f"Error: {COLLECTION_PATH} not found.")
+        return
+
+    with open(COLLECTION_PATH, "r") as f:
+        collection_raw = json.load(f)
+
+    # Handle wrapped collection from Postman API
+    if "collection" in collection_raw:
+        collection = collection_raw["collection"]
+    else:
+        collection = collection_raw
+
+    categories = []
+    loose_requests = []
+
+    if "item" in collection:
+        for item in collection["item"]:
+            repair_item(item)
+            if "item" in item:
+                categories.append(item)
+            else:
+                loose_requests.append(item)
 
     if loose_requests:
         categories.append({

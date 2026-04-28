@@ -10,14 +10,17 @@
 
 ## ✨ Features
 
-- **🐛 Animated Mascot:** Lorapok reacts to your API tests in real-time.
-- **🗺️ Explorer:** Browse curated APIs across 20+ categories (Science, Finance, Games, etc.).
-- **🧪 Live Sandbox:** Test endpoints directly from the dashboard and view instant results.
-- **🖼️ Rich Media Visualizer:** Automatically renders images, audio, video, and even full HTML pages.
-- **📥 Data Export:** One-click "Download JSON" for any API response.
-- **📖 Auto-Documentation:** Every API includes automatically generated usage guides and multilingual code snippets (cURL, JS, Python, Go).
-- **🎨 Glassmorphic UI:** A modern, high-contrast design optimized for developers.
-- **⚡ Performance First:** Powered by Vite and React for near-instant transitions.
+- **🚀 100+ Curated APIs**: Hand-picked selection of high-quality, free, and open-source APIs across 20+ categories.
+- **🖼️ Multimodal Visualizers**:
+  - **Dynamic Video Player**: Support for direct video files and responsive YouTube embeds.
+  - **Binary Image Rendering**: Real-time conversion of raw bytes (QR codes, dynamic assets) into crisp images.
+  - **Web Previews**: Integrated HTML visualizer for document-based API responses.
+- **⚡ Developer First**: 
+  - One-click **JSON copy** and response downloads.
+  - Built-in **Code Snippets** for cURL, JavaScript, Python, and Go.
+  - Direct **Registration Links** for APIs requiring keys.
+- **🧪 Live Testing**: Zero-config dashboard to run and preview API calls instantly.
+- **🐛 Lorapok Mascot**: Interactive guide providing status feedback during data fetching.
 
 ## 🚀 Quick Start
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, Globe, Folder, Play, Book, Terminal, Github, Copy, ExternalLink, Code, Check, ChevronDown, ChevronRight, Download } from 'lucide-react'
+import { Search, Globe, Folder, Play, Book, Terminal, Github, Copy, ExternalLink, Code, Check, ChevronDown, ChevronRight, Download, Video } from 'lucide-react'
 import apiCollection from './data/api_collection.json'
 import axios from 'axios'
 
@@ -41,6 +41,121 @@ const HtmlVisualizer = ({ html, baseUrl }: { html: string, baseUrl?: string }) =
   );
 };
 
+const ImagePreview = ({ url }: { url: string }) => {
+  const [error, setError] = useState(false);
+
+  if (error) {
+    return (
+      <a 
+        href={url} 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        className="mt-2 inline-flex items-center gap-2 bg-blue-500 bg-opacity-10 border border-blue-500 border-opacity-20 text-blue-400 px-3 py-1.5 rounded-md text-xs font-bold hover:bg-opacity-20 transition-all transition-colors break-all"
+      >
+        Open Link <ExternalLink size={12} />
+      </a>
+    );
+  }
+
+  return (
+    <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="relative group mt-2 max-w-sm">
+      <img 
+        src={url} 
+        alt="API Data" 
+        onError={() => setError(true)}
+        className="rounded-lg shadow-lg border border-white border-opacity-10 max-h-80 object-contain bg-white bg-opacity-5" 
+      />
+      <a href={url} target="_blank" rel="noopener noreferrer" className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all rounded-lg flex items-center justify-center">
+         <ExternalLink className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+      </a>
+    </motion.div>
+  );
+};
+
+const VideoVisualizer = ({ url }: { url: string }) => {
+  const isYouTube = url.includes('youtube.com') || url.includes('youtu.be');
+  
+  let embedUrl = url;
+  if (isYouTube) {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    if (match && match[2].length === 11) {
+      embedUrl = `https://www.youtube.com/embed/${match[2]}`;
+    }
+  }
+
+  return (
+    <div className="mt-2 bg-white bg-opacity-5 p-3 rounded-lg border border-white border-opacity-10 flex flex-col gap-2 max-w-sm">
+      <div className="flex items-center gap-2 text-xs font-bold text-gray-400">
+        <Video size={12} /> {isYouTube ? 'YouTube Embed' : 'Video Preview'}
+      </div>
+      {isYouTube ? (
+        <iframe
+          className="rounded shadow-lg w-full aspect-video border-none"
+          src={embedUrl}
+          title="YouTube video player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      ) : (
+        <video controls className="rounded shadow-lg w-full">
+          <source src={url} />
+        </video>
+      )}
+    </div>
+  );
+};
+
+const BinaryImageVisualizer = ({ data }: { data: string }) => {
+  const [src, setSrc] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof data !== 'string') return;
+    
+    // If it's already a data URL, use it directly
+    if (data.startsWith('data:image/')) {
+      setSrc(data);
+      return;
+    }
+
+    try {
+      // Basic magic byte detection for raw binary strings
+      const isPng = data.includes('PNG') || data.startsWith('\x89PNG');
+      const isJpg = data.includes('JFIF') || data.startsWith('\xFF\xD8\xFF');
+      const isGif = data.startsWith('GIF');
+
+      if (isPng || isJpg || isGif) {
+        const bytes = new Uint8Array(data.length);
+        for (let i = 0; i < data.length; i++) {
+          bytes[i] = data.charCodeAt(i) & 0xFF;
+        }
+        const blob = new Blob([bytes], { type: isPng ? 'image/png' : isJpg ? 'image/jpeg' : 'image/gif' });
+        const url = URL.createObjectURL(blob);
+        setSrc(url);
+        return () => URL.revokeObjectURL(url);
+      }
+    } catch (e) {
+      console.error("Binary image conversion failed", e);
+    }
+  }, [data]);
+
+  if (!src) return null;
+
+  return (
+    <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="mt-4 border border-white border-opacity-10 rounded-lg overflow-hidden bg-white p-6 flex flex-col items-center gap-4 shadow-xl">
+      <div className="bg-gray-100 px-4 py-2 w-full -mt-6 -mx-6 border-b border-gray-200 flex items-center justify-between">
+        <span className="text-xs font-bold text-gray-500 uppercase flex items-center gap-2">
+           Visual Result (Image)
+        </span>
+      </div>
+      <img src={src} alt="Visual API Result" className="max-w-full max-h-[400px] shadow-sm rounded border border-gray-100 bg-gray-50" />
+      <div className="text-[10px] text-gray-400 font-mono bg-gray-50 px-2 py-1 rounded">
+        {data.startsWith('data:') ? 'Data URL' : 'Binary Data'} Detected
+      </div>
+    </motion.div>
+  );
+};
+
 const DataVisualizer = ({ data, baseUrl }: { data: any, baseUrl?: string }) => {
   if (data === null || data === undefined || data === '') {
     return <span className="text-gray-500 italic text-xs">N/A</span>;
@@ -48,9 +163,22 @@ const DataVisualizer = ({ data, baseUrl }: { data: any, baseUrl?: string }) => {
 
   // Detect HTML string
   const isHtml = (val: any) => typeof val === 'string' && (val.trim().startsWith('<!DOCTYPE html>') || val.trim().startsWith('<html') || val.includes('<body'));
+  
+  // Detect Binary Image or Data URL
+  const isBinaryImage = (val: any) => typeof val === 'string' && (
+    val.startsWith('data:image/') || 
+    val.includes('PNG') || 
+    val.includes('JFIF') || 
+    val.startsWith('\x89PNG') || 
+    (val.length > 100 && val.includes('IHDR'))
+  );
 
   if (isHtml(data)) {
     return <HtmlVisualizer html={data} baseUrl={baseUrl} />;
+  }
+
+  if (isBinaryImage(data)) {
+    return <BinaryImageVisualizer data={data} />;
   }
 
   // Handle primitives directly
@@ -63,15 +191,20 @@ const DataVisualizer = ({ data, baseUrl }: { data: any, baseUrl?: string }) => {
   }
 
   function renderPrimitive(val: any, key?: string) {
-    const isUrl = (v: any) => typeof v === 'string' && v.startsWith('http');
+    const isUrl = (v: any) => typeof v === 'string' && (v.startsWith('http') || v.startsWith('data:'));
     
-    // Detect Images
-    const isImageUrl = (url: string, k?: string) => {
+    // Stricter Image Detection: Only match explicit image extensions or known image hosts
+    const isImageUrl = (url: string, _k?: string) => {
       if (!isUrl(url)) return false;
-      const isImageExt = url.match(/\.(jpeg|jpg|gif|png|webp|svg)$/i) != null;
-      const isImageKey = k && (k.toLowerCase().includes('url') || k.toLowerCase().includes('image') || k.toLowerCase().includes('img') || k.toLowerCase().includes('avatar') || k.toLowerCase().includes('download') || k.toLowerCase().includes('cover'));
-      const isImageContent = url.includes('images.unsplash.com') || url.includes('picsum.photos') || url.includes('placeholder.com');
-      return (isImageExt || (isImageKey && url.startsWith('http')) || isImageContent) && !url.match(/\.(mp3|wav|ogg|mp4|webm)$/i);
+      if (url.startsWith('data:image/')) return true;
+      
+      const isExplicitImage = url.match(/\.(jpeg|jpg|gif|png|webp|svg|bmp|ico)$/i) != null;
+      const isKnownService = url.includes('images.unsplash.com') || url.includes('picsum.photos') || url.includes('placeholder.com') || url.includes('robohash.org') || url.includes('catfact.ninja');
+      
+      // Never match pages, git repos, or blobs as images
+      const isForbidden = url.match(/\.(git|pdf|zip|gz|exe|dmg|html|htm|php|asp|aspx)$/i) != null || url.includes('/blob/') || url.includes('/tree/') || url.includes('curid=');
+      
+      return (isExplicitImage || isKnownService) && !isForbidden;
     };
 
     const isAudioUrl = (url: string, k?: string) => {
@@ -84,19 +217,13 @@ const DataVisualizer = ({ data, baseUrl }: { data: any, baseUrl?: string }) => {
     const isVideoUrl = (url: string, k?: string) => {
       if (!isUrl(url)) return false;
       const isVideoExt = url.match(/\.(mp4|webm|ogg)$/i) != null;
+      const isYouTube = url.includes('youtube.com/watch') || url.includes('youtu.be/') || url.includes('youtube.com/embed/');
       const isVideoKey = k && (k.toLowerCase().includes('video') || k.toLowerCase().includes('movie') || k.toLowerCase().includes('clip'));
-      return isVideoExt || (isVideoKey && url.startsWith('http'));
+      return isVideoExt || isYouTube || (isVideoKey && url.startsWith('http'));
     };
 
     if (isImageUrl(val, key)) {
-      return (
-        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="relative group mt-2 max-w-sm">
-          <img src={val} alt="API Data" className="rounded-lg shadow-lg border border-white border-opacity-10 max-h-80 object-contain bg-white bg-opacity-5" />
-          <a href={val} target="_blank" rel="noopener noreferrer" className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all rounded-lg flex items-center justify-center">
-             <ExternalLink className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
-          </a>
-        </motion.div>
-      );
+      return <ImagePreview url={val} />;
     }
 
     if (isAudioUrl(val, key)) {
@@ -111,20 +238,18 @@ const DataVisualizer = ({ data, baseUrl }: { data: any, baseUrl?: string }) => {
     }
 
     if (isVideoUrl(val, key)) {
-      return (
-        <div className="mt-2 bg-white bg-opacity-5 p-3 rounded-lg border border-white border-opacity-10 flex flex-col gap-2 max-w-sm">
-           <div className="flex items-center gap-2 text-xs font-bold text-gray-400"><Play size={12}/> Video Preview</div>
-           <video controls className="rounded shadow-lg w-full">
-              <source src={val} />
-           </video>
-        </div>
-      );
+      return <VideoVisualizer url={val} />;
     }
 
     if (isUrl(val)) {
       return (
-        <a href={val} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 underline underline-offset-2 flex items-center gap-1 transition-colors break-all">
-          {val} <ExternalLink size={12} />
+        <a 
+          href={val} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="mt-1 inline-flex items-center gap-2 bg-blue-500 bg-opacity-10 border border-blue-500 border-opacity-20 text-blue-400 px-3 py-1.5 rounded-md text-xs font-bold hover:bg-opacity-20 transition-all transition-colors break-all"
+        >
+          Open Link <ExternalLink size={12} />
         </a>
       );
     }
@@ -228,6 +353,7 @@ const CodeSnippets = ({ api }: { api: ApiItem }) => {
 const ResponseSection = ({ data, isLoading, apiName, baseUrl }: { data: any, isLoading: boolean, apiName: string, baseUrl?: string }) => {
   const [visualizerOpen, setVisualizerOpen] = useState(true);
   const [jsonOpen, setJsonOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const downloadJson = () => {
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -239,6 +365,13 @@ const ResponseSection = ({ data, isLoading, apiName, baseUrl }: { data: any, isL
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
+  };
+
+  const copyToClipboard = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    navigator.clipboard.writeText(JSON.stringify(data, null, 2));
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   if (isLoading) {
@@ -305,6 +438,13 @@ const ResponseSection = ({ data, isLoading, apiName, baseUrl }: { data: any, isL
             <span className="text-sm font-bold uppercase tracking-wider">Raw JSON Response</span>
           </div>
           <div className="flex items-center gap-2">
+            <button 
+              onClick={copyToClipboard} 
+              title="Copy JSON" 
+              className={`p-2 hover:bg-white hover:bg-opacity-10 rounded-full transition-all ${copied ? 'text-lorapok-green' : 'text-gray-400 hover:text-white'}`}
+            >
+               {copied ? <Check size={14} /> : <Copy size={14} />}
+            </button>
             <button onClick={(e) => { e.stopPropagation(); downloadJson(); }} title="Download JSON" className="p-2 hover:bg-white hover:bg-opacity-10 rounded-full text-gray-400 hover:text-white transition-all">
                <Download size={14} />
             </button>
@@ -345,11 +485,34 @@ function App() {
     setIsLoading(true)
     setStatus('thinking')
     setSelectedApi(api)
+    setTestResult(null)
     
     try {
-      const response = await axios.get(api.request.url.raw)
-      setTestResult(response.data)
-      setStatus('happy')
+      const response = await axios.get(api.request.url.raw, {
+        responseType: 'arraybuffer'
+      })
+      
+      const rawContentType = response.headers['content-type'];
+      const contentType = typeof rawContentType === 'string' ? rawContentType : '';
+      
+      if (contentType.includes('image/') || contentType.includes('application/octet-stream')) {
+        const blob = new Blob([response.data], { type: contentType || 'image/png' })
+        const reader = new FileReader()
+        reader.onloadend = () => {
+          setTestResult(reader.result)
+          setStatus('happy')
+        }
+        reader.readAsDataURL(blob)
+      } else {
+        const decoder = new TextDecoder('utf-8')
+        const text = decoder.decode(response.data)
+        try {
+          setTestResult(JSON.parse(text))
+        } catch {
+          setTestResult(text)
+        }
+        setStatus('happy')
+      }
     } catch (error: any) {
       setTestResult({ error: error.message })
       setStatus('sad')
