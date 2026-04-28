@@ -281,6 +281,22 @@ const ResponsePanel = ({ data, isLoading, apiName, baseUrl }: { data: any; isLoa
     </div>
   )
 
+  // CORS / Network error — show a helpful message instead of raw JSON
+  if (data?.error === 'CORS / Network Error') return (
+    <div className="flex flex-col items-center justify-center h-full gap-4 p-6 text-center">
+      <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22 }}>🚧</div>
+      <div>
+        <div className="font-bold text-sm mb-1" style={{ color: '#fbbf24' }}>CORS Blocked</div>
+        <p className="text-xs leading-relaxed mb-3" style={{ color: '#4a6278', maxWidth: 280 }}>
+          This API doesn't allow direct browser requests. It works fine from a terminal or server.
+        </p>
+        <div className="text-[10px] px-3 py-2 rounded-lg text-left font-mono" style={{ background: 'rgba(0,0,0,0.4)', border: '1px solid #1a3050', color: '#34d399' }}>
+          💡 Use the cURL snippet on the left and run it in your terminal
+        </div>
+      </div>
+    </div>
+  )
+
   return (
     <div className="flex flex-col overflow-hidden h-full">
       {/* Visualizer */}
@@ -388,7 +404,17 @@ const ApiModal = ({ api, onClose, user }: { api: FlatApi; onClose: () => void; u
         setStatus('happy')
       }
     } catch (err: any) {
-      setTestResult({ error: err.message }); setStatus('sad')
+      const isNetworkError = !err.response && (err.message === 'Network Error' || err.code === 'ERR_NETWORK')
+      if (isNetworkError) {
+        setTestResult({
+          error: 'CORS / Network Error',
+          detail: 'This API does not allow browser requests (missing CORS headers). The API itself works fine — use the curl snippet in your terminal instead.',
+          tip: 'Copy the cURL command above and run it locally, or use a server-side proxy.',
+        })
+      } else {
+        setTestResult({ error: err.message, status: err.response?.status, detail: err.response?.data })
+      }
+      setStatus('sad')
     } finally {
       setIsLoading(false)
     }
