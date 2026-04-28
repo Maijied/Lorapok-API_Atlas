@@ -1868,6 +1868,582 @@
           "response": [],
           "authRequired": "API Key",
           "authLink": "https://lunarcrush.com/developers/api/authentication"
+        },
+        {
+          "name": "Ethereum JSON-RPC",
+          "id": "2d628306-2d1e-4be5-8f24-0e4c0c643c9b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://cloudflare-eth.com/"
+            },
+            "description": "Direct Ethereum node JSON-RPC calls"
+          },
+          "response": []
+        },
+        {
+          "name": "Polygon (MATIC) API",
+          "id": "566b287e-c801-43be-8362-d1fb333119c7",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.polygonscan.com/api?module=stats&action=maticprice&apikey=YOUR_API_KEY"
+            },
+            "description": "Polygon blockchain data and transactions"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://polygonscan.com/register"
+        },
+        {
+          "name": "BSCScan API",
+          "id": "1e1e36e3-8d2f-407e-a08a-08b573d640a3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.bscscan.com/api?module=stats&action=bnbprice&apikey=YOUR_API_KEY"
+            },
+            "description": "BNB Smart Chain explorer API"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://bscscan.com/register"
+        },
+        {
+          "name": "Solscan API",
+          "id": "a18f5b91-28b7-4d1c-b6be-a91f78250f3c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://public-api.solscan.io/chaininfo"
+            },
+            "description": "Solana blockchain explorer"
+          },
+          "response": []
+        },
+        {
+          "name": "Helius API",
+          "id": "06cee254-6c3c-4889-a860-94f85bd98bde",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.helius.xyz/v0/addresses/YOUR_ADDRESS/transactions?api-key=YOUR_API_KEY"
+            },
+            "description": "Solana RPC and enhanced APIs"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.helius.dev/"
+        },
+        {
+          "name": "QuickNode API",
+          "id": "4d7841ab-3ed9-4aec-9eb3-44045c9ac307",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://YOUR_ENDPOINT.quiknode.pro/YOUR_TOKEN/"
+            },
+            "description": "Multi-chain blockchain node provider"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.quicknode.com/signup"
+        },
+        {
+          "name": "Ankr API",
+          "id": "a473147e-2b62-477b-9ead-b4e8f2e5993c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://rpc.ankr.com/eth"
+            },
+            "description": "Multi-chain Web3 infrastructure"
+          },
+          "response": []
+        },
+        {
+          "name": "Chainlink Data Feeds",
+          "id": "f48dc637-04c3-4051-87a9-d6f4bdc9d61f",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.chain.link/v1/feeds"
+            },
+            "description": "Decentralized oracle price feeds"
+          },
+          "response": []
+        },
+        {
+          "name": "Uniswap API",
+          "id": "db830b88-a80d-4d3d-824d-81a7510a0533",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.uniswap.org/v1/graphql"
+            },
+            "description": "DEX trading data and liquidity pools"
+          },
+          "response": []
+        },
+        {
+          "name": "1inch API",
+          "id": "9515c1df-0b46-4bcb-baf4-4057a0acc301",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.1inch.dev/swap/v6.0/1/quote?src=0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE&dst=0x6B175474E89094C44Da98b954EedeAC495271d0F&amount=10000000000000000"
+            },
+            "description": "DEX aggregator for best swap rates"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://portal.1inch.dev/"
+        },
+        {
+          "name": "Aave API",
+          "id": "2dde1d51-edf8-4616-a4dc-4e8584b3dd6e",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://aave-api-v2.aave.com/data/markets-data"
+            },
+            "description": "DeFi lending protocol data"
+          },
+          "response": []
+        },
+        {
+          "name": "Compound Finance API",
+          "id": "43c11dbc-60c7-483b-81e9-521869b43bf6",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.compound.finance/api/v2/ctoken"
+            },
+            "description": "DeFi lending and borrowing rates"
+          },
+          "response": []
+        },
+        {
+          "name": "Yearn Finance API",
+          "id": "625035a0-5168-4c46-9683-62cef49bb150",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.yearn.finance/v1/chains/1/vaults/all"
+            },
+            "description": "DeFi yield optimization vaults"
+          },
+          "response": []
+        },
+        {
+          "name": "CurveFinance API",
+          "id": "bad78a65-d563-4f55-8569-b0ce6f97285c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.curve.fi/api/getPools/ethereum/main"
+            },
+            "description": "Stablecoin DEX pools and APY"
+          },
+          "response": []
+        },
+        {
+          "name": "Lido Finance API",
+          "id": "feb039a3-3991-4360-978b-fce8a9b317d3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://stake.lido.fi/api/sma-steth-apr"
+            },
+            "description": "Liquid staking protocol data"
+          },
+          "response": []
+        },
+        {
+          "name": "NFTScan API",
+          "id": "5c56d073-3d1b-4fb6-8931-94149bd7a603",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://restapi.nftscan.com/api/v2/statistics/ranking/trade"
+            },
+            "description": "Multi-chain NFT data and analytics"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developer.nftscan.com/"
+        },
+        {
+          "name": "Reservoir API",
+          "id": "9caf296c-62f3-4641-a39c-c1464bdca669",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.reservoir.tools/collections/v7?limit=5"
+            },
+            "description": "NFT market data and trading"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://reservoir.tools/"
+        },
+        {
+          "name": "Alchemy NFT API",
+          "id": "79c1ad0b-a221-4ad1-b98c-e4e8622fc24e",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://eth-mainnet.g.alchemy.com/nft/v3/YOUR_API_KEY/getNFTsForOwner?owner=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+            },
+            "description": "NFT metadata and ownership data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://auth.alchemy.com/signup"
+        },
+        {
+          "name": "Zapper API",
+          "id": "c10a3da5-5be1-4512-8e4f-c979c2a2eb00",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.zapper.xyz/v2/balances/tokens?addresses[]=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+            },
+            "description": "DeFi portfolio and protocol data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://studio.zapper.xyz/"
+        },
+        {
+          "name": "DeBank API",
+          "id": "629caa98-e07f-4aa8-ab9f-72cee26ca61b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://pro-openapi.debank.com/v1/user/total_balance?id=0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+            },
+            "description": "DeFi wallet and protocol analytics"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://cloud.debank.com/"
+        },
+        {
+          "name": "Nansen API",
+          "id": "ee082078-31ec-403f-b33b-74d847bce984",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.nansen.ai/v1/labels/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+            },
+            "description": "On-chain analytics and smart money tracking"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.nansen.ai/"
+        },
+        {
+          "name": "Dune Analytics API",
+          "id": "c59bde9a-31e8-4dcb-bcd7-7eee7e63da00",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.dune.com/api/v1/query/1/results"
+            },
+            "description": "SQL-based blockchain data queries"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://dune.com/settings/api"
+        },
+        {
+          "name": "Flipside Crypto API",
+          "id": "4f790cf7-c959-4a25-88a1-581581c7a76d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api-v2.flipsidecrypto.xyz/json-rpc"
+            },
+            "description": "Blockchain analytics and SQL queries"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://flipsidecrypto.xyz/"
+        },
+        {
+          "name": "Token Terminal API",
+          "id": "0f9e38f2-7f69-4a3b-9a0e-984d22620199",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tokenterminal.com/v2/projects"
+            },
+            "description": "DeFi protocol revenue and metrics"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://tokenterminal.com/"
+        },
+        {
+          "name": "CoinPaprika API",
+          "id": "d1aee589-dc8c-459d-acf5-30b8880d365d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.coinpaprika.com/v1/tickers?limit=10"
+            },
+            "description": "Crypto prices, market cap, exchanges"
+          },
+          "response": []
+        },
+        {
+          "name": "CryptoRank API",
+          "id": "9a60413d-6ea0-4d25-a1e7-28627a3b8866",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.cryptorank.io/v1/currencies?limit=10"
+            },
+            "description": "Crypto fundraising and market data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://cryptorank.io/api"
+        },
+        {
+          "name": "Nomics API",
+          "id": "0e62bab9-6ec9-4eb6-82d3-2e5838a4f1d1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.nomics.com/v1/currencies/ticker?key=YOUR_API_KEY&ids=BTC,ETH"
+            },
+            "description": "Crypto market data and exchange rates"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://p.nomics.com/cryptocurrency-bitcoin-api"
+        },
+        {
+          "name": "Livecoinwatch API",
+          "id": "6168c4d5-db22-45f4-9e7b-832c81d51421",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.livecoinwatch.com/coins/list"
+            },
+            "description": "Real-time crypto prices and market data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.livecoinwatch.com/tools/api"
+        },
+        {
+          "name": "CoinStats API",
+          "id": "92e11d3c-781e-4e00-9da2-4d6fcddb01e6",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://openapiv1.coinstats.app/coins?limit=10"
+            },
+            "description": "Crypto portfolio and market data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://openapi.coinstats.app/"
+        },
+        {
+          "name": "Santiment API",
+          "id": "5e196c30-bac6-4773-a6c0-06754bd654d1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.santiment.net/graphql"
+            },
+            "description": "Crypto social and on-chain analytics"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://app.santiment.net/"
+        },
+        {
+          "name": "Whale Alert API",
+          "id": "aced37f5-3450-4c13-a956-70f4bf5704d2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.whale-alert.io/v1/transactions?api_key=YOUR_API_KEY&min_value=500000"
+            },
+            "description": "Large crypto transaction tracking"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://whale-alert.io/"
+        },
+        {
+          "name": "Bitquery API",
+          "id": "d64eac4e-17ab-4b9e-be04-ee47f0c25303",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://graphql.bitquery.io/"
+            },
+            "description": "Multi-chain blockchain data via GraphQL"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://bitquery.io/forms/api"
+        },
+        {
+          "name": "Covalent API",
+          "id": "1308cc5a-2f45-48ae-b41a-7fbf7e93025d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.covalenthq.com/v1/1/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045/balances_v2/?key=YOUR_API_KEY"
+            },
+            "description": "Multi-chain token balances and transactions"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.covalenthq.com/platform/"
+        },
+        {
+          "name": "Transpose API",
+          "id": "dcbca9eb-1d24-4ce1-83b4-cb51277c3d62",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.transpose.io/sql"
+            },
+            "description": "SQL-like blockchain data queries"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://app.transpose.io/"
+        },
+        {
+          "name": "Footprint Analytics API",
+          "id": "7665e9f7-a930-4d17-8777-ec4435dc1585",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.footprint.network/api/v1/data/get"
+            },
+            "description": "DeFi and GameFi on-chain analytics"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.footprint.network/"
+        },
+        {
+          "name": "Arkham Intelligence API",
+          "id": "217a7eb1-59fe-471f-b8eb-00c72019dc47",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.arkhamintelligence.com/intelligence/address/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+            },
+            "description": "Blockchain entity and wallet intelligence"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://platform.arkhamintelligence.com/"
+        },
+        {
+          "name": "Chainalysis API",
+          "id": "31410711-0625-4aba-8699-6d041b7f8ec4",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.chainalysis.com/api/kyt/v2/users"
+            },
+            "description": "Crypto compliance and risk scoring"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.chainalysis.com/"
+        },
+        {
+          "name": "TRM Labs API",
+          "id": "c07b7684-54be-4d91-bd07-58fd7a4450b3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.trmlabs.com/public/v1/sanctions/screening"
+            },
+            "description": "Blockchain risk and compliance"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.trmlabs.com/"
+        },
+        {
+          "name": "Elliptic API",
+          "id": "d306efcc-2aea-47b0-9d2b-02b8dbce2c52",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://aml-api.elliptic.co/v2/wallet/synchronous"
+            },
+            "description": "Crypto transaction risk analysis"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.elliptic.co/"
+        },
+        {
+          "name": "Bitfinex API",
+          "id": "4a1f6b8e-07ca-4874-bfd4-2edaa1879e6b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api-pub.bitfinex.com/v2/tickers?symbols=tBTCUSD,tETHUSD"
+            },
+            "description": "Crypto exchange market data"
+          },
+          "response": []
         }
       ]
     },
@@ -4163,6 +4739,365 @@
           "response": [],
           "authRequired": "API Key",
           "authLink": "https://tyk.io/sign-up/"
+        },
+        {
+          "name": "Agify Name Age",
+          "id": "dfa026bd-363e-402d-b51d-270483bdd2d9",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.agify.io?name=michael"
+            },
+            "description": "Predict age from a first name"
+          },
+          "response": []
+        },
+        {
+          "name": "Genderize Name",
+          "id": "0af202be-f71b-4842-b352-627edf77fe9e",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.genderize.io?name=luc"
+            },
+            "description": "Predict gender from a first name"
+          },
+          "response": []
+        },
+        {
+          "name": "Nationalize Name",
+          "id": "00bf7534-576f-4c60-8bc5-18c4c9f58b86",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.nationalize.io?name=nathaniel"
+            },
+            "description": "Predict nationality from a name"
+          },
+          "response": []
+        },
+        {
+          "name": "IP Stack API",
+          "id": "b5391864-a978-4e4d-a9f0-779f8495fa3b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://api.ipstack.com/134.201.250.155?access_key=YOUR_API_KEY"
+            },
+            "description": "IP geolocation with detailed location data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://ipstack.com/product"
+        },
+        {
+          "name": "Abstract IP Geolocation v2",
+          "id": "879db47a-a12e-47c0-b7e4-6bb7c0e1553d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://ipgeolocation.abstractapi.com/v1/?api_key=YOUR_API_KEY&ip_address=166.171.248.255"
+            },
+            "description": "IP to location, timezone, currency"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://app.abstractapi.com/users/signup"
+        },
+        {
+          "name": "Scraper API",
+          "id": "7cc485c0-a2fd-40e4-b6ce-768888780c7e",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://api.scraperapi.com?api_key=YOUR_API_KEY&url=https://httpbin.org/ip"
+            },
+            "description": "Web scraping with proxy rotation"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.scraperapi.com/signup"
+        },
+        {
+          "name": "ScrapingBee API",
+          "id": "58875fdd-4aba-4d1e-a856-c6664a06fbb0",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://app.scrapingbee.com/api/v1/?api_key=YOUR_API_KEY&url=https://httpbin.org/ip"
+            },
+            "description": "Headless browser web scraping"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://app.scrapingbee.com/account/register"
+        },
+        {
+          "name": "Zenrows API",
+          "id": "52342274-478e-46f1-8e91-792a5dd35d06",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.zenrows.com/v1/?apikey=YOUR_API_KEY&url=https://httpbin.org/ip"
+            },
+            "description": "Web scraping with JS rendering"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://app.zenrows.com/register"
+        },
+        {
+          "name": "Apify API",
+          "id": "85d42028-7ec3-4ab2-a64b-2d434de3a984",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.apify.com/v2/acts?token=YOUR_API_KEY"
+            },
+            "description": "Web scraping and automation platform"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://console.apify.com/sign-up"
+        },
+        {
+          "name": "Browserless API",
+          "id": "464c70a3-4abf-4981-a7b0-8cd5e79db91e",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://chrome.browserless.io/screenshot?token=YOUR_API_KEY"
+            },
+            "description": "Headless Chrome as a service"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.browserless.io/sign-up/"
+        },
+        {
+          "name": "Puppeteer API (Browserbase)",
+          "id": "63737cfb-5347-4daa-ac50-db2d02a16f47",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.browserbase.com/v1/sessions"
+            },
+            "description": "Cloud browser automation"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.browserbase.com/sign-up"
+        },
+        {
+          "name": "Firecrawl API",
+          "id": "dbb38f6f-b7ef-43c1-8d25-31a7517ec5eb",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.firecrawl.dev/v0/scrape"
+            },
+            "description": "Web crawling and scraping to markdown"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.firecrawl.dev/"
+        },
+        {
+          "name": "Jina AI Reader API",
+          "id": "655702d1-d1f5-45ed-9dfa-26b95aa4d96b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://r.jina.ai/https://example.com"
+            },
+            "description": "Convert any URL to LLM-friendly markdown"
+          },
+          "response": []
+        },
+        {
+          "name": "Diffbot API",
+          "id": "4a782194-9766-47dc-888e-b618e3039d85",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.diffbot.com/v3/article?url=https://techcrunch.com&token=YOUR_API_KEY"
+            },
+            "description": "AI-powered web data extraction"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://app.diffbot.com/get-started/"
+        },
+        {
+          "name": "Clearbit Logo API",
+          "id": "ae440ffc-cb07-452e-b002-27c54ecf71f9",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://logo.clearbit.com/stripe.com"
+            },
+            "description": "Company logos by domain"
+          },
+          "response": []
+        },
+        {
+          "name": "Brandfetch API",
+          "id": "896ffa9e-0aad-47ba-8196-4eb910e9546d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.brandfetch.io/v2/brands/stripe.com"
+            },
+            "description": "Brand logos, colors, fonts by domain"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://brandfetch.com/developers"
+        },
+        {
+          "name": "Favicon Grabber",
+          "id": "b5ae46b4-306b-4666-8dea-a3facff6ff46",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://favicongrabber.com/api/grab/github.com"
+            },
+            "description": "Get favicon for any website"
+          },
+          "response": []
+        },
+        {
+          "name": "Screenshot API (ScreenshotOne)",
+          "id": "42ef91d7-69b8-4e06-bdc9-cb560797fc75",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.screenshotone.com/take?access_key=YOUR_API_KEY&url=https://example.com"
+            },
+            "description": "Website screenshots as a service"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://screenshotone.com/"
+        },
+        {
+          "name": "URLbox API",
+          "id": "db32d91b-f03d-4e37-bbdc-66871ca97081",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.urlbox.io/v1/YOUR_API_KEY/png?url=https://example.com"
+            },
+            "description": "Website screenshots and PDF generation"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://urlbox.io/"
+        },
+        {
+          "name": "Microlink API",
+          "id": "5b3ff109-1fab-4ad6-baba-6ffca505f705",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.microlink.io/?url=https://github.com"
+            },
+            "description": "Extract metadata and screenshots from URLs"
+          },
+          "response": []
+        },
+        {
+          "name": "Iframely API",
+          "id": "82cd1499-29ad-44fd-bf56-ddb31eb0859d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://iframe.ly/api/iframely?url=https://vimeo.com/123&api_key=YOUR_API_KEY"
+            },
+            "description": "oEmbed and link preview metadata"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://iframely.com/plans"
+        },
+        {
+          "name": "Embedly API",
+          "id": "8a3bd0ed-f76c-4983-a8d5-8d156243458d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.embedly.com/1/oembed?url=https://www.youtube.com/watch?v=dQw4w9WgXcQ&key=YOUR_API_KEY"
+            },
+            "description": "Embed and preview any URL"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://app.embed.ly/signup"
+        },
+        {
+          "name": "Abstract Screenshot",
+          "id": "ee3db84c-7c29-42f3-8a37-24908f824feb",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://screenshot.abstractapi.com/v1/?api_key=YOUR_API_KEY&url=https://example.com"
+            },
+            "description": "Website screenshot API"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://app.abstractapi.com/users/signup"
+        },
+        {
+          "name": "Whois XML API",
+          "id": "4e87d805-8676-46bc-a451-c7ca0e04ed4a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.whoisxmlapi.com/whoisserver/WhoisService?apiKey=YOUR_API_KEY&domainName=google.com&outputFormat=JSON"
+            },
+            "description": "Domain WHOIS lookup and registration data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.whoisxmlapi.com/signup.php"
+        },
+        {
+          "name": "DNS over HTTPS (Cloudflare)",
+          "id": "f06a850b-da9c-4f42-9530-c55e2728c4e1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://cloudflare-dns.com/dns-query?name=example.com&type=A"
+            },
+            "description": "DNS resolution over HTTPS"
+          },
+          "response": []
         }
       ]
     },
@@ -4849,6 +5784,381 @@
           "response": [],
           "authRequired": "API Key",
           "authLink": "https://app.abstractapi.com/users/signup"
+        },
+        {
+          "name": "Stripe Billing API",
+          "id": "56e6c7d6-cafb-419b-b15e-c60e2dfae415",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.stripe.com/v1/subscriptions"
+            },
+            "description": "Subscriptions, invoices, billing management"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://dashboard.stripe.com/register"
+        },
+        {
+          "name": "Square API",
+          "id": "6e488cba-4375-43ba-b097-0bea64a592a8",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://connect.squareup.com/v2/catalog/list"
+            },
+            "description": "Payments, inventory, customers for Square"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://developer.squareup.com/apps"
+        },
+        {
+          "name": "Braintree API",
+          "id": "114209c2-f3a4-4854-8d63-a8dd9790d917",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://payments.sandbox.braintree-api.com/graphql"
+            },
+            "description": "PayPal-owned payment gateway"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.braintreepayments.com/sandbox"
+        },
+        {
+          "name": "Adyen API",
+          "id": "a94422f9-dd76-40cf-ad03-10de28fbb111",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://checkout-test.adyen.com/v70/paymentMethods"
+            },
+            "description": "Global payment processing platform"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.adyen.com/signup"
+        },
+        {
+          "name": "Klarna API",
+          "id": "3c92def0-3582-4a57-9c9a-2e6df0661682",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.klarna.com/payments/v1/sessions"
+            },
+            "description": "Buy now pay later and checkout"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developers.klarna.com/"
+        },
+        {
+          "name": "Razorpay API",
+          "id": "17cda54e-37cf-453e-a037-406ecf0b27ff",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.razorpay.com/v1/payments"
+            },
+            "description": "Indian payment gateway"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://dashboard.razorpay.com/app/website-app-settings/api-keys"
+        },
+        {
+          "name": "Paytm API",
+          "id": "5c541eb5-92c5-4d71-bcf9-6ca15a52a5dd",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://securegw.paytm.in/v3/order/status"
+            },
+            "description": "Indian digital payments platform"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developer.paytm.com/"
+        },
+        {
+          "name": "Mollie API",
+          "id": "f73fa033-9d77-4910-8cdf-9bab969418ca",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.mollie.com/v2/methods"
+            },
+            "description": "European payment service provider"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.mollie.com/dashboard/signup"
+        },
+        {
+          "name": "Paddle API",
+          "id": "ebed523f-9c0c-486b-aed4-b7b652c86ca7",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.paddle.com/products"
+            },
+            "description": "SaaS billing and subscription management"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://login.paddle.com/signup"
+        },
+        {
+          "name": "Lemon Squeezy API",
+          "id": "a69fb4b5-9f94-4dc0-be11-5af5411d5c91",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.lemonsqueezy.com/v1/products"
+            },
+            "description": "Digital product sales and subscriptions"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://app.lemonsqueezy.com/register"
+        },
+        {
+          "name": "Gumroad API",
+          "id": "d503e8b4-96ad-4395-8f10-a4d1f46b6b76",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.gumroad.com/v2/products"
+            },
+            "description": "Digital product marketplace"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://gumroad.com/signup"
+        },
+        {
+          "name": "Chargebee API",
+          "id": "5d4f1dd3-8bd6-41e5-b64d-b0200204dd1e",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://YOUR_SITE.chargebee.com/api/v2/subscriptions"
+            },
+            "description": "Subscription billing and revenue management"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.chargebee.com/trial-signup/"
+        },
+        {
+          "name": "Recurly API",
+          "id": "1ba779db-0968-40c9-a7bb-b3f4afec670d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://v3.recurly.com/plans"
+            },
+            "description": "Subscription management platform"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://app.recurly.com/signup"
+        },
+        {
+          "name": "Zuora API",
+          "id": "bd76172a-5687-4918-97ac-c3bbbc9b1607",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://rest.zuora.com/v1/catalog/products"
+            },
+            "description": "Enterprise subscription and billing"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://www.zuora.com/free-trial/"
+        },
+        {
+          "name": "Open Banking API (UK)",
+          "id": "208efd54-321a-488b-868f-a7805afd7f2c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.openbanking.org.uk/open-banking/v3.1/aisp/accounts"
+            },
+            "description": "UK open banking standard"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://www.openbanking.org.uk/"
+        },
+        {
+          "name": "Plaid Transactions API",
+          "id": "0647fcbd-4665-48c2-b933-57288548a9ed",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://sandbox.plaid.com/transactions/get"
+            },
+            "description": "Bank transaction history"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://dashboard.plaid.com/signup"
+        },
+        {
+          "name": "Yodlee API",
+          "id": "6ac66263-7f3b-4188-8863-5bc672845316",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://sandbox.api.yodlee.com/ysl/accounts"
+            },
+            "description": "Financial data aggregation"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://developer.yodlee.com/"
+        },
+        {
+          "name": "MX Platform API",
+          "id": "df766686-31cd-4c09-9985-f27b93a2d2cd",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://int-api.mx.com/users"
+            },
+            "description": "Financial data connectivity"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://dashboard.mx.com/sign_up"
+        },
+        {
+          "name": "Finicity API",
+          "id": "89eefbdc-16e3-4f32-8999-6c5ec99101c2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.finicity.com/aggregation/v1/customers"
+            },
+            "description": "Financial data and open banking"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://signup.finicity.com/"
+        },
+        {
+          "name": "Alpaca Trading API",
+          "id": "c2e24c27-368a-4afb-bc08-24d6e980e757",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://paper-api.alpaca.markets/v2/account"
+            },
+            "description": "Commission-free stock trading API"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://app.alpaca.markets/signup"
+        },
+        {
+          "name": "Tradier API",
+          "id": "6e7658d9-07cd-4695-a6ff-a754307cf9e0",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://sandbox.tradier.com/v1/markets/quotes?symbols=AAPL"
+            },
+            "description": "Stock trading and market data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developer.tradier.com/user/sign_up"
+        },
+        {
+          "name": "IEX Cloud API",
+          "id": "289bda40-0cb2-4f32-95a3-cd5685c8e02b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://cloud.iexapis.com/stable/stock/aapl/quote?token=YOUR_API_KEY"
+            },
+            "description": "Stock market data and financials"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://iexcloud.io/cloud-login#/register"
+        },
+        {
+          "name": "Twelve Data API",
+          "id": "06604450-fa99-4d29-88c0-5bde3aecb0e7",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.twelvedata.com/time_series?symbol=AAPL&interval=1min&apikey=YOUR_API_KEY"
+            },
+            "description": "Stock, forex, crypto time series"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://twelvedata.com/register"
+        },
+        {
+          "name": "Marketstack API",
+          "id": "0e864b15-e545-4cfa-b6ae-e8a14b98b6d0",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://api.marketstack.com/v1/eod?access_key=YOUR_API_KEY&symbols=AAPL"
+            },
+            "description": "Real-time and historical stock data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://marketstack.com/signup/free"
+        },
+        {
+          "name": "Intrinio API",
+          "id": "6365c9d2-2088-4441-9f89-4638f47b3131",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api-v2.intrinio.com/securities/AAPL/prices?api_key=YOUR_API_KEY"
+            },
+            "description": "Financial data for stocks and ETFs"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://intrinio.com/signup"
         }
       ]
     },
@@ -5288,6 +6598,575 @@
           "createdAt": "2026-04-27T23:48:14.000Z",
           "updatedAt": "2026-04-27T23:48:14.000Z",
           "uid": "3124823-0d28f1bd-7f8e-47d7-940a-2c794cd18586"
+        },
+        {
+          "name": "Wikipedia REST API",
+          "id": "caa5038f-8675-4df3-aba4-dce49244b767",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://en.wikipedia.org/api/rest_v1/page/summary/Python_(programming_language)"
+            },
+            "description": "Wikipedia article summaries and content"
+          },
+          "response": []
+        },
+        {
+          "name": "Wikimedia Commons API",
+          "id": "cb7399ed-df86-4e72-bbb0-ecbd2c067964",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://commons.wikimedia.org/w/api.php?action=query&list=search&srsearch=cat&format=json"
+            },
+            "description": "Free media files from Wikimedia"
+          },
+          "response": []
+        },
+        {
+          "name": "Wiktionary API",
+          "id": "fba91986-5427-48da-85c0-45f5d2c3153d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://en.wiktionary.org/api/rest_v1/page/definition/hello"
+            },
+            "description": "Dictionary definitions from Wiktionary"
+          },
+          "response": []
+        },
+        {
+          "name": "Wolfram Alpha Short Answers",
+          "id": "b5f0bdce-ea3f-4e9a-a36f-505771d71f8e",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.wolframalpha.com/v1/result?i=What+is+the+speed+of+light&appid=YOUR_API_KEY"
+            },
+            "description": "Computational knowledge short answers"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developer.wolframalpha.com/"
+        },
+        {
+          "name": "Britannica API",
+          "id": "67d15d1f-621e-47f7-a6d1-32cc6fd14fba",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://syndication.api.eb.com/production/article?query=photosynthesis&token=YOUR_API_KEY"
+            },
+            "description": "Encyclopedia Britannica articles"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://syndication.api.eb.com/"
+        },
+        {
+          "name": "Coursera API",
+          "id": "102be10f-dbac-40c0-a22f-7384551f22d6",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.coursera.org/api/courses.v1?fields=name,description&limit=5"
+            },
+            "description": "Online courses and specializations"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://www.coursera.org/oauth2/client/register"
+        },
+        {
+          "name": "Udemy API",
+          "id": "0918e3a7-53d0-4207-b3a6-4e2d44cc18e5",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.udemy.com/api-2.0/courses/?page_size=5"
+            },
+            "description": "Online course catalog and data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.udemy.com/developers/affiliate/"
+        },
+        {
+          "name": "edX API",
+          "id": "c5daaeab-0443-4d14-8e75-f1c73a6f45df",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.edx.org/catalog/v1/catalogs/1/courses"
+            },
+            "description": "Open online courses from top universities"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.edx.org/"
+        },
+        {
+          "name": "MIT OpenCourseWare API",
+          "id": "8a47f761-f1da-405a-85b3-99d50f79c374",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://ocw.mit.edu/api/v0/courses/?limit=5"
+            },
+            "description": "Free MIT course materials"
+          },
+          "response": []
+        },
+        {
+          "name": "Duolingo API",
+          "id": "d98af6d0-2d6e-4577-bacd-cdf14b3efc91",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.duolingo.com/api/1/version_info"
+            },
+            "description": "Language learning progress and courses"
+          },
+          "response": []
+        },
+        {
+          "name": "Memrise API",
+          "id": "7887627e-6bdd-4413-9255-7711012e1010",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.memrise.com/api/1/course/list/?limit=5"
+            },
+            "description": "Language learning flashcards"
+          },
+          "response": []
+        },
+        {
+          "name": "Quizlet API",
+          "id": "e5af20a4-ced4-45c6-8bd7-01913fb8187b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.quizlet.com/2.0/search/sets?q=biology&client_id=YOUR_API_KEY"
+            },
+            "description": "Flashcard sets and study tools"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://quizlet.com/api/2.0/docs/"
+        },
+        {
+          "name": "Anki Connect API",
+          "id": "8448be2d-8464-4020-88fd-f5b3aa30c3cb",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8765"
+            },
+            "description": "Anki flashcard deck management"
+          },
+          "response": []
+        },
+        {
+          "name": "Open Textbook Library API",
+          "id": "366f77a9-2607-4d58-a9ed-90c2095ae4d3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://open.umn.edu/opentextbooks/textbooks.json"
+            },
+            "description": "Free open textbooks catalog"
+          },
+          "response": []
+        },
+        {
+          "name": "DOAJ API",
+          "id": "ad7808d0-09b8-4378-8999-b2e5ce648531",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://doaj.org/api/v3/search/articles/photosynthesis?pageSize=5"
+            },
+            "description": "Directory of Open Access Journals"
+          },
+          "response": []
+        },
+        {
+          "name": "CORE API",
+          "id": "ae874fe8-bc1d-4c4c-8981-96eeabe630bc",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.core.ac.uk/v3/search/works?q=machine+learning&limit=5"
+            },
+            "description": "Open access research papers aggregator"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://core.ac.uk/services/api"
+        },
+        {
+          "name": "Semantic Scholar Graph API",
+          "id": "ef148f79-d6d8-4378-89e7-ec3ff33d60b6",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.semanticscholar.org/graph/v1/paper/search?query=deep+learning&limit=5"
+            },
+            "description": "Academic paper citations and authors"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.semanticscholar.org/product/api"
+        },
+        {
+          "name": "Europe PMC API",
+          "id": "e6682f8b-4564-4a63-98ea-72a654af7513",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=cancer&format=json&pageSize=5"
+            },
+            "description": "Life sciences literature database"
+          },
+          "response": []
+        },
+        {
+          "name": "Unpaywall API",
+          "id": "5b09834f-5191-475e-bc7d-7e9aef17c1a2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.unpaywall.org/v2/10.1038/nature12373?email=YOUR_EMAIL"
+            },
+            "description": "Free legal versions of research papers"
+          },
+          "response": []
+        },
+        {
+          "name": "OpenAlex Works API",
+          "id": "28af543b-2861-41c6-bd6c-198df3dbd8bf",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.openalex.org/works?search=climate+change&per-page=5"
+            },
+            "description": "Open catalog of scholarly works"
+          },
+          "response": []
+        },
+        {
+          "name": "Zenodo API",
+          "id": "4a39be68-1589-44f1-9b99-564a7715b9fa",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://zenodo.org/api/records?q=machine+learning&size=5"
+            },
+            "description": "Open science research repository"
+          },
+          "response": []
+        },
+        {
+          "name": "Figshare API",
+          "id": "c1146892-4fe4-4858-8d90-d02cc960adad",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.figshare.com/v2/articles?page_size=5"
+            },
+            "description": "Research data and figures repository"
+          },
+          "response": []
+        },
+        {
+          "name": "Dryad API",
+          "id": "1630ab5e-0f22-4550-a0cc-ba2ac961b51e",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://datadryad.org/api/v2/datasets?per_page=5"
+            },
+            "description": "Scientific research data repository"
+          },
+          "response": []
+        },
+        {
+          "name": "OSF API",
+          "id": "c430101c-b0ca-4cfd-a681-528914fb8ffa",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.osf.io/v2/nodes/?filter[category]=project&page[size]=5"
+            },
+            "description": "Open Science Framework research projects"
+          },
+          "response": []
+        },
+        {
+          "name": "Wikidata SPARQL",
+          "id": "29522002-6da5-4bc3-a500-f70dfa2c4e37",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://query.wikidata.org/sparql?query=SELECT+%3Fitem+%3FitemLabel+WHERE+%7B%3Fitem+wdt%3AP31+wd%3AQ5.%7D+LIMIT+5&format=json"
+            },
+            "description": "Structured knowledge graph SPARQL queries"
+          },
+          "response": []
+        },
+        {
+          "name": "DBpedia SPARQL",
+          "id": "cef19645-7835-4965-b497-5c070af80282",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://dbpedia.org/sparql?query=SELECT+%3Fname+WHERE+%7B%3Fs+a+dbo%3APerson%3Bfoaf%3Aname+%3Fname%7D+LIMIT+5&format=json"
+            },
+            "description": "Wikipedia structured data SPARQL"
+          },
+          "response": []
+        },
+        {
+          "name": "Freebase API (Archive)",
+          "id": "6c520cbb-16e9-4cf0-8dd0-1e8371ca1c08",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.googleapis.com/freebase/v1/search?query=Python&key=YOUR_API_KEY"
+            },
+            "description": "Google's knowledge graph archive"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://console.cloud.google.com/"
+        },
+        {
+          "name": "ConceptNet API",
+          "id": "303aeff3-f0c6-475f-9912-46652e79d4a2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.conceptnet.io/c/en/example"
+            },
+            "description": "Commonsense knowledge graph"
+          },
+          "response": []
+        },
+        {
+          "name": "WordNet API",
+          "id": "272a9930-184b-498e-9caf-58be254c0b59",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://wordnet.princeton.edu/"
+            },
+            "description": "English lexical database"
+          },
+          "response": []
+        },
+        {
+          "name": "Datamuse API",
+          "id": "c973504c-2a76-4dec-8f4b-a5179f3994d3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.datamuse.com/words?ml=ringing+in+the+ears"
+            },
+            "description": "Word-finding query engine"
+          },
+          "response": []
+        },
+        {
+          "name": "Rhymebrain API",
+          "id": "d3f704d5-049d-4731-9422-2d50383a8637",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://rhymebrain.com/talk?function=getRhymes&word=hello"
+            },
+            "description": "Rhyming words and word info"
+          },
+          "response": []
+        },
+        {
+          "name": "Big Huge Thesaurus",
+          "id": "e30e2742-7dbb-42e5-a139-44e603c80e39",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://words.bighugelabs.com/api/2/YOUR_API_KEY/love/json"
+            },
+            "description": "Synonyms and antonyms API"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://words.bighugelabs.com/api.php"
+        },
+        {
+          "name": "Lingua Robot Lemma",
+          "id": "b8b35e0f-11ab-45a1-99c1-ef5ce291dd88",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.linguarobot.io/linguistics/lemma?word=running"
+            },
+            "description": "Word lemmatization and morphology"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.linguarobot.io/"
+        },
+        {
+          "name": "Wordnik Definitions",
+          "id": "a599acdd-6c0f-49f0-b199-710fd6d6abd7",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.wordnik.com/v4/word.json/hello/definitions?limit=3&api_key=YOUR_API_KEY"
+            },
+            "description": "Word definitions and examples"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developer.wordnik.com/"
+        },
+        {
+          "name": "Merriam-Webster Thesaurus",
+          "id": "289cf562-7d33-49f8-8aa7-4787437d24c5",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.dictionaryapi.com/api/v3/references/thesaurus/json/hello?key=YOUR_API_KEY"
+            },
+            "description": "Synonyms and antonyms from Merriam-Webster"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://dictionaryapi.com/register/index"
+        },
+        {
+          "name": "Oxford Dictionaries API",
+          "id": "8bce69aa-6063-4fcd-ae46-ad1a1f1b0ae1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://od-api.oxforddictionaries.com/api/v2/entries/en-gb/ace"
+            },
+            "description": "Oxford English Dictionary definitions"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developer.oxforddictionaries.com/"
+        },
+        {
+          "name": "Cambridge Dictionary API",
+          "id": "272d9296-a9f1-4e6f-9c17-3e316443af1e",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://dictionary.cambridge.org/api/v1/dictionaries/english/entries/hello"
+            },
+            "description": "Cambridge English dictionary"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://dictionary.cambridge.org/editorial-and-content-services/"
+        },
+        {
+          "name": "Longman Dictionary API",
+          "id": "05387347-a761-49cf-bcfe-701ad65c8dc9",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.ldoceonline.com/api/"
+            },
+            "description": "Longman English dictionary"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.ldoceonline.com/"
+        },
+        {
+          "name": "Collins Dictionary API",
+          "id": "9850a200-6744-4d0e-a7a8-d3136306a4bd",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.collinsdictionary.com/api/v1/dictionaries/english/search/?q=hello"
+            },
+            "description": "Collins English dictionary"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://api.collinsdictionary.com/"
+        },
+        {
+          "name": "Macmillan Dictionary API",
+          "id": "7ea4fc91-08dd-467a-b9c3-1b42c6b71289",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.macmillandictionary.com/api/v1/dictionaries/american-english/entries/hello"
+            },
+            "description": "Macmillan English dictionary"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.macmillandictionary.com/"
+        },
+        {
+          "name": "Free Dictionary API v2",
+          "id": "e41f6470-8149-474a-b302-2db2eff7953b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.dictionaryapi.dev/api/v2/entries/en/serendipity"
+            },
+            "description": "Free English dictionary with audio"
+          },
+          "response": []
         }
       ]
     },
@@ -6639,6 +8518,371 @@
           "response": [],
           "authRequired": "API Key",
           "authLink": "https://developer.api.nhs.uk/"
+        },
+        {
+          "name": "OpenFDA Drug Events",
+          "id": "57b14464-2e7e-47bc-8e9f-071ee6bb8c03",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.fda.gov/drug/event.json?limit=5"
+            },
+            "description": "FDA adverse drug event reports"
+          },
+          "response": []
+        },
+        {
+          "name": "OpenFDA Device Recalls",
+          "id": "74436b8e-612d-477f-a094-56ed0a5418f7",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.fda.gov/device/recall.json?limit=5"
+            },
+            "description": "FDA medical device recall data"
+          },
+          "response": []
+        },
+        {
+          "name": "Healthgrades API",
+          "id": "ebc7eaef-d3f8-4286-b6d4-2b6964274ab0",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.healthgrades.com/api/"
+            },
+            "description": "Doctor and hospital ratings"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.healthgrades.com/"
+        },
+        {
+          "name": "Practo API",
+          "id": "c002422e-7a16-4657-a3b2-9858bdeb675c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.practo.com/v1/doctors"
+            },
+            "description": "Doctor search and appointment booking"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.practo.com/"
+        },
+        {
+          "name": "Zocdoc API",
+          "id": "536c92ca-e07d-4d39-aa66-c1ad63b8d2bd",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.zocdoc.com/directory/v2/doctors"
+            },
+            "description": "Doctor appointment booking"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.zocdoc.com/about/api/"
+        },
+        {
+          "name": "Fitbit API",
+          "id": "07e83bb8-9008-4d35-931f-0ff44e7b141d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.fitbit.com/1/user/-/activities/date/today.json"
+            },
+            "description": "Fitness tracking: steps, sleep, heart rate"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://dev.fitbit.com/apps/new"
+        },
+        {
+          "name": "Withings API",
+          "id": "2440f41a-a220-462b-b29c-0e787c8c017b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://wbsapi.withings.net/v2/measure?action=getmeas"
+            },
+            "description": "Health device data: weight, BP, sleep"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://developer.withings.com/"
+        },
+        {
+          "name": "Garmin Health API",
+          "id": "26ec1078-6c53-45c2-983f-c953a48aa15a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://healthapi.garmin.com/wellness-api/rest/dailies"
+            },
+            "description": "Garmin fitness and health data"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://developer.garmin.com/health-api/"
+        },
+        {
+          "name": "Strava API",
+          "id": "ea4d4d28-29f4-4115-a9e8-d32deb7eda6a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.strava.com/api/v3/athlete/activities"
+            },
+            "description": "Running, cycling, fitness activities"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://www.strava.com/settings/api"
+        },
+        {
+          "name": "Peloton API",
+          "id": "cfc9a7b8-7f73-4ee2-8305-9b8f046104b0",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.onepeloton.com/api/v2/ride/live"
+            },
+            "description": "Peloton workout and fitness data"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://www.onepeloton.com/"
+        },
+        {
+          "name": "Oura Ring API",
+          "id": "bd96e3aa-b8ed-48f1-ac88-f57661f9f2b7",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.ouraring.com/v2/usercollection/daily_sleep"
+            },
+            "description": "Sleep, readiness, activity from Oura Ring"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://cloud.ouraring.com/oauth/applications"
+        },
+        {
+          "name": "Apple HealthKit API",
+          "id": "32dadfde-a1bb-4f4f-b151-0ebbef8d5c34",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://developer.apple.com/documentation/healthkit"
+            },
+            "description": "iOS health and fitness data"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://developer.apple.com/healthkit/"
+        },
+        {
+          "name": "Google Fit API",
+          "id": "e4fd2690-eee7-48f8-b56e-8fca6838f30c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.googleapis.com/fitness/v1/users/me/dataSources"
+            },
+            "description": "Android fitness and health data"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://console.cloud.google.com/"
+        },
+        {
+          "name": "Cronometer API",
+          "id": "77211d00-79dc-4376-9305-281cabffe194",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://cronometer.com/api/"
+            },
+            "description": "Nutrition and diet tracking"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://cronometer.com/"
+        },
+        {
+          "name": "Edamam Nutrition API",
+          "id": "a8b473da-4615-432e-ad29-c61fd1a25ea6",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.edamam.com/api/nutrition-data?app_id=YOUR_APP_ID&app_key=YOUR_API_KEY&ingr=1%20large%20apple"
+            },
+            "description": "Nutrition analysis from food text"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developer.edamam.com/"
+        },
+        {
+          "name": "Spoonacular Nutrition",
+          "id": "fc0565ea-16ab-44e6-8ac8-f5be3ff4d600",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.spoonacular.com/recipes/716429/nutritionWidget.json?apiKey=YOUR_API_KEY"
+            },
+            "description": "Recipe nutrition and meal planning"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://spoonacular.com/food-api/console#Dashboard"
+        },
+        {
+          "name": "Nutritionix Track API",
+          "id": "ce1e2263-42b7-4784-988c-470a6fe06aef",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://trackapi.nutritionix.com/v2/natural/nutrients"
+            },
+            "description": "Natural language food logging"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.nutritionix.com/business/api"
+        },
+        {
+          "name": "Open Food Facts Nutrition",
+          "id": "ecebb484-cbc7-4e69-b148-e36fdb103fba",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://world.openfoodfacts.org/api/v0/product/3017620422003.json"
+            },
+            "description": "Nutritional data from food barcodes"
+          },
+          "response": []
+        },
+        {
+          "name": "Wger Workout API",
+          "id": "f9b1524d-9592-46bc-b4b1-7518fd813b00",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://wger.de/api/v2/exercise/?format=json&language=2&limit=5"
+            },
+            "description": "Open-source workout and exercise database"
+          },
+          "response": []
+        },
+        {
+          "name": "ExerciseDB API",
+          "id": "58f0c165-5f93-4c36-8925-586c8f15df7d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://exercisedb.p.rapidapi.com/exercises?limit=5"
+            },
+            "description": "Exercise database with muscle groups"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://rapidapi.com/justin-WFnsXH_t6/api/exercisedb"
+        },
+        {
+          "name": "Infermedica Symptom Checker",
+          "id": "6f182f96-322f-456a-97b8-526f2a4c6708",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.infermedica.com/v3/parse"
+            },
+            "description": "AI-powered symptom analysis"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developer.infermedica.com/"
+        },
+        {
+          "name": "Ada Health API",
+          "id": "2c2ba436-e094-418f-8a8c-55c5a21ec485",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://ada.com/api/"
+            },
+            "description": "AI health assessment and triage"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://ada.com/"
+        },
+        {
+          "name": "Babylon Health API",
+          "id": "db42c2bb-d87e-4321-8057-ae666f21a127",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.babylonhealth.com/"
+            },
+            "description": "Digital health and symptom checker"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.babylonhealth.com/"
+        },
+        {
+          "name": "Pillbox API (NIH)",
+          "id": "97411b62-c54f-4849-b9bb-8153a2b30d6c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://pillbox.nlm.nih.gov/API/search?key=YOUR_API_KEY&ingredient=aspirin"
+            },
+            "description": "Pill identification by color, shape, imprint"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://pillbox.nlm.nih.gov/developer.html"
+        },
+        {
+          "name": "DailyMed API",
+          "id": "0c75df11-91b3-4f05-98ec-c1f7e344c187",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.json?drug_name=aspirin"
+            },
+            "description": "FDA drug label information"
+          },
+          "response": []
         }
       ]
     },
@@ -6993,6 +9237,586 @@
           "response": [],
           "authRequired": "API Key",
           "authLink": "https://cloudinary.com/users/register_free"
+        },
+        {
+          "name": "Cloudinary Transformation API",
+          "id": "424bb2e3-f878-4f3b-bb73-68e5129bf1d2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://res.cloudinary.com/demo/image/upload/w_300,h_300,c_fill/sample.jpg"
+            },
+            "description": "Image transformation: resize, crop, filter"
+          },
+          "response": []
+        },
+        {
+          "name": "Imgix API",
+          "id": "fc28a7ed-de00-4e06-8f94-22a1caff9e3d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://assets.imgix.net/examples/pione.jpg?w=300&h=300&fit=crop"
+            },
+            "description": "Real-time image processing and CDN"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://dashboard.imgix.com/sign-up"
+        },
+        {
+          "name": "Thumbor API",
+          "id": "e351520c-8c50-420a-b981-9cb28613fde6",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://thumbor.org/"
+            },
+            "description": "Open-source image cropping and resizing"
+          },
+          "response": []
+        },
+        {
+          "name": "Kraken.io API",
+          "id": "8239b608-1b14-4a1c-9624-3d7eae92e87a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.kraken.io/v1/url"
+            },
+            "description": "Image optimization and compression"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://kraken.io/signup"
+        },
+        {
+          "name": "TinyPNG API",
+          "id": "355390db-1768-490b-9851-44b42996bbe7",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tinify.com/shrink"
+            },
+            "description": "PNG and JPEG image compression"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://tinypng.com/developers"
+        },
+        {
+          "name": "Imagga API",
+          "id": "0a9bb300-7573-45b3-aad5-096beacb902c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.imagga.com/v2/tags?image_url=https://upload.wikimedia.org/wikipedia/commons/a/a7/Camponotus_flavomarginatus_ant.jpg"
+            },
+            "description": "Image tagging, categorization, color extraction"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://imagga.com/auth/register"
+        },
+        {
+          "name": "Google Vision API",
+          "id": "29814b35-1c45-42f3-9673-a7164a6d2e03",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://vision.googleapis.com/v1/images:annotate?key=YOUR_API_KEY"
+            },
+            "description": "Image recognition, OCR, face detection"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://console.cloud.google.com/"
+        },
+        {
+          "name": "AWS Rekognition API",
+          "id": "7248ee8f-7d84-42a2-80a3-df0d38a6a568",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://rekognition.us-east-1.amazonaws.com/"
+            },
+            "description": "Image and video analysis by Amazon"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://aws.amazon.com/rekognition/"
+        },
+        {
+          "name": "Azure Computer Vision",
+          "id": "d0c6bf39-e62c-4f29-8c88-806f9969c113",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://YOUR_ENDPOINT.cognitiveservices.azure.com/vision/v3.2/analyze"
+            },
+            "description": "Image analysis, OCR, face detection"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://portal.azure.com/"
+        },
+        {
+          "name": "Deepface API",
+          "id": "66d8ae30-3e1f-43df-a9ea-b4a5cdd392f7",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://deepface.com/api/"
+            },
+            "description": "Face recognition and analysis"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://deepface.com/"
+        },
+        {
+          "name": "Face++ API",
+          "id": "7d3cdbf8-40e4-492a-bc8a-a25ba905b6f9",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api-us.faceplusplus.com/facepp/v3/detect"
+            },
+            "description": "Face detection, recognition, analysis"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.faceplusplus.com/"
+        },
+        {
+          "name": "Sightengine API",
+          "id": "e9bb5c06-004e-482e-91d9-6fe60b54887e",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.sightengine.com/1.0/check.json?url=https://sightengine.com/assets/img/examples/example7.jpg&models=nudity&api_user=YOUR_USER&api_secret=YOUR_SECRET"
+            },
+            "description": "Image moderation and content detection"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://sightengine.com/signup"
+        },
+        {
+          "name": "Hive Moderation API",
+          "id": "51b53ada-c89d-4a72-9e7c-ff4519c16c35",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.thehive.ai/api/v2/task/sync"
+            },
+            "description": "AI content moderation for images and video"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://thehive.ai/"
+        },
+        {
+          "name": "Shutterstock API",
+          "id": "76cce0d4-05e8-45f8-bfc0-6a27b8414b05",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.shutterstock.com/v2/images/search?query=nature&per_page=5"
+            },
+            "description": "Stock photos, vectors, videos"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://www.shutterstock.com/account/developers/apps/add"
+        },
+        {
+          "name": "Getty Images API",
+          "id": "5b7480ec-979b-4526-8826-3e5cb289f521",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.gettyimages.com/v3/search/images?phrase=nature&page_size=5"
+            },
+            "description": "Premium stock photography"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developers.gettyimages.com/"
+        },
+        {
+          "name": "Adobe Stock API",
+          "id": "90925274-1c61-4cf8-9be7-462dbc66acd4",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://stock.adobe.io/Rest/Media/1/Search/Files?search_parameters[words]=nature&search_parameters[limit]=5"
+            },
+            "description": "Adobe stock photos and assets"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developer.adobe.com/stock/"
+        },
+        {
+          "name": "Unsplash Source API",
+          "id": "9522002e-b217-4470-8a40-19fb6748ddce",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://source.unsplash.com/random/800x600/?nature"
+            },
+            "description": "Random Unsplash photos by keyword"
+          },
+          "response": []
+        },
+        {
+          "name": "Picsum Photos API",
+          "id": "90b1898f-7455-43a1-82b2-699180c04c3f",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://picsum.photos/v2/list?page=1&limit=10"
+            },
+            "description": "Lorem Picsum random placeholder images"
+          },
+          "response": []
+        },
+        {
+          "name": "Placeholder.com API",
+          "id": "2afcf4fa-7316-4448-a610-438a8cb0622e",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://via.placeholder.com/150"
+            },
+            "description": "Simple placeholder image generator"
+          },
+          "response": []
+        },
+        {
+          "name": "DiceBear API",
+          "id": "6b96d38d-128b-4be2-8291-46d4d64a086a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.dicebear.com/7.x/avataaars/json?seed=Felix"
+            },
+            "description": "Unique avatar illustrations by seed"
+          },
+          "response": []
+        },
+        {
+          "name": "Boring Avatars API",
+          "id": "bed318ad-89f7-4ad3-842c-3e56295dd5ac",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://source.boringavatars.com/marble/120/Maria+Mitchell"
+            },
+            "description": "Minimalist SVG avatars"
+          },
+          "response": []
+        },
+        {
+          "name": "Pravatar API",
+          "id": "f91464ea-0653-4c9c-b072-770e9d83fe0d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://i.pravatar.cc/300"
+            },
+            "description": "Random avatar photos"
+          },
+          "response": []
+        },
+        {
+          "name": "This Person Does Not Exist",
+          "id": "486a5a0a-b12f-46b2-9bbe-64f6b58bb51c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://thispersondoesnotexist.com/"
+            },
+            "description": "AI-generated human face images"
+          },
+          "response": []
+        },
+        {
+          "name": "Generated Photos API",
+          "id": "9def94ad-afa3-4fdf-8a2c-66a5cdbf82bc",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.generated.photos/api/v1/faces?api_key=YOUR_API_KEY&per_page=5"
+            },
+            "description": "AI-generated human face photos"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://generated.photos/account"
+        },
+        {
+          "name": "Stable Diffusion API (Replicate)",
+          "id": "0f9c8a85-13a7-413d-8078-9e423fa480bf",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.replicate.com/v1/models/stability-ai/stable-diffusion/versions"
+            },
+            "description": "AI image generation via Replicate"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://replicate.com/signin"
+        },
+        {
+          "name": "DALL-E API (OpenAI)",
+          "id": "bc037603-d1aa-470b-ad9e-0d27e0d0c11e",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.openai.com/v1/images/generations"
+            },
+            "description": "AI image generation from text prompts"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://platform.openai.com/signup"
+        },
+        {
+          "name": "Midjourney API (via Discord)",
+          "id": "975c5de3-cda8-4d11-a62b-4bf693656da8",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://discord.com/api/v10/channels/YOUR_CHANNEL/messages"
+            },
+            "description": "AI art generation via Midjourney"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.midjourney.com/"
+        },
+        {
+          "name": "Ideogram API",
+          "id": "d54c1f28-6632-4b88-988b-777d183f6a34",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.ideogram.ai/generate"
+            },
+            "description": "AI image generation with text rendering"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://ideogram.ai/"
+        },
+        {
+          "name": "Flux API (Black Forest Labs)",
+          "id": "15d1f325-9645-475b-8e51-4761b8c1ca1f",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.bfl.ml/v1/flux-pro"
+            },
+            "description": "High-quality AI image generation"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://api.bfl.ml/"
+        },
+        {
+          "name": "Recraft API",
+          "id": "aa41dcba-a108-48e4-8ccb-538b5cffb982",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://external.api.recraft.ai/v1/images/generations"
+            },
+            "description": "AI vector and raster image generation"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.recraft.ai/"
+        },
+        {
+          "name": "Fal.ai API",
+          "id": "cd23f6e7-a2d8-4336-a9c7-839b2bda43de",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://fal.run/fal-ai/flux/dev"
+            },
+            "description": "Fast AI image and video generation"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://fal.ai/"
+        },
+        {
+          "name": "Leonardo AI API",
+          "id": "5756f084-79a8-4d60-8944-a01c12320cf8",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://cloud.leonardo.ai/api/rest/v1/generations"
+            },
+            "description": "AI image generation for game assets"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://app.leonardo.ai/"
+        },
+        {
+          "name": "Segmind API",
+          "id": "d80d5bc5-c03c-4238-afc7-bd7b74a6ef0f",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.segmind.com/v1/sd1.5-txt2img"
+            },
+            "description": "Fast AI image generation models"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://cloud.segmind.com/"
+        },
+        {
+          "name": "Clipdrop API",
+          "id": "b54d1e43-e0cb-40b2-b113-e06e4e8c4086",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://clipdrop-api.co/remove-background/v1"
+            },
+            "description": "AI image editing: remove bg, upscale, relight"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://clipdrop.co/apis"
+        },
+        {
+          "name": "Photoroom API",
+          "id": "00e89d91-d707-4aae-ad23-ca6a2f9f8358",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://sdk.photoroom.com/v1/segment"
+            },
+            "description": "AI background removal and product photos"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.photoroom.com/api"
+        },
+        {
+          "name": "Vectorizer.AI API",
+          "id": "248cf7c8-d7c7-4bc4-b61d-7f5fcd7a2bc7",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://vectorizer.ai/api/v1/vectorize"
+            },
+            "description": "Convert raster images to SVG vectors"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://vectorizer.ai/"
+        },
+        {
+          "name": "Upscayl API",
+          "id": "2a20d233-1d65-4640-a384-0735c4423b41",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://upscayl.org/"
+            },
+            "description": "Open-source AI image upscaling"
+          },
+          "response": []
+        },
+        {
+          "name": "Real-ESRGAN API",
+          "id": "f43b844d-dd73-4d2e-b6da-1b55216b6b96",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.replicate.com/v1/models/nightmareai/real-esrgan/versions"
+            },
+            "description": "AI image super-resolution"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://replicate.com/signin"
+        },
+        {
+          "name": "Tenor API",
+          "id": "c670bcf9-d15e-4574-9c51-f1df9556b685",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://tenor.googleapis.com/v2/search?q=excited&key=YOUR_API_KEY&limit=5"
+            },
+            "description": "GIF search engine by Google"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developers.google.com/tenor/guides/quickstart"
+        },
+        {
+          "name": "Giphy Stickers API",
+          "id": "49ed803d-7e0e-4f2e-9648-36ccc8157ece",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.giphy.com/v1/stickers/trending?api_key=YOUR_API_KEY&limit=5"
+            },
+            "description": "Animated stickers from Giphy"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developers.giphy.com/dashboard/"
         }
       ]
     },
@@ -7412,6 +10236,47 @@
           "response": [],
           "authRequired": "API Key",
           "authLink": "https://lecto.ai/"
+        },
+        {
+          "name": "Lingua API",
+          "id": "d0b70d25-2f0d-495b-8e55-857a213b5108",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.lingua.com/v1/detect"
+            },
+            "description": "Language detection and translation"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://lingua.com/"
+        },
+        {
+          "name": "Argos Translate API",
+          "id": "602a19b6-d5d0-482b-ae0a-149e82eff062",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://translate.argosopentech.com/translate"
+            },
+            "description": "Open-source offline translation"
+          },
+          "response": []
+        },
+        {
+          "name": "Lingva Translate API",
+          "id": "a0ab5c9d-21c4-47b4-881e-6a9c13f20f3d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://lingva.ml/api/v1/en/es/hello"
+            },
+            "description": "Privacy-focused Google Translate frontend"
+          },
+          "response": []
         }
       ]
     },
@@ -8047,6 +10912,319 @@
             "description": "Sunrise and sunset times for any location"
           },
           "response": []
+        },
+        {
+          "name": "MapTiler API",
+          "id": "3b6f9989-6f29-4b39-af6f-353292dcc852",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.maptiler.com/geocoding/berlin.json?key=YOUR_API_KEY"
+            },
+            "description": "Vector maps, geocoding, elevation"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://cloud.maptiler.com/auth/widget?mode=create"
+        },
+        {
+          "name": "TomTom API",
+          "id": "7c0e966d-34e9-459f-9aff-def20c011577",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tomtom.com/search/2/geocode/Amsterdam.json?key=YOUR_API_KEY"
+            },
+            "description": "Maps, routing, traffic, geocoding"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developer.tomtom.com/user/register"
+        },
+        {
+          "name": "Azure Maps API",
+          "id": "32ebf81e-5a2d-4dd7-bfbf-ddbf1f71e04c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://atlas.microsoft.com/search/address/json?api-version=1.0&subscription-key=YOUR_API_KEY&query=Seattle"
+            },
+            "description": "Microsoft Azure mapping and location services"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://portal.azure.com/"
+        },
+        {
+          "name": "Radar.io API",
+          "id": "f3355809-4e26-493a-b0c9-b212013fd914",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.radar.io/v1/geocode/forward?query=Brooklyn+Navy+Yard"
+            },
+            "description": "Geofencing, geocoding, trip tracking"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://radar.com/signup"
+        },
+        {
+          "name": "SmartyStreets API",
+          "id": "97c3bc0f-752a-45ef-b649-48a845a47821",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://us-street.api.smartystreets.com/street-address?auth-id=YOUR_API_KEY&street=1600+Amphitheatre+Pkwy&city=Mountain+View&state=CA"
+            },
+            "description": "US address verification and geocoding"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.smarty.com/free-trial"
+        },
+        {
+          "name": "Geoapify API",
+          "id": "d7f7af83-7bd7-4644-af0c-1888adeae33b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.geoapify.com/v1/geocode/search?text=Berlin&apiKey=YOUR_API_KEY"
+            },
+            "description": "Geocoding, routing, places, isochrones"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://myprojects.geoapify.com/register"
+        },
+        {
+          "name": "Stadia Maps API",
+          "id": "3b7620da-bd07-4e10-ae0b-cb6c75ba33f8",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.stadiamaps.com/geocoding/v1/search?text=Berlin&api_key=YOUR_API_KEY"
+            },
+            "description": "Map tiles, routing, geocoding"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://client.stadiamaps.com/signup/"
+        },
+        {
+          "name": "Pelias Geocoder",
+          "id": "bf87b498-3eef-4b40-b5c6-ab53d6d77ca1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.geocode.earth/v1/search?text=London&api_key=YOUR_API_KEY"
+            },
+            "description": "Open-source geocoding engine"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://geocode.earth/"
+        },
+        {
+          "name": "Positionstack API",
+          "id": "3715ef22-5888-4a16-8795-0e285e09d09b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://api.positionstack.com/v1/forward?access_key=YOUR_API_KEY&query=1600+Pennsylvania+Ave+NW"
+            },
+            "description": "Forward and reverse geocoding"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://positionstack.com/signup/free"
+        },
+        {
+          "name": "Mapquest API",
+          "id": "c518ee26-4a9d-455d-b4fc-edd87556a11b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.mapquestapi.com/geocoding/v1/address?key=YOUR_API_KEY&location=Washington,DC"
+            },
+            "description": "Maps, directions, geocoding by Mapquest"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developer.mapquest.com/user/login/sign-up"
+        },
+        {
+          "name": "LocationIQ API",
+          "id": "210bed0e-b18e-4019-8275-5c6d398c89ec",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://us1.locationiq.com/v1/search?key=YOUR_API_KEY&q=Empire+State+Building&format=json"
+            },
+            "description": "Geocoding and reverse geocoding"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://locationiq.com/register"
+        },
+        {
+          "name": "Bing Maps API",
+          "id": "cd82b46b-0361-46d9-b265-90b1aa48f91c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://dev.virtualearth.net/REST/v1/Locations?q=Seattle&key=YOUR_API_KEY"
+            },
+            "description": "Microsoft Bing Maps geocoding and routing"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.bingmapsportal.com/"
+        },
+        {
+          "name": "Google Maps Geocoding",
+          "id": "351ca0cb-b4a4-4127-b585-6e25e9b9b252",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway&key=YOUR_API_KEY"
+            },
+            "description": "Google Maps geocoding and reverse geocoding"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://console.cloud.google.com/"
+        },
+        {
+          "name": "Foursquare Places API",
+          "id": "e3511253-dd6d-47fd-a6cb-fb70e8e83bb7",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.foursquare.com/v3/places/search?query=coffee&ll=40.7128,-74.0060"
+            },
+            "description": "Places, venues, and location data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://foursquare.com/developers/signup"
+        },
+        {
+          "name": "Google Places API",
+          "id": "3db2b346-38c2-41e7-a87a-077dcd305a8b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&key=YOUR_API_KEY"
+            },
+            "description": "Place search, details, photos"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://console.cloud.google.com/"
+        },
+        {
+          "name": "Yelp GraphQL API",
+          "id": "f38a2258-508f-48f2-b1b1-4daf0edc4d36",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.yelp.com/v3/businesses/search?location=NYC&term=pizza"
+            },
+            "description": "Business search and reviews via GraphQL"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.yelp.com/developers/v3/manage_app"
+        },
+        {
+          "name": "Waze API",
+          "id": "dd60d8c2-726d-4af3-b055-eac96f12a90a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.waze.com/row-RoutingManager/routingRequest?from=x:-122.4194y:37.7749&to=x:-118.2437y:34.0522"
+            },
+            "description": "Real-time traffic and navigation data"
+          },
+          "response": []
+        },
+        {
+          "name": "OpenChargeMap API",
+          "id": "b4caf89a-f348-41ee-af3c-1b656daac36b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.openchargemap.io/v3/poi/?output=json&countrycode=US&maxresults=10&key=YOUR_API_KEY"
+            },
+            "description": "EV charging station locations worldwide"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://openchargemap.org/site/loginprovider/"
+        },
+        {
+          "name": "Transitland API",
+          "id": "f0851121-6ac2-48eb-9e26-0f442a333f7e",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://transit.land/api/v2/rest/routes?api_key=YOUR_API_KEY&operator_onestop_id=o-9q9-bart"
+            },
+            "description": "Open transit data aggregator"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.transit.land/documentation"
+        },
+        {
+          "name": "Mapbox Directions API",
+          "id": "8caf8dad-ba75-49fd-a733-4c6f30c69068",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.mapbox.com/directions/v5/mapbox/cycling/-122.42,37.78;-77.03,38.91?access_token=YOUR_API_KEY"
+            },
+            "description": "Turn-by-turn directions and routing"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://account.mapbox.com/auth/signup/"
+        },
+        {
+          "name": "HERE Traffic API",
+          "id": "1ec2cb78-0622-4682-ad6c-dbc0e037823a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://data.traffic.hereapi.com/v7/flow?locationReferencing=shape&in=circle:52.5308,13.3847;r=1000&apiKey=YOUR_API_KEY"
+            },
+            "description": "Real-time traffic flow and incidents"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developer.here.com/sign-up"
         }
       ]
     },
@@ -8668,6 +11846,366 @@
           "createdAt": "2026-04-27T23:48:14.000Z",
           "updatedAt": "2026-04-27T23:48:14.000Z",
           "uid": "3124823-5fda7697-b1ff-4d67-b405-12a05787b8c3"
+        },
+        {
+          "name": "Twitch API",
+          "id": "afd28abf-d497-48bb-b11a-7f86728355be",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.twitch.tv/helix/streams?game_id=33214"
+            },
+            "description": "Streams, games, clips, users from Twitch"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://dev.twitch.tv/console/apps/create"
+        },
+        {
+          "name": "YouTube Data API",
+          "id": "66dc4ec6-9b29-48b7-9638-fb08ae0a1f85",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&key=YOUR_API_KEY"
+            },
+            "description": "Videos, channels, playlists from YouTube"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://console.cloud.google.com/"
+        },
+        {
+          "name": "Vimeo API",
+          "id": "2a9f52e5-f758-4b11-b1ed-8986f69437b1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.vimeo.com/videos?per_page=5"
+            },
+            "description": "Video hosting, upload, and metadata"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://developer.vimeo.com/apps/new"
+        },
+        {
+          "name": "Dailymotion API",
+          "id": "6cefe3c9-41ff-4d74-bab3-19bab2644a6f",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.dailymotion.com/videos?fields=id,title,thumbnail_url&limit=5"
+            },
+            "description": "Video search and metadata"
+          },
+          "response": []
+        },
+        {
+          "name": "Open Movie Database",
+          "id": "fa8ae4bb-fa22-424c-b7da-8452dd2a2ac4",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.omdbapi.com/?t=Inception&apikey=YOUR_API_KEY"
+            },
+            "description": "Movie and TV data by title or IMDb ID"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.omdbapi.com/apikey.aspx"
+        },
+        {
+          "name": "Anime News Network API",
+          "id": "75666038-be13-4707-98cf-3b6d02e554ee",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.animenewsnetwork.com/encyclopedia/api.xml?anime=4658"
+            },
+            "description": "Anime and manga news and encyclopedia"
+          },
+          "response": []
+        },
+        {
+          "name": "Kitsu Anime API",
+          "id": "ad980303-8cf5-405c-8eac-7d15939e05d2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://kitsu.io/api/edge/anime?page[limit]=5"
+            },
+            "description": "Anime database with episodes and characters"
+          },
+          "response": []
+        },
+        {
+          "name": "AniDB API",
+          "id": "76c60afa-9c29-4240-b75e-4d7612737f98",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.anidb.net:9001/httpapi?request=anime&client=YOUR_CLIENT&clientver=1&protover=1&aid=1"
+            },
+            "description": "Comprehensive anime database"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://anidb.net/user/register"
+        },
+        {
+          "name": "Mangadex API",
+          "id": "6e63c287-f0c4-43d6-8170-b0c57d1f35f3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.mangadex.org/manga?limit=5"
+            },
+            "description": "Manga reading platform API"
+          },
+          "response": []
+        },
+        {
+          "name": "ComicVine API",
+          "id": "c61350e9-ab3d-4cd4-8241-861bad963ec4",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://comicvine.gamespot.com/api/characters/?api_key=YOUR_API_KEY&format=json&limit=5"
+            },
+            "description": "Comic book characters, issues, volumes"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://comicvine.gamespot.com/api/"
+        },
+        {
+          "name": "Marvel Comics API",
+          "id": "5028aa47-8823-4e97-8908-506a2976e6f7",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://gateway.marvel.com/v1/public/characters?apikey=YOUR_API_KEY"
+            },
+            "description": "Marvel characters, comics, series"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developer.marvel.com/account"
+        },
+        {
+          "name": "Star Wars API (SWAPI)",
+          "id": "446f1ed6-d8d6-4f2c-bb41-dc80317a6ff6",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://swapi.py4e.com/api/people/1/"
+            },
+            "description": "Star Wars films, characters, planets"
+          },
+          "response": []
+        },
+        {
+          "name": "Lord of the Rings API",
+          "id": "ec1e4a37-fffa-489d-b521-657815aa9bf5",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://the-one-api.dev/v2/movie"
+            },
+            "description": "LOTR books, movies, characters, quotes"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://the-one-api.dev/sign-up"
+        },
+        {
+          "name": "Game of Thrones API",
+          "id": "5d85adb4-e789-4d66-b763-4a4f01e9d75a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://anapioficeandfire.com/api/characters?pageSize=5"
+            },
+            "description": "GoT characters, houses, books"
+          },
+          "response": []
+        },
+        {
+          "name": "Pok\u00e9mon TCG API",
+          "id": "a91f5288-92d1-4ac5-bdc2-fc73d06431f8",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.pokemontcg.io/v2/cards?pageSize=5"
+            },
+            "description": "Pok\u00e9mon Trading Card Game data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://dev.pokemontcg.io/"
+        },
+        {
+          "name": "Digimon API",
+          "id": "9e12c648-4dae-4e71-b88b-dbd71d7c1153",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://digimon-api.vercel.app/api/digimon"
+            },
+            "description": "Digimon characters and data"
+          },
+          "response": []
+        },
+        {
+          "name": "Superhero API",
+          "id": "7a0ddcf4-fba5-462c-af38-d89f46798c67",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://superheroapi.com/api/YOUR_API_KEY/1"
+            },
+            "description": "Superhero stats, powers, biography"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://superheroapi.com/"
+        },
+        {
+          "name": "Open Trivia Database",
+          "id": "a6a95c6f-1365-462d-8c76-9ae1152036ec",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://opentdb.com/api.php?amount=5&category=9"
+            },
+            "description": "Trivia questions across many categories"
+          },
+          "response": []
+        },
+        {
+          "name": "Quotable Quotes API",
+          "id": "f23e5fdd-bddc-4e30-9046-d80c6b099ac4",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.quotable.io/random"
+            },
+            "description": "Random and searchable quotes"
+          },
+          "response": []
+        },
+        {
+          "name": "Advice Slip API",
+          "id": "6ec08d71-632a-4243-94d1-45b8ddf334fe",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.adviceslip.com/advice"
+            },
+            "description": "Random advice slips"
+          },
+          "response": []
+        },
+        {
+          "name": "Kanye.rest",
+          "id": "411ca5c1-97ce-40f1-b77d-44faf6d8a9af",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.kanye.rest/"
+            },
+            "description": "Random Kanye West quotes"
+          },
+          "response": []
+        },
+        {
+          "name": "Taylor Swift API",
+          "id": "da815359-2db7-4705-aa5b-1f5cbfeea946",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://taylor-swift-api.sarbo.workers.dev/albums"
+            },
+            "description": "Taylor Swift songs, albums, lyrics"
+          },
+          "response": []
+        },
+        {
+          "name": "Waifu.pics API",
+          "id": "32fce7d6-2181-4b7a-a9ba-51adf27aad4c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.waifu.pics/sfw/waifu"
+            },
+            "description": "Random anime waifu images"
+          },
+          "response": []
+        },
+        {
+          "name": "Nekos.life API",
+          "id": "f13521da-6b43-4078-a94c-c380a496554c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://nekos.life/api/v2/img/neko"
+            },
+            "description": "Anime cat-girl images and text"
+          },
+          "response": []
+        },
+        {
+          "name": "Studio Ghibli API",
+          "id": "55fae295-7d55-407c-bd91-4b2c9f76b596",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://ghibliapi.vercel.app/films"
+            },
+            "description": "Studio Ghibli films, characters, locations"
+          },
+          "response": []
+        },
+        {
+          "name": "Twitch EventSub API",
+          "id": "4f5e8223-1d53-4fda-a771-311025b47f33",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.twitch.tv/helix/eventsub/subscriptions"
+            },
+            "description": "Twitch real-time event notifications"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://dev.twitch.tv/console/apps/create"
         }
       ]
     },
@@ -9026,6 +12564,655 @@
           "response": [],
           "authRequired": "API Key",
           "authLink": "https://rapidapi.com/apidojo/api/shazam"
+        },
+        {
+          "name": "Spotify Podcast API",
+          "id": "27489982-235a-4c7d-a593-a340ea18412a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.spotify.com/v1/shows/38bS44xjbVVZ3No3ByF1dJ/episodes"
+            },
+            "description": "Podcast episodes and shows from Spotify"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://developer.spotify.com/dashboard/"
+        },
+        {
+          "name": "Apple Music API",
+          "id": "c6f0d85e-1c31-4c12-9b12-16bcfbc17f28",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.music.apple.com/v1/catalog/us/charts?types=songs&limit=5"
+            },
+            "description": "Apple Music catalog, playlists, radio"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developer.apple.com/musickit/"
+        },
+        {
+          "name": "Deezer Charts API",
+          "id": "7b0b09e3-caeb-4195-b15f-8ed3af4e227a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.deezer.com/chart/0/tracks"
+            },
+            "description": "Top charts from Deezer"
+          },
+          "response": []
+        },
+        {
+          "name": "Bandsintown API",
+          "id": "849af5c0-5763-47f8-bcff-4dd6ceb2859e",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://rest.bandsintown.com/artists/Radiohead/events?app_id=YOUR_API_KEY"
+            },
+            "description": "Concert and event data for artists"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://artists.bandsintown.com/support/bandsintown-api"
+        },
+        {
+          "name": "Songkick API",
+          "id": "ad513e42-a612-4caf-ac43-4a3afe9b8f8b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.songkick.com/api/3.0/artists/253846/calendar.json?apikey=YOUR_API_KEY"
+            },
+            "description": "Concert listings and artist tour dates"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.songkick.com/api_key_requests/new"
+        },
+        {
+          "name": "Musixmatch Lyrics API",
+          "id": "303ae936-c1e6-4e5f-9861-fa2511681a78",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.musixmatch.com/ws/1.1/track.search?q_track=shape+of+you&apikey=YOUR_API_KEY"
+            },
+            "description": "Song lyrics and music metadata"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developer.musixmatch.com/"
+        },
+        {
+          "name": "Chartlyrics API",
+          "id": "7bc025a3-2ea8-41c2-b878-71ad9dae5ee5",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://api.chartlyrics.com/apiv1.asmx/SearchLyricDirect?artist=Coldplay&song=Yellow"
+            },
+            "description": "Free lyrics search API"
+          },
+          "response": []
+        },
+        {
+          "name": "Freesound API",
+          "id": "227764be-cdf6-4fc3-a0c2-e8f2b325154c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://freesound.org/apiv2/search/text/?query=rain&token=YOUR_API_KEY"
+            },
+            "description": "Creative Commons sound samples and effects"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://freesound.org/apiv2/apply/"
+        },
+        {
+          "name": "Audioscrobbler API",
+          "id": "ec68c453-bd90-4726-995d-16c735f05499",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=YOUR_API_KEY&format=json"
+            },
+            "description": "Music listening history and recommendations"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.last.fm/api/account/create"
+        },
+        {
+          "name": "Beatport API",
+          "id": "875ae6f6-d068-492f-874e-7bd17c348bd0",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.beatport.com/v4/catalog/tracks/?page=1&per_page=5"
+            },
+            "description": "Electronic music tracks and releases"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://www.beatport.com/account/developer"
+        },
+        {
+          "name": "Soundcharts API",
+          "id": "6703c292-4eaa-4b03-8ce2-90cdb6ff4c16",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://customer.api.soundcharts.com/api/v2/chart/spotify/top200"
+            },
+            "description": "Music charts and streaming analytics"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://soundcharts.com/"
+        },
+        {
+          "name": "Napster Catalog API",
+          "id": "a2f906b3-1612-4ed9-819f-1cb27bc1c3aa",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.napster.com/v2.2/tracks/top?apikey=YOUR_API_KEY&limit=5"
+            },
+            "description": "Music catalog metadata from Napster"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developer.napster.com/"
+        },
+        {
+          "name": "Pandora API",
+          "id": "e0784ce9-ae08-45dc-b36d-9d8ee0f8ef00",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.pandora.com/api/v1/station/getPlaylist"
+            },
+            "description": "Pandora music stations and tracks"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://developer.pandora.com/"
+        },
+        {
+          "name": "Tidal API",
+          "id": "b3056a4d-9607-4b70-8e28-d8d8dcf699d4",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://openapi.tidal.com/v2/tracks?countryCode=US"
+            },
+            "description": "High-fidelity music streaming catalog"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://developer.tidal.com/"
+        },
+        {
+          "name": "Audius API",
+          "id": "35c96032-2d7a-4085-ad86-4ed52cf5b0dd",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://discoveryprovider.audius.co/v1/tracks/trending?limit=5"
+            },
+            "description": "Decentralized music streaming platform"
+          },
+          "response": []
+        },
+        {
+          "name": "Pocket Casts API",
+          "id": "919c2db5-7a5a-4981-ad93-2dc36a5bc9ff",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.pocketcasts.com/user/podcast/list"
+            },
+            "description": "Podcast listening data"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://pocketcasts.com/"
+        },
+        {
+          "name": "Podcast Index API",
+          "id": "5659f92c-3341-4863-8b43-0125d6e4db84",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.podcastindex.org/api/1.0/search/byterm?q=technology"
+            },
+            "description": "Open podcast database and search"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://api.podcastindex.org/"
+        },
+        {
+          "name": "Listen Notes API",
+          "id": "91833ba6-9d09-4da6-b60e-688d1a39b5e6",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://listen-api.listennotes.com/api/v2/search?q=technology&type=episode"
+            },
+            "description": "Podcast search and directory"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.listennotes.com/api/"
+        },
+        {
+          "name": "Podchaser API",
+          "id": "69652208-4a61-4121-b810-38d1f7c19434",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.podchaser.com/graphql"
+            },
+            "description": "Podcast ratings and reviews"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.podchaser.com/developers"
+        },
+        {
+          "name": "Transistor FM API",
+          "id": "8b9138e0-3921-4104-9c79-260313d72898",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.transistor.fm/v1/shows"
+            },
+            "description": "Podcast hosting and analytics"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://transistor.fm/"
+        },
+        {
+          "name": "Buzzsprout API",
+          "id": "68745cdf-056b-4ac8-a6fc-d55020d16de0",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.buzzsprout.com/api/YOUR_PODCAST_ID/episodes.json?api_token=YOUR_API_KEY"
+            },
+            "description": "Podcast hosting platform"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.buzzsprout.com/"
+        },
+        {
+          "name": "Anchor FM API",
+          "id": "1ecc7003-c468-4fbd-9fd9-92c77af53629",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://anchor.fm/api/v3/podcastEpisodes/webId/YOUR_PODCAST_ID"
+            },
+            "description": "Spotify podcast creation platform"
+          },
+          "response": []
+        },
+        {
+          "name": "Simplecast API",
+          "id": "9830ba7e-c08d-4ae1-b8a1-b901b7a3e74c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.simplecast.com/podcasts"
+            },
+            "description": "Podcast hosting and analytics"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://simplecast.com/"
+        },
+        {
+          "name": "Acast API",
+          "id": "1dbf12a4-619e-4f24-898f-f94bb714da9d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://open.acast.com/public/shows"
+            },
+            "description": "Podcast hosting and monetization"
+          },
+          "response": []
+        },
+        {
+          "name": "Spreaker API",
+          "id": "76c18a61-958c-4529-a795-69a2af35b5b1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.spreaker.com/v2/shows/YOUR_SHOW_ID/episodes"
+            },
+            "description": "Live radio and podcast platform"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.spreaker.com/developers"
+        },
+        {
+          "name": "Libsyn API",
+          "id": "b2b5f3ad-57ea-4fb2-b72a-d2dbfb76c0a2",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.libsyn.com/"
+            },
+            "description": "Podcast hosting and distribution"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://libsyn.com/"
+        },
+        {
+          "name": "Podbean API",
+          "id": "a74130e6-3d52-40c6-a40d-55538768b323",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.podbean.com/v1/podcasts"
+            },
+            "description": "Podcast hosting and monetization"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://developers.podbean.com/"
+        },
+        {
+          "name": "Castbox API",
+          "id": "90418d42-1b3e-4a65-9de6-5a963872d1be",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.castbox.fm/v2/podcasts"
+            },
+            "description": "Podcast discovery and listening"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://castbox.fm/"
+        },
+        {
+          "name": "Overcast API",
+          "id": "130ce3b0-596f-43fc-936b-bebc269276a3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://overcast.fm/api/account/extended"
+            },
+            "description": "iOS podcast app data"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://overcast.fm/"
+        },
+        {
+          "name": "Stitcher API",
+          "id": "b232f43b-175f-4f46-89b1-2bafa366a3ca",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.stitcher.com/v1/shows"
+            },
+            "description": "Podcast streaming platform"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.stitcher.com/"
+        },
+        {
+          "name": "iHeartRadio API",
+          "id": "57c3ebbb-9bba-4b61-b8a0-626f94f77d3f",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api2.iheart.com/api/v3/catalog/searchAll?keywords=rock"
+            },
+            "description": "Radio stations and podcasts"
+          },
+          "response": []
+        },
+        {
+          "name": "TuneIn API",
+          "id": "37f60ee2-c83a-40cf-9dc5-638874d602f7",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://opml.radiotime.com/Search.ashx?query=jazz&render=json"
+            },
+            "description": "Live radio and podcast streaming"
+          },
+          "response": []
+        },
+        {
+          "name": "Radio Browser API",
+          "id": "c7894a3a-4867-4d32-9703-e060c8fce4d5",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://de1.api.radio-browser.info/json/stations/search?name=jazz&limit=5"
+            },
+            "description": "Community radio station directory"
+          },
+          "response": []
+        },
+        {
+          "name": "Shoutcast API",
+          "id": "34de1131-996a-4aa9-824f-83a933347b8c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://directory.shoutcast.com/Search/UpdateSearch?query=jazz"
+            },
+            "description": "Internet radio station directory"
+          },
+          "response": []
+        },
+        {
+          "name": "Icecast API",
+          "id": "912f181a-6d25-443d-8690-10d79055a3bc",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://icecast.org/"
+            },
+            "description": "Open-source streaming media server"
+          },
+          "response": []
+        },
+        {
+          "name": "SoundCloud Tracks API",
+          "id": "4548e2f1-cc9c-4045-ae03-2e906a67f07a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.soundcloud.com/tracks?client_id=YOUR_API_KEY&q=electronic&limit=5"
+            },
+            "description": "SoundCloud track search and streaming"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://soundcloud.com/you/apps/new"
+        },
+        {
+          "name": "Mixcloud API",
+          "id": "12aa3e16-81e0-4720-858f-c8c1844f8313",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.mixcloud.com/popular/"
+            },
+            "description": "DJ mixes and radio shows"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://www.mixcloud.com/developers/"
+        },
+        {
+          "name": "Beatport Charts API",
+          "id": "667b558a-6d45-4393-8551-0922b95d6c4d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.beatport.com/v4/catalog/charts/?page=1&per_page=5"
+            },
+            "description": "Electronic music charts"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://www.beatport.com/account/developer"
+        },
+        {
+          "name": "Traxsource API",
+          "id": "852eff52-6405-4673-8109-bb78303bf0b1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.traxsource.com/api/"
+            },
+            "description": "House and techno music store"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.traxsource.com/"
+        },
+        {
+          "name": "Juno Download API",
+          "id": "e225c2d0-87c9-49cd-85a2-ed1ce3afa4ae",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.junodownload.com/api/"
+            },
+            "description": "Electronic music download store"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.junodownload.com/"
+        },
+        {
+          "name": "Bandcamp Fan API",
+          "id": "612d767b-68f8-4022-8bb0-f7119b3f2429",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://bandcamp.com/api/fan/2/collection_summary"
+            },
+            "description": "Bandcamp fan collection data"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://bandcamp.com/developer"
+        },
+        {
+          "name": "Resident Advisor API",
+          "id": "5676e254-e883-4199-8ff4-22d6f286aaba",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://ra.co/graphql"
+            },
+            "description": "Electronic music events and artists"
+          },
+          "response": []
+        },
+        {
+          "name": "Discogs Marketplace API",
+          "id": "49fb7ce4-5027-4158-be0c-5e53af5323f0",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.discogs.com/marketplace/listings/1"
+            },
+            "description": "Vinyl record marketplace listings"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://www.discogs.com/settings/developers"
+        },
+        {
+          "name": "MusicBrainz Recordings",
+          "id": "85b35782-41bc-408b-b946-1056ef18d0aa",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://musicbrainz.org/ws/2/recording?query=artist:radiohead&fmt=json&limit=5"
+            },
+            "description": "Music recording metadata"
+          },
+          "response": []
+        },
+        {
+          "name": "AcousticBrainz Mood",
+          "id": "b419bcd5-ce16-4249-9b31-0783d9db2721",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://acousticbrainz.org/api/v1/high-level?recording_ids=0dad432b-16cc-4bf0-8961-fd31d124b01b"
+            },
+            "description": "Music mood and genre classification"
+          },
+          "response": []
         }
       ]
     },
@@ -9329,6 +13516,135 @@
             "description": "Stories and comments from lobste.rs"
           },
           "response": []
+        },
+        {
+          "name": "Reddit OAuth API",
+          "id": "40849548-9644-42f6-946c-6e70d0086ba7",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://oauth.reddit.com/r/programming/hot.json?limit=5"
+            },
+            "description": "Reddit posts, comments, subreddits"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://www.reddit.com/prefs/apps"
+        },
+        {
+          "name": "Hacker News Algolia",
+          "id": "0be5f49c-7026-4dce-8c06-e4b90ec14f5a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://hn.algolia.com/api/v1/search?query=react&tags=story"
+            },
+            "description": "Full-text search of Hacker News"
+          },
+          "response": []
+        },
+        {
+          "name": "Dev.to Articles API",
+          "id": "90cfc9aa-3218-4e57-ae2b-d23561458b1c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://dev.to/api/articles?per_page=5"
+            },
+            "description": "Dev.to programming articles"
+          },
+          "response": []
+        },
+        {
+          "name": "Hashnode API",
+          "id": "ec48a655-b311-4258-be62-7d5f9f43a118",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://gql.hashnode.com/"
+            },
+            "description": "Developer blogging platform articles"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://hashnode.com/settings/developer"
+        },
+        {
+          "name": "Medium API",
+          "id": "7b7e08bb-0089-4100-a959-4f383a0cec41",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.medium.com/v1/me"
+            },
+            "description": "Medium articles and publications"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://medium.com/me/applications"
+        },
+        {
+          "name": "Substack API",
+          "id": "a234f6cf-6c80-45ef-9e12-dddc82e0be9c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://substack.com/api/v1/publication/techcrunch/posts"
+            },
+            "description": "Newsletter and publication data"
+          },
+          "response": []
+        },
+        {
+          "name": "Pocket API",
+          "id": "05266381-4992-4887-93c9-11a0af1a6375",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://getpocket.com/v3/get"
+            },
+            "description": "Save and retrieve articles for later"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://getpocket.com/developer/apps/new"
+        },
+        {
+          "name": "Feedly API",
+          "id": "650a6f33-47a0-4f9c-9eb9-4ed16fbd0d44",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://cloud.feedly.com/v3/streams/contents?streamId=feed/https://techcrunch.com/feed/"
+            },
+            "description": "RSS feed aggregation and reading"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://developer.feedly.com/"
+        },
+        {
+          "name": "Inoreader API",
+          "id": "e3139329-5018-4797-be0b-817fb7bdf348",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.inoreader.com/reader/api/0/stream/contents/feed/https://techcrunch.com/feed/"
+            },
+            "description": "RSS reader and content aggregation"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://www.inoreader.com/developers/"
         }
       ]
     },
@@ -11019,6 +15335,703 @@
           "response": [],
           "authRequired": "API Key",
           "authLink": "https://developer.sportradar.com/"
+        },
+        {
+          "name": "Twitch Clips API",
+          "id": "c5185012-c9ca-482f-aec0-f106a864355a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.twitch.tv/helix/clips?game_id=33214"
+            },
+            "description": "Twitch game clips and highlights"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://dev.twitch.tv/console/apps/create"
+        },
+        {
+          "name": "ESPN API",
+          "id": "dfd325fe-b7e3-4631-ad2b-1ee1dbf433b6",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
+            },
+            "description": "Sports scores, news, standings"
+          },
+          "response": []
+        },
+        {
+          "name": "SportsDB Events API",
+          "id": "d53a2ee0-9dbf-4746-bf6e-93e4ce385daa",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.thesportsdb.com/api/v1/json/3/eventsday.php?d=2023-10-10"
+            },
+            "description": "Sports events and results"
+          },
+          "response": []
+        },
+        {
+          "name": "OpenLigaDB API",
+          "id": "3fbe9bc0-0d25-4676-94bb-8943dc06c1fb",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.openligadb.de/getmatchdata/bl1/2023"
+            },
+            "description": "German football league data"
+          },
+          "response": []
+        },
+        {
+          "name": "Football-Data.org Standings",
+          "id": "c182a6a0-c0ed-4fd8-b376-d17e3e8346e8",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.football-data.org/v4/competitions/PL/standings"
+            },
+            "description": "Football league standings and tables"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.football-data.org/client/register"
+        },
+        {
+          "name": "API-NBA",
+          "id": "31b77a9b-3e68-40fd-91ea-2af4eb550d73",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api-nba-v1.p.rapidapi.com/teams"
+            },
+            "description": "NBA stats, teams, players via RapidAPI"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://rapidapi.com/api-sports/api/api-nba"
+        },
+        {
+          "name": "MLB Stats API v2",
+          "id": "54ae4cc6-8f64-46d0-a632-8843ddc2ea20",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://statsapi.mlb.com/api/v1/schedule?sportId=1&date=2023-10-01"
+            },
+            "description": "MLB baseball stats and schedules"
+          },
+          "response": []
+        },
+        {
+          "name": "NHL API v1",
+          "id": "99d82288-d240-436b-9af2-833935d4c8de",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api-web.nhle.com/v1/score/now"
+            },
+            "description": "NHL hockey scores and stats"
+          },
+          "response": []
+        },
+        {
+          "name": "Tennis Abstract API",
+          "id": "cab72af9-25e8-4183-ae18-2a2d23df8685",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.tennisabstract.com/cgi-bin/player-classic.cgi?p=NovakDjokovic"
+            },
+            "description": "Tennis player stats and match data"
+          },
+          "response": []
+        },
+        {
+          "name": "ATP Tour API",
+          "id": "2964bb7e-d4d8-4972-9f7f-19a9bbb70a61",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.atptour.com/"
+            },
+            "description": "ATP tennis rankings and results"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.atptour.com/"
+        },
+        {
+          "name": "Formula 1 API (Ergast)",
+          "id": "6ed88c57-0a39-4da0-b26d-d755f3aca9db",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://ergast.com/api/f1/current/last/results.json"
+            },
+            "description": "F1 race results, standings, drivers"
+          },
+          "response": []
+        },
+        {
+          "name": "OpenF1 API",
+          "id": "1391e13a-05dd-4b19-a2e2-db6469e7812a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.openf1.org/v1/drivers?session_key=latest"
+            },
+            "description": "Real-time F1 telemetry and race data"
+          },
+          "response": []
+        },
+        {
+          "name": "MotoGP API",
+          "id": "7b842eff-8dcc-474f-8d11-3f416ace8380",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.motogp.com/riders-api/season/2023/categories"
+            },
+            "description": "MotoGP race results and standings"
+          },
+          "response": []
+        },
+        {
+          "name": "Cricbuzz API",
+          "id": "600060c3-bff0-4b25-a52e-7f74fa064975",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://cricbuzz-cricket.p.rapidapi.com/matches/v1/live"
+            },
+            "description": "Live cricket scores and commentary"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://rapidapi.com/cricbuzz/api/cricbuzz-cricket"
+        },
+        {
+          "name": "ICC Cricket API",
+          "id": "bda2ad9d-d66f-438e-9f8a-335a78b9b0e3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://icc-cricket.p.rapidapi.com/rankings"
+            },
+            "description": "International cricket rankings and stats"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://rapidapi.com/"
+        },
+        {
+          "name": "Golf API",
+          "id": "bb6261c1-695e-467b-8765-5ff0d81df5fb",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://golf-leaderboard-data.p.rapidapi.com/world-rankings"
+            },
+            "description": "Golf scores, players, tournaments"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://rapidapi.com/"
+        },
+        {
+          "name": "PGA Tour API",
+          "id": "ec60c95e-5020-4deb-b2e4-fec3b0336f3d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.pgatour.com/graphql"
+            },
+            "description": "PGA Tour golf stats and leaderboards"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.pgatour.com/"
+        },
+        {
+          "name": "Boxing API",
+          "id": "cd483e9c-dc71-4d3b-9ac0-abc6ba5c6866",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://boxing-data.p.rapidapi.com/fighters"
+            },
+            "description": "Boxing fight results and rankings"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://rapidapi.com/"
+        },
+        {
+          "name": "UFC Stats API",
+          "id": "4e6a9c76-efa8-446b-8296-b0f51c3b6ec0",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://ufc-stats.p.rapidapi.com/fighters"
+            },
+            "description": "UFC fighter stats and fight history"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://rapidapi.com/"
+        },
+        {
+          "name": "Sportradar Tennis API",
+          "id": "3a544df1-fde8-447b-82bc-5b58aaee3912",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.sportradar.com/tennis/trial/v3/en/schedules/live/summaries.json?api_key=YOUR_API_KEY"
+            },
+            "description": "Tennis match data and statistics"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developer.sportradar.com/"
+        },
+        {
+          "name": "Sportradar Soccer API",
+          "id": "d5d130d6-7105-4835-9096-8d554c3d88b9",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.sportradar.com/soccer/trial/v4/en/schedules/live/summaries.json?api_key=YOUR_API_KEY"
+            },
+            "description": "Soccer match data and statistics"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developer.sportradar.com/"
+        },
+        {
+          "name": "Sportradar Basketball API",
+          "id": "7627bd9d-5df8-42c7-9329-aef7a988d6e1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.sportradar.com/nba/trial/v8/en/games/2023/10/01/schedule.json?api_key=YOUR_API_KEY"
+            },
+            "description": "Basketball match data and statistics"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developer.sportradar.com/"
+        },
+        {
+          "name": "Odds API",
+          "id": "4d0a9751-443e-4f53-a823-6c39460d8d40",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.the-odds-api.com/v4/sports/?apiKey=YOUR_API_KEY"
+            },
+            "description": "Sports betting odds from bookmakers"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://the-odds-api.com/"
+        },
+        {
+          "name": "BetFair API",
+          "id": "a1a8c3f1-a64f-4eab-b711-a046e4e5ed85",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.betfair.com/exchange/betting/rest/v1.0/listEventTypes/"
+            },
+            "description": "Sports betting exchange data"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://developer.betfair.com/"
+        },
+        {
+          "name": "Pinnacle API",
+          "id": "a8840a2b-a71b-4701-af06-bf4b9cb7c486",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.pinnacle.com/v1/sports"
+            },
+            "description": "Sports odds and betting lines"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.pinnacle.com/en/api/manual"
+        },
+        {
+          "name": "RAWG Video Games",
+          "id": "849bb993-f9e4-4b5e-b576-443b6c9b46d4",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.rawg.io/api/games?key=YOUR_API_KEY&page_size=5"
+            },
+            "description": "Video game database with 500k+ games"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://rawg.io/apidocs"
+        },
+        {
+          "name": "GiantBomb API",
+          "id": "1175fb14-a5d9-4ead-bd22-89a62602cefc",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.giantbomb.com/api/games/?api_key=YOUR_API_KEY&format=json&limit=5"
+            },
+            "description": "Video game database and reviews"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.giantbomb.com/api/"
+        },
+        {
+          "name": "IGDB Games API",
+          "id": "bd171c3a-2eab-48be-92a7-f43cc2db1d9a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.igdb.com/v4/games"
+            },
+            "description": "Video game metadata from Twitch"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://dev.twitch.tv/console/apps/create"
+        },
+        {
+          "name": "Steam Store API",
+          "id": "edeb0ea8-e4f2-4785-a7b9-9eec16da65c0",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://store.steampowered.com/api/appdetails?appids=570"
+            },
+            "description": "Steam game details and pricing"
+          },
+          "response": []
+        },
+        {
+          "name": "Steam Web API",
+          "id": "2e937785-2589-4b84-b923-52841ec177d9",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=YOUR_API_KEY&steamids=76561197960435530"
+            },
+            "description": "Steam player stats and achievements"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://steamcommunity.com/dev/apikey"
+        },
+        {
+          "name": "Epic Games Store API",
+          "id": "3578a5fd-2825-4a63-a256-0a96d5945941",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions"
+            },
+            "description": "Epic Games free and featured games"
+          },
+          "response": []
+        },
+        {
+          "name": "GOG API",
+          "id": "85c8a3df-71ba-49b6-ab70-d72f2262fa77",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.gog.com/products?mediaType=game&page=1&limit=5"
+            },
+            "description": "GOG.com game catalog and prices"
+          },
+          "response": []
+        },
+        {
+          "name": "Humble Bundle API",
+          "id": "a44fcfe6-7b3f-4393-846e-a42359d07ca9",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.humblebundle.com/api/v1/bundles"
+            },
+            "description": "Humble Bundle game deals"
+          },
+          "response": []
+        },
+        {
+          "name": "IsThereAnyDeal API",
+          "id": "f966c399-96ad-4e5f-9b9c-c09113f32adb",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.isthereanydeal.com/games/search/v1?title=cyberpunk&key=YOUR_API_KEY"
+            },
+            "description": "Game price comparison across stores"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://isthereanydeal.com/dev/app/"
+        },
+        {
+          "name": "CheapShark Deals API",
+          "id": "f6432a40-9fb3-4252-a09f-f9604604934d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.cheapshark.com/api/1.0/deals?upperPrice=15&pageSize=5"
+            },
+            "description": "PC game deals and price history"
+          },
+          "response": []
+        },
+        {
+          "name": "Pok\u00e9mon GO API",
+          "id": "df90e3f7-a8d3-4dc2-b60d-2508f2d851b3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://pogoapi.net/api/v1/pokemon_stats.json"
+            },
+            "description": "Pok\u00e9mon GO game data"
+          },
+          "response": []
+        },
+        {
+          "name": "Clash of Clans API",
+          "id": "6c548814-deeb-43bb-862a-04f9f8542529",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.clashofclans.com/v1/clans?name=test&limit=5"
+            },
+            "description": "Clash of Clans player and clan data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developer.clashofclans.com/"
+        },
+        {
+          "name": "Clash Royale API",
+          "id": "220f8795-0892-44d4-8f2d-6139ef81c984",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.clashroyale.com/v1/cards"
+            },
+            "description": "Clash Royale cards and player stats"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developer.clashroyale.com/"
+        },
+        {
+          "name": "Brawl Stars API",
+          "id": "0789c5c3-49b3-4c29-b0d9-268679d0e66a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.brawlstars.com/v1/brawlers"
+            },
+            "description": "Brawl Stars brawlers and events"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developer.brawlstars.com/"
+        },
+        {
+          "name": "Hearthstone API",
+          "id": "f06feccf-f278-487c-acfd-ec5eb18b0e0c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://us.api.blizzard.com/hearthstone/cards?locale=en_US&access_token=YOUR_API_KEY"
+            },
+            "description": "Hearthstone cards and decks"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://develop.battle.net/"
+        },
+        {
+          "name": "World of Warcraft API",
+          "id": "99d3fb6e-4982-417c-9c5d-890c84dafbbe",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://us.api.blizzard.com/data/wow/realm/index?namespace=dynamic-us&locale=en_US&access_token=YOUR_API_KEY"
+            },
+            "description": "WoW characters, guilds, realms"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://develop.battle.net/"
+        },
+        {
+          "name": "Diablo IV API",
+          "id": "884fa7ca-89d8-400b-a3e4-cf72e17f9a28",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://us.api.blizzard.com/d4/en-us/item-type"
+            },
+            "description": "Diablo IV game data"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://develop.battle.net/"
+        },
+        {
+          "name": "Overwatch API",
+          "id": "eb7b97a4-2bd0-4fbf-942c-794b070e8c4d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://overfast-api.tekrop.fr/heroes"
+            },
+            "description": "Overwatch heroes and game data"
+          },
+          "response": []
+        },
+        {
+          "name": "Valorant API",
+          "id": "ecea66d1-b513-4fbe-aed1-a381e028a206",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://valorant-api.com/v1/agents"
+            },
+            "description": "Valorant agents, maps, weapons"
+          },
+          "response": []
+        },
+        {
+          "name": "Minecraft API",
+          "id": "c968cb98-bb50-445c-b201-bf8a6dd2a426",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.mcsrvstat.us/2/hypixel.net"
+            },
+            "description": "Minecraft server status and player data"
+          },
+          "response": []
+        },
+        {
+          "name": "Hypixel API",
+          "id": "80d019d0-dd16-4083-a5f9-0b07bf6cfe12",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.hypixel.net/counts?key=YOUR_API_KEY"
+            },
+            "description": "Hypixel Minecraft server stats"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developer.hypixel.net/"
+        },
+        {
+          "name": "Fortnite API",
+          "id": "9451d981-bfc6-43e7-9804-34210732a822",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://fortnite-api.com/v2/cosmetics/br"
+            },
+            "description": "Fortnite cosmetics and game data"
+          },
+          "response": []
+        },
+        {
+          "name": "Apex Legends API",
+          "id": "1fdbe8e4-e699-4093-b211-b4943d2c7def",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.mozambiquehe.re/bridge?auth=YOUR_API_KEY&player=YOUR_PLAYER&platform=PC"
+            },
+            "description": "Apex Legends player stats"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://apexlegendsapi.com/"
+        },
+        {
+          "name": "League of Legends API",
+          "id": "3002d76c-f19d-4822-8f76-59c16d20c9d7",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://euw1.api.riotgames.com/lol/platform/v3/champion-rotations?api_key=YOUR_API_KEY"
+            },
+            "description": "LoL champions, items, summoner data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://developer.riotgames.com/"
         }
       ]
     },
@@ -11725,6 +16738,122 @@
           "updatedAt": "2026-04-27T23:48:14.000Z",
           "uid": "3124823-a1c8966a-dcff-49af-81c7-df460ab9e943",
           "authLink": "https://home.openweathermap.org/users/sign_up"
+        },
+        {
+          "name": "Carbon Interface API",
+          "id": "5017c7c9-dc8a-45c6-a2fe-aaf4aac8b7a4",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.carboninterface.com/api/v1/estimates"
+            },
+            "description": "Carbon emissions calculation for travel, shipping, electricity"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.carboninterface.com/users/sign_up"
+        },
+        {
+          "name": "AirNow API",
+          "id": "d77c7e99-43b3-4833-91e7-b7dee667dfb5",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.airnowapi.org/aq/observation/zipCode/current/?format=application/json&zipCode=90210&distance=25&API_KEY=YOUR_API_KEY"
+            },
+            "description": "US air quality data from EPA"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://docs.airnowapi.org/account/request/"
+        },
+        {
+          "name": "Open-Meteo Marine",
+          "id": "eb9bd3a5-62f1-4f04-9551-7c24545e0cdf",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://marine-api.open-meteo.com/v1/marine?latitude=54.544587&longitude=10.227487&hourly=wave_height"
+            },
+            "description": "Marine weather: wave height, sea temperature"
+          },
+          "response": []
+        },
+        {
+          "name": "Open-Meteo Air Quality",
+          "id": "792a9e64-6f99-43c5-b231-5c01de8c0dc9",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=52.52&longitude=13.41&hourly=pm10"
+            },
+            "description": "Air quality forecast: PM2.5, ozone, pollen"
+          },
+          "response": []
+        },
+        {
+          "name": "Weatherstack",
+          "id": "61ab9d22-9f06-4203-9d1f-07e479efdd05",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://api.weatherstack.com/current?access_key=YOUR_API_KEY&query=New+York"
+            },
+            "description": "Real-time and historical weather data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://weatherstack.com/signup/free"
+        },
+        {
+          "name": "ClimaCell (Tomorrow.io) Historical",
+          "id": "f6e8b3c5-dcb8-43fa-953f-a88e6a2e3e44",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.tomorrow.io/v4/historical?location=42.3478,-71.0466&fields=temperature&apikey=YOUR_API_KEY"
+            },
+            "description": "Historical weather data by coordinates"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://app.tomorrow.io/signup"
+        },
+        {
+          "name": "Solcast Solar API",
+          "id": "22131299-9655-4410-be08-8e0074037de3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.solcast.com.au/world_radiation/forecasts?latitude=-33.86&longitude=151.21&format=json&api_key=YOUR_API_KEY"
+            },
+            "description": "Solar irradiance and PV power forecasts"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://toolkit.solcast.com.au/register"
+        },
+        {
+          "name": "Windy API",
+          "id": "76ac0870-345d-4c3a-b022-3512cad31664",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.windy.com/api/point-forecast/v2"
+            },
+            "description": "Wind, weather and wave forecast data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://api.windy.com/keys"
         }
       ]
     }
