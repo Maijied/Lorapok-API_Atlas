@@ -226,11 +226,52 @@ const CodeSnippets = ({ api }: { api: FlatApi }) => {
   const [lang, setLang] = useState('curl')
   const [copied, setCopied] = useState(false)
   const url = api.url, method = api.method
+  const isPost = ['POST','PUT','PATCH'].includes(method)
+  const rawBody = (api.raw as any)?.request?.body?.raw || ''
+  const bodyStr = rawBody || (isPost ? '{\n  "key": "value"\n}' : '')
+  const authHeader = api.authRequired ? `\n  --header 'Authorization: Bearer YOUR_KEY' \\` : ''
   const snippets: Record<string, string> = {
-    curl: `curl --request ${method} \\\n  --url '${url}' \\\n  --header 'Accept: application/json'`,
-    javascript: `fetch('${url}', {\n  method: '${method}',\n  headers: { 'Accept': 'application/json' }\n})\n.then(r => r.json())\n.then(data => console.log(data))`,
-    python: `import requests\n\nresponse = requests.${method.toLowerCase()}(\n  '${url}',\n  headers={'Accept': 'application/json'}\n)\nprint(response.json())`,
-    go: `package main\nimport ("fmt";"net/http";"io/ioutil")\nfunc main() {\n  req, _ := http.NewRequest("${method}", "${url}", nil)\n  req.Header.Add("Accept", "application/json")\n  res, _ := http.DefaultClient.Do(req)\n  defer res.Body.Close()\n  body, _ := ioutil.ReadAll(res.Body)\n  fmt.Println(string(body))\n}`,
+    curl: `curl --request ${method} \\
+  --url '${url}' \\${authHeader}
+  --header 'Accept: application/json'${isPost ? ` \\
+  --header 'Content-Type: application/json' \\
+  --data '${bodyStr}'` : ''}`,
+    javascript: `fetch('${url}', {
+  method: '${method}',
+  headers: {
+    'Accept': 'application/json',${api.authRequired ? `
+    'Authorization': 'Bearer YOUR_KEY',` : ''}${isPost ? `
+    'Content-Type': 'application/json',` : ''}
+  },${isPost ? `
+  body: JSON.stringify(${bodyStr}),` : ''}
+})
+.then(r => r.json())
+.then(data => console.log(data))`,
+    python: `import requests${isPost ? '\nimport json' : ''}
+
+response = requests.${method.toLowerCase()}(
+  '${url}',
+  headers={
+    'Accept': 'application/json',${api.authRequired ? `
+    'Authorization': 'Bearer YOUR_KEY',` : ''}${isPost ? `
+    'Content-Type': 'application/json',` : ''}
+  },${isPost ? `
+  json=${bodyStr},` : ''}
+)
+print(response.json())`,
+    go: `package main
+import ("fmt";"net/http"${isPost ? `;"strings"` : ''};"io/ioutil")
+func main() {
+  ${isPost ? `body := strings.NewReader(\`${bodyStr}\`)
+  req, _ := http.NewRequest("${method}", "${url}", body)` : `req, _ := http.NewRequest("${method}", "${url}", nil)`}
+  req.Header.Add("Accept", "application/json")${api.authRequired ? `
+  req.Header.Add("Authorization", "Bearer YOUR_KEY")` : ''}${isPost ? `
+  req.Header.Add("Content-Type", "application/json")` : ''}
+  res, _ := http.DefaultClient.Do(req)
+  defer res.Body.Close()
+  body2, _ := ioutil.ReadAll(res.Body)
+  fmt.Println(string(body2))
+}`,
   }
   const copy = () => { navigator.clipboard.writeText(snippets[lang]); setCopied(true); setTimeout(() => setCopied(false), 2000) }
   return (
@@ -391,7 +432,46 @@ const ApiModal = ({ api, onClose, user }: { api: FlatApi; onClose: () => void; u
     if (!api.url) return
     setIsLoading(true); setStatus('thinking'); setTestResult(null)
     try {
-      const res = await axios.get(effectiveUrl, { responseType: 'arraybuffer' })
+      const method = api.method.toLowerCase()
+      const rawRequest = (api.raw as any)?.request
+
+      // Build headers — inject saved key into Authorization if needed
+      const headers: Record<string, string> = { 'Accept': 'application/json' }
+      const rawHeaders: any[] = rawRequest?.header || []
+      rawHeaders.forEach((h: any) => {
+        if (h.key && h.value) {
+          const val = apiKey
+            ? String(h.value).replace(/<<[^>]+>>|YOUR_[A-Z_]+/g, apiKey)
+            : h.value
+          headers[h.key] = val
+        }
+      })
+      // If URL has placeholder and key is set, also set Authorization Bearer
+      if (apiKey && !headers['Authorization'] && !headers['authorization']) {
+        const needsBearer = rawHeaders.some((h: any) =>
+          h.key?.toLowerCase() === 'authorization' || String(h.value || '').toLowerCase().includes('bearer')
+        )
+        if (needsBearer) headers['Authorization'] = `Bearer ${apiKey}`
+      }
+
+      // Build body for POST/PUT/PATCH
+      let body: any = undefined
+      if (['post', 'put', 'patch'].includes(method)) {
+        const rawBody = rawRequest?.body
+        if (rawBody?.mode === 'raw' && rawBody?.raw) {
+          try { body = JSON.parse(rawBody.raw) } catch { body = rawBody.raw }
+        }
+        // Default minimal body for known POST APIs if no body defined
+        if (!body && api.url.includes('groq.com')) {
+          body = { model: 'llama3-8b-8192', messages: [{ role: 'user', content: 'Say hello in one sentence.' }] }
+        }
+      }
+
+      const config: any = { headers, responseType: 'arraybuffer' }
+      const res = ['post', 'put', 'patch'].includes(method)
+        ? await axios[method as 'post'](effectiveUrl, body, config)
+        : await axios.get(effectiveUrl, config)
+
       const ct = typeof res.headers['content-type'] === 'string' ? res.headers['content-type'] : ''
       if (ct.includes('image/') || ct.includes('application/octet-stream')) {
         const blob = new Blob([res.data], { type: ct || 'image/png' })
@@ -408,7 +488,7 @@ const ApiModal = ({ api, onClose, user }: { api: FlatApi; onClose: () => void; u
       if (isNetworkError) {
         setTestResult({
           error: 'CORS / Network Error',
-          detail: 'This API does not allow browser requests (missing CORS headers). The API itself works fine — use the curl snippet in your terminal instead.',
+          detail: 'This API does not allow direct browser requests (missing CORS headers). The API itself works fine — use the curl snippet in your terminal instead.',
           tip: 'Copy the cURL command above and run it locally, or use a server-side proxy.',
         })
       } else {
