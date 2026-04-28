@@ -223,6 +223,37 @@ MIT © [Lorapok](https://github.com/Maijied) — see [LICENSE](LICENSE) for deta
 
 ---
 
+## 💛 Decentralized Support
+
+If this project helped you, consider supporting via USDT on any of the networks below. No accounts, no middlemen — direct on-chain.
+
+| Network | Token | Address |
+|:--------|:------|:--------|
+| BNB Smart Chain (BEP20) | USDT | `0xfbaae60922e40bdcc82142ac6d6ff9c69bb12d26` |
+| Ethereum (ERC20) | USDT | `0xfbaae60922e40bdcc82142ac6d6ff9c69bb12d26` |
+| Solana | USDT | `HMbxpSyhSS99xC9fVdMMtbnrbjBEvSP2ww2KXUoqwe7D` |
+| Tron (TRC20) | USDT | `TNicohFHB9VYPSq2ksqRD73Ubhi9QVAVZm` |
+| Aptos | USDT | `0xb9a6776cfce10ee3755ecaa39f8aeb5b4f1edaa0adaccf4c79260c63bce27e3d` |
+
+> ⚠️ Only send USDT to the matching network. Do not send NFTs or other tokens.
+
+---
+
+## 👤 About the Author
+
+<div align="center">
+
+**Mohammad Maizied Hasan Majumder**
+
+Application Developer · Open Source Enthusiast
+
+[![GitHub](https://img.shields.io/badge/GitHub-maijied-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/maijied)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-maizied-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/maizied/)
+
+</div>
+
+---
+
 <div align="center">
   <sub>Made with 💚 for the open-source community · A product of <strong>Lorapok</strong></sub>
 </div>

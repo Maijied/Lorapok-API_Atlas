@@ -72,6 +72,22 @@ function flattenCollection(): FlatApi[] {
   const result: FlatApi[] = []
   for (const cat of (apiCollection as any).item) {
     for (const api of (cat.item || [])) {
+      // Detect authRequired from headers if not explicitly set
+      let authRequired = api.authRequired
+      if (!authRequired) {
+        const headers: any[] = api.request?.header || []
+        const hasAuthHeader = headers.some((h: any) =>
+          h.key?.toLowerCase() === 'authorization' ||
+          h.key?.toLowerCase() === 'x-api-key' ||
+          String(h.value || '').toLowerCase().includes('bearer') ||
+          String(h.value || '').includes('<<') ||
+          String(h.value || '').includes('YOUR_')
+        )
+        if (hasAuthHeader) authRequired = 'API Key'
+      }
+      // Also detect from authLink presence
+      if (!authRequired && api.authLink) authRequired = 'API Key'
+
       result.push({
         name: api.name,
         category: cat.name,
@@ -79,7 +95,7 @@ function flattenCollection(): FlatApi[] {
         url: api.request?.url?.raw || '',
         method: api.request?.method || 'GET',
         authLink: api.authLink,
-        authRequired: api.authRequired,
+        authRequired,
         raw: api,
       })
     }
@@ -315,9 +331,13 @@ function substituteKey(url: string, key: string): string {
   if (!key) return url
   return url.replace(KEY_PLACEHOLDER_RE, key)
 }
-function urlNeedsKey(url: string): boolean {
+function urlNeedsKey(api: FlatApi): boolean {
+  // Check URL placeholders
   KEY_PLACEHOLDER_RE.lastIndex = 0
-  return KEY_PLACEHOLDER_RE.test(url)
+  if (KEY_PLACEHOLDER_RE.test(api.url)) return true
+  // Check if authRequired is set
+  if (api.authRequired) return true
+  return false
 }
 
 // ─── API Modal ────────────────────────────────────────────────────────────────
@@ -329,7 +349,7 @@ const ApiModal = ({ api, onClose, user }: { api: FlatApi; onClose: () => void; u
   const [keySaved, setKeySaved] = useState(false)
   const [showKeyInput, setShowKeyInput] = useState(false)
   const authStyle = AUTH_STYLE[api.authRequired || 'None'] || AUTH_STYLE['None']
-  const needsKey = urlNeedsKey(api.url) || !!api.authRequired
+  const needsKey = urlNeedsKey(api) || !!api.authRequired
 
   // Firestore-backed key
   const { key: apiKey, loading: keyLoading, save: saveKey, remove: removeKey } = useApiKey(user, api.name)
@@ -692,6 +712,24 @@ const ApiCard = ({ api, onClick }: { api: FlatApi; onClick: () => void }) => {
   )
 }
 
+// ─── Copyable wallet address ──────────────────────────────────────────────────
+const CopyableAddress = ({ addr }: { addr: string }) => {
+  const [copied, setCopied] = useState(false)
+  const copy = () => {
+    navigator.clipboard.writeText(addr)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1500)
+  }
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 6, flex: 1, minWidth: 0 }}>
+      <span style={{ fontSize: 10, fontFamily: 'monospace', color: '#64748b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>{addr}</span>
+      <button onClick={copy} title="Copy address" style={{ flexShrink: 0, background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: copied ? '#34d399' : '#334d63', transition: 'color 0.15s' }}>
+        {copied ? <Check size={12} /> : <Copy size={12} />}
+      </button>
+    </div>
+  )
+}
+
 // ─── Main App ─────────────────────────────────────────────────────────────────
 export default function App() {
   const [search, setSearch] = useState('')
@@ -954,6 +992,69 @@ export default function App() {
           </div>
 
           {/* Divider */}
+          <div style={{ height: 1, background: 'linear-gradient(90deg, transparent, #1a3050 30%, #1a3050 70%, transparent)', marginBottom: 24 }} />
+
+          {/* Support & Author row */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, marginBottom: 32 }}>
+
+            {/* Decentralized Support */}
+            <div style={{ flex: '1 1 340px' }}>
+              <div style={{ fontSize: 10, fontWeight: 700, color: '#fde047', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 6 }}>
+                <span>💛</span> Decentralized Support
+              </div>
+              <p style={{ fontSize: 11, color: '#4a6278', marginBottom: 12, lineHeight: 1.6 }}>
+                If this project helped you, consider supporting via USDT. No accounts, no middlemen — direct on-chain.
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                {[
+                  { net: 'BNB Smart Chain (BEP20)', addr: '0xfbaae60922e40bdcc82142ac6d6ff9c69bb12d26' },
+                  { net: 'Ethereum (ERC20)',         addr: '0xfbaae60922e40bdcc82142ac6d6ff9c69bb12d26' },
+                  { net: 'Tron (TRC20)',             addr: 'TNicohFHB9VYPSq2ksqRD73Ubhi9QVAVZm' },
+                  { net: 'Solana',                   addr: 'HMbxpSyhSS99xC9fVdMMtbnrbjBEvSP2ww2KXUoqwe7D' },
+                  { net: 'Aptos',                    addr: '0xb9a6776cfce10ee3755ecaa39f8aeb5b4f1edaa0adaccf4c79260c63bce27e3d' },
+                ].map(({ net, addr }) => (
+                  <div key={net} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 10px', borderRadius: 6, background: 'rgba(253,224,71,0.04)', border: '1px solid rgba(253,224,71,0.1)' }}>
+                    <span style={{ fontSize: 10, fontWeight: 700, color: '#fde047', minWidth: 160, flexShrink: 0 }}>{net}</span>
+                    <CopyableAddress addr={addr} />
+                  </div>
+                ))}
+              </div>
+              <p style={{ fontSize: 10, color: '#334d63', marginTop: 8 }}>⚠️ Only send USDT to the matching network.</p>
+            </div>
+
+            {/* Author */}
+            <div style={{ flex: '0 1 220px' }}>
+              <div style={{ fontSize: 10, fontWeight: 700, color: '#818cf8', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 6 }}>
+                <span>👤</span> About the Author
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: '#d4e4f7', marginBottom: 2 }}>Mohammad Maizied Hasan Majumder</div>
+                  <div style={{ fontSize: 11, color: '#4a6278' }}>Application Developer · Open Source Enthusiast</div>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                  <a href="https://github.com/maijied" target="_blank" rel="noopener noreferrer"
+                    style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 12px', borderRadius: 7, background: 'rgba(255,255,255,0.04)', border: '1px solid #1a3050', color: '#d4e4f7', textDecoration: 'none', fontSize: 12, fontWeight: 600, transition: 'all 0.15s' }}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor = '#38bdf8'; e.currentTarget.style.color = '#38bdf8' }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#d4e4f7' }}
+                  >
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                    github.com/maijied
+                  </a>
+                  <a href="https://www.linkedin.com/in/maizied/" target="_blank" rel="noopener noreferrer"
+                    style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 12px', borderRadius: 7, background: 'rgba(255,255,255,0.04)', border: '1px solid #1a3050', color: '#d4e4f7', textDecoration: 'none', fontSize: 12, fontWeight: 600, transition: 'all 0.15s' }}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor = '#818cf8'; e.currentTarget.style.color = '#818cf8' }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#d4e4f7' }}
+                  >
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    linkedin.com/in/maizied
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Second divider */}
           <div style={{ height: 1, background: 'linear-gradient(90deg, transparent, #1a3050 30%, #1a3050 70%, transparent)', marginBottom: 24 }} />
 
           {/* Bottom row */}
