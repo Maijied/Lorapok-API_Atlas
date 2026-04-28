@@ -1,67 +1,228 @@
-# 🐛 Lorapok API Atlas
+<div align="center">
 
-![Lorapok API Atlas](https://img.shields.io/badge/Lorapok-API_Atlas-4ade80?style=for-the-badge&logo=github)
-![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
+<img src="lorapok-api-atlas/public/logo.svg" width="96" height="96" alt="Lorapok Atlas Logo" />
 
-**Lorapok API Atlas** is a premium, animated web dashboard designed to explore and test over 60 high-quality open-source APIs. Featuring **Lorapok**, our cute larva mascot, the Atlas provides a professional sandbox environment with real-time feedback, dynamic documentation, and rich media visualization.
+# Lorapok Atlas API Directory
 
-## ✨ Features
+**A premium open-source sandbox for exploring and live-testing 644+ curated public APIs.**
 
-- **🚀 100+ Curated APIs**: Hand-picked selection of high-quality, free, and open-source APIs across 20+ categories.
-- **🖼️ Multimodal Visualizers**:
-  - **Dynamic Video Player**: Support for direct video files and responsive YouTube embeds.
-  - **Binary Image Rendering**: Real-time conversion of raw bytes (QR codes, dynamic assets) into crisp images.
-  - **Web Previews**: Integrated HTML visualizer for document-based API responses.
-- **⚡ Developer First**: 
-  - One-click **JSON copy** and response downloads.
-  - Built-in **Code Snippets** for cURL, JavaScript, Python, and Go.
-  - Direct **Registration Links** for APIs requiring keys.
-- **🧪 Live Testing**: Zero-config dashboard to run and preview API calls instantly.
-- **🐛 Lorapok Mascot**: Interactive guide providing status feedback during data fetching.
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-4ade80?style=for-the-badge&logo=github)](https://maijied.github.io/Lorapok-API_Atlas/)
+[![React](https://img.shields.io/badge/React%2018-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Vite](https://img.shields.io/badge/Vite%205-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev)
+[![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-34d399?style=for-the-badge)](LICENSE)
 
-## 🚀 Quick Start
+[**→ Open Live App**](https://maijied.github.io/Lorapok-API_Atlas/) · [Report Bug](https://github.com/Maijied/Lorapok-API_Atlas/issues) · [Request Feature](https://github.com/Maijied/Lorapok-API_Atlas/issues)
 
-### Prerequisites
-- Node.js (v18+)
-- npm or yarn
-
-### Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/lorapok/api-atlas.git
-   cd api-atlas
-   ```
-2. Install dependencies:
-   ```bash
-   cd lorapok-api-atlas
-   npm install
-   ```
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
-
-## 🚢 Deployment
-
-The project is configured for automated deployment to **GitHub Pages** via GitHub Actions.
-
-1. Push your changes to the `main` branch.
-2. The `.github/workflows/deploy.yml` workflow will automatically build and deploy the app.
-3. Ensure your repository settings have GitHub Pages enabled (Source: GitHub Actions).
-
-## 📂 Project Structure
-
-- `lorapok-api-atlas/src/data`: Contains the `api_collection.json` source.
-- `lorapok-api-atlas/src/components`: UI components including the animated Lorapok.
-- `lorapok-api-atlas/scripts`: Automation scripts for data repair and validation.
-- `.github/workflows`: CI/CD configurations.
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+</div>
 
 ---
-*A product of **Lorapok** - Making APIs fun and accessible.*
+
+## What is this?
+
+Lorapok Atlas API Directory is a zero-config web dashboard that lets developers **browse, explore, and live-test 644+ free and open-source APIs** — all in one place. No backend setup, no Postman required. Just open the app, pick an API, and hit Run Test.
+
+Built around the **Lorapok** larva mascot 🐛, the app provides real-time feedback during API calls and visualizes responses as structured data, images, video, audio, or rendered HTML — automatically.
+
+---
+
+## Features
+
+### Core
+- **644+ curated APIs** across 32 categories — weather, AI, crypto, maps, music, health, space, and more
+- **Live API testing** — one-click requests with real-time response visualization
+- **Smart response renderer** — auto-detects JSON, images, binary data, HTML, audio, and video
+- **Code snippet generator** — instant cURL, JavaScript, Python, and Go snippets for every API
+- **Search, filter & sort** — by name, category, auth type (Free / API Key / OAuth)
+
+### API Key Management
+- **Firebase Firestore storage** — keys saved securely under your Google account
+- **Google OAuth sign-in** — one click, works across all your devices
+- **Per-API key manager** — add, update, or clear keys inline in the API modal
+- **Auto URL substitution** — saved keys are injected into the endpoint and code snippets automatically
+- **Production Firestore rules** — only you can read/write your own keys
+
+### Developer Experience
+- **Framer Motion animations** — smooth modal transitions and mascot reactions
+- **Responsive grid layout** — works on desktop and tablet
+- **Copy & download** — one-click JSON copy and response download
+- **Auth badge system** — Free 🔓 / API Key 🗝 / OAuth 🔑 at a glance
+
+---
+
+## API Categories
+
+| Category | Count | Category | Count |
+|---|---|---|---|
+| 🤖 AI & Machine Learning | 23 | 📰 News & Media | 16 |
+| 💻 Developer Tools | 23 | 🎬 Movies & Entertainment | 16 |
+| 📡 Communication & Social | 21 | 🌤 Weather & Environment | 16 |
+| 💰 E-Commerce & Finance | 21 | ✈️ Travel & Transport | 16 |
+| 🏋️ Sports & Games | 21 | 🐾 Animals & Nature | 16 |
+| 🗺 Maps & Geolocation | 20 | 🔐 Security & Identity | 15 |
+| 🎵 Music | 18 | 🚀 Space & Astronomy | 15 |
+| 📚 Education & Knowledge | 18 | 🏛 Government & Public Data | 15 |
+| 🏦 Blockchain & Crypto | 15 | 🔬 Science & Research | 15 |
+| 🏥 Health & Medicine | 17 | + 13 more categories | — |
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| UI Framework | React 18 + TypeScript (strict) |
+| Build Tool | Vite 5 |
+| Styling | Tailwind CSS 3 + custom `lorapok` tokens |
+| Animations | Framer Motion |
+| HTTP Client | Axios |
+| Icons | Lucide React |
+| Auth | Firebase Google OAuth |
+| Database | Firebase Firestore |
+| Deployment | GitHub Pages via GitHub Actions |
+
+---
+
+## Getting Started
+
+### Prerequisites
+- Node.js 18+
+- A Firebase project (free tier is enough)
+
+### 1. Clone & install
+
+```bash
+git clone https://github.com/Maijied/Lorapok-API_Atlas.git
+cd Lorapok-API_Atlas/lorapok-api-atlas
+npm install
+```
+
+### 2. Configure Firebase
+
+Create a `.env.local` file in `lorapok-api-atlas/`:
+
+```env
+VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
+```
+
+Get these values from [Firebase Console](https://console.firebase.google.com) → Project Settings → Your apps → Web app.
+
+### 3. Enable Firebase services
+
+In Firebase Console:
+- **Authentication** → Sign-in method → Enable **Google**
+- **Firestore Database** → Create database → Production mode
+- **Firestore Rules** → Paste:
+
+```
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{uid}/apikeys/{apiName} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+```
+
+### 4. Run locally
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:5173/Lorapok-API_Atlas/](http://localhost:5173/Lorapok-API_Atlas/)
+
+---
+
+## Deployment
+
+The project auto-deploys to GitHub Pages on every push to `main` via GitHub Actions.
+
+### Setup GitHub Secrets
+
+Go to your repo → **Settings → Secrets and variables → Actions** → add these 6 secrets:
+
+```
+VITE_FIREBASE_API_KEY
+VITE_FIREBASE_AUTH_DOMAIN
+VITE_FIREBASE_PROJECT_ID
+VITE_FIREBASE_STORAGE_BUCKET
+VITE_FIREBASE_MESSAGING_SENDER_ID
+VITE_FIREBASE_APP_ID
+```
+
+Also add your GitHub Pages domain to Firebase Console → **Authentication → Settings → Authorized domains**:
+```
+yourusername.github.io
+```
+
+Then push to `main` — the workflow handles the rest.
+
+---
+
+## Project Structure
+
+```
+/
+├── .github/workflows/deploy.yml     # CI/CD — build & deploy to GitHub Pages
+├── lorapok-api-atlas/
+│   ├── src/
+│   │   ├── App.tsx                  # Entire UI (single-file architecture)
+│   │   ├── firebase.ts              # Firebase Auth + Firestore helpers
+│   │   ├── useKeyStore.ts           # useAuth + useApiKey hooks
+│   │   ├── vite-env.d.ts            # VITE_ env var type declarations
+│   │   └── data/
+│   │       └── api_collection.json  # API data (Postman Collection v2.1 schema)
+│   ├── scripts/
+│   │   ├── repair_and_validate.py   # Patches + validates api_collection.json
+│   │   └── deep_validate.py         # Live endpoint validation
+│   ├── public/logo.svg              # Lorapok mascot SVG icon
+│   └── package.json
+└── README.md
+```
+
+---
+
+## Adding New APIs
+
+Edit `lorapok-api-atlas/src/data/api_collection.json` directly, or run the repair script after adding raw entries:
+
+```bash
+python3 lorapok-api-atlas/scripts/repair_and_validate.py
+```
+
+The script applies URL fixes from `API_REPAIRS` and auth links from `API_AUTH_LINKS` dictionaries, then writes back to `api_collection.json`.
+
+---
+
+## Contributing
+
+Contributions are welcome — new APIs, bug fixes, UI improvements.
+
+1. Fork the repo
+2. Create a branch: `git checkout -b feat/your-feature`
+3. Commit: `git commit -m "feat: add your feature"`
+4. Push: `git push origin feat/your-feature`
+5. Open a Pull Request
+
+---
+
+## License
+
+MIT © [Lorapok](https://github.com/Maijied) — see [LICENSE](LICENSE) for details.
+
+---
+
+<div align="center">
+  <sub>Made with 💚 for the open-source community · A product of <strong>Lorapok</strong></sub>
+</div>
