@@ -1367,342 +1367,272 @@ export default function App() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#070e18', fontFamily: "'Inter', system-ui, sans-serif", color: '#e2e8f0' }}>
-      {/* Header */}
-      <div style={{ background: 'linear-gradient(135deg, #0c1828 0%, #091220 50%, #0c1828 100%)', borderBottom: '1px solid #1a3050', padding: '36px 24px 28px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(ellipse at 15% 60%, rgba(56,189,248,0.07) 0%, transparent 50%), radial-gradient(ellipse at 85% 40%, rgba(139,92,246,0.07) 0%, transparent 50%), radial-gradient(ellipse at 50% 0%, rgba(52,211,153,0.05) 0%, transparent 40%)' }} />
-        <div style={{ position: 'relative' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, marginBottom: 12 }}>
-            <motion.img
-              src="/Lorapok-API_Atlas/logo.svg"
-              alt="Lorapok"
-              animate={{ y: [0, -5, 0] }}
-              transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
-              style={{ width: 72, height: 72, borderRadius: 18, flexShrink: 0, display: 'block' }}
-            />
-            <div style={{ textAlign: 'left' }}>
-              <div style={{ fontSize: 11, letterSpacing: '0.3em', color: '#38bdf8', textTransform: 'uppercase', marginBottom: 6 }}>◈ Lorapok · Open Source Intelligence</div>
-              <h1 style={{ fontSize: 'clamp(22px, 4vw, 44px)', fontWeight: 900, margin: 0, lineHeight: 1.1, background: 'linear-gradient(100deg, #38bdf8 0%, #818cf8 40%, #34d399 80%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: '-0.02em' }}>
-                Lorapok Atlas API Directory
-              </h1>
+
+      {/* ── Sticky Navbar ── */}
+      <nav style={{ position: 'sticky', top: 0, zIndex: 40, background: 'rgba(7,14,24,0.94)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(26,48,80,0.7)', padding: '0 24px' }}>
+        <div style={{ maxWidth: 1400, margin: '0 auto', height: 58, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+            <motion.img src="/Lorapok-API_Atlas/logo.svg" alt="Lorapok" animate={{ y: [0,-3,0] }} transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }} style={{ width: 34, height: 34, borderRadius: 8 }} />
+            <div>
+              <div style={{ fontSize: 14, fontWeight: 800, color: '#d4e4f7', letterSpacing: '-0.02em', lineHeight: 1.1 }}>Lorapok Atlas</div>
+              <div style={{ fontSize: 9, color: '#334d63', letterSpacing: '0.18em', textTransform: 'uppercase' }}>API Directory</div>
             </div>
           </div>
-
-          {/* Auth button */}
-          <div style={{ position: 'absolute', top: 20, right: 24 }}>
+          <div style={{ fontSize: 10, letterSpacing: '0.22em', color: '#38bdf8', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: 6, opacity: 0.8 }}>
+            <span>◈</span> Lorapok · Open Source Intelligence
+          </div>
+          <div style={{ flexShrink: 0 }}>
             {authLoading ? (
-              <div style={{ width: 120, height: 36, borderRadius: 8, background: 'rgba(255,255,255,0.04)', border: '1px solid #1a3050', animation: 'pulse 1.5s infinite' }} />
+              <div style={{ width: 100, height: 32, borderRadius: 8, background: 'rgba(255,255,255,0.04)', border: '1px solid #1a3050' }} />
             ) : user ? (
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                {/* User pill */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 10px 5px 6px', borderRadius: 40, background: 'rgba(52,211,153,0.08)', border: '1px solid rgba(52,211,153,0.2)' }}>
-                  {user.photoURL
-                    ? <img src={user.photoURL} alt={user.displayName || ''} style={{ width: 26, height: 26, borderRadius: '50%', border: '2px solid rgba(52,211,153,0.4)' }} />
-                    : <div style={{ width: 26, height: 26, borderRadius: '50%', background: 'rgba(52,211,153,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><UserIcon size={13} style={{ color: '#34d399' }} /></div>
-                  }
+                <div style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '4px 10px 4px 5px', borderRadius: 40, background: 'rgba(52,211,153,0.07)', border: '1px solid rgba(52,211,153,0.18)' }}>
+                  {user.photoURL ? <img src={user.photoURL} alt="" style={{ width: 24, height: 24, borderRadius: '50%', border: '1.5px solid rgba(52,211,153,0.4)' }} /> : <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'rgba(52,211,153,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><UserIcon size={12} style={{ color: '#34d399' }} /></div>}
                   <div>
-                    <div style={{ fontSize: 12, fontWeight: 700, color: '#d4e4f7', maxWidth: 130, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', lineHeight: 1.2 }}>{user.displayName || 'User'}</div>
-                    <div style={{ fontSize: 10, color: '#334d63', lineHeight: 1.2 }}>Signed in</div>
+                    <div style={{ fontSize: 11, fontWeight: 700, color: '#d4e4f7', maxWidth: 110, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', lineHeight: 1.2 }}>{user.displayName || 'User'}</div>
+                    <div style={{ fontSize: 9, color: '#34d399', lineHeight: 1.2 }}>● Signed in</div>
                   </div>
                 </div>
-                {/* Sign out */}
-                <button
-                  onClick={signOutUser}
-                  title="Sign out"
-                  style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '7px 12px', borderRadius: 8, background: 'transparent', border: '1px solid #1a3050', color: '#4a6278', fontSize: 12, cursor: 'pointer', transition: 'all 0.15s' }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#f87171'; e.currentTarget.style.color = '#f87171'; e.currentTarget.style.background = 'rgba(248,113,113,0.06)' }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#4a6278'; e.currentTarget.style.background = 'transparent' }}
-                >
-                  <LogOut size={13} /> Sign out
+                <button onClick={signOutUser} style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 10px', borderRadius: 7, background: 'transparent', border: '1px solid #1a3050', color: '#4a6278', fontSize: 11, cursor: 'pointer', transition: 'all 0.15s' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#f87171'; e.currentTarget.style.color = '#f87171' }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#4a6278' }}>
+                  <LogOut size={12} /> Sign out
                 </button>
               </div>
             ) : (
-              <button
-                onClick={signInWithGoogle}
-                style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 16px 8px 12px', borderRadius: 10, background: '#fff', border: 'none', color: '#1f2937', fontSize: 13, fontWeight: 600, cursor: 'pointer', boxShadow: '0 1px 3px rgba(0,0,0,0.3)', transition: 'all 0.15s' }}
-                onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.4)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
-                onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.3)'; e.currentTarget.style.transform = 'translateY(0)' }}
-              >
-                {/* Google G logo */}
-                <svg width="18" height="18" viewBox="0 0 48 48">
-                  <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-                  <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-                  <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-                  <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-                </svg>
+              <button onClick={signInWithGoogle} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 14px 7px 10px', borderRadius: 9, background: '#fff', border: 'none', color: '#1f2937', fontSize: 12, fontWeight: 600, cursor: 'pointer', boxShadow: '0 1px 4px rgba(0,0,0,0.3)', transition: 'all 0.15s' }}
+                onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 4px 14px rgba(0,0,0,0.4)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+                onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.3)'; e.currentTarget.style.transform = 'translateY(0)' }}>
+                <svg width="16" height="16" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
                 Sign in with Google
               </button>
             )}
-          </div>          <p style={{ color: '#4a6278', fontSize: 13, letterSpacing: '0.05em', margin: '0 0 20px' }}>
-            {ALL_APIS.length} APIs &nbsp;·&nbsp; {CATEGORIES.length - 1} Categories &nbsp;·&nbsp; Free, Key & OAuth
+          </div>
+        </div>
+      </nav>
+
+      {/* ── Hero ── */}
+      <div style={{ background: 'linear-gradient(160deg, #0a1628 0%, #070e18 70%)', borderBottom: '1px solid #1a3050', padding: '56px 24px 48px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(ellipse at 20% 50%, rgba(56,189,248,0.06) 0%, transparent 55%), radial-gradient(ellipse at 80% 30%, rgba(129,140,248,0.06) 0%, transparent 55%), radial-gradient(ellipse at 50% 100%, rgba(52,211,153,0.04) 0%, transparent 50%)' }} />
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(26,48,80,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(26,48,80,0.25) 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
+        <div style={{ position: 'relative', maxWidth: 760, margin: '0 auto' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 7, padding: '5px 16px', borderRadius: 20, background: 'rgba(52,211,153,0.07)', border: '1px solid rgba(52,211,153,0.2)', marginBottom: 22 }}>
+            <motion.span animate={{ opacity: [1,0.3,1] }} transition={{ repeat: Infinity, duration: 2 }} style={{ width: 6, height: 6, borderRadius: '50%', background: '#34d399', display: 'inline-block' }} />
+            <span style={{ fontSize: 10, letterSpacing: '0.2em', color: '#34d399', textTransform: 'uppercase', fontWeight: 600 }}>Live · Open Source · Community Driven</span>
+          </div>
+          <h1 style={{ fontSize: 'clamp(28px, 5vw, 54px)', fontWeight: 900, margin: '0 0 18px', lineHeight: 1.05, background: 'linear-gradient(120deg, #e2e8f0 0%, #38bdf8 30%, #818cf8 60%, #34d399 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: '-0.03em' }}>
+            Lorapok Atlas API Directory
+          </h1>
+          <p style={{ fontSize: 15, color: '#4a6278', margin: '0 0 40px', lineHeight: 1.7, maxWidth: 540, marginLeft: 'auto', marginRight: 'auto' }}>
+            Explore, test, and integrate <strong style={{ color: '#d4e4f7', fontWeight: 700 }}>{ALL_APIS.length}+ curated APIs</strong> across {CATEGORIES.length - 1} categories. Zero config, live responses, code snippets in 4 languages.
           </p>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(16px, 4vw, 48px)', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(20px, 4vw, 52px)', flexWrap: 'wrap' }}>
             {[
-              { label: 'Total APIs', val: ALL_APIS.length, color: '#38bdf8' },
-              { label: 'Categories', val: CATEGORIES.length - 1, color: '#818cf8' },
-              { label: '🔓 Free', val: freeCount, color: '#34d399' },
-              { label: '🗝 API Key', val: keyCount, color: '#818cf8' },
-              { label: '🔑 OAuth', val: oauthCount, color: '#f87171' },
+              { val: ALL_APIS.length, label: 'Total APIs', color: '#38bdf8' },
+              { val: CATEGORIES.length - 1, label: 'Categories', color: '#818cf8' },
+              { val: freeCount, label: '🔓 Free', color: '#34d399' },
+              { val: keyCount, label: '🗝 API Key', color: '#818cf8' },
+              { val: oauthCount, label: '🔑 OAuth', color: '#f87171' },
             ].map(s => (
               <div key={s.label} style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: 'clamp(18px, 3vw, 28px)', fontWeight: 800, color: s.color }}>{s.val}</div>
-                <div style={{ fontSize: 10, color: '#334d63', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{s.label}</div>
+                <div style={{ fontSize: 'clamp(22px, 3.5vw, 36px)', fontWeight: 900, color: s.color, letterSpacing: '-0.02em', lineHeight: 1 }}>{s.val}</div>
+                <div style={{ fontSize: 10, color: '#334d63', letterSpacing: '0.12em', textTransform: 'uppercase', marginTop: 5 }}>{s.label}</div>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Controls */}
-      <div style={{ padding: '20px 20px 0', maxWidth: 1500, margin: '0 auto' }}>
-        <div style={{ display: 'flex', gap: 10, marginBottom: 12, flexWrap: 'wrap' }}>
-          <div style={{ position: 'relative', flex: '1 1 280px' }}>
-            <Search style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#334d63' }} size={15} />
-            <input
-              value={search} onChange={e => setSearch(e.target.value)}
-              placeholder="Search APIs by name, description, or category…"
-              style={{ width: '100%', boxSizing: 'border-box', background: '#0c1828', border: '1px solid #1a3050', borderRadius: 8, padding: '10px 14px 10px 38px', color: '#e2e8f0', fontSize: 13, outline: 'none' }}
-              onFocus={e => (e.target.style.borderColor = '#38bdf8')}
-              onBlur={e => (e.target.style.borderColor = '#1a3050')}
-            />
+      {/* ── Sticky Controls ── */}
+      <div style={{ background: 'rgba(7,14,24,0.97)', borderBottom: '1px solid #1a3050', position: 'sticky', top: 58, zIndex: 30, padding: '12px 24px' }}>
+        <div style={{ maxWidth: 1400, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
+            <div style={{ position: 'relative', flex: '1 1 280px' }}>
+              <Search style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#334d63', pointerEvents: 'none' }} size={14} />
+              <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search APIs by name, description, or category…"
+                style={{ width: '100%', boxSizing: 'border-box', background: '#0c1828', border: '1px solid #1a3050', borderRadius: 9, padding: '9px 36px 9px 36px', color: '#e2e8f0', fontSize: 13, outline: 'none', transition: 'border-color 0.15s' }}
+                onFocus={e => (e.target.style.borderColor = '#38bdf8')} onBlur={e => (e.target.style.borderColor = '#1a3050')} />
+              {search && <button onClick={() => setSearch('')} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: '#334d63', cursor: 'pointer', padding: 2 }}><X size={13} /></button>}
+            </div>
+            <select value={sortBy} onChange={e => setSortBy(e.target.value)} style={{ background: '#0c1828', border: '1px solid #1a3050', borderRadius: 9, padding: '9px 14px', color: '#64748b', fontSize: 12, outline: 'none', cursor: 'pointer' }}>
+              <option value="default">Default order</option>
+              <option value="name">Sort A → Z</option>
+              <option value="category">Sort by Category</option>
+            </select>
+            <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
+              {[
+                { val: 'All', label: 'All', ac: '#38bdf8', ab: 'rgba(56,189,248,0.1)', abr: '#38bdf8' },
+                { val: 'None', label: '🔓 Free', ac: '#34d399', ab: 'rgba(52,211,153,0.1)', abr: '#34d399' },
+                { val: 'API Key', label: '🗝 Key', ac: '#818cf8', ab: 'rgba(129,140,248,0.1)', abr: '#818cf8' },
+                { val: 'OAuth', label: '🔑 OAuth', ac: '#f87171', ab: 'rgba(248,113,113,0.1)', abr: '#f87171' },
+              ].map(a => {
+                const active = authFilter === a.val
+                return <button key={a.val} onClick={() => setAuthFilter(a.val)} style={{ padding: '6px 13px', borderRadius: 7, fontSize: 12, cursor: 'pointer', border: `1px solid ${active ? a.abr : '#1a3050'}`, background: active ? a.ab : 'transparent', color: active ? a.ac : '#4a6278', fontWeight: active ? 700 : 400, transition: 'all 0.15s' }}>{a.label}</button>
+              })}
+            </div>
+            <div style={{ marginLeft: 'auto', fontSize: 12, color: '#334d63', whiteSpace: 'nowrap' }}>
+              <strong style={{ color: '#38bdf8' }}>{filtered.length}</strong> / {ALL_APIS.length}
+            </div>
           </div>
-          <select value={sortBy} onChange={e => setSortBy(e.target.value)}
-            style={{ background: '#0c1828', border: '1px solid #1a3050', borderRadius: 8, padding: '10px 14px', color: '#64748b', fontSize: 13, outline: 'none', cursor: 'pointer' }}>
-            <option value="default">Default order</option>
-            <option value="name">Sort A → Z</option>
-            <option value="category">Sort by Category</option>
-          </select>
-        </div>
-
-        {/* Auth filter */}
-        <div style={{ display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap', alignItems: 'center' }}>
-          <span style={{ color: '#334d63', fontSize: 11, letterSpacing: '0.12em' }}>AUTH:</span>
-          {['All', 'None', 'API Key', 'OAuth'].map(a => (
-            <button key={a} onClick={() => setAuthFilter(a)} style={{ padding: '5px 14px', borderRadius: 20, fontSize: 12, cursor: 'pointer', border: authFilter === a ? '1px solid #38bdf8' : '1px solid #1a3050', background: authFilter === a ? 'rgba(56,189,248,0.1)' : 'transparent', color: authFilter === a ? '#38bdf8' : '#4a6278', transition: 'all 0.15s' }}>
-              {a === 'None' ? '🔓 Free' : a === 'OAuth' ? '🔑 OAuth' : a === 'API Key' ? '🗝 API Key' : a}
-            </button>
-          ))}
-          <span style={{ color: '#334d63', fontSize: 12, marginLeft: 8 }}>
-            Showing <strong style={{ color: '#38bdf8' }}>{filtered.length}</strong> of {ALL_APIS.length}
-          </span>
-        </div>
-
-        {/* Category pills */}
-        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 20 }}>
-          {CATEGORIES.map(cat => {
-            const count = cat === 'All' ? ALL_APIS.length : ALL_APIS.filter(a => a.category === cat).length
-            const active = activeCategory === cat
-            return (
-              <button key={cat} onClick={() => setActiveCategory(cat)} style={{ padding: '5px 12px', borderRadius: 20, fontSize: 11, cursor: 'pointer', border: active ? '1px solid #818cf8' : '1px solid #151f2e', background: active ? 'rgba(129,140,248,0.12)' : 'rgba(12,24,40,0.8)', color: active ? '#818cf8' : '#4a6278', transition: 'all 0.15s', whiteSpace: 'nowrap' }}>
-                {cat !== 'All' ? `${CAT_ICONS[cat] || '●'} ` : ''}{cat}
-                <span style={{ marginLeft: 4, opacity: 0.45, fontSize: 10 }}>({count})</span>
-              </button>
-            )
-          })}
+          {/* Category pills — multi-row wrap */}
+          <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
+            {CATEGORIES.map(cat => {
+              const count = cat === 'All' ? ALL_APIS.length : ALL_APIS.filter(a => a.category === cat).length
+              const active = activeCategory === cat
+              return (
+                <button key={cat} onClick={() => setActiveCategory(cat)} style={{ padding: '4px 11px', borderRadius: 20, fontSize: 11, cursor: 'pointer', border: `1px solid ${active ? '#818cf8' : '#151f2e'}`, background: active ? 'rgba(129,140,248,0.14)' : 'rgba(12,24,40,0.8)', color: active ? '#818cf8' : '#4a6278', transition: 'all 0.15s', whiteSpace: 'nowrap', flexShrink: 0, fontWeight: active ? 700 : 400 }}>
+                  {cat !== 'All' ? `${CAT_ICONS[cat] || '●'} ` : ''}{cat} <span style={{ opacity: 0.4, fontSize: 10 }}>({count})</span>
+                </button>
+              )
+            })}
+          </div>
         </div>
       </div>
 
-      {/* Grid */}
-      <div style={{ padding: '0 20px 56px', maxWidth: 1500, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(285px, 1fr))', gap: 10 }}>
-        {filtered.map((api, i) => (
-          <ApiCard key={i} api={api} onClick={() => setSelectedApi(api)} />
-        ))}
-        {filtered.length === 0 && (
-          <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '80px 0', color: '#334d63' }}>
-            <div style={{ fontSize: 48, marginBottom: 14 }}>⊘</div>
-            <div style={{ fontSize: 16 }}>No results for "<span style={{ color: '#38bdf8' }}>{search}</span>"</div>
+      {/* ── Grid ── */}
+      <div style={{ maxWidth: 1400, margin: '0 auto', padding: '28px 24px 72px' }}>
+        {filtered.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '100px 0', color: '#334d63' }}>
+            <div style={{ fontSize: 52, marginBottom: 16, opacity: 0.3 }}>⊘</div>
+            <div style={{ fontSize: 18, fontWeight: 700, color: '#4a6278', marginBottom: 8 }}>No results found</div>
+            <div style={{ fontSize: 13 }}>Try "<span style={{ color: '#38bdf8' }}>{search}</span>" with different filters</div>
+            <button onClick={() => { setSearch(''); setActiveCategory('All'); setAuthFilter('All') }} style={{ marginTop: 20, padding: '8px 20px', borderRadius: 8, background: 'rgba(56,189,248,0.1)', border: '1px solid rgba(56,189,248,0.3)', color: '#38bdf8', fontSize: 13, cursor: 'pointer' }}>Clear all filters</button>
+          </div>
+        ) : (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))', gap: 12 }}>
+            {filtered.map((api, i) => <ApiCard key={i} api={api} onClick={() => setSelectedApi(api)} />)}
           </div>
         )}
       </div>
 
       {/* Modal */}
       {selectedApi && <ApiModal api={selectedApi} onClose={() => setSelectedApi(null)} user={user} />}
-
-      {/* ── Vaultie AI Assistant ── */}
       <Vaultie />
 
-      {/* ── Page Footer ── */}
-      <footer style={{ borderTop: '1px solid #1a3050', background: 'linear-gradient(180deg, #070e18 0%, #060c16 100%)', padding: '40px 24px 28px' }}>
-        <div style={{ maxWidth: 1500, margin: '0 auto' }}>
-          {/* Top row */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 40, justifyContent: 'space-between', marginBottom: 36 }}>
-
-            {/* Brand */}
-            <div style={{ flex: '1 1 260px', maxWidth: 320 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
-                <img src="/Lorapok-API_Atlas/logo.svg" alt="Lorapok" style={{ width: 40, height: 40, borderRadius: 10 }} />
-                <div>
-                  <div style={{ fontWeight: 800, fontSize: 15, color: '#d4e4f7', letterSpacing: '-0.01em' }}>Lorapok Atlas</div>
-                  <div style={{ fontSize: 10, color: '#334d63', letterSpacing: '0.15em', textTransform: 'uppercase' }}>API Directory</div>
-                </div>
-              </div>
-              <p style={{ fontSize: 12, color: '#4a6278', lineHeight: 1.7, margin: 0 }}>
-                A premium open-source sandbox for exploring and live-testing 600+ curated public APIs. Built for developers, by developers.
-              </p>
-              <div style={{ display: 'flex', gap: 8, marginTop: 16, flexWrap: 'wrap' }}>
-                {[
-                  { label: `${ALL_APIS.length} APIs`, color: '#38bdf8' },
-                  { label: `${CATEGORIES.length - 1} Categories`, color: '#818cf8' },
-                  { label: 'Open Source', color: '#34d399' },
-                ].map(b => (
-                  <span key={b.label} style={{ fontSize: 10, fontWeight: 700, padding: '3px 10px', borderRadius: 20, background: 'rgba(255,255,255,0.04)', border: '1px solid #1a3050', color: b.color, letterSpacing: '0.05em' }}>
-                    {b.label}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Product */}
-            <div style={{ flex: '0 1 160px' }}>
-              <div style={{ fontSize: 10, fontWeight: 700, color: '#38bdf8', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 14 }}>Product</div>
-              {[
-                { label: 'Live API Testing', href: '#' },
-                { label: 'Code Snippets', href: '#' },
-                { label: 'Key Manager', href: '#' },
-                { label: 'Response Visualizer', href: '#' },
-                { label: 'GitHub Actions CI/CD', href: 'https://github.com/Maijied/Lorapok-API_Atlas/actions' },
-              ].map(l => (
-                <a key={l.label} href={l.href} target={l.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer"
-                  style={{ display: 'block', fontSize: 12, color: '#4a6278', marginBottom: 8, textDecoration: 'none', transition: 'color 0.15s' }}
-                  onMouseEnter={e => (e.currentTarget.style.color = '#d4e4f7')}
-                  onMouseLeave={e => (e.currentTarget.style.color = '#4a6278')}
-                >{l.label}</a>
-              ))}
-            </div>
-
-            {/* Resources */}
-            <div style={{ flex: '0 1 160px' }}>
-              <div style={{ fontSize: 10, fontWeight: 700, color: '#818cf8', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 14 }}>Resources</div>
-              {[
-                { label: 'Source Code', href: 'https://github.com/Maijied/Lorapok-API_Atlas' },
-                { label: 'Report an Issue', href: 'https://github.com/Maijied/Lorapok-API_Atlas/issues' },
-                { label: 'Contribute', href: 'https://github.com/Maijied/Lorapok-API_Atlas/pulls' },
-                { label: 'README', href: 'https://github.com/Maijied/Lorapok-API_Atlas#readme' },
-              ].map(l => (
-                <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer"
-                  style={{ display: 'block', fontSize: 12, color: '#4a6278', marginBottom: 8, textDecoration: 'none', transition: 'color 0.15s' }}
-                  onMouseEnter={e => (e.currentTarget.style.color = '#d4e4f7')}
-                  onMouseLeave={e => (e.currentTarget.style.color = '#4a6278')}
-                >{l.label}</a>
-              ))}
-            </div>
-
-            {/* Tech stack */}
-            <div style={{ flex: '0 1 180px' }}>
-              <div style={{ fontSize: 10, fontWeight: 700, color: '#34d399', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 14 }}>Built With</div>
-              {[
-                { label: 'React 18 + TypeScript', icon: '⚛️' },
-                { label: 'Vite 5', icon: '⚡' },
-                { label: 'Tailwind CSS', icon: '🎨' },
-                { label: 'Framer Motion', icon: '🎞️' },
-                { label: 'Firebase + Firestore', icon: '🔥' },
-                { label: 'GitHub Pages', icon: '🚀' },
-              ].map(t => (
-                <div key={t.label} style={{ display: 'flex', alignItems: 'center', gap: 7, fontSize: 12, color: '#4a6278', marginBottom: 7 }}>
-                  <span style={{ fontSize: 13 }}>{t.icon}</span> {t.label}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Divider */}
-          <div style={{ height: 1, background: 'linear-gradient(90deg, transparent, #1a3050 30%, #1a3050 70%, transparent)', marginBottom: 24 }} />
-
-          {/* Support & Author row */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, marginBottom: 32 }}>
-
-            {/* Decentralized Support */}
-            <div style={{ flex: '1 1 340px' }}>
-              <div style={{ fontSize: 10, fontWeight: 700, color: '#fde047', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 6 }}>
-                <span>💛</span> Decentralized Support
-              </div>
-              <p style={{ fontSize: 11, color: '#4a6278', marginBottom: 12, lineHeight: 1.6 }}>
-                If this project helped you, consider supporting via USDT. No accounts, no middlemen — direct on-chain.
-              </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                {[
-                  { net: 'BNB Smart Chain (BEP20)', addr: '0xfbaae60922e40bdcc82142ac6d6ff9c69bb12d26' },
-                  { net: 'Ethereum (ERC20)',         addr: '0xfbaae60922e40bdcc82142ac6d6ff9c69bb12d26' },
-                  { net: 'Tron (TRC20)',             addr: 'TNicohFHB9VYPSq2ksqRD73Ubhi9QVAVZm' },
-                  { net: 'Solana',                   addr: 'HMbxpSyhSS99xC9fVdMMtbnrbjBEvSP2ww2KXUoqwe7D' },
-                  { net: 'Aptos',                    addr: '0xb9a6776cfce10ee3755ecaa39f8aeb5b4f1edaa0adaccf4c79260c63bce27e3d' },
-                ].map(({ net, addr }) => (
-                  <div key={net} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 10px', borderRadius: 6, background: 'rgba(253,224,71,0.04)', border: '1px solid rgba(253,224,71,0.1)' }}>
-                    <span style={{ fontSize: 10, fontWeight: 700, color: '#fde047', minWidth: 160, flexShrink: 0 }}>{net}</span>
-                    <CopyableAddress addr={addr} />
-                  </div>
-                ))}
-              </div>
-              <p style={{ fontSize: 10, color: '#334d63', marginTop: 8 }}>⚠️ Only send USDT to the matching network.</p>
-            </div>
-
-            {/* Author */}
-            <div style={{ flex: '0 1 220px' }}>
-              <div style={{ fontSize: 10, fontWeight: 700, color: '#818cf8', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 6 }}>
-                <span>👤</span> About the Author
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: '#d4e4f7', marginBottom: 2 }}>Mohammad Maizied Hasan Majumder</div>
-                  <div style={{ fontSize: 11, color: '#4a6278' }}>Application Developer · Open Source Enthusiast</div>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                  <a href="https://github.com/maijied" target="_blank" rel="noopener noreferrer"
-                    style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 12px', borderRadius: 7, background: 'rgba(255,255,255,0.04)', border: '1px solid #1a3050', color: '#d4e4f7', textDecoration: 'none', fontSize: 12, fontWeight: 600, transition: 'all 0.15s' }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = '#38bdf8'; e.currentTarget.style.color = '#38bdf8' }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#d4e4f7' }}
-                  >
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-                    github.com/maijied
-                  </a>
-                  <a href="https://www.linkedin.com/in/maizied/" target="_blank" rel="noopener noreferrer"
-                    style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 12px', borderRadius: 7, background: 'rgba(255,255,255,0.04)', border: '1px solid #1a3050', color: '#d4e4f7', textDecoration: 'none', fontSize: 12, fontWeight: 600, transition: 'all 0.15s' }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = '#818cf8'; e.currentTarget.style.color = '#818cf8' }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#d4e4f7' }}
-                  >
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                    linkedin.com/in/maizied
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Second divider */}
-          <div style={{ height: 1, background: 'linear-gradient(90deg, transparent, #1a3050 30%, #1a3050 70%, transparent)', marginBottom: 24 }} />
-
-          {/* Bottom row */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <span style={{ fontSize: 20 }}>🐛</span>
+      {/* ── Footer ── */}
+      <footer style={{ background: 'linear-gradient(180deg, #070e18 0%, #050b14 100%)', borderTop: '1px solid #1a3050' }}>
+        {/* Top section */}
+        <div style={{ maxWidth: 1400, margin: '0 auto', padding: '56px 24px 40px', display: 'flex', flexWrap: 'wrap', gap: 48, justifyContent: 'space-between' }}>
+          {/* Brand */}
+          <div style={{ flex: '1 1 280px', maxWidth: 320 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+              <img src="/Lorapok-API_Atlas/logo.svg" alt="Lorapok" style={{ width: 44, height: 44, borderRadius: 11 }} />
               <div>
-                <span style={{ fontSize: 12, color: '#334d63' }}>
-                  © {new Date().getFullYear()} &nbsp;
-                </span>
-                <a href="https://github.com/Maijied" target="_blank" rel="noopener noreferrer"
-                  style={{ fontSize: 12, fontWeight: 700, color: '#38bdf8', textDecoration: 'none' }}
-                  onMouseEnter={e => (e.currentTarget.style.color = '#7dd3fc')}
-                  onMouseLeave={e => (e.currentTarget.style.color = '#38bdf8')}
-                >Lorapok</a>
-                <span style={{ fontSize: 12, color: '#334d63' }}> · All rights reserved · MIT License</span>
+                <div style={{ fontWeight: 800, fontSize: 16, color: '#d4e4f7', letterSpacing: '-0.02em' }}>Lorapok Atlas</div>
+                <div style={{ fontSize: 9, color: '#334d63', letterSpacing: '0.2em', textTransform: 'uppercase' }}>API Directory</div>
               </div>
             </div>
-
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              <span style={{ fontSize: 11, color: '#1e3a52' }}>Made with</span>
-              <span style={{ fontSize: 13 }}>💚</span>
-              <span style={{ fontSize: 11, color: '#1e3a52' }}>for the open-source community</span>
+            <p style={{ fontSize: 13, color: '#4a6278', lineHeight: 1.75, margin: '0 0 20px' }}>
+              A premium open-source sandbox for exploring and live-testing {ALL_APIS.length}+ curated public APIs. Built for developers, by developers.
+            </p>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              {[{ l: `${ALL_APIS.length} APIs`, c: '#38bdf8' }, { l: `${CATEGORIES.length - 1} Categories`, c: '#818cf8' }, { l: 'MIT License', c: '#34d399' }].map(b => (
+                <span key={b.l} style={{ fontSize: 10, fontWeight: 700, padding: '3px 10px', borderRadius: 20, background: 'rgba(255,255,255,0.04)', border: '1px solid #1a3050', color: b.c }}>{b.l}</span>
+              ))}
             </div>
+          </div>
 
-            <div style={{ display: 'flex', gap: 12 }}>
-              <a href="https://github.com/Maijied/Lorapok-API_Atlas" target="_blank" rel="noopener noreferrer"
-                style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#334d63', textDecoration: 'none', padding: '5px 12px', borderRadius: 6, border: '1px solid #1a3050', transition: 'all 0.15s' }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = '#38bdf8'; e.currentTarget.style.color = '#38bdf8' }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#334d63' }}
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-                Star on GitHub
-              </a>
+          {/* Product */}
+          <div style={{ flex: '0 1 150px' }}>
+            <div style={{ fontSize: 10, fontWeight: 700, color: '#38bdf8', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 16 }}>Product</div>
+            {[{ l: 'Live API Testing', h: '#' }, { l: 'Code Snippets', h: '#' }, { l: 'Key Manager', h: '#' }, { l: 'Response Visualizer', h: '#' }, { l: 'CI/CD Pipeline', h: 'https://github.com/Maijied/Lorapok-API_Atlas/actions' }].map(lk => (
+              <a key={lk.l} href={lk.h} target={lk.h.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" style={{ display: 'block', fontSize: 13, color: '#4a6278', marginBottom: 10, textDecoration: 'none', transition: 'color 0.15s' }}
+                onMouseEnter={e => (e.currentTarget.style.color = '#d4e4f7')} onMouseLeave={e => (e.currentTarget.style.color = '#4a6278')}>{lk.l}</a>
+            ))}
+          </div>
+
+          {/* Resources */}
+          <div style={{ flex: '0 1 150px' }}>
+            <div style={{ fontSize: 10, fontWeight: 700, color: '#818cf8', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 16 }}>Resources</div>
+            {[{ l: 'Source Code', h: 'https://github.com/Maijied/Lorapok-API_Atlas' }, { l: 'Report Issue', h: 'https://github.com/Maijied/Lorapok-API_Atlas/issues' }, { l: 'Contribute', h: 'https://github.com/Maijied/Lorapok-API_Atlas/pulls' }, { l: 'README', h: 'https://github.com/Maijied/Lorapok-API_Atlas#readme' }].map(lk => (
+              <a key={lk.l} href={lk.h} target="_blank" rel="noopener noreferrer" style={{ display: 'block', fontSize: 13, color: '#4a6278', marginBottom: 10, textDecoration: 'none', transition: 'color 0.15s' }}
+                onMouseEnter={e => (e.currentTarget.style.color = '#d4e4f7')} onMouseLeave={e => (e.currentTarget.style.color = '#4a6278')}>{lk.l}</a>
+            ))}
+          </div>
+
+          {/* Tech */}
+          <div style={{ flex: '0 1 180px' }}>
+            <div style={{ fontSize: 10, fontWeight: 700, color: '#34d399', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 16 }}>Built With</div>
+            {[['⚛️', 'React 18 + TypeScript'], ['⚡', 'Vite 5'], ['🎨', 'Tailwind CSS'], ['🎞️', 'Framer Motion'], ['🔥', 'Firebase + Firestore'], ['🤖', 'Groq AI (Vaultie)'], ['🚀', 'GitHub Pages']].map(([icon, label]) => (
+              <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: '#4a6278', marginBottom: 8 }}>
+                <span style={{ fontSize: 14 }}>{icon}</span>{label}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div style={{ height: 1, background: 'linear-gradient(90deg, transparent, #1a3050 20%, #1a3050 80%, transparent)', margin: '0 24px' }} />
+
+        {/* Support + Author */}
+        <div style={{ maxWidth: 1400, margin: '0 auto', padding: '36px 24px', display: 'flex', flexWrap: 'wrap', gap: 32 }}>
+          {/* Support */}
+          <div style={{ flex: '1 1 340px' }}>
+            <div style={{ fontSize: 10, fontWeight: 700, color: '#fde047', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
+              💛 Decentralized Support
             </div>
+            <p style={{ fontSize: 12, color: '#4a6278', marginBottom: 14, lineHeight: 1.65 }}>If this project helped you, consider supporting via USDT. No accounts, no middlemen — direct on-chain.</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              {[
+                { net: 'BNB Smart Chain (BEP20)', addr: '0xfbaae60922e40bdcc82142ac6d6ff9c69bb12d26' },
+                { net: 'Ethereum (ERC20)', addr: '0xfbaae60922e40bdcc82142ac6d6ff9c69bb12d26' },
+                { net: 'Tron (TRC20)', addr: 'TNicohFHB9VYPSq2ksqRD73Ubhi9QVAVZm' },
+                { net: 'Solana', addr: 'HMbxpSyhSS99xC9fVdMMtbnrbjBEvSP2ww2KXUoqwe7D' },
+                { net: 'Aptos', addr: '0xb9a6776cfce10ee3755ecaa39f8aeb5b4f1edaa0adaccf4c79260c63bce27e3d' },
+              ].map(({ net, addr }) => (
+                <div key={net} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 10px', borderRadius: 7, background: 'rgba(253,224,71,0.04)', border: '1px solid rgba(253,224,71,0.1)' }}>
+                  <span style={{ fontSize: 10, fontWeight: 700, color: '#fde047', minWidth: 155, flexShrink: 0 }}>{net}</span>
+                  <CopyableAddress addr={addr} />
+                </div>
+              ))}
+            </div>
+            <p style={{ fontSize: 10, color: '#334d63', marginTop: 8 }}>⚠️ Only send USDT to the matching network.</p>
+          </div>
+
+          {/* Author */}
+          <div style={{ flex: '0 1 240px' }}>
+            <div style={{ fontSize: 10, fontWeight: 700, color: '#818cf8', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 6 }}>
+              👤 About the Author
+            </div>
+            <div style={{ marginBottom: 16 }}>
+              <div style={{ fontSize: 14, fontWeight: 700, color: '#d4e4f7', marginBottom: 4 }}>Mohammad Maizied Hasan Majumder</div>
+              <div style={{ fontSize: 12, color: '#4a6278', lineHeight: 1.5 }}>Application Developer · Open Source Enthusiast</div>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {[
+                { href: 'https://github.com/maijied', label: 'github.com/maijied', color: '#38bdf8', icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg> },
+                { href: 'https://www.linkedin.com/in/maizied/', label: 'linkedin.com/in/maizied', color: '#818cf8', icon: <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> },
+              ].map(lk => (
+                <a key={lk.href} href={lk.href} target="_blank" rel="noopener noreferrer"
+                  style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', borderRadius: 8, background: 'rgba(255,255,255,0.04)', border: '1px solid #1a3050', color: '#d4e4f7', textDecoration: 'none', fontSize: 12, fontWeight: 600, transition: 'all 0.15s' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = lk.color; e.currentTarget.style.color = lk.color }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#d4e4f7' }}>
+                  {lk.icon}{lk.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div style={{ borderTop: '1px solid #1a3050', padding: '18px 24px' }}>
+          <div style={{ maxWidth: 1400, margin: '0 auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span style={{ fontSize: 18 }}>🐛</span>
+              <span style={{ fontSize: 12, color: '#334d63' }}>© {new Date().getFullYear()} </span>
+              <a href="https://github.com/Maijied" target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, fontWeight: 700, color: '#38bdf8', textDecoration: 'none' }}>Lorapok</a>
+              <span style={{ fontSize: 12, color: '#334d63' }}>· All rights reserved · MIT License</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 11, color: '#1e3a52' }}>
+              Made with <span style={{ fontSize: 14 }}>💚</span> for the open-source community
+            </div>
+            <a href="https://github.com/Maijied/Lorapok-API_Atlas" target="_blank" rel="noopener noreferrer"
+              style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#334d63', textDecoration: 'none', padding: '5px 12px', borderRadius: 7, border: '1px solid #1a3050', transition: 'all 0.15s' }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = '#38bdf8'; e.currentTarget.style.color = '#38bdf8' }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#334d63' }}>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              ⭐ Star on GitHub
+            </a>
           </div>
         </div>
       </footer>
