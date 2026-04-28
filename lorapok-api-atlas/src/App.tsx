@@ -297,7 +297,113 @@ func main() {
   )
 }
 
-const ResponsePanel = ({ data, isLoading, apiName, baseUrl }: { data: any; isLoading: boolean; apiName: string; baseUrl?: string }) => {
+// ─── CORS Panel — interactive cURL runner ────────────────────────────────────
+const CorsPanel = ({ api }: { api?: FlatApi }) => {
+  const [copied, setCopied] = useState(false)
+  const [showSteps, setShowSteps] = useState(false)
+
+  const method = api?.method || 'GET'
+  const url = api?.url || ''
+  const isPost = ['POST','PUT','PATCH'].includes(method)
+  const rawBody = (api?.raw as any)?.request?.body?.raw || ''
+  const authHeader = api?.authRequired ? `\n  --header 'Authorization: Bearer YOUR_KEY' \\` : ''
+
+  const curlCmd = `curl --request ${method} \\
+  --url '${url}' \\${authHeader}
+  --header 'Accept: application/json'${isPost && rawBody ? ` \\
+  --header 'Content-Type: application/json' \\
+  --data '${rawBody}'` : ''}`
+
+  const copy = () => {
+    navigator.clipboard.writeText(curlCmd)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  return (
+    <div className="flex flex-col h-full overflow-y-auto custom-scrollbar p-5 gap-4">
+      {/* Header */}
+      <div className="flex items-center gap-3">
+        <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>🚧</div>
+        <div>
+          <div className="font-bold text-sm" style={{ color: '#fbbf24' }}>CORS Blocked</div>
+          <p className="text-xs" style={{ color: '#4a6278' }}>Browser requests are blocked. Run this directly from your terminal.</p>
+        </div>
+      </div>
+
+      {/* cURL command box */}
+      <div style={{ background: '#050c18', border: '1px solid #1a3050', borderRadius: 10, overflow: 'hidden' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 12px', background: 'rgba(0,0,0,0.3)', borderBottom: '1px solid #1a3050' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <Terminal size={12} style={{ color: '#34d399' }} />
+            <span style={{ fontSize: 10, fontWeight: 700, color: '#34d399', textTransform: 'uppercase', letterSpacing: '0.1em' }}>cURL Command</span>
+          </div>
+          <button
+            onClick={copy}
+            style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '4px 10px', borderRadius: 6, background: copied ? 'rgba(52,211,153,0.15)' : 'rgba(56,189,248,0.1)', border: `1px solid ${copied ? 'rgba(52,211,153,0.4)' : 'rgba(56,189,248,0.3)'}`, color: copied ? '#34d399' : '#38bdf8', fontSize: 11, fontWeight: 700, cursor: 'pointer', transition: 'all 0.15s' }}
+          >
+            {copied ? <><Check size={12} /> Copied!</> : <><Copy size={12} /> Copy & Run</>}
+          </button>
+        </div>
+        <pre style={{ margin: 0, padding: '12px 14px', fontSize: 11, fontFamily: 'monospace', color: '#a5f3fc', lineHeight: 1.7, overflowX: 'auto', whiteSpace: 'pre' }}>
+          {curlCmd}
+        </pre>
+      </div>
+
+      {/* One-click copy CTA */}
+      <button
+        onClick={copy}
+        style={{ width: '100%', padding: '11px', borderRadius: 9, background: copied ? 'rgba(52,211,153,0.12)' : 'linear-gradient(135deg, rgba(56,189,248,0.15), rgba(129,140,248,0.15))', border: `1px solid ${copied ? 'rgba(52,211,153,0.3)' : 'rgba(56,189,248,0.3)'}`, color: copied ? '#34d399' : '#38bdf8', fontSize: 13, fontWeight: 700, cursor: 'pointer', transition: 'all 0.2s', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
+        onMouseEnter={e => !copied && (e.currentTarget.style.background = 'linear-gradient(135deg, rgba(56,189,248,0.22), rgba(129,140,248,0.22))')}
+        onMouseLeave={e => !copied && (e.currentTarget.style.background = 'linear-gradient(135deg, rgba(56,189,248,0.15), rgba(129,140,248,0.15))')}
+      >
+        {copied
+          ? <><Check size={15} /> Copied to clipboard — paste in your terminal</>
+          : <><Copy size={15} /> Copy cURL command to clipboard</>}
+      </button>
+
+      {/* How to run steps */}
+      <div>
+        <button
+          onClick={() => setShowSteps(v => !v)}
+          style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'none', border: 'none', color: '#4a6278', fontSize: 11, cursor: 'pointer', padding: 0 }}
+        >
+          {showSteps ? <ChevronDown size={13} /> : <ChevronRight size={13} />}
+          How to run this in your terminal
+        </button>
+        <AnimatePresence>
+          {showSteps && (
+            <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
+              <div style={{ marginTop: 10, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {[
+                  { step: '1', label: 'Copy the command', desc: 'Click "Copy cURL command" above', icon: '📋' },
+                  { step: '2', label: 'Open your terminal', desc: 'Terminal, iTerm, PowerShell, or WSL', icon: '💻' },
+                  { step: '3', label: 'Paste and run', desc: 'Ctrl+V (or Cmd+V on Mac) then Enter', icon: '▶️' },
+                  { step: '4', label: 'See the response', desc: 'JSON output will appear in the terminal', icon: '✅' },
+                ].map(s => (
+                  <div key={s.step} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                    <div style={{ width: 22, height: 22, borderRadius: '50%', background: 'rgba(56,189,248,0.1)', border: '1px solid rgba(56,189,248,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 800, color: '#38bdf8', flexShrink: 0 }}>{s.step}</div>
+                    <div>
+                      <div style={{ fontSize: 12, fontWeight: 600, color: '#d4e4f7' }}>{s.icon} {s.label}</div>
+                      <div style={{ fontSize: 11, color: '#4a6278' }}>{s.desc}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Why CORS explanation */}
+      <div style={{ padding: '10px 12px', borderRadius: 8, background: 'rgba(129,140,248,0.06)', border: '1px solid rgba(129,140,248,0.15)', fontSize: 11, color: '#4a6278', lineHeight: 1.6 }}>
+        <span style={{ color: '#818cf8', fontWeight: 700 }}>Why is this blocked?</span> Browsers enforce CORS (Cross-Origin Resource Sharing) security policy. This API doesn't send the required headers to allow browser requests — but it works perfectly from curl, Postman, or any server-side code.
+      </div>
+    </div>
+  )
+}
+
+const ResponsePanel = ({ data, isLoading, apiName, baseUrl, api }: { data: any; isLoading: boolean; apiName: string; baseUrl?: string; api?: FlatApi }) => {
   const [vizOpen, setVizOpen] = useState(true)
   const [jsonOpen, setJsonOpen] = useState(false)
   const [copied, setCopied] = useState(false)
@@ -323,20 +429,9 @@ const ResponsePanel = ({ data, isLoading, apiName, baseUrl }: { data: any; isLoa
     </div>
   )
 
-  // CORS / Network error — show a helpful message instead of raw JSON
+  // CORS / Network error — show interactive cURL runner
   if (data?.error === 'CORS / Network Error') return (
-    <div className="flex flex-col items-center justify-center h-full gap-4 p-6 text-center">
-      <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22 }}>🚧</div>
-      <div>
-        <div className="font-bold text-sm mb-1" style={{ color: '#fbbf24' }}>CORS Blocked</div>
-        <p className="text-xs leading-relaxed mb-3" style={{ color: '#4a6278', maxWidth: 280 }}>
-          This API doesn't allow direct browser requests. It works fine from a terminal or server.
-        </p>
-        <div className="text-[10px] px-3 py-2 rounded-lg text-left font-mono" style={{ background: 'rgba(0,0,0,0.4)', border: '1px solid #1a3050', color: '#34d399' }}>
-          💡 Use the cURL snippet on the left and run it in your terminal
-        </div>
-      </div>
-    </div>
+    <CorsPanel api={api} />
   )
 
   return (
@@ -739,7 +834,7 @@ const ApiModal = ({ api, onClose, user }: { api: FlatApi; onClose: () => void; u
 
             {/* Response */}
             <div className="overflow-hidden flex flex-col" style={{ minHeight: 0 }}>
-              <ResponsePanel data={testResult} isLoading={isLoading} apiName={api.name} baseUrl={effectiveUrl} />
+              <ResponsePanel data={testResult} isLoading={isLoading} apiName={api.name} baseUrl={effectiveUrl} api={api} />
             </div>
           </div>
 
