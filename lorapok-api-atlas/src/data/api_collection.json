@@ -790,30 +790,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://shibe.online/api/shibes?count=1&urls=true&httpsUrls=true",
-              "protocol": "https",
-              "host": [
-                "shibe",
-                "online"
-              ],
-              "path": [
-                "api",
-                "shibes"
-              ],
-              "query": [
-                {
-                  "key": "count",
-                  "value": "1"
-                },
-                {
-                  "key": "urls",
-                  "value": "true"
-                },
-                {
-                  "key": "httpsUrls",
-                  "value": "true"
-                }
-              ]
+              "raw": "https://shibe.online/api/shibes?count=1&urls=true&httpsUrls=true"
             }
           },
           "response": [],
@@ -899,18 +876,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://www.fruityvice.com/api/fruit/all",
-              "protocol": "https",
-              "host": [
-                "www",
-                "fruityvice",
-                "com"
-              ],
-              "path": [
-                "api",
-                "fruit",
-                "all"
-              ]
+              "raw": "https://www.fruityvice.com/api/fruit/all"
             },
             "description": "Fruit nutrition and facts"
           },
@@ -923,16 +889,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://randomfox.ca/floof/",
-              "protocol": "https",
-              "host": [
-                "randomfox",
-                "ca"
-              ],
-              "path": [
-                "floof",
-                ""
-              ]
+              "raw": "https://randomfox.ca/floof/"
             },
             "description": "Random fox images"
           },
@@ -959,7 +916,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://www.inaturalist.org/pages/api+reference"
+              "raw": "https://api.inaturalist.org/v1/observations?taxon_name=Monarch+Butterfly&per_page=3"
             },
             "description": "Species observations worldwide"
           },
@@ -973,7 +930,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://api.gbif.org/v1/occurrence/search?taxonKey=1&limit=5"
+              "raw": "https://api.gbif.org/v1/occurrence/search?taxonKey=1&limit=3"
             },
             "description": "Global biodiversity information facility"
           },
@@ -986,7 +943,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://openfarm.cc/pages/api"
+              "raw": "https://openfarm.cc/api/v1/crops?q=tomato"
             },
             "description": "Open gardening and plant data"
           },
@@ -999,7 +956,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://trefle.io"
+              "raw": "https://trefle.io/api/v1/plants?token=YOUR_API_KEY"
             },
             "description": "Plants database with images"
           },
@@ -1013,7 +970,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://www.petfinder.com/developers"
+              "raw": "https://api.petfinder.com/v2/animals"
             },
             "description": "Adoptable pets and shelters"
           },
@@ -1027,7 +984,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://xeno-canto.org/api/2/recordings?query=owl"
+              "raw": "https://xeno-canto.org/api/2/recordings?query=Turdus+merula"
             },
             "description": "Bird sounds from around the world"
           },
@@ -1040,7 +997,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://my.plantnet.org/account/doc"
+              "raw": "https://my-api.plantnet.org/v2/identify/all?api-key=YOUR_API_KEY"
             },
             "description": "Plant identification via image"
           },
@@ -1068,7 +1025,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://www.itis.gov/ws_description.html"
+              "raw": "https://www.itis.gov/ITISWebService/jsonservice/searchByScientificName?srchKey=Ursus+arctos"
             },
             "description": "Integrated taxonomic information"
           },
@@ -2134,16 +2091,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://zenquotes.io/api/random",
-              "protocol": "https",
-              "host": [
-                "zenquotes",
-                "io"
-              ],
-              "path": [
-                "api",
-                "random"
-              ]
+              "raw": "https://zenquotes.io/api/random"
             }
           },
           "response": [],
@@ -2158,14 +2106,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://api.kanye.rest",
-              "protocol": "https",
-              "host": [
-                "api",
-                "kanye",
-                "rest"
-              ],
-              "path": []
+              "raw": "https://api.kanye.rest/"
             }
           },
           "response": [],
@@ -2205,16 +2146,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://animechan.xyz/api/random",
-              "protocol": "https",
-              "host": [
-                "animechan",
-                "xyz"
-              ],
-              "path": [
-                "api",
-                "random"
-              ]
+              "raw": "https://animechan.io/api/v1/quotes/random"
             }
           },
           "response": [],
@@ -2420,7 +2352,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://docs.joinmastodon.org/api"
+              "raw": "https://mastodon.social/api/v1/timelines/public?limit=3"
             },
             "description": "Federated social network API"
           },
@@ -2565,7 +2497,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://docs.data.nasdaq.com"
+              "raw": "https://data.nasdaq.com/api/v3/datasets/WIKI/FB.json?api_key=YOUR_API_KEY"
             },
             "description": "Financial, economic, alt data"
           },
@@ -2579,7 +2511,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://dev.socrata.com"
+              "raw": "https://data.cityofnewyork.us/resource/h9gi-nx95.json?$limit=3"
             },
             "description": "Government open data platform"
           },
@@ -2593,7 +2525,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://dbpedia.org/sparql?query=SELECT+?name+WHERE+{?s+a+dbo:Person;+foaf:name+?name}+LIMIT+5&format=json"
+              "raw": "https://dbpedia.org/sparql?query=SELECT+%3Fname+WHERE+%7B%3Fs+a+dbo%3APerson%3Bfoaf%3Aname+%3Fname%7D+LIMIT+5&format=json"
             },
             "description": "Structured Wikipedia data as linked data"
           },
@@ -2606,7 +2538,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://stats.oecd.org/SDMX-JSON/data/QNA/AUS+AUT.GDP+B1_GE.CUR+VOBARSA.Q/all?startTime=2010-Q1&endTime=2010-Q4"
+              "raw": "https://stats.oecd.org/SDMX-JSON/data/QNA/AUS.GDP.CUR.Q/all?startTime=2020-Q1&endTime=2020-Q4"
             },
             "description": "Economic and social stats from OECD"
           },
@@ -2619,7 +2551,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://developers.google.com/analytics"
+              "raw": "https://analyticsdata.googleapis.com/v1beta/properties/YOUR_PROPERTY_ID:runReport"
             },
             "description": "Website traffic and behavior data"
           },
@@ -2633,7 +2565,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://developer.matomo.org/api-reference/reporting-api"
+              "raw": "https://YOUR_MATOMO.com/index.php?module=API&method=API.getMatomoVersion&format=JSON"
             },
             "description": "Open-source web analytics"
           },
@@ -2647,7 +2579,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://plausible.io/docs/stats-api"
+              "raw": "https://plausible.io/api/v1/stats/realtime/visitors?site_id=YOUR_SITE"
             },
             "description": "Privacy-focused analytics platform"
           },
@@ -2661,7 +2593,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://developer.mixpanel.com/reference"
+              "raw": "https://data.mixpanel.com/api/2.0/export"
             },
             "description": "Product analytics and event data"
           },
@@ -2675,7 +2607,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://segment.com/docs/connections/sources/catalog/libraries/server/http-api"
+              "raw": "https://api.segment.io/v1/track"
             },
             "description": "Customer data platform and tracking"
           },
@@ -2689,7 +2621,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://ourworldindata.org"
+              "raw": "https://ourworldindata.org/grapher/life-expectancy.csv"
             },
             "description": "Global development and statistics"
           },
@@ -2855,17 +2787,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://run.mocky.io/v3/8040d750-f92b-42e1-8f81-9b16893630f6",
-              "protocol": "https",
-              "host": [
-                "run",
-                "mocky",
-                "io"
-              ],
-              "path": [
-                "v3",
-                "8040d750-f92b-42e1-8f81-9b16893630f6"
-              ]
+              "raw": "https://run.mocky.io/v3/8040d750-f92b-42e1-8f81-9b16893630f6"
             }
           },
           "response": [],
@@ -2880,14 +2802,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://echo.beeceptor.com",
-              "protocol": "https",
-              "host": [
-                "echo",
-                "beeceptor",
-                "com"
-              ],
-              "path": []
+              "raw": "https://echo.beeceptor.com"
             }
           },
           "response": [],
@@ -3305,18 +3220,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://jsonplaceholder.typicode.typicode.com/posts/1",
-              "protocol": "https",
-              "host": [
-                "jsonplaceholder",
-                "typicode",
-                "typicode",
-                "com"
-              ],
-              "path": [
-                "posts",
-                "1"
-              ]
+              "raw": "https://jsonplaceholder.typicode.com/posts/1"
             }
           },
           "response": [],
@@ -3602,18 +3506,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://worldtimeapi.org/api/timezone/Etc/UTC",
-              "protocol": "http",
-              "host": [
-                "worldtimeapi",
-                "org"
-              ],
-              "path": [
-                "api",
-                "timezone",
-                "Etc",
-                "UTC"
-              ]
+              "raw": "https://worldtimeapi.org/api/timezone/Etc/UTC"
             }
           },
           "response": [],
@@ -4468,18 +4361,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://covers.openlibrary.org/b/id/240727-S.jpg",
-              "protocol": "https",
-              "host": [
-                "covers",
-                "openlibrary",
-                "org"
-              ],
-              "path": [
-                "b",
-                "id",
-                "240727-S.jpg"
-              ]
+              "raw": "https://covers.openlibrary.org/b/id/240727-S.jpg"
             }
           },
           "response": [],
@@ -5245,15 +5127,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://foodish-api.com/api",
-              "protocol": "https",
-              "host": [
-                "foodish-api",
-                "com"
-              ],
-              "path": [
-                "api"
-              ]
+              "raw": "https://foodish-api.com/api/"
             }
           },
           "response": [],
@@ -5268,17 +5142,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://coffee.alexwohlbruck.com/api/random",
-              "protocol": "https",
-              "host": [
-                "coffee",
-                "alexwohlbruck",
-                "com"
-              ],
-              "path": [
-                "api",
-                "random"
-              ]
+              "raw": "https://api.sampleapis.com/coffee/hot"
             }
           },
           "response": [],
@@ -5393,17 +5257,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://api.sampleapis.com/coffee/hot",
-              "protocol": "https",
-              "host": [
-                "api",
-                "sampleapis",
-                "com"
-              ],
-              "path": [
-                "coffee",
-                "hot"
-              ]
+              "raw": "https://api.sampleapis.com/coffee/hot"
             },
             "description": "Coffee types, drinks, and blends"
           },
@@ -5472,7 +5326,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://github.com/evz/tacofancy-api"
+              "raw": "https://taco-randomizer.herokuapp.com/random/"
             },
             "description": "Random taco recipe generator"
           },
@@ -5664,20 +5518,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://api.worldbank.org/v2/country/US/indicator/NY.GDP.MKTP.CD?format=json",
-              "protocol": "https",
-              "host": [
-                "api",
-                "worldbank",
-                "org"
-              ],
-              "path": [
-                "v2",
-                "country",
-                "US",
-                "indicator",
-                "NY.GDP.MKTP.CD?format=json"
-              ]
+              "raw": "https://api.worldbank.org/v2/country/US/indicator/NY.GDP.MKTP.CD?format=json&per_page=3"
             },
             "description": "Global development and poverty data"
           },
@@ -5690,22 +5531,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/demo_pjan?format=JSON&geo=EU27_2020&time=2020",
-              "protocol": "https",
-              "host": [
-                "ec",
-                "europa",
-                "eu"
-              ],
-              "path": [
-                "eurostat",
-                "api",
-                "dissemination",
-                "statistics",
-                "1.0",
-                "data",
-                "demo_pjan?format=JSON&geo=EU27_2020&time=2020"
-              ]
+              "raw": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/demo_pjan?format=JSON&geo=EU27_2020&time=2020"
             },
             "description": "European statistics and indicators"
           },
@@ -5731,7 +5557,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://www.api.gov.uk"
+              "raw": "https://api.gov.uk"
             },
             "description": "UK public data: companies, land registry"
           },
@@ -5745,7 +5571,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://www.europeandataportal.eu"
+              "raw": "https://data.europa.eu/api/hub/search/datasets?limit=3"
             },
             "description": "EU open data across member states"
           },
@@ -5800,7 +5626,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://efts.sec.gov/LATEST/search-index?q=%22climate+change%22&dateRange=custom&startdt=2021-01-01&enddt=2021-12-31"
+              "raw": "https://efts.sec.gov/LATEST/search-index?q=climate+change&dateRange=custom&startdt=2021-01-01&enddt=2021-12-31&hits.hits._source=period_of_report,entity_name"
             },
             "description": "US company financial filings"
           },
@@ -5868,7 +5694,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://data.gov.au"
+              "raw": "https://data.gov.au/api/3/action/package_list"
             },
             "description": "Australian government datasets"
           },
@@ -5881,7 +5707,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://data.un.org"
+              "raw": "https://data.un.org/ws/rest/data/DF_UNData_UNFCC,DF_UNData_UNFCC/A.GHG_CO2.4.1/1?format=json"
             },
             "description": "United Nations statistical data"
           },
@@ -5983,7 +5809,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://api.stlouisfed.org/fred/series/observations?series_id=GNPCA&api_key=YOUR_API_KEY&file_type=json"
+              "raw": "https://api.stlouisfed.org/fred/series/observations?series_id=GNPCA&api_key=YOUR_API_KEY&file_type=json&limit=5"
             },
             "description": "US economic time series data"
           },
@@ -6011,7 +5837,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070?api-key=YOUR_API_KEY&format=json"
+              "raw": "https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070?api-key=YOUR_API_KEY&format=json&limit=3"
             },
             "description": "Indian public datasets portal"
           },
@@ -6835,16 +6661,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://picsum.photos/200/300",
-              "protocol": "https",
-              "host": [
-                "picsum",
-                "photos"
-              ],
-              "path": [
-                "200",
-                "300"
-              ]
+              "raw": "https://picsum.photos/200/300"
             }
           },
           "response": [],
@@ -6983,7 +6800,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://api.thingspeak.com/channels/public.json?results=5"
+              "raw": "https://api.thingspeak.com/channels/public.json?results=3"
             },
             "description": "IoT analytics and data storage"
           },
@@ -7011,7 +6828,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://api.opensensemap.org/boxes?limit=5"
+              "raw": "https://api.opensensemap.org/boxes?limit=3&format=json"
             },
             "description": "Environmental IoT sensor data"
           },
@@ -7357,7 +7174,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://v3.openstates.org/people?jurisdiction=ocd-jurisdiction/country:us/state:nc/government&apikey=YOUR_API_KEY"
+              "raw": "https://v3.openstates.org/bills?jurisdiction=ocd-jurisdiction/country:us/state:nc/government&apikey=YOUR_API_KEY&per_page=3"
             },
             "description": "US state legislation and legislators"
           },
@@ -7371,7 +7188,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://www.courtlistener.com/api/rest/v3/opinions/?format=json"
+              "raw": "https://www.courtlistener.com/api/rest/v3/opinions/?format=json&page_size=3"
             },
             "description": "US court opinions and dockets"
           },
@@ -7385,7 +7202,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://api.congress.gov/v3/bill?api_key=YOUR_API_KEY&limit=5"
+              "raw": "https://api.congress.gov/v3/bill?api_key=YOUR_API_KEY&limit=3"
             },
             "description": "US Congress bills and members"
           },
@@ -7399,7 +7216,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://api.opencorporates.com"
+              "raw": "https://api.opencorporates.com/v0.4/companies/search?q=apple&per_page=3"
             },
             "description": "Global company registry data"
           },
@@ -7426,7 +7243,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://eur-lex.europa.eu/content/tools/webservices"
+              "raw": "https://eur-lex.europa.eu/search.html?type=quick&lang=en&text=GDPR"
             },
             "description": "EUR-Lex legal document search"
           },
@@ -7572,16 +7389,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://nominatim.openstreetmap.org/search?q=London&format=json",
-              "protocol": "https",
-              "host": [
-                "nominatim",
-                "openstreetmap",
-                "org"
-              ],
-              "path": [
-                "search?q=London&format=json"
-              ]
+              "raw": "https://nominatim.openstreetmap.org/search?q=London&format=json&limit=3"
             },
             "description": "Geocoding and reverse geocoding using OSM"
           },
@@ -7594,16 +7402,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://ip-api.com/json/",
-              "protocol": "http",
-              "host": [
-                "ip-api",
-                "com"
-              ],
-              "path": [
-                "json",
-                ""
-              ]
+              "raw": "http://ip-api.com/json/"
             },
             "description": "IP address geolocation"
           },
@@ -7639,17 +7438,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://api.postcodes.io/postcodes/SW1A1AA",
-              "protocol": "https",
-              "host": [
-                "api",
-                "postcodes",
-                "io"
-              ],
-              "path": [
-                "postcodes",
-                "SW1A1AA"
-              ]
+              "raw": "https://api.postcodes.io/postcodes/SW1A1AA"
             },
             "description": "UK postcode lookup and validation"
           },
@@ -7690,7 +7479,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://overpass-api.de/api/interpreter?data=[out:json];node[name=%22Berlin%22];out;"
+              "raw": "https://overpass-api.de/api/interpreter?data=[out:json];node[name=%22Eiffel+Tower%22];out;"
             },
             "description": "Query OpenStreetMap data"
           },
@@ -7703,7 +7492,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://api.geonames.org/searchJSON?q=london&maxRows=5&username=YOUR_USERNAME"
+              "raw": "http://api.geonames.org/searchJSON?q=london&maxRows=3&username=YOUR_USERNAME"
             },
             "description": "Geographical names and data worldwide"
           },
@@ -7731,7 +7520,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=37.42&longitude=-122.08"
+              "raw": "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=37.42&longitude=-122.08&localityLanguage=en"
             },
             "description": "Reverse geocoding and location enrichment"
           },
@@ -7745,7 +7534,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://photon.komoot.io/api/?q=berlin&limit=5"
+              "raw": "https://photon.komoot.io/api/?q=berlin&limit=3"
             },
             "description": "OSM-based geocoder optimized for search"
           },
@@ -7772,7 +7561,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://www.mapillary.com/developer/api-documentation"
+              "raw": "https://graph.mapillary.com/images?access_token=YOUR_API_KEY&fields=id,thumb_256_url&limit=3"
             },
             "description": "Street-level imagery from community"
           },
@@ -7786,7 +7575,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://api.opencagedata.com/geocode/v1/json?q=Berlin&key=YOUR_API_KEY"
+              "raw": "https://api.opencagedata.com/geocode/v1/json?q=Berlin&key=YOUR_API_KEY&limit=3"
             },
             "description": "Forward/reverse geocoding worldwide"
           },
@@ -7800,7 +7589,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://developer.what3words.com"
+              "raw": "https://api.what3words.com/v3/convert-to-coordinates?words=filled.count.soap&key=YOUR_API_KEY"
             },
             "description": "3-word location addressing system"
           },
@@ -7814,7 +7603,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://www.abstractapi.com/ip-geolocation-api"
+              "raw": "https://ipgeolocation.abstractapi.com/v1/?api_key=YOUR_API_KEY"
             },
             "description": "IP geolocation with timezone data"
           },
@@ -7983,7 +7772,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://api.sunrise-sunset.org/json?lat=36.72&lng=-4.42"
+              "raw": "https://api.sunrise-sunset.org/json?lat=36.72&lng=-4.42&formatted=0"
             },
             "description": "Sunrise and sunset times for any location"
           },
@@ -8143,17 +7932,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://www.boredapi.com/api/activity",
-              "protocol": "https",
-              "host": [
-                "www",
-                "boredapi",
-                "com"
-              ],
-              "path": [
-                "api",
-                "activity"
-              ]
+              "raw": "https://bored-api.appbrewery.com/random"
             },
             "description": "Random activity suggestions when bored"
           },
@@ -8240,7 +8019,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://kitsu.io/api/edge/anime?page[limit]=5"
+              "raw": "https://kitsu.io/api/edge/anime?page[limit]=3"
             },
             "description": "Anime and manga database"
           },
@@ -8513,22 +8292,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://geek-jokes.sameerkumar.website/api?format=json",
-              "protocol": "https",
-              "host": [
-                "geek-jokes",
-                "sameerkumar",
-                "website"
-              ],
-              "path": [
-                "api"
-              ],
-              "query": [
-                {
-                  "key": "format",
-                  "value": "json"
-                }
-              ]
+              "raw": "https://geek-jokes.sameerkumar.website/api?format=json"
             }
           },
           "response": [],
@@ -8622,25 +8386,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://evilinsult.com/generate_insult.php?lang=en&type=json",
-              "protocol": "https",
-              "host": [
-                "evilinsult",
-                "com"
-              ],
-              "path": [
-                "generate_insult.php"
-              ],
-              "query": [
-                {
-                  "key": "lang",
-                  "value": "en"
-                },
-                {
-                  "key": "type",
-                  "value": "json"
-                }
-              ]
+              "raw": "https://evilinsult.com/generate_insult.php?lang=en&type=json"
             }
           },
           "response": [],
@@ -8848,7 +8594,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://api.jamendo.com/v3.0/tracks/?client_id=YOUR_API_KEY&format=json&limit=5"
+              "raw": "https://api.jamendo.com/v3.0/tracks/?client_id=YOUR_API_KEY&format=json&limit=3"
             },
             "description": "Free/CC music tracks and artists"
           },
@@ -8946,7 +8692,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://acousticbrainz.org/data"
+              "raw": "https://acousticbrainz.org/api/v1/high-level?recording_ids=0dad432b-16cc-4bf0-8961-fd31d124b01b"
             },
             "description": "Music audio features and analysis"
           },
@@ -8959,7 +8705,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://developer.napster.com/api/v2.2"
+              "raw": "https://api.napster.com/v2.2/tracks/top?apikey=YOUR_API_KEY&limit=5"
             },
             "description": "Music catalog and streaming metadata"
           },
@@ -9126,19 +8872,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://api.gdeltproject.org/api/v2/summary/summary?d=web&t=summary",
-              "protocol": "https",
-              "host": [
-                "api",
-                "gdeltproject",
-                "org"
-              ],
-              "path": [
-                "api",
-                "v2",
-                "summary",
-                "summary?d=web&t=summary"
-              ]
+              "raw": "https://api.gdeltproject.org/api/v2/summary/summary?d=web&t=summary"
             },
             "description": "Global events database & media monitoring"
           },
@@ -9726,16 +9460,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://archive.org/wayback/available?url=example.com",
-              "protocol": "https",
-              "host": [
-                "archive",
-                "org"
-              ],
-              "path": [
-                "wayback",
-                "available?url=example.com"
-              ]
+              "raw": "https://archive.org/wayback/available?url=example.com"
             },
             "description": "Internet Archive web snapshots"
           },
@@ -9748,7 +9473,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://opendata.cern.ch"
+              "raw": "https://opendata.cern.ch/api/records/?type=Dataset&page=1&size=3"
             },
             "description": "Particle physics data from LHC"
           },
@@ -9761,7 +9486,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&stationid=GHCND:USW00094728&startdate=2010-05-01&enddate=2010-05-31&limit=5"
+              "raw": "https://www.ncdc.noaa.gov/cdo-web/api/v2/data?datasetid=GHCND&stationid=GHCND:USW00094728&startdate=2010-05-01&enddate=2010-05-31&limit=3"
             },
             "description": "Climate data and historical weather"
           },
@@ -9775,7 +9500,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://api.openalex.org/works?search=machine+learning&per-page=5"
+              "raw": "https://api.openalex.org/works?search=machine+learning&per-page=3"
             },
             "description": "Open catalog of scholarly works"
           },
@@ -9788,7 +9513,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://www.ncbi.nlm.nih.gov/books/NBK25497"
+              "raw": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=cancer&retmode=json&retmax=3"
             },
             "description": "Biological databases: GenBank, PubMed"
           },
@@ -9802,7 +9527,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://tidesandcurrents.noaa.gov/api-helper/url-generator.html"
+              "raw": "https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?begin_date=20240101&end_date=20240102&station=8454000&product=water_level&datum=MLLW&time_zone=GMT&units=english&format=json"
             },
             "description": "Tides and water level predictions"
           },
@@ -9841,7 +9566,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://support.datacite.org/docs/api"
+              "raw": "https://api.datacite.org/dois?query=climate+change&page[size]=3"
             },
             "description": "Research data repositories DOIs"
           },
@@ -10273,16 +9998,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://api.open-notify.org/iss-now.json",
-              "protocol": "http",
-              "host": [
-                "api",
-                "open-notify",
-                "org"
-              ],
-              "path": [
-                "iss-now.json"
-              ]
+              "raw": "http://api.open-notify.org/iss-now.json"
             },
             "description": "ISS location and astronaut data"
           },
@@ -10295,18 +10011,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://api.le-systeme-solaire.net/rest/bodies/",
-              "protocol": "https",
-              "host": [
-                "api",
-                "le-systeme-solaire",
-                "net"
-              ],
-              "path": [
-                "rest",
-                "bodies",
-                ""
-              ]
+              "raw": "https://api.le-systeme-solaire.net/rest/bodies/?data=englishName,bodyType&order=englishName,asc&page=1&size=10"
             },
             "description": "Solar system bodies, planets, moons"
           },
@@ -10319,19 +10024,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://ll.thespacedevs.com/2.2.0/launch/upcoming/?limit=5",
-              "protocol": "https",
-              "host": [
-                "ll",
-                "thespacedevs",
-                "com"
-              ],
-              "path": [
-                "2.2.0",
-                "launch",
-                "upcoming",
-                "?limit=5"
-              ]
+              "raw": "https://ll.thespacedevs.com/2.2.0/launch/upcoming/?limit=3&format=json"
             },
             "description": "Rocket launches, agencies, astronauts"
           },
@@ -10358,7 +10051,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+top+5+*+from+ps&format=json"
+              "raw": "https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+top+5+pl_name,hostname+from+ps&format=json"
             },
             "description": "Exoplanet confirmed discoveries"
           },
@@ -10371,7 +10064,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://api.helioviewer.org/v2/getJP2Image/?date=2014-01-01T23:59:59Z&sourceId=14"
+              "raw": "https://api.helioviewer.org/v2/getClosestImage/?date=2014-01-01T23:59:59Z&sourceId=14"
             },
             "description": "Solar imagery from NASA/ESA"
           },
@@ -10384,7 +10077,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://www.asterank.com/api/asterank?query={%22e%22:{%22$lt%22:0.1}}&limit=5"
+              "raw": "https://www.asterank.com/api/asterank?query={%22e%22:{%22$lt%22:0.1}}&limit=3"
             },
             "description": "Asteroid data and mining estimates"
           },
@@ -10410,7 +10103,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://simbad.u-strasbg.fr/simbad/sim-tap"
+              "raw": "https://simbad.u-strasbg.fr/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=json&QUERY=SELECT+TOP+5+main_id,ra,dec+FROM+basic"
             },
             "description": "Astronomical objects catalog (CDS)"
           },
@@ -10515,17 +10208,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://www.freetogame.com/api/games",
-              "protocol": "https",
-              "host": [
-                "www",
-                "freetogame",
-                "com"
-              ],
-              "path": [
-                "api",
-                "games"
-              ]
+              "raw": "https://www.freetogame.com/api/games?platform=pc"
             }
           },
           "response": [],
@@ -11004,18 +10687,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://api.teleport.org/api/cities/",
-              "protocol": "https",
-              "host": [
-                "api",
-                "teleport",
-                "org"
-              ],
-              "path": [
-                "api",
-                "cities",
-                ""
-              ]
+              "raw": "https://api.teleport.org/api/urban_areas/"
             }
           },
           "response": [],
@@ -11030,17 +10702,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://bikeindex.org/api/v3/search",
-              "protocol": "https",
-              "host": [
-                "bikeindex",
-                "org"
-              ],
-              "path": [
-                "api",
-                "v3",
-                "search"
-              ]
+              "raw": "https://bikeindex.org/api/v3/search?per_page=5&location=IP&distance=10&stolenness=stolen"
             }
           },
           "response": [],
@@ -11114,17 +10776,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://opensky-network.org/api/states/all",
-              "protocol": "https",
-              "host": [
-                "opensky-network",
-                "org"
-              ],
-              "path": [
-                "api",
-                "states",
-                "all"
-              ]
+              "raw": "https://opensky-network.org/api/states/all?lamin=45.8389&lomin=5.9962&lamax=47.8229&lomax=10.5226"
             },
             "description": "Live aircraft tracking data"
           },
@@ -11137,17 +10789,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://api.citybik.es/v2/networks",
-              "protocol": "https",
-              "host": [
-                "api",
-                "citybik",
-                "es"
-              ],
-              "path": [
-                "v2",
-                "networks"
-              ]
+              "raw": "https://api.citybik.es/v2/networks?fields=id,name,location&limit=5"
             },
             "description": "Bike sharing station data worldwide"
           },
@@ -11243,7 +10885,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://dev.blablacar.com"
+              "raw": "https://public-api.blablacar.com/api/v3/trips?from_coordinate=48.8566,2.3522&to_coordinate=43.2965,5.3698&locale=en-GB&currency=EUR"
             },
             "description": "Carpooling rides and trips"
           },
@@ -11312,7 +10954,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/JFK-sky/LHR-sky/2024-01-01"
+              "raw": "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/JFK-sky/LHR-sky/2024-06-01"
             },
             "description": "Flight price search and comparison"
           },
