@@ -211,7 +211,8 @@
             "description": "Run ML models via API"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://huggingface.co/join"
         },
         {
           "name": "Replicate API",
@@ -225,7 +226,8 @@
             "description": "Run open-source ML models"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://replicate.com/signin"
         },
         {
           "name": "Clarifai API",
@@ -239,7 +241,8 @@
             "description": "Image recognition and computer vision"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://clarifai.com/signup"
         },
         {
           "name": "Wit.ai (Meta)",
@@ -253,7 +256,8 @@
             "description": "Natural language processing by Meta"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://wit.ai/"
         },
         {
           "name": "DeepAI API",
@@ -267,7 +271,8 @@
             "description": "Image generation, colorization, text"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://deepai.org/dashboard"
         },
         {
           "name": "Cohere API",
@@ -281,7 +286,8 @@
             "description": "NLP: generation, embedding, classification"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://dashboard.cohere.com/register"
         },
         {
           "name": "OpenAI API",
@@ -295,7 +301,8 @@
             "description": "GPT, DALL\u00b7E, Whisper models"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://platform.openai.com/signup"
         },
         {
           "name": "Anthropic Claude API",
@@ -309,7 +316,8 @@
             "description": "Claude AI for text, code, vision"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://console.anthropic.com/"
         },
         {
           "name": "Google Gemini API",
@@ -323,7 +331,8 @@
             "description": "Multimodal AI from Google DeepMind"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://ai.google.dev/"
         },
         {
           "name": "Mistral AI API",
@@ -337,7 +346,8 @@
             "description": "Efficient open-weight language models"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://console.mistral.ai/"
         },
         {
           "name": "Stability AI API",
@@ -351,7 +361,8 @@
             "description": "Stable Diffusion image generation"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://platform.stability.ai/"
         },
         {
           "name": "Eleven Labs API",
@@ -365,7 +376,8 @@
             "description": "AI voice cloning and synthesis"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://elevenlabs.io/sign-up"
         },
         {
           "name": "AssemblyAI",
@@ -379,7 +391,8 @@
             "description": "Speech-to-text and audio intelligence"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.assemblyai.com/dashboard/signup"
         },
         {
           "name": "Deepgram API",
@@ -393,7 +406,8 @@
             "description": "Real-time and batch speech recognition"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://console.deepgram.com/signup"
         },
         {
           "name": "Perplexity AI API",
@@ -407,7 +421,8 @@
             "description": "AI-powered search and Q&A"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.perplexity.ai/settings/api"
         },
         {
           "name": "Together AI API",
@@ -421,7 +436,8 @@
             "description": "Run open-source LLMs in the cloud"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://api.together.xyz/signin"
         },
         {
           "name": "Groq API",
@@ -435,7 +451,8 @@
             "description": "Ultra-fast LLM inference API"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://console.groq.com/keys"
         },
         {
           "name": "AI21 Labs",
@@ -449,7 +466,8 @@
             "description": "Language models (Jurassic series)"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://studio.ai21.com/sign-up"
         },
         {
           "name": "DeepAI Image Generator",
@@ -463,7 +481,8 @@
             "description": "AI image generation and colorization"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://deepai.org/dashboard"
         },
         {
           "name": "Stability AI",
@@ -477,7 +496,8 @@
             "description": "Stable Diffusion image generation"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://platform.stability.ai/"
         },
         {
           "name": "Together AI",
@@ -491,7 +511,8 @@
             "description": "Run open-source LLMs in the cloud"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://api.together.xyz/signin"
         },
         {
           "name": "Perplexity AI",
@@ -505,7 +526,8 @@
             "description": "AI-powered search and Q&A"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.perplexity.ai/settings/api"
         },
         {
           "name": "ElevenLabs API",
@@ -519,7 +541,8 @@
             "description": "AI voice cloning and synthesis"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://elevenlabs.io/sign-up"
         },
         {
           "name": "Wit.ai",
@@ -533,7 +556,8 @@
             "description": "Natural language processing by Meta"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://wit.ai/"
         },
         {
           "name": "Anthropic Claude",
@@ -547,7 +571,8 @@
             "description": "Claude AI for text, code, vision"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://console.anthropic.com/"
         },
         {
           "name": "Wolfram Alpha API",
@@ -561,7 +586,8 @@
             "description": "Computational knowledge engine"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developer.wolframalpha.com/"
         },
         {
           "name": "Perspective API",
@@ -575,7 +601,8 @@
             "description": "Toxicity detection in text by Google"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developers.perspectiveapi.com/s/docs-get-started"
         },
         {
           "name": "Textgears API",
@@ -589,7 +616,8 @@
             "description": "Grammar and spell checking"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://textgears.com/signup"
         },
         {
           "name": "Meaningcloud API",
@@ -603,7 +631,8 @@
             "description": "Text analytics: sentiment, topics, entities"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.meaningcloud.com/developer/login"
         },
         {
           "name": "MonkeyLearn API",
@@ -617,7 +646,8 @@
             "description": "Text classification and extraction"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.monkeylearn.com/accounts/register/"
         }
       ]
     },
@@ -636,7 +666,8 @@
             "description": "Manage Google Ads campaigns"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://developers.google.com/google-ads/api/docs/start"
         },
         {
           "name": "Facebook Ads API",
@@ -650,7 +681,8 @@
             "description": "Meta advertising campaigns"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://developers.facebook.com/apps/"
         },
         {
           "name": "HubSpot API",
@@ -664,7 +696,8 @@
             "description": "CRM, marketing, sales, service hub"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://app.hubspot.com/signup"
         },
         {
           "name": "Salesforce API",
@@ -678,7 +711,8 @@
             "description": "CRM, leads, accounts, contacts"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://developer.salesforce.com/signup"
         },
         {
           "name": "Klaviyo API",
@@ -692,7 +726,8 @@
             "description": "Email and SMS marketing platform"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://www.klaviyo.com/account#api-keys-tab"
         },
         {
           "name": "Brevo (Sendinblue) API",
@@ -706,7 +741,8 @@
             "description": "Email, SMS, chat marketing"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.brevo.com/settings/keys/api"
         },
         {
           "name": "ActiveCampaign API",
@@ -720,7 +756,8 @@
             "description": "CRM, email automation, deals"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.activecampaign.com/free-crm-trial/"
         },
         {
           "name": "SEMrush API",
@@ -734,7 +771,8 @@
             "description": "SEO and competitor analytics"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.semrush.com/user/register/"
         },
         {
           "name": "Ahrefs API",
@@ -748,7 +786,8 @@
             "description": "Backlinks, keywords, SEO data"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://ahrefs.com/api"
         },
         {
           "name": "Moz API",
@@ -762,7 +801,8 @@
             "description": "Domain authority and link data"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://moz.com/products/api/signup"
         },
         {
           "name": "Mailchimp Marketing API",
@@ -776,7 +816,8 @@
             "description": "Email campaigns and audience management"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://login.mailchimp.com/signup/"
         }
       ]
     },
@@ -907,7 +948,8 @@
             "description": "Random cat images and facts"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://thecatapi.com/signup"
         },
         {
           "name": "iNaturalist API",
@@ -921,7 +963,8 @@
             "description": "Species observations worldwide"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://www.inaturalist.org/users/new"
         },
         {
           "name": "GBIF API",
@@ -961,7 +1004,8 @@
             "description": "Plants database with images"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://trefle.io/users/sign_up"
         },
         {
           "name": "Petfinder API",
@@ -975,7 +1019,8 @@
             "description": "Adoptable pets and shelters"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://www.petfinder.com/developers/"
         },
         {
           "name": "Xeno-canto API",
@@ -1002,7 +1047,8 @@
             "description": "Plant identification via image"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://my.plantnet.org/account/doc"
         },
         {
           "name": "NASA Earth Imagery",
@@ -1016,7 +1062,8 @@
             "description": "Earth satellite and space imagery"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://api.nasa.gov/"
         },
         {
           "name": "ITIS Taxonomy",
@@ -1400,7 +1447,8 @@
             "description": "Ethereum blockchain explorer API"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://etherscan.io/register"
         },
         {
           "name": "Blockchain.com API",
@@ -1456,7 +1504,8 @@
             "description": "Cryptocurrency prices and rankings"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://coinmarketcap.com/api/"
         },
         {
           "name": "Infura API",
@@ -1470,7 +1519,8 @@
             "description": "Ethereum and IPFS gateway access"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.infura.io/register"
         },
         {
           "name": "Alchemy API",
@@ -1484,7 +1534,8 @@
             "description": "Web3 blockchain infrastructure API"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://auth.alchemy.com/signup"
         },
         {
           "name": "OpenSea API",
@@ -1498,7 +1549,8 @@
             "description": "NFT marketplace data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://docs.opensea.io/reference/api-keys"
         },
         {
           "name": "Moralis API",
@@ -1512,7 +1564,8 @@
             "description": "Cross-chain DeFi and NFT data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://admin.moralis.io/register"
         },
         {
           "name": "Binance API",
@@ -1526,7 +1579,8 @@
             "description": "Crypto trading and market data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.binance.com/en/register"
         },
         {
           "name": "CoinGecko Pro API",
@@ -1540,7 +1594,8 @@
             "description": "Deep crypto prices, market history"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.coingecko.com/en/api/pricing"
         },
         {
           "name": "The Graph API",
@@ -1554,7 +1609,8 @@
             "description": "Query blockchain data via GraphQL"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://thegraph.com/studio/"
         },
         {
           "name": "KuCoin API",
@@ -1568,7 +1624,8 @@
             "description": "Crypto exchange and market data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.kucoin.com/account/signup"
         },
         {
           "name": "Get Bitcoin Price (CoinGecko)",
@@ -1764,7 +1821,8 @@
             "description": "Crypto prices, news, social data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://min-api.cryptocompare.com/pricing"
         },
         {
           "name": "Messari API",
@@ -1778,7 +1836,8 @@
             "description": "Crypto asset profiles and metrics"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://messari.io/api"
         },
         {
           "name": "Glassnode API",
@@ -1792,7 +1851,8 @@
             "description": "On-chain blockchain analytics"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://studio.glassnode.com/settings/api"
         },
         {
           "name": "Lunarcrush API",
@@ -1806,7 +1866,8 @@
             "description": "Crypto social analytics"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://lunarcrush.com/developers/api/authentication"
         }
       ]
     },
@@ -1825,7 +1886,8 @@
             "description": "Amazon Web Services REST APIs"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://aws.amazon.com/free/"
         },
         {
           "name": "Google Cloud APIs",
@@ -1839,7 +1901,8 @@
             "description": "GCP compute, storage, AI services"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://console.cloud.google.com/"
         },
         {
           "name": "Azure REST API",
@@ -1853,7 +1916,8 @@
             "description": "Microsoft Azure resource management"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://azure.microsoft.com/en-us/free/"
         },
         {
           "name": "DigitalOcean API",
@@ -1867,7 +1931,8 @@
             "description": "Droplets, volumes, Kubernetes"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://cloud.digitalocean.com/registrations/new"
         },
         {
           "name": "Hetzner Cloud API",
@@ -1881,7 +1946,8 @@
             "description": "European cloud infrastructure"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://accounts.hetzner.com/signUp"
         },
         {
           "name": "Cloudflare API",
@@ -1895,7 +1961,8 @@
             "description": "DNS, CDN, security, workers"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://dash.cloudflare.com/sign-up"
         },
         {
           "name": "Netlify API",
@@ -1909,7 +1976,8 @@
             "description": "Deployments, sites, functions"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://app.netlify.com/signup"
         },
         {
           "name": "Vercel API",
@@ -1923,7 +1991,8 @@
             "description": "Deployments and project management"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://vercel.com/signup"
         },
         {
           "name": "Fly.io API",
@@ -1937,7 +2006,8 @@
             "description": "Global app deployment platform"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://fly.io/app/sign-up"
         },
         {
           "name": "Linode (Akamai) API",
@@ -1951,7 +2021,8 @@
             "description": "Cloud compute and networking"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://login.linode.com/signup"
         },
         {
           "name": "Vultr API",
@@ -1965,7 +2036,8 @@
             "description": "Cloud compute, storage, networking"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.vultr.com/register/"
         },
         {
           "name": "Linode API",
@@ -1979,7 +2051,8 @@
             "description": "Cloud compute and networking"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://login.linode.com/signup"
         },
         {
           "name": "Scaleway API",
@@ -1993,7 +2066,8 @@
             "description": "European cloud provider"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://console.scaleway.com/register"
         },
         {
           "name": "OVHcloud API",
@@ -2007,7 +2081,8 @@
             "description": "European cloud and hosting services"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://www.ovhcloud.com/en/lp/new-customer/"
         },
         {
           "name": "Backblaze B2 API",
@@ -2021,7 +2096,8 @@
             "description": "Cloud object storage"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.backblaze.com/b2/sign-up.html"
         },
         {
           "name": "Wasabi API",
@@ -2035,7 +2111,8 @@
             "description": "Hot cloud storage S3-compatible"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://wasabi.com/sign-up/"
         },
         {
           "name": "Cloudinary API",
@@ -2049,7 +2126,8 @@
             "description": "Image and video management in cloud"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://cloudinary.com/users/register_free"
         },
         {
           "name": "Fastly API",
@@ -2063,7 +2141,8 @@
             "description": "CDN and edge cloud platform"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.fastly.com/signup/"
         },
         {
           "name": "Akamai API",
@@ -2077,7 +2156,8 @@
             "description": "CDN and cloud security services"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developer.akamai.com/"
         }
       ]
     },
@@ -2189,7 +2269,8 @@
             "description": "SMS, voice, email, video messaging"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.twilio.com/try-twilio"
         },
         {
           "name": "SendGrid API",
@@ -2203,7 +2284,8 @@
             "description": "Transactional and marketing email"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://signup.sendgrid.com/"
         },
         {
           "name": "Mailgun API",
@@ -2217,7 +2299,8 @@
             "description": "Email sending and tracking"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://signup.mailgun.com/new/signup"
         },
         {
           "name": "Telegram Bot API",
@@ -2231,7 +2314,8 @@
             "description": "Create bots for Telegram"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://t.me/BotFather"
         },
         {
           "name": "Discord API",
@@ -2245,7 +2329,8 @@
             "description": "Bots, guilds, channels, messages"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://discord.com/developers/applications"
         },
         {
           "name": "Slack API",
@@ -2259,7 +2344,8 @@
             "description": "Workspace messaging and automation"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://api.slack.com/apps"
         },
         {
           "name": "Twitter/X API",
@@ -2273,7 +2359,8 @@
             "description": "Tweets, users, trends"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://developer.twitter.com/en/portal/petition/essential/basic-info"
         },
         {
           "name": "WhatsApp Business API",
@@ -2287,7 +2374,8 @@
             "description": "Send/receive WhatsApp messages"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://developers.facebook.com/docs/whatsapp/getting-started"
         },
         {
           "name": "Vonage (Nexmo) API",
@@ -2301,7 +2389,8 @@
             "description": "SMS, voice, verify communications"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://ui.idp.vonage.com/ui/auth/registration"
         },
         {
           "name": "Mailchimp API",
@@ -2315,7 +2404,8 @@
             "description": "Email marketing and campaigns"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://login.mailchimp.com/signup/"
         },
         {
           "name": "Pusher API",
@@ -2329,7 +2419,8 @@
             "description": "Real-time WebSocket messaging"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://dashboard.pusher.com/accounts/sign_up"
         },
         {
           "name": "OneSignal API",
@@ -2343,7 +2434,8 @@
             "description": "Push notifications for web and mobile"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.onesignal.com/signup"
         },
         {
           "name": "Mastodon API",
@@ -2357,7 +2449,8 @@
             "description": "Federated social network API"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://mastodon.social/auth/sign_up"
         },
         {
           "name": "Facebook Graph API",
@@ -2371,7 +2464,8 @@
             "description": "Facebook pages, posts, insights"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://developers.facebook.com/apps/"
         },
         {
           "name": "LinkedIn API",
@@ -2385,7 +2479,8 @@
             "description": "Professional profiles and shares"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://www.linkedin.com/developers/apps/new"
         },
         {
           "name": "Postmark API",
@@ -2399,7 +2494,8 @@
             "description": "Transactional email delivery"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://account.postmarkapp.com/sign_up"
         },
         {
           "name": "Vonage API",
@@ -2413,7 +2509,8 @@
             "description": "SMS, voice, verify communications"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://ui.idp.vonage.com/ui/auth/registration"
         },
         {
           "name": "Brevo API",
@@ -2427,7 +2524,8 @@
             "description": "Email, SMS, chat marketing platform"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.brevo.com/settings/keys/api"
         },
         {
           "name": "Resend API",
@@ -2441,7 +2539,8 @@
             "description": "Email API for developers"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://resend.com/signup"
         },
         {
           "name": "Plunk API",
@@ -2455,7 +2554,8 @@
             "description": "Open-source email platform"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.useplunk.com/"
         },
         {
           "name": "Courier API",
@@ -2469,7 +2569,8 @@
             "description": "Multi-channel notification routing"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.courier.com/signup"
         }
       ]
     },
@@ -2488,7 +2589,8 @@
             "description": "Datasets and competitions"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.kaggle.com/account"
         },
         {
           "name": "Quandl (Nasdaq Data Link)",
@@ -2502,7 +2604,8 @@
             "description": "Financial, economic, alt data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://data.nasdaq.com/sign-up"
         },
         {
           "name": "Socrata Open Data API",
@@ -2516,7 +2619,8 @@
             "description": "Government open data platform"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://dev.socrata.com/register"
         },
         {
           "name": "DBpedia API",
@@ -2556,7 +2660,8 @@
             "description": "Website traffic and behavior data"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://console.cloud.google.com/"
         },
         {
           "name": "Matomo API",
@@ -2570,7 +2675,8 @@
             "description": "Open-source web analytics"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://matomo.org/start-free-analytics-trial/"
         },
         {
           "name": "Plausible API",
@@ -2584,7 +2690,8 @@
             "description": "Privacy-focused analytics platform"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://plausible.io/register"
         },
         {
           "name": "Mixpanel API",
@@ -2598,7 +2705,8 @@
             "description": "Product analytics and event data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://mixpanel.com/register/"
         },
         {
           "name": "Segment API",
@@ -2612,7 +2720,8 @@
             "description": "Customer data platform and tracking"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.segment.com/signup/"
         },
         {
           "name": "OurWorldInData",
@@ -2639,7 +2748,8 @@
             "description": "Product analytics platform"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://amplitude.com/get-started"
         },
         {
           "name": "Hotjar API",
@@ -2653,7 +2763,8 @@
             "description": "Heatmaps and user behavior analytics"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://insights.hotjar.com/register"
         },
         {
           "name": "Heap API",
@@ -2667,7 +2778,8 @@
             "description": "Automatic event capture analytics"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://heapanalytics.com/signup"
         }
       ]
     },
@@ -2833,7 +2945,8 @@
             "description": "Repos, issues, PRs, users, gists"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://github.com/settings/tokens"
         },
         {
           "name": "GitLab API",
@@ -2857,7 +2970,8 @@
             "description": "Projects, pipelines, merge requests"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://gitlab.com/users/sign_up"
         },
         {
           "name": "npm Registry API",
@@ -3023,7 +3137,8 @@
             "description": "Container image metadata"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://hub.docker.com/signup"
         },
         {
           "name": "Bitbucket API",
@@ -3037,7 +3152,8 @@
             "description": "Code repos, pull requests, pipelines"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://bitbucket.org/account/signup/"
         },
         {
           "name": "Jira REST API",
@@ -3051,7 +3167,8 @@
             "description": "Atlassian project and issue tracking"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://www.atlassian.com/software/jira/free"
         },
         {
           "name": "Trello API",
@@ -3065,7 +3182,8 @@
             "description": "Boards, lists, cards, and members"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://trello.com/power-ups/admin"
         },
         {
           "name": "Mocky",
@@ -3092,7 +3210,8 @@
             "description": "API collections and workspaces"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://identity.getpostman.com/signup"
         },
         {
           "name": "Swagger/OpenAPI",
@@ -3106,7 +3225,8 @@
             "description": "OpenAPI spec validation and testing"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://swagger.io/tools/swaggerhub/"
         },
         {
           "name": "UUID Generator API",
@@ -3632,7 +3752,8 @@
             "description": "Phone number validation and carrier info"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.abstractapi.com/users/signup"
         },
         {
           "name": "Abstract Email Validation",
@@ -3646,7 +3767,8 @@
             "description": "Email address validation"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.abstractapi.com/users/signup"
         },
         {
           "name": "Hunter.io",
@@ -3660,7 +3782,8 @@
             "description": "Find and verify professional email addresses"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://hunter.io/users/sign_up"
         },
         {
           "name": "Clearbit Enrichment",
@@ -3674,7 +3797,8 @@
             "description": "Company and person data enrichment"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://clearbit.com/"
         },
         {
           "name": "FullContact API",
@@ -3688,7 +3812,8 @@
             "description": "Person and company identity resolution"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://platform.fullcontact.com/"
         },
         {
           "name": "GitHub Actions API",
@@ -3702,7 +3827,8 @@
             "description": "Manage GitHub Actions workflows and runs"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://github.com/settings/tokens"
         },
         {
           "name": "CircleCI API",
@@ -3716,7 +3842,8 @@
             "description": "CI/CD pipeline management"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://circleci.com/signup/"
         },
         {
           "name": "Travis CI API",
@@ -3730,7 +3857,8 @@
             "description": "Continuous integration service"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.travis-ci.com/signup"
         },
         {
           "name": "Render API",
@@ -3744,7 +3872,8 @@
             "description": "Cloud hosting and deployment platform"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://dashboard.render.com/register"
         },
         {
           "name": "Railway API",
@@ -3758,7 +3887,8 @@
             "description": "Deploy apps and databases instantly"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://railway.app/login"
         },
         {
           "name": "Supabase API",
@@ -3772,7 +3902,8 @@
             "description": "Open-source Firebase alternative"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://supabase.com/dashboard/sign-up"
         },
         {
           "name": "PlanetScale API",
@@ -3786,7 +3917,8 @@
             "description": "MySQL-compatible serverless database"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://auth.planetscale.com/sign-up"
         },
         {
           "name": "Neon API",
@@ -3800,7 +3932,8 @@
             "description": "Serverless Postgres database"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://console.neon.tech/signup"
         },
         {
           "name": "Upstash API",
@@ -3814,7 +3947,8 @@
             "description": "Serverless Redis and Kafka"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://console.upstash.com/"
         },
         {
           "name": "Turso API",
@@ -3828,7 +3962,8 @@
             "description": "Edge SQLite database platform"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.turso.tech/signup"
         },
         {
           "name": "Linear API",
@@ -3842,7 +3977,8 @@
             "description": "Issue tracking for software teams"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://linear.app/signup"
         },
         {
           "name": "Sentry API",
@@ -3856,7 +3992,8 @@
             "description": "Error tracking and performance monitoring"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://sentry.io/signup/"
         },
         {
           "name": "Datadog API",
@@ -3870,7 +4007,8 @@
             "description": "Monitoring, analytics, and security"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.datadoghq.com/signup/agent"
         },
         {
           "name": "PagerDuty API",
@@ -3884,7 +4022,8 @@
             "description": "Incident management and alerting"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://www.pagerduty.com/sign-up/"
         },
         {
           "name": "Statuspage API",
@@ -3898,7 +4037,8 @@
             "description": "Status page management by Atlassian"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://manage.statuspage.io/login"
         },
         {
           "name": "Mocky API",
@@ -3977,7 +4117,8 @@
             "description": "OpenAPI spec validation and testing"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://swagger.io/tools/swaggerhub/"
         },
         {
           "name": "Insomnia API",
@@ -3991,7 +4132,8 @@
             "description": "REST and GraphQL API client"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://app.insomnia.rest/app/signup/"
         },
         {
           "name": "Kong API",
@@ -4004,7 +4146,8 @@
             },
             "description": "API gateway and management platform"
           },
-          "response": []
+          "response": [],
+          "authLink": "https://konghq.com/get-started"
         },
         {
           "name": "Tyk API",
@@ -4018,7 +4161,8 @@
             "description": "Open-source API gateway"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://tyk.io/sign-up/"
         }
       ]
     },
@@ -4093,7 +4237,8 @@
             "description": "Merge, compress, convert PDFs"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developer.ilovepdf.com/"
         },
         {
           "name": "PDF.co API",
@@ -4107,7 +4252,8 @@
             "description": "PDF generation, parsing, conversion"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.pdf.co/registration"
         },
         {
           "name": "DocuSign API",
@@ -4121,7 +4267,8 @@
             "description": "Electronic signatures and agreements"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://account.docusign.com/oauth/auth"
         },
         {
           "name": "HelloSign API",
@@ -4135,7 +4282,8 @@
             "description": "E-signatures via Dropbox Sign"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://app.hellosign.com/account/signUp"
         },
         {
           "name": "CloudConvert API",
@@ -4149,7 +4297,8 @@
             "description": "File conversion for 200+ formats"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://cloudconvert.com/register"
         },
         {
           "name": "PDFMonkey API",
@@ -4163,7 +4312,8 @@
             "description": "Generate PDFs from templates"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.pdfmonkey.io/sign-up"
         },
         {
           "name": "HTML2PDF Rocket",
@@ -4177,7 +4327,8 @@
             "description": "Convert HTML/URLs to PDF"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://html2pdfrocket.com/"
         },
         {
           "name": "Pandoc API",
@@ -4217,7 +4368,8 @@
             "description": "OCR for scanned documents"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.abbyy.com/cloud-ocr-sdk/"
         },
         {
           "name": "OCR.space API",
@@ -4231,7 +4383,8 @@
             "description": "Free OCR API for images and PDFs"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://ocr.space/ocrapi/freekey"
         },
         {
           "name": "Docparser API",
@@ -4245,7 +4398,8 @@
             "description": "Extract data from PDFs and documents"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.docparser.com/register"
         }
       ]
     },
@@ -4474,7 +4628,8 @@
             "description": "Currency exchange rates worldwide"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://openexchangerates.org/signup"
         },
         {
           "name": "ExchangeRate-API",
@@ -4488,7 +4643,8 @@
             "description": "Free currency conversion and rates"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.exchangerate-api.com/docs/free"
         },
         {
           "name": "Alpha Vantage",
@@ -4502,7 +4658,8 @@
             "description": "Stock market, forex, crypto data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.alphavantage.co/support/#api-key"
         },
         {
           "name": "Polygon.io",
@@ -4516,7 +4673,8 @@
             "description": "Stock market and financial data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://polygon.io/dashboard/signup"
         },
         {
           "name": "Stripe API",
@@ -4530,7 +4688,8 @@
             "description": "Payments, subscriptions, billing"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://dashboard.stripe.com/register"
         },
         {
           "name": "Fixer.io",
@@ -4544,7 +4703,8 @@
             "description": "Foreign exchange rates and converter"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://fixer.io/product"
         },
         {
           "name": "Financial Modeling Prep",
@@ -4558,7 +4718,8 @@
             "description": "Financial statements, stock data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://site.financialmodelingprep.com/register"
         },
         {
           "name": "Plaid API",
@@ -4572,7 +4733,8 @@
             "description": "Bank account and transaction data"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://dashboard.plaid.com/signup"
         },
         {
           "name": "PayPal API",
@@ -4586,7 +4748,8 @@
             "description": "Payments, invoicing, subscriptions"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://developer.paypal.com/dashboard/"
         },
         {
           "name": "WooCommerce API",
@@ -4600,7 +4763,8 @@
             "description": "Manage WooCommerce store data"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://woocommerce.com/"
         },
         {
           "name": "Shopify Admin API",
@@ -4614,7 +4778,8 @@
             "description": "Manage Shopify stores and orders"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://partners.shopify.com/signup"
         },
         {
           "name": "TaxJar API",
@@ -4628,7 +4793,8 @@
             "description": "Sales tax calculations and reporting"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.taxjar.com/sign_up"
         },
         {
           "name": "Coinbase API",
@@ -4642,7 +4808,8 @@
             "description": "Crypto buy/sell and wallet management"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://www.coinbase.com/signup"
         },
         {
           "name": "Currency Rates (Frankfurter)",
@@ -4680,7 +4847,8 @@
             "description": "VAT validation and rates"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.abstractapi.com/users/signup"
         }
       ]
     },
@@ -4938,7 +5106,8 @@
             "description": "Book volumes, previews, metadata"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://console.cloud.google.com/"
         },
         {
           "name": "Wikidata API",
@@ -4965,7 +5134,8 @@
             "description": "Academic papers and citations"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.semanticscholar.org/product/api"
         },
         {
           "name": "PubMed API",
@@ -4979,7 +5149,8 @@
             "description": "Biomedical literature database"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.ncbi.nlm.nih.gov/account/"
         },
         {
           "name": "Merriam-Webster API",
@@ -4993,7 +5164,8 @@
             "description": "Dictionary and thesaurus API"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://dictionaryapi.com/register/index"
         },
         {
           "name": "Khan Academy API",
@@ -5007,7 +5179,8 @@
             "description": "Educational content and exercises"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://www.khanacademy.org/api-labs"
         },
         {
           "name": "Wordnik API",
@@ -5021,7 +5194,8 @@
             "description": "Words, definitions, examples"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developer.wordnik.com/"
         },
         {
           "name": "Quran API",
@@ -5275,7 +5449,8 @@
             "description": "Recipe search, nutrition, meal planning"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://spoonacular.com/food-api/console#Dashboard"
         },
         {
           "name": "Edamam API",
@@ -5289,7 +5464,8 @@
             "description": "Recipe search and nutrition analysis"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developer.edamam.com/edamam-recipe-api"
         },
         {
           "name": "Yelp Fusion API",
@@ -5303,7 +5479,8 @@
             "description": "Restaurant search and reviews"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://www.yelp.com/developers/v3/manage_app"
         },
         {
           "name": "CalorieNinjas",
@@ -5317,7 +5494,8 @@
             "description": "Nutrition from natural language queries"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://calorieninjas.com/api"
         },
         {
           "name": "Taco Fancy API",
@@ -5344,7 +5522,8 @@
             "description": "Product info via barcode/EAN"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.barcodelookup.com/api"
         },
         {
           "name": "Get Food Product (Open Food Facts)",
@@ -5476,7 +5655,8 @@
             "description": "Recipe search and nutrition analysis"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developer.edamam.com/edamam-recipe-api"
         },
         {
           "name": "Tasty API",
@@ -5490,7 +5670,8 @@
             "description": "Recipes and cooking videos by BuzzFeed"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://rapidapi.com/apidojo/api/tasty"
         },
         {
           "name": "Zomato API",
@@ -5504,7 +5685,8 @@
             "description": "Restaurant search and food delivery"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developers.zomato.com/api"
         }
       ]
     },
@@ -5562,7 +5744,8 @@
             "description": "UK public data: companies, land registry"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.api.gov.uk/"
         },
         {
           "name": "European Data Portal",
@@ -5589,7 +5772,8 @@
             "description": "Demographics, economic, geographic data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://api.census.gov/data/key_signup.html"
         },
         {
           "name": "FRED API (St. Louis Fed)",
@@ -5603,7 +5787,8 @@
             "description": "US economic time series data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://fred.stlouisfed.org/docs/api/api_key.html"
         },
         {
           "name": "Companies House API (UK)",
@@ -5617,7 +5802,8 @@
             "description": "UK company registrations and filings"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developer.company-information.service.gov.uk/get-started"
         },
         {
           "name": "SEC EDGAR API",
@@ -5644,7 +5830,8 @@
             "description": "French government open data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.data.gouv.fr/en/register"
         },
         {
           "name": "Open Government Canada",
@@ -5671,7 +5858,8 @@
             "description": "Indian public datasets portal"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://data.gov.in/user/register"
         },
         {
           "name": "FBI Crime Data API",
@@ -5685,7 +5873,8 @@
             "description": "US crime statistics and trends"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://api.data.gov/signup/"
         },
         {
           "name": "Australia Open Data",
@@ -5787,7 +5976,8 @@
             "description": "Public holidays for any country"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.abstractapi.com/users/signup"
         },
         {
           "name": "Nager.Date",
@@ -5814,7 +6004,8 @@
             "description": "US economic time series data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://fred.stlouisfed.org/docs/api/api_key.html"
         },
         {
           "name": "Companies House API",
@@ -5828,7 +6019,8 @@
             "description": "UK company registrations and filings"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developer.company-information.service.gov.uk/get-started"
         },
         {
           "name": "India Open Data",
@@ -5842,7 +6034,8 @@
             "description": "Indian public datasets portal"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://data.gov.in/user/register"
         }
       ]
     },
@@ -5871,7 +6064,8 @@
             "description": "Pages, databases, blocks in Notion"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://www.notion.so/my-integrations"
         },
         {
           "name": "Airtable API",
@@ -5885,7 +6079,8 @@
             "description": "Spreadsheet-database hybrid data"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://airtable.com/account"
         },
         {
           "name": "Asana API",
@@ -5899,7 +6094,8 @@
             "description": "Tasks, projects, workspaces"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://app.asana.com/0/developer-console"
         },
         {
           "name": "Monday.com API",
@@ -5913,7 +6109,8 @@
             "description": "Work management via GraphQL"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://monday.com/developers/v2"
         },
         {
           "name": "ClickUp API",
@@ -5927,7 +6124,8 @@
             "description": "Tasks, docs, goals, workspaces"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://app.clickup.com/settings/apps"
         },
         {
           "name": "Todoist API",
@@ -5941,7 +6139,8 @@
             "description": "Tasks, projects, and reminders"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://developer.todoist.com/appconsole.html"
         },
         {
           "name": "Google Workspace API",
@@ -5955,7 +6154,8 @@
             "description": "Gmail, Drive, Calendar, Sheets"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://console.cloud.google.com/"
         },
         {
           "name": "Microsoft Graph API",
@@ -5969,7 +6169,8 @@
             "description": "Microsoft 365: mail, Teams, OneDrive"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://portal.azure.com/"
         },
         {
           "name": "Calendly API",
@@ -5983,7 +6184,8 @@
             "description": "Meeting scheduling and availability"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://developer.calendly.com/"
         },
         {
           "name": "Harvest API",
@@ -5997,7 +6199,8 @@
             "description": "Time tracking and invoicing"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://id.getharvest.com/developers"
         },
         {
           "name": "BambooHR API",
@@ -6011,7 +6214,8 @@
             "description": "Employee data and HR workflows"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.bamboohr.com/signup/"
         },
         {
           "name": "Gusto API",
@@ -6025,7 +6229,8 @@
             "description": "Payroll and HR platform"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://dev.gusto.com/"
         },
         {
           "name": "Workable API",
@@ -6039,7 +6244,8 @@
             "description": "Recruiting and HR management"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://www.workable.com/"
         },
         {
           "name": "Greenhouse API",
@@ -6053,7 +6259,8 @@
             "description": "Applicant tracking system"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developers.greenhouse.io/"
         },
         {
           "name": "Lever API",
@@ -6067,7 +6274,8 @@
             "description": "Recruiting and talent acquisition"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://hire.lever.co/developer/"
         },
         {
           "name": "Zapier API",
@@ -6081,7 +6289,8 @@
             "description": "Workflow automation between apps"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://zapier.com/app/developer"
         },
         {
           "name": "Make (Integromat) API",
@@ -6095,7 +6304,8 @@
             "description": "Visual automation platform"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.make.com/en/register"
         },
         {
           "name": "n8n API",
@@ -6109,7 +6319,8 @@
             "description": "Open-source workflow automation"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://n8n.io/"
         }
       ]
     },
@@ -6263,7 +6474,8 @@
             "description": "International disease classification codes"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://icd.who.int/icdapi"
         },
         {
           "name": "Nutritionix",
@@ -6277,7 +6489,8 @@
             "description": "Food and nutrition database"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.nutritionix.com/business/api"
         },
         {
           "name": "USDA FoodData Central",
@@ -6291,7 +6504,8 @@
             "description": "Nutrient and food composition data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://fdc.nal.usda.gov/api-key-signup.html"
         },
         {
           "name": "Calorie Ninjas",
@@ -6305,7 +6519,8 @@
             "description": "Nutrition information from natural language"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://calorieninjas.com/api"
         },
         {
           "name": "NHS API (UK)",
@@ -6319,7 +6534,8 @@
             "description": "UK health services, conditions, medications"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developer.api.nhs.uk/"
         },
         {
           "name": "ClinicalTrials.gov API",
@@ -6346,7 +6562,8 @@
             "description": "Detailed drug and pharmacology data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://go.drugbank.com/releases/latest"
         },
         {
           "name": "BioPortal API",
@@ -6360,7 +6577,8 @@
             "description": "Biomedical ontologies and terminologies"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://bioportal.bioontology.org/accounts/new"
         },
         {
           "name": "Infermedica API",
@@ -6374,7 +6592,8 @@
             "description": "Symptom checker and triage"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developer.infermedica.com/"
         },
         {
           "name": "MyFitnessPal API",
@@ -6388,7 +6607,8 @@
             "description": "Exercise and nutrition tracking"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://www.myfitnesspal.com/api"
         },
         {
           "name": "Nutritionix API",
@@ -6402,7 +6622,8 @@
             "description": "Food and nutrition database"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.nutritionix.com/business/api"
         },
         {
           "name": "NHS API",
@@ -6416,7 +6637,8 @@
             "description": "UK health services, conditions, medications"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developer.api.nhs.uk/"
         }
       ]
     },
@@ -6500,7 +6722,8 @@
             "description": "Free high-res stock photos"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://unsplash.com/developers"
         },
         {
           "name": "Pexels API",
@@ -6514,7 +6737,8 @@
             "description": "Free stock photos and videos"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.pexels.com/api/new/"
         },
         {
           "name": "Pixabay API",
@@ -6528,7 +6752,8 @@
             "description": "Free images, vectors, videos"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://pixabay.com/api/docs/"
         },
         {
           "name": "Giphy API",
@@ -6542,7 +6767,8 @@
             "description": "GIFs, stickers, animated content"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developers.giphy.com/dashboard/"
         },
         {
           "name": "Flickr API",
@@ -6556,7 +6782,8 @@
             "description": "Photo sharing and discovery"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://www.flickr.com/services/apps/create/"
         },
         {
           "name": "Cloudinary",
@@ -6570,7 +6797,8 @@
             "description": "Image and video management API"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://cloudinary.com/users/register_free"
         },
         {
           "name": "Imgur API",
@@ -6584,7 +6812,8 @@
             "description": "Image hosting and sharing"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://api.imgur.com/oauth2/addclient"
         },
         {
           "name": "DiceBear Avatars",
@@ -6611,7 +6840,8 @@
             "description": "Automatic background removal"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.remove.bg/api"
         },
         {
           "name": "Placeholder.com",
@@ -6638,7 +6868,8 @@
             "description": "GIF search engine by Google"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developers.google.com/tenor/guides/quickstart"
         },
         {
           "name": "DeepImage API",
@@ -6652,7 +6883,8 @@
             "description": "AI image upscaling and enhancement"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://deep-image.ai/"
         },
         {
           "name": "Placeholder Image URL",
@@ -6759,7 +6991,8 @@
             "description": "Image and video upload and transformation"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://cloudinary.com/users/register_free"
         }
       ]
     },
@@ -6805,7 +7038,8 @@
             "description": "IoT analytics and data storage"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://thingspeak.com/users/sign_up"
         },
         {
           "name": "Adafruit IO API",
@@ -6819,7 +7053,8 @@
             "description": "IoT cloud platform and MQTT"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://io.adafruit.com/"
         },
         {
           "name": "OpenSenseMap API",
@@ -6846,7 +7081,8 @@
             "description": "IoT devices and cloud platform"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://login.particle.io/signup"
         },
         {
           "name": "Home Assistant API",
@@ -6860,7 +7096,8 @@
             "description": "Smart home automation platform"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.home-assistant.io/"
         },
         {
           "name": "SmartThings API",
@@ -6874,7 +7111,8 @@
             "description": "Samsung smart home devices"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://developer.smartthings.com/"
         },
         {
           "name": "Tuya IoT API",
@@ -6888,7 +7126,8 @@
             "description": "Smart home device control platform"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://developer.tuya.com/en/"
         },
         {
           "name": "InfluxDB API",
@@ -6902,7 +7141,8 @@
             "description": "Time-series database for IoT"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://cloud2.influxdata.com/signup"
         },
         {
           "name": "Arduino IoT Cloud API",
@@ -6916,7 +7156,8 @@
             "description": "Connect and manage Arduino devices"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://create.arduino.cc/iot/"
         },
         {
           "name": "Meross API",
@@ -6930,7 +7171,8 @@
             "description": "Smart home device control"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.meross.com/"
         },
         {
           "name": "Govee API",
@@ -6944,7 +7186,8 @@
             "description": "Smart LED lights and home devices"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developer.govee.com/"
         },
         {
           "name": "Philips Hue API",
@@ -6958,7 +7201,8 @@
             "description": "Smart lighting control"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://developers.meethue.com/"
         }
       ]
     },
@@ -7076,7 +7320,8 @@
             "description": "High-quality neural translation"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.deepl.com/pro-api"
         },
         {
           "name": "Google Translate API",
@@ -7090,7 +7335,8 @@
             "description": "Machine translation in 100+ languages"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://console.cloud.google.com/"
         },
         {
           "name": "Microsoft Translator API",
@@ -7104,7 +7350,8 @@
             "description": "Azure AI translation service"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://portal.azure.com/"
         },
         {
           "name": "detectlanguage.com",
@@ -7118,7 +7365,8 @@
             "description": "Detect language of any text"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://detectlanguage.com/documentation"
         },
         {
           "name": "Yandex Translate API",
@@ -7132,7 +7380,8 @@
             "description": "Yandex translation service"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://yandex.com/dev/translate/"
         },
         {
           "name": "Lingua Robot API",
@@ -7146,7 +7395,8 @@
             "description": "Lemmatization and linguistic data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.linguarobot.io/"
         },
         {
           "name": "Lecto Translation",
@@ -7160,7 +7410,8 @@
             "description": "Affordable multi-language translation"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://lecto.ai/"
         }
       ]
     },
@@ -7179,7 +7430,8 @@
             "description": "US state legislation and legislators"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://openstates.org/api/register/"
         },
         {
           "name": "CourtListener API",
@@ -7193,7 +7445,8 @@
             "description": "US court opinions and dockets"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.courtlistener.com/sign-in/"
         },
         {
           "name": "Congress.gov API",
@@ -7207,7 +7460,8 @@
             "description": "US Congress bills and members"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://api.congress.gov/sign-up/"
         },
         {
           "name": "Open Corporates API",
@@ -7221,7 +7475,8 @@
             "description": "Global company registry data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://opencorporates.com/api_accounts/new"
         },
         {
           "name": "UN Sanctions API",
@@ -7261,7 +7516,8 @@
             "description": "Company enrichment and firmographics"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://clearbit.com/"
         },
         {
           "name": "OpenSyllabus API",
@@ -7275,7 +7531,8 @@
             "description": "Academic curriculum data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://opensyllabus.org/"
         }
       ]
     },
@@ -7456,7 +7713,8 @@
             "description": "Open-source routing, isochrones, geocoding"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://openrouteservice.org/dev/#/signup"
         },
         {
           "name": "Mapbox",
@@ -7470,7 +7728,8 @@
             "description": "Maps, navigation, geospatial data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://account.mapbox.com/auth/signup/"
         },
         {
           "name": "Overpass API",
@@ -7497,7 +7756,8 @@
             "description": "Geographical names and data worldwide"
           },
           "response": [],
-          "authRequired": "Username"
+          "authRequired": "Username",
+          "authLink": "http://www.geonames.org/login"
         },
         {
           "name": "ipinfo.io",
@@ -7511,7 +7771,8 @@
             "description": "IP details and geolocation"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://ipinfo.io/signup"
         },
         {
           "name": "BigDataCloud",
@@ -7525,7 +7786,8 @@
             "description": "Reverse geocoding and location enrichment"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.bigdatacloud.com/customer/register"
         },
         {
           "name": "Photon",
@@ -7552,7 +7814,8 @@
             "description": "Routing, geocoding, traffic, maps"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developer.here.com/sign-up"
         },
         {
           "name": "Mapillary API",
@@ -7566,7 +7829,8 @@
             "description": "Street-level imagery from community"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://www.mapillary.com/app/?signup=1"
         },
         {
           "name": "OpenCage Geocoder",
@@ -7580,7 +7844,8 @@
             "description": "Forward/reverse geocoding worldwide"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://opencagedata.com/users/sign_up"
         },
         {
           "name": "What3Words API",
@@ -7594,7 +7859,8 @@
             "description": "3-word location addressing system"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developer.what3words.com/public-api"
         },
         {
           "name": "Abstract IP Geolocation",
@@ -7608,7 +7874,8 @@
             "description": "IP geolocation with timezone data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.abstractapi.com/users/signup"
         },
         {
           "name": "TimeZoneDB",
@@ -7622,7 +7889,8 @@
             "description": "Timezone lookup by coordinates"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://timezonedb.com/register"
         },
         {
           "name": "Get Country Info (REST Countries)",
@@ -7710,7 +7978,8 @@
             "description": "IP geolocation with timezone and currency"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.abstractapi.com/users/signup"
         },
         {
           "name": "Zippopotam.us",
@@ -7737,7 +8006,8 @@
             "description": "Countries, states, cities data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://countrystatecity.in/docs/"
         },
         {
           "name": "Teleport API",
@@ -7806,7 +8076,8 @@
             "description": "The Movie Database: movies, TV, actors"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.themoviedb.org/settings/api"
         },
         {
           "name": "TVMaze API",
@@ -7996,7 +8267,8 @@
             "description": "Movie and TV data, ratings, posters"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.omdbapi.com/apikey.aspx"
         },
         {
           "name": "AniList API",
@@ -8010,7 +8282,8 @@
             "description": "Anime, manga, characters via GraphQL"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://anilist.co/settings/developer"
         },
         {
           "name": "Kitsu API",
@@ -8037,7 +8310,8 @@
             "description": "Movie/TV watch history and ratings"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://trakt.tv/oauth/applications/new"
         },
         {
           "name": "Simkl API",
@@ -8051,7 +8325,8 @@
             "description": "Movie and TV tracking platform"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://simkl.com/apps/new/"
         },
         {
           "name": "Quotable API",
@@ -8543,7 +8818,8 @@
             "description": "Tracks, playlists, artists, audio features"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://developer.spotify.com/dashboard/"
         },
         {
           "name": "Last.fm API",
@@ -8557,7 +8833,8 @@
             "description": "Music metadata, scrobbles, charts"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.last.fm/api/account/create"
         },
         {
           "name": "Deezer API",
@@ -8571,7 +8848,8 @@
             "description": "Tracks, albums, artists, playlists"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://developers.deezer.com/myapps/create"
         },
         {
           "name": "Genius API",
@@ -8585,7 +8863,8 @@
             "description": "Lyrics, annotations, song metadata"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://genius.com/api-clients/new"
         },
         {
           "name": "Jamendo API",
@@ -8599,7 +8878,8 @@
             "description": "Free/CC music tracks and artists"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developer.jamendo.com/v3.0"
         },
         {
           "name": "TheAudioDB",
@@ -8613,7 +8893,8 @@
             "description": "Music metadata, artwork, biographies"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.theaudiodb.com/api_guide.php"
         },
         {
           "name": "Discogs API",
@@ -8627,7 +8908,8 @@
             "description": "Vinyl records, releases, marketplace"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://www.discogs.com/settings/developers"
         },
         {
           "name": "SoundCloud API",
@@ -8641,7 +8923,8 @@
             "description": "Audio tracks, playlists, social features"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://soundcloud.com/you/apps/new"
         },
         {
           "name": "Musixmatch API",
@@ -8655,7 +8938,8 @@
             "description": "Lyrics and music data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developer.musixmatch.com/"
         },
         {
           "name": "Bandcamp API",
@@ -8669,7 +8953,8 @@
             "description": "Independent artist music discovery"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://bandcamp.com/developer"
         },
         {
           "name": "Setlist.fm API",
@@ -8683,7 +8968,8 @@
             "description": "Concert setlists and tour data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://api.setlist.fm/docs/1.0/index.html"
         },
         {
           "name": "AcousticBrainz",
@@ -8710,7 +8996,8 @@
             "description": "Music catalog and streaming metadata"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://developer.napster.com/"
         },
         {
           "name": "Lyrics.ovh",
@@ -8737,7 +9024,8 @@
             "description": "Song recognition and music data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://rapidapi.com/apidojo/api/shazam"
         }
       ]
     },
@@ -8840,7 +9128,8 @@
             "description": "Top headlines and news search"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://newsapi.org/register"
         },
         {
           "name": "HackerNews API",
@@ -8890,7 +9179,8 @@
             "description": "Google News aggregated content"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://gnews.io/"
         },
         {
           "name": "The Guardian API",
@@ -8904,7 +9194,8 @@
             "description": "Articles from The Guardian newspaper"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://open-platform.theguardian.com/access/"
         },
         {
           "name": "New York Times API",
@@ -8918,7 +9209,8 @@
             "description": "NYT articles, books, movies data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developer.nytimes.com/accounts/create"
         },
         {
           "name": "Mediastack",
@@ -8932,7 +9224,8 @@
             "description": "Real-time news in 50+ languages"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://mediastack.com/product"
         },
         {
           "name": "Currents API",
@@ -8946,7 +9239,8 @@
             "description": "Latest news from various sources"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://currentsapi.services/en/register"
         },
         {
           "name": "Reddit API",
@@ -8960,7 +9254,8 @@
             "description": "Access Reddit posts, comments, subreddits"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://www.reddit.com/prefs/apps"
         },
         {
           "name": "DEV.to API",
@@ -8974,7 +9269,8 @@
             "description": "Dev.to articles, users, tags"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://dev.to/settings/extensions"
         },
         {
           "name": "NewsData.io",
@@ -8988,7 +9284,8 @@
             "description": "Breaking news from 187 countries"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://newsdata.io/register"
         },
         {
           "name": "Bing News Search",
@@ -9002,7 +9299,8 @@
             "description": "News search via Microsoft Bing"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://portal.azure.com/"
         },
         {
           "name": "Event Registry",
@@ -9016,7 +9314,8 @@
             "description": "News articles and event analysis"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://eventregistry.org/register"
         },
         {
           "name": "Lobsters API",
@@ -9085,7 +9384,8 @@
             "description": "Product lookup via barcode/EAN"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.barcodelookup.com/api"
         },
         {
           "name": "Bit.ly API",
@@ -9099,7 +9399,8 @@
             "description": "URL shortening and analytics"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://app.bitly.com/settings/api/"
         },
         {
           "name": "TinyURL API",
@@ -9113,7 +9414,8 @@
             "description": "Simple URL shortener"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://tinyurl.com/app/dev"
         },
         {
           "name": "Rebrandly API",
@@ -9127,7 +9429,8 @@
             "description": "Branded short links and analytics"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.rebrandly.com/account/api-keys"
         },
         {
           "name": "Cleanuri API",
@@ -9154,7 +9457,8 @@
             "description": "URL shortener with analytics"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://t.ly/register"
         }
       ]
     },
@@ -9173,7 +9477,8 @@
             "description": "US property listings and estimates"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://rapidapi.com/apimaker/api/zillow-com1"
         },
         {
           "name": "Zoopla API",
@@ -9187,7 +9492,8 @@
             "description": "UK property search and valuations"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developer.zoopla.co.uk/"
         },
         {
           "name": "Realtor API",
@@ -9201,7 +9507,8 @@
             "description": "US property search and agent data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://rapidapi.com/apidojo/api/realtor"
         },
         {
           "name": "ATTOM Property API",
@@ -9215,7 +9522,8 @@
             "description": "US real estate and neighborhood data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://api.gateway.attomdata.com/"
         },
         {
           "name": "Estated API",
@@ -9229,7 +9537,8 @@
             "description": "Property data and ownership records"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://estated.com/developers/docs"
         },
         {
           "name": "Rentcast API",
@@ -9243,7 +9552,8 @@
             "description": "Rental market data and estimates"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.rentcast.io/app/api-access"
         },
         {
           "name": "HouseCanary API",
@@ -9257,7 +9567,8 @@
             "description": "Property valuations and analytics"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://api-docs.housecanary.com/"
         },
         {
           "name": "Geocodio",
@@ -9271,7 +9582,8 @@
             "description": "US/Canada geocoding and census data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://dash.geocod.io/register"
         },
         {
           "name": "OpenDataSoft Cadastre",
@@ -9298,7 +9610,8 @@
             "description": "US property listings and estimates"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.zillow.com/howzillow/"
         }
       ]
     },
@@ -9491,7 +9804,8 @@
             "description": "Climate data and historical weather"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.ncdc.noaa.gov/cdo-web/token"
         },
         {
           "name": "OpenAlex",
@@ -9518,7 +9832,8 @@
             "description": "Biological databases: GenBank, PubMed"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.ncbi.nlm.nih.gov/account/"
         },
         {
           "name": "NOAA Tides API",
@@ -9584,7 +9899,8 @@
             "description": "Volcano activity and eruption data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.volcanodiscovery.com/"
         }
       ]
     },
@@ -9667,7 +9983,8 @@
             "description": "Check if email was in data breach"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://haveibeenpwned.com/API/Key"
         },
         {
           "name": "Pwned Passwords API",
@@ -9704,7 +10021,8 @@
             "description": "Internet-connected device search engine"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://account.shodan.io/register"
         },
         {
           "name": "VirusTotal API",
@@ -9718,7 +10036,8 @@
             "description": "Malware and URL scanning"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.virustotal.com/gui/join-us"
         },
         {
           "name": "AbuseIPDB",
@@ -9732,7 +10051,8 @@
             "description": "IP abuse and threat intelligence"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.abuseipdb.com/register"
         },
         {
           "name": "PhishTank API",
@@ -9746,7 +10066,8 @@
             "description": "Community phishing URL database"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.phishtank.com/register.php"
         },
         {
           "name": "Google Safe Browsing",
@@ -9760,7 +10081,8 @@
             "description": "URL malware and phishing check"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://console.cloud.google.com/"
         },
         {
           "name": "URLScan.io",
@@ -9774,7 +10096,8 @@
             "description": "URL scanning and analysis"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://urlscan.io/user/signup"
         },
         {
           "name": "AlienVault OTX",
@@ -9788,7 +10111,8 @@
             "description": "Open threat intelligence feed"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://otx.alienvault.com/accounts/register"
         },
         {
           "name": "CVE API (NIST NVD)",
@@ -9802,7 +10126,8 @@
             "description": "Common vulnerability and exposure data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://nvd.nist.gov/developers/request-an-api-key"
         },
         {
           "name": "Auth0 API",
@@ -9816,7 +10141,8 @@
             "description": "Authentication and identity platform"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://auth0.com/signup"
         },
         {
           "name": "IPQualityScore",
@@ -9830,7 +10156,8 @@
             "description": "Fraud detection and IP reputation"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.ipqualityscore.com/create-account"
         },
         {
           "name": "Censys API",
@@ -9844,7 +10171,8 @@
             "description": "Internet-wide asset scanning data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://search.censys.io/register"
         },
         {
           "name": "Snyk API",
@@ -9858,7 +10186,8 @@
             "description": "Open source vulnerability scanning"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.snyk.io/login"
         },
         {
           "name": "Socket.dev API",
@@ -9872,7 +10201,8 @@
             "description": "Supply chain security for npm packages"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://socket.dev/"
         },
         {
           "name": "Cloudflare Radar",
@@ -9886,7 +10216,8 @@
             "description": "Internet traffic and security insights"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://dash.cloudflare.com/sign-up"
         }
       ]
     },
@@ -9965,7 +10296,8 @@
             "description": "APOD, Mars rover, asteroids, earth imagery"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://api.nasa.gov/"
         },
         {
           "name": "SpaceX API",
@@ -10042,7 +10374,8 @@
             "description": "Star charts, moon phases, events"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://astronomyapi.com/auth/signup"
         },
         {
           "name": "NASA Exoplanet Archive",
@@ -10324,7 +10657,8 @@
             },
             "description": "Sports data: leagues, teams, events"
           },
-          "response": []
+          "response": [],
+          "authLink": "https://www.thesportsdb.com/api.php"
         },
         {
           "name": "Balldontlie (NBA)",
@@ -10435,7 +10769,8 @@
             "description": "European football stats and fixtures"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.football-data.org/client/register"
         },
         {
           "name": "API-Football",
@@ -10449,7 +10784,8 @@
             "description": "Football stats, fixtures, standings"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.api-football.com/register"
         },
         {
           "name": "RAWG API",
@@ -10463,7 +10799,8 @@
             "description": "Video games database"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://rawg.io/apidocs"
         },
         {
           "name": "IGDB API (Twitch)",
@@ -10477,7 +10814,8 @@
             "description": "Games database by Twitch"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://dev.twitch.tv/console/apps/create"
         },
         {
           "name": "Lichess API",
@@ -10491,7 +10829,8 @@
             "description": "Open chess platform data"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://lichess.org/account/oauth/token/create"
         },
         {
           "name": "MLB Stats API",
@@ -10531,7 +10870,8 @@
             "description": "Live cricket scores and schedules"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.cricapi.com/"
         },
         {
           "name": "Riot Games API",
@@ -10545,7 +10885,8 @@
             "description": "League of Legends, Valorant data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developer.riotgames.com/"
         },
         {
           "name": "Steam API",
@@ -10559,7 +10900,8 @@
             "description": "Steam game info and player stats"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://steamcommunity.com/dev/apikey"
         },
         {
           "name": "Free NBA API",
@@ -10645,7 +10987,8 @@
             "description": "Games database by Twitch"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://api.igdb.com/"
         },
         {
           "name": "PandaScore API",
@@ -10659,7 +11002,8 @@
             "description": "Esports data: matches, teams, players"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://pandascore.co/"
         },
         {
           "name": "SportRadar API",
@@ -10673,7 +11017,8 @@
             "description": "Professional sports data and statistics"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developer.sportradar.com/"
         }
       ]
     },
@@ -10807,7 +11152,8 @@
             "description": "Flights, hotels, points of interest"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://developers.amadeus.com/register"
         },
         {
           "name": "Aviationstack",
@@ -10821,7 +11167,8 @@
             "description": "Real-time flight status and data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://aviationstack.com/product"
         },
         {
           "name": "Rome2Rio API",
@@ -10835,7 +11182,8 @@
             "description": "Multi-modal travel routing"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.rome2rio.com/documentation/"
         },
         {
           "name": "GTFS Realtime",
@@ -10862,7 +11210,8 @@
             "description": "Flight tracking and aviation data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://flightaware.com/commercial/firehose/"
         },
         {
           "name": "Booking.com API",
@@ -10876,7 +11225,8 @@
             "description": "Hotel availability and pricing"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://developers.booking.com/"
         },
         {
           "name": "BlaBlaCar API",
@@ -10890,7 +11240,8 @@
             "description": "Carpooling rides and trips"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://dev.blablacar.com/"
         },
         {
           "name": "OpenRailwayMap API",
@@ -10917,7 +11268,8 @@
             "description": "Unfiltered aircraft tracking data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.adsbexchange.com/data/"
         },
         {
           "name": "Skyscanner RapidAPI",
@@ -10931,7 +11283,8 @@
             "description": "Flight price search and comparison"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://rapidapi.com/skyscanner/api/skyscanner-flight-search"
         },
         {
           "name": "Citymapper API",
@@ -10945,7 +11298,8 @@
             "description": "Urban transit routing and data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://developer.citymapper.com/"
         },
         {
           "name": "Skyscanner API",
@@ -10959,7 +11313,8 @@
             "description": "Flight price search and comparison"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://rapidapi.com/skyscanner/api/skyscanner-flight-search"
         },
         {
           "name": "ADS-B Exchange",
@@ -10973,7 +11328,8 @@
             "description": "Unfiltered aircraft tracking data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.adsbexchange.com/data/"
         }
       ]
     },
@@ -11064,7 +11420,8 @@
             "description": "Current weather, forecasts, historical data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://home.openweathermap.org/users/sign_up"
         },
         {
           "name": "wttr.in",
@@ -11145,7 +11502,8 @@
             "description": "Real-time and forecast weather data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.weatherapi.com/signup.aspx"
         },
         {
           "name": "AirVisual (IQAir)",
@@ -11159,7 +11517,8 @@
             "description": "Global air quality data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.iqair.com/air-pollution-data-api"
         },
         {
           "name": "Stormglass",
@@ -11173,7 +11532,8 @@
             "description": "Marine weather and ocean data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://stormglass.io/"
         },
         {
           "name": "Meteomatics",
@@ -11187,7 +11547,8 @@
             "description": "Professional weather data API"
           },
           "response": [],
-          "authRequired": "OAuth"
+          "authRequired": "OAuth",
+          "authLink": "https://www.meteomatics.com/en/sign-up-weather-api-test-account/"
         },
         {
           "name": "Ambee",
@@ -11201,7 +11562,8 @@
             "description": "Environmental data: pollen, fires, weather"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.getambee.com/"
         },
         {
           "name": "Tomorrow.io",
@@ -11215,7 +11577,8 @@
             "description": "Hyperlocal weather intelligence"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://app.tomorrow.io/signup"
         },
         {
           "name": "Visual Crossing Weather",
@@ -11229,7 +11592,8 @@
             "description": "Historical and forecast weather data"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.visualcrossing.com/weather-api"
         },
         {
           "name": "7Timer!",
@@ -11256,7 +11620,8 @@
             "description": "Real-time air quality index worldwide"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://aqicn.org/data-platform/token/"
         },
         {
           "name": "Weatherbit",
@@ -11270,7 +11635,8 @@
             "description": "Global weather data, alerts, climate"
           },
           "response": [],
-          "authRequired": "API Key"
+          "authRequired": "API Key",
+          "authLink": "https://www.weatherbit.io/account/create"
         },
         {
           "name": "Weather Forecast (7Timer!)",
