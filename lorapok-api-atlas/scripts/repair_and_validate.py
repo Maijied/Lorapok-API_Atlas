@@ -1,7 +1,7 @@
 import json
 import os
 
-COLLECTION_PATH = "Famous Free APIs.postman_collection.json"
+COLLECTION_PATH = "lorapok-api-atlas/src/data/api_collection.json"
 OUTPUT_PATH = "lorapok-api-atlas/src/data/api_collection.json"
 
 # Comprehensive stable mirrors and fixed endpoints
@@ -191,13 +191,7 @@ def main():
         return
 
     with open(COLLECTION_PATH, "r") as f:
-        collection_raw = json.load(f)
-
-    # Handle wrapped collection from Postman API
-    if "collection" in collection_raw:
-        collection = collection_raw["collection"]
-    else:
-        collection = collection_raw
+        collection = json.load(f)
 
     categories = []
     loose_requests = []
@@ -218,90 +212,10 @@ def main():
 
     collection["item"] = categories
 
-    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
     with open(OUTPUT_PATH, "w") as f:
         json.dump(collection, f, indent=2)
 
-    print(f"Repaired and categorized collection saved to {OUTPUT_PATH}")
-
-if __name__ == "__main__":
-    main()
-
-def repair_item(item):
-    name = item.get("name")
-    
-    if name in API_AUTH_LINKS:
-        item["authLink"] = API_AUTH_LINKS[name]
-
-    if name in API_REPAIRS:
-        url = API_REPAIRS[name]
-        if "request" not in item:
-            item["request"] = {"method": "GET", "header": []}
-        
-        item["request"]["url"] = {
-            "raw": url,
-            "protocol": url.split("://")[0] if "://" in url else "https",
-            "host": url.split("://")[1].split("/")[0].split(".") if "://" in url else url.split("/")[0].split("."),
-            "path": url.split("://")[1].split("/")[1:] if "://" in url and "/" in url.split("://")[1] else []
-        }
-        
-        if "?" in url:
-            path_part = item["request"]["url"]["path"][-1] if item["request"]["url"]["path"] else ""
-            if "?" in path_part:
-                clean_path = path_part.split("?")[0]
-                query_str = path_part.split("?")[1]
-                if item["request"]["url"]["path"]:
-                    item["request"]["url"]["path"][-1] = clean_path
-                
-                query_params = []
-                for param in query_str.split("&"):
-                    if "=" in param:
-                        k, v = param.split("=")
-                        query_params.append({"key": k, "value": v})
-                item["request"]["url"]["query"] = query_params
-
-    if "item" in item:
-        for sub_item in item["item"]:
-            repair_item(sub_item)
-
-def main():
-    if not os.path.exists(COLLECTION_PATH):
-        print(f"Error: {COLLECTION_PATH} not found.")
-        return
-
-    with open(COLLECTION_PATH, "r") as f:
-        collection_raw = json.load(f)
-
-    # Handle wrapped collection from Postman API
-    if "collection" in collection_raw:
-        collection = collection_raw["collection"]
-    else:
-        collection = collection_raw
-
-    categories = []
-    loose_requests = []
-
-    if "item" in collection:
-        for item in collection["item"]:
-            repair_item(item)
-            if "item" in item:
-                categories.append(item)
-            else:
-                loose_requests.append(item)
-
-    if loose_requests:
-        categories.append({
-            "name": "General & Misc",
-            "item": loose_requests
-        })
-
-    collection["item"] = categories
-
-    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
-    with open(OUTPUT_PATH, "w") as f:
-        json.dump(collection, f, indent=2)
-
-    print(f"Repaired and categorized collection saved to {OUTPUT_PATH}")
+    print(f"Repaired collection saved to {OUTPUT_PATH}")
 
 if __name__ == "__main__":
     main()
