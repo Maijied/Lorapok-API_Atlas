@@ -46,3 +46,23 @@ export async function getAllApiKeys(uid: string): Promise<Record<string, string>
   snap.forEach(d => { result[d.id] = d.data().key })
   return result
 }
+
+// ─── Vaultie Chat Storage ─────────────────────────────────────────────────────
+// Path: vaultie_chats/{uid}/messages/{auto-id} → { role, content, ts }
+import { addDoc, query, orderBy, limit, onSnapshot, type Unsubscribe } from 'firebase/firestore'
+
+export async function saveChatMessage(uid: string, role: 'user' | 'assistant', content: string) {
+  const colRef = collection(db, 'vaultie_chats', uid, 'messages')
+  await addDoc(colRef, { role, content, ts: Date.now() })
+}
+
+export function subscribeChatHistory(
+  uid: string,
+  cb: (msgs: { role: 'user' | 'assistant'; content: string }[]) => void
+): Unsubscribe {
+  const colRef = collection(db, 'vaultie_chats', uid, 'messages')
+  const q = query(colRef, orderBy('ts', 'asc'), limit(100))
+  return onSnapshot(q, snap => {
+    cb(snap.docs.map(d => ({ role: d.data().role, content: d.data().content })))
+  })
+}

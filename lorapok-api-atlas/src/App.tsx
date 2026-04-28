@@ -5,6 +5,7 @@ import apiCollection from './data/api_collection.json'
 import axios from 'axios'
 import { signInWithGoogle, signOutUser } from './firebase'
 import { useAuth, useApiKey } from './useKeyStore'
+import { saveChatMessage, subscribeChatHistory } from './firebase'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface ApiItem {
@@ -818,6 +819,117 @@ const ApiCard = ({ api, onClick }: { api: FlatApi; onClick: () => void }) => {
   )
 }
 
+// ─── Vaultie SVG Mascot ───────────────────────────────────────────────────────
+const VaultieSVG = ({ size = 60 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="vbg" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stopColor="#0d1f3c"/>
+        <stop offset="100%" stopColor="#060e1e"/>
+      </radialGradient>
+      <radialGradient id="vglow" cx="50%" cy="60%" r="50%">
+        <stop offset="0%" stopColor="#4ade80" stopOpacity="0.3"/>
+        <stop offset="100%" stopColor="#4ade80" stopOpacity="0"/>
+      </radialGradient>
+      <linearGradient id="vbody" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#6ee7b7"/>
+        <stop offset="50%" stopColor="#4ade80"/>
+        <stop offset="100%" stopColor="#16a34a"/>
+      </linearGradient>
+      <linearGradient id="vhl" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stopColor="#bbf7d0" stopOpacity="0.7"/>
+        <stop offset="100%" stopColor="#4ade80" stopOpacity="0"/>
+      </linearGradient>
+      <linearGradient id="vring" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#38bdf8"/>
+        <stop offset="100%" stopColor="#818cf8"/>
+      </linearGradient>
+      <filter id="vgf" x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur stdDeviation="3" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+
+    {/* Background circle */}
+    <circle cx="60" cy="60" r="58" fill="url(#vbg)" stroke="url(#vring)" strokeWidth="2"/>
+
+    {/* Glow */}
+    <ellipse cx="60" cy="70" rx="30" ry="25" fill="url(#vglow)"/>
+
+    {/* Body segments */}
+    <g filter="url(#vgf)">
+      {/* Tail */}
+      <ellipse cx="60" cy="100" rx="10" ry="8" fill="url(#vbody)" opacity="0.85"/>
+      <ellipse cx="60" cy="100" rx="10" ry="8" fill="none" stroke="#38bdf8" strokeWidth="0.8" opacity="0.6"/>
+
+      {/* Segment 3 */}
+      <ellipse cx="60" cy="87" rx="13" ry="9" fill="url(#vbody)" opacity="0.9"/>
+      <ellipse cx="60" cy="87" rx="13" ry="9" fill="none" stroke="#38bdf8" strokeWidth="0.8" opacity="0.5"/>
+      <circle cx="50" cy="87" r="1.5" fill="#38bdf8" opacity="0.7"/>
+      <circle cx="70" cy="87" r="1.5" fill="#38bdf8" opacity="0.7"/>
+
+      {/* Segment 2 */}
+      <ellipse cx="60" cy="73" rx="16" ry="10" fill="url(#vbody)"/>
+      <ellipse cx="60" cy="73" rx="16" ry="10" fill="none" stroke="#38bdf8" strokeWidth="1" opacity="0.55"/>
+      {/* Arms */}
+      <path d="M44 71 Q36 67 32 71 Q36 75 44 75 Z" fill="url(#vbody)" stroke="#38bdf8" strokeWidth="0.8" opacity="0.8"/>
+      <path d="M76 71 Q84 67 88 71 Q84 75 76 75 Z" fill="url(#vbody)" stroke="#38bdf8" strokeWidth="0.8" opacity="0.8"/>
+      <circle cx="32" cy="71" r="2" fill="#38bdf8" opacity="0.9"/>
+      <circle cx="88" cy="71" r="2" fill="#38bdf8" opacity="0.9"/>
+      {/* Circuit lines */}
+      <line x1="52" y1="71" x2="68" y2="71" stroke="#bbf7d0" strokeWidth="0.7" opacity="0.5"/>
+      <circle cx="60" cy="71" r="2" fill="none" stroke="#bbf7d0" strokeWidth="0.7" opacity="0.6"/>
+
+      {/* Neck */}
+      <rect x="53" y="58" width="14" height="7" rx="3" fill="url(#vbody)"/>
+      <rect x="53" y="58" width="14" height="7" rx="3" fill="none" stroke="#38bdf8" strokeWidth="0.8" opacity="0.6"/>
+
+      {/* Head */}
+      <ellipse cx="60" cy="46" rx="20" ry="18" fill="url(#vbody)"/>
+      <ellipse cx="60" cy="38" rx="15" ry="8" fill="url(#vhl)" opacity="0.5"/>
+      <ellipse cx="60" cy="46" rx="20" ry="18" fill="none" stroke="#38bdf8" strokeWidth="1.5" opacity="0.7"/>
+
+      {/* Head band */}
+      <path d="M40 40 Q60 34 80 40" fill="none" stroke="url(#vring)" strokeWidth="2" opacity="0.8"/>
+      <circle cx="41" cy="40" r="2" fill="#38bdf8"/>
+      <circle cx="60" cy="34" r="2" fill="#818cf8"/>
+      <circle cx="79" cy="40" r="2" fill="#38bdf8"/>
+
+      {/* Antennae */}
+      <line x1="52" y1="29" x2="44" y2="16" stroke="#38bdf8" strokeWidth="1.5" opacity="0.9"/>
+      <circle cx="44" cy="16" r="3" fill="#38bdf8" opacity="0.9"/>
+      <circle cx="44" cy="16" r="1.5" fill="#e0f2fe"/>
+      <line x1="68" y1="29" x2="76" y2="16" stroke="#818cf8" strokeWidth="1.5" opacity="0.9"/>
+      <circle cx="76" cy="16" r="3" fill="#818cf8" opacity="0.9"/>
+      <circle cx="76" cy="16" r="1.5" fill="#e0e7ff"/>
+
+      {/* Eyes */}
+      <ellipse cx="52" cy="44" rx="6" ry="6" fill="#0a1628"/>
+      <ellipse cx="52" cy="44" rx="6" ry="6" fill="none" stroke="#38bdf8" strokeWidth="1.2"/>
+      <circle cx="52" cy="44" r="4" fill="#38bdf8" opacity="0.9"/>
+      <circle cx="50" cy="42" r="1.5" fill="#e0f2fe"/>
+
+      <ellipse cx="68" cy="44" rx="6" ry="6" fill="#0a1628"/>
+      <ellipse cx="68" cy="44" rx="6" ry="6" fill="none" stroke="#818cf8" strokeWidth="1.2"/>
+      <circle cx="68" cy="44" r="4" fill="#818cf8" opacity="0.9"/>
+      <circle cx="66" cy="42" r="1.5" fill="#e0e7ff"/>
+
+      {/* Smile */}
+      <path d="M53 54 Q60 59 67 54" fill="none" stroke="#bbf7d0" strokeWidth="2" strokeLinecap="round" opacity="0.9"/>
+
+      {/* Cheeks */}
+      <circle cx="44" cy="50" r="4" fill="#4ade80" opacity="0.2"/>
+      <circle cx="76" cy="50" r="4" fill="#4ade80" opacity="0.2"/>
+    </g>
+
+    {/* Corner accents */}
+    <path d="M8 22 L8 8 L22 8" stroke="url(#vring)" strokeWidth="1.5" fill="none" opacity="0.5"/>
+    <path d="M98 8 L112 8 L112 22" stroke="url(#vring)" strokeWidth="1.5" fill="none" opacity="0.5"/>
+    <path d="M8 98 L8 112 L22 112" stroke="url(#vring)" strokeWidth="1.5" fill="none" opacity="0.5"/>
+    <path d="M98 112 L112 112 L112 98" stroke="url(#vring)" strokeWidth="1.5" fill="none" opacity="0.5"/>
+  </svg>
+)
+
 // ─── Vaultie — AI Floating Assistant ─────────────────────────────────────────
 const SYSTEM_PROMPT = `You are Vaultie 🐛, the cute AI assistant and vault manager of the Lorapok Atlas API Directory.
 You are a friendly, knowledgeable larva mascot who helps developers explore and use APIs.
@@ -839,41 +951,60 @@ Your personality:
 
 interface VaultieMessage { role: 'user' | 'assistant'; content: string }
 
+const GREETING = "Hey! I'm Vaultie 🐛 — Manager of this Atlas. I know every API in here inside out. How may I help you today?"
+
 const Vaultie = () => {
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState<VaultieMessage[]>([])
   const [input, setInput] = useState('')
+  const [streaming, setStreaming] = useState('')
   const [loading, setLoading] = useState(false)
-  const [onboarded, setOnboarded] = useState(false)
+  const [opened, setOpened] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const { user } = useAuth()
 
-  // Onboarding greeting
+  // Load chat history from Firestore when signed in
   useEffect(() => {
-    if (open && !onboarded) {
-      setOnboarded(true)
-      setMessages([{
-        role: 'assistant',
-        content: "Hey there! I'm Vaultie 🐛 — your Atlas Vault Manager! I know everything about this API directory. Want me to help you find the perfect API, explain how something works, or just chat about APIs? What are you building today? 🚀"
-      }])
+    if (!user) return
+    const unsub = subscribeChatHistory(user.uid, msgs => {
+      if (msgs.length > 0) { setMessages(msgs); setOpened(true) }
+    })
+    return unsub
+  }, [user])
+
+  // Greeting on first open
+  useEffect(() => {
+    if (open && !opened) {
+      setOpened(true)
+      const greeting: VaultieMessage = { role: 'assistant', content: GREETING }
+      setMessages([greeting])
+      if (user) saveChatMessage(user.uid, 'assistant', GREETING).catch(() => {})
     }
-  }, [open, onboarded])
+  }, [open, opened, user])
 
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages, loading])
-
-  useEffect(() => {
-    if (open) setTimeout(() => inputRef.current?.focus(), 100)
-  }, [open])
+  useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [messages, streaming, loading])
+  useEffect(() => { if (open) setTimeout(() => inputRef.current?.focus(), 150) }, [open])
 
   const send = async () => {
     const text = input.trim()
-    if (!text || loading) return
+    if (!text || loading || streaming) return
     setInput('')
-    const newMessages: VaultieMessage[] = [...messages, { role: 'user', content: text }]
-    setMessages(newMessages)
+
+    const userMsg: VaultieMessage = { role: 'user', content: text }
+    const history = [...messages, userMsg]
+    setMessages(history)
+    if (user) saveChatMessage(user.uid, 'user', text).catch(() => {})
+
     setLoading(true)
+    setStreaming('')
+
+    // Build messages array with proper role structure:
+    // system → assistant (greeting) → user → assistant → user → ...
+    const apiMessages = [
+      { role: 'assistant', content: GREETING },
+      ...history.map(m => ({ role: m.role, content: m.content }))
+    ]
 
     try {
       const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -886,20 +1017,49 @@ const Vaultie = () => {
           model: 'llama3-8b-8192',
           messages: [
             { role: 'system', content: SYSTEM_PROMPT },
-            ...newMessages.map(m => ({ role: m.role, content: m.content }))
+            ...apiMessages,
           ],
-          temperature: 0.8,
-          max_tokens: 512,
-          stream: false,
-        })
+          temperature: 1,
+          max_completion_tokens: 512,
+          top_p: 1,
+          stream: true,
+          stop: null,
+        }),
       })
-      const data = await res.json()
-      const reply = data.choices?.[0]?.message?.content || "Hmm, I couldn't think of a response. Try again! 🐛"
-      setMessages(prev => [...prev, { role: 'assistant', content: reply }])
-    } catch {
-      setMessages(prev => [...prev, { role: 'assistant', content: "Oops! My brain glitched 🐛 Try again in a moment!" }])
-    } finally {
+
+      if (!res.ok || !res.body) throw new Error(`HTTP ${res.status}`)
+
+      const reader = res.body.getReader()
+      const decoder = new TextDecoder()
+      let full = ''
       setLoading(false)
+
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+        const lines = decoder.decode(value).split('\n')
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue
+          const data = line.slice(6).trim()
+          if (data === '[DONE]') break
+          try {
+            const delta = JSON.parse(data).choices?.[0]?.delta?.content || ''
+            full += delta
+            setStreaming(full)
+          } catch { /* skip malformed chunks */ }
+        }
+      }
+
+      const assistantMsg: VaultieMessage = { role: 'assistant', content: full || "Hmm, I got nothing back. Try again! 🐛" }
+      setMessages(prev => [...prev, assistantMsg])
+      setStreaming('')
+      if (user) saveChatMessage(user.uid, 'assistant', assistantMsg.content).catch(() => {})
+
+    } catch (err) {
+      setLoading(false)
+      setStreaming('')
+      const errMsg: VaultieMessage = { role: 'assistant', content: "Oops! My brain glitched 🐛 Try again in a moment!" }
+      setMessages(prev => [...prev, errMsg])
     }
   }
 
@@ -926,7 +1086,9 @@ const Vaultie = () => {
           >
             {/* Header */}
             <div style={{ padding: '14px 16px', borderBottom: '1px solid #1a3050', background: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', gap: 10 }}>
-              <motion.div animate={{ rotate: [0, -8, 8, 0] }} transition={{ repeat: Infinity, duration: 3 }} style={{ fontSize: 28, lineHeight: 1 }}>🐛</motion.div>
+              <motion.div animate={{ rotate: [0, -8, 8, 0] }} transition={{ repeat: Infinity, duration: 3 }} style={{ lineHeight: 1 }}>
+                <VaultieSVG size={36} />
+              </motion.div>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 13, fontWeight: 800, color: '#d4e4f7' }}>Vaultie</div>
                 <div style={{ fontSize: 10, color: '#34d399', display: 'flex', alignItems: 'center', gap: 4 }}>
@@ -943,22 +1105,37 @@ const Vaultie = () => {
             <div style={{ flex: 1, overflowY: 'auto', padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 10 }} className="custom-scrollbar">
               {messages.map((m, i) => (
                 <div key={i} style={{ display: 'flex', justifyContent: m.role === 'user' ? 'flex-end' : 'flex-start', gap: 8, alignItems: 'flex-end' }}>
-                  {m.role === 'assistant' && <span style={{ fontSize: 18, flexShrink: 0, marginBottom: 2 }}>🐛</span>}
+                  {m.role === 'assistant' && <div style={{ flexShrink: 0, marginBottom: 2 }}><VaultieSVG size={22} /></div>}
                   <div style={{
                     maxWidth: '80%', padding: '9px 13px', borderRadius: m.role === 'user' ? '16px 16px 4px 16px' : '16px 16px 16px 4px',
                     background: m.role === 'user' ? 'linear-gradient(135deg, #38bdf8, #818cf8)' : 'rgba(255,255,255,0.06)',
                     border: m.role === 'assistant' ? '1px solid #1a3050' : 'none',
-                    fontSize: 12, lineHeight: 1.6,
+                    fontSize: 12, lineHeight: 1.65,
                     color: m.role === 'user' ? '#000' : '#d4e4f7',
                     fontWeight: m.role === 'user' ? 600 : 400,
+                    whiteSpace: 'pre-wrap',
                   }}>
                     {m.content}
                   </div>
                 </div>
               ))}
-              {loading && (
+
+              {/* Streaming bubble */}
+              {streaming && (
+                <div style={{ display: 'flex', justifyContent: 'flex-start', gap: 8, alignItems: 'flex-end' }}>
+                  <div style={{ flexShrink: 0, marginBottom: 2 }}><VaultieSVG size={22} /></div>
+                  <div style={{ maxWidth: '80%', padding: '9px 13px', borderRadius: '16px 16px 16px 4px', background: 'rgba(255,255,255,0.06)', border: '1px solid #1a3050', fontSize: 12, lineHeight: 1.65, color: '#d4e4f7', whiteSpace: 'pre-wrap' }}>
+                    {streaming}
+                    <motion.span animate={{ opacity: [1, 0] }} transition={{ repeat: Infinity, duration: 0.5 }}
+                      style={{ display: 'inline-block', width: 2, height: 12, background: '#34d399', marginLeft: 2, verticalAlign: 'middle', borderRadius: 1 }} />
+                  </div>
+                </div>
+              )}
+
+              {/* Thinking dots */}
+              {loading && !streaming && (
                 <div style={{ display: 'flex', alignItems: 'flex-end', gap: 8 }}>
-                  <span style={{ fontSize: 18 }}>🐛</span>
+                  <div style={{ flexShrink: 0 }}><VaultieSVG size={22} /></div>
                   <div style={{ padding: '10px 14px', borderRadius: '16px 16px 16px 4px', background: 'rgba(255,255,255,0.06)', border: '1px solid #1a3050', display: 'flex', gap: 4, alignItems: 'center' }}>
                     {[0, 1, 2].map(i => (
                       <motion.div key={i} animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 0.8, delay: i * 0.15 }}
@@ -967,6 +1144,14 @@ const Vaultie = () => {
                   </div>
                 </div>
               )}
+
+              {/* Sign-in nudge */}
+              {!user && messages.length > 1 && (
+                <div style={{ textAlign: 'center', padding: '6px 10px', borderRadius: 8, background: 'rgba(56,189,248,0.06)', border: '1px solid rgba(56,189,248,0.12)', fontSize: 10, color: '#4a6278' }}>
+                  <button onClick={signInWithGoogle} style={{ background: 'none', border: 'none', color: '#38bdf8', cursor: 'pointer', fontSize: 10, fontWeight: 700 }}>Sign in</button> to save this conversation ☁️
+                </div>
+              )}
+
               <div ref={bottomRef} />
             </div>
 
@@ -978,16 +1163,17 @@ const Vaultie = () => {
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && !e.shiftKey && send()}
                 placeholder="Ask Vaultie anything…"
+                disabled={loading || !!streaming}
                 style={{ flex: 1, background: 'rgba(255,255,255,0.05)', border: '1px solid #1a3050', borderRadius: 10, padding: '8px 12px', color: '#e2e8f0', fontSize: 12, outline: 'none' }}
                 onFocus={e => (e.target.style.borderColor = '#38bdf8')}
                 onBlur={e => (e.target.style.borderColor = '#1a3050')}
               />
               <button
                 onClick={send}
-                disabled={!input.trim() || loading}
-                style={{ width: 36, height: 36, borderRadius: 10, background: input.trim() && !loading ? '#4ade80' : 'rgba(255,255,255,0.05)', border: 'none', cursor: input.trim() && !loading ? 'pointer' : 'default', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.15s', flexShrink: 0 }}
+                disabled={!input.trim() || loading || !!streaming}
+                style={{ width: 36, height: 36, borderRadius: 10, background: input.trim() && !loading && !streaming ? '#4ade80' : 'rgba(255,255,255,0.05)', border: 'none', cursor: input.trim() && !loading && !streaming ? 'pointer' : 'default', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.15s', flexShrink: 0 }}
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={input.trim() && !loading ? '#000' : '#334d63'} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={input.trim() && !loading && !streaming ? '#000' : '#334d63'} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
                 </svg>
               </button>
@@ -996,29 +1182,35 @@ const Vaultie = () => {
         )}
       </AnimatePresence>
 
-      {/* Floating button */}
+      {/* Floating button — animated Vaultie SVG */}
       <motion.button
         onClick={() => setOpen(v => !v)}
-        animate={open ? { scale: 1 } : { y: [0, -6, 0] }}
-        transition={open ? {} : { repeat: Infinity, duration: 3, ease: 'easeInOut' }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
+        animate={open ? { scale: 1 } : { y: [0, -8, 0] }}
+        transition={open ? {} : { repeat: Infinity, duration: 2.5, ease: 'easeInOut' }}
+        whileHover={{ scale: 1.12 }}
+        whileTap={{ scale: 0.93 }}
         style={{
           position: 'fixed', bottom: 28, right: 28, zIndex: 60,
-          width: 60, height: 60, borderRadius: '50%',
-          background: open ? 'linear-gradient(135deg, #1a3050, #0c1828)' : 'linear-gradient(135deg, #4ade80, #22c55e)',
-          border: open ? '2px solid #38bdf8' : '2px solid #16a34a',
-          boxShadow: open ? '0 0 0 4px rgba(56,189,248,0.15)' : '0 8px 24px rgba(74,222,128,0.4)',
-          cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: 28,
+          width: 68, height: 68, borderRadius: '50%',
+          background: 'transparent',
+          border: 'none',
+          cursor: 'pointer',
+          padding: 0,
+          filter: open ? 'none' : 'drop-shadow(0 8px 20px rgba(74,222,128,0.5))',
         }}
       >
-        {open ? <X size={22} color="#38bdf8" /> : <span>🐛</span>}
+        {open ? (
+          <div style={{ width: 68, height: 68, borderRadius: '50%', background: 'linear-gradient(135deg, #1a3050, #0c1828)', border: '2px solid #38bdf8', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 0 4px rgba(56,189,248,0.15)' }}>
+            <X size={22} color="#38bdf8" />
+          </div>
+        ) : (
+          <VaultieSVG size={68} />
+        )}
       </motion.button>
 
       {/* Tooltip on first load */}
       <AnimatePresence>
-        {!open && !onboarded && (
+        {!open && !opened && (
           <motion.div
             initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }}
             transition={{ delay: 2 }}
