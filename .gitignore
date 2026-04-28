@@ -26,3 +26,6 @@ dist-ssr
 # Project specific
 lorapok-api-atlas/node_modules
 lorapok-api-atlas/dist
+
+# Reference files
+OpenSourceAPIDirectory.jsx
