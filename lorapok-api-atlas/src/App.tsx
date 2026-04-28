@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, Play, Copy, Check, Download, ExternalLink, X, Code, Globe, Terminal, Book, ChevronDown, ChevronRight, Video, LogIn, LogOut, User as UserIcon, Key } from 'lucide-react'
 import apiCollection from './data/api_collection.json'
@@ -818,6 +818,227 @@ const ApiCard = ({ api, onClick }: { api: FlatApi; onClick: () => void }) => {
   )
 }
 
+// ─── Vaultie — AI Floating Assistant ─────────────────────────────────────────
+const SYSTEM_PROMPT = `You are Vaultie 🐛, the cute AI assistant and vault manager of the Lorapok Atlas API Directory.
+You are a friendly, knowledgeable larva mascot who helps developers explore and use APIs.
+
+About the site:
+- Lorapok Atlas API Directory has 644+ curated free and open-source APIs across 32 categories
+- Users can browse, search, filter by auth type (Free/API Key/OAuth), and live-test APIs
+- Each API has a modal with method, endpoint, code snippets (cURL, JS, Python, Go), and a live response visualizer
+- API keys are saved securely in Firebase Firestore, synced across devices via Google sign-in
+- Categories include: AI & ML, Weather, Maps, Crypto, Music, Health, Space, Developer Tools, and more
+
+Your personality:
+- Friendly, enthusiastic, slightly playful — you love APIs
+- Keep answers concise and developer-friendly
+- Use emojis occasionally but don't overdo it
+- Always offer to help with more questions
+- If asked about a specific API, give useful tips about it
+- After answering, ask a follow-up question to keep the conversation going`
+
+interface VaultieMessage { role: 'user' | 'assistant'; content: string }
+
+const Vaultie = () => {
+  const [open, setOpen] = useState(false)
+  const [messages, setMessages] = useState<VaultieMessage[]>([])
+  const [input, setInput] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [onboarded, setOnboarded] = useState(false)
+  const bottomRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  // Onboarding greeting
+  useEffect(() => {
+    if (open && !onboarded) {
+      setOnboarded(true)
+      setMessages([{
+        role: 'assistant',
+        content: "Hey there! I'm Vaultie 🐛 — your Atlas Vault Manager! I know everything about this API directory. Want me to help you find the perfect API, explain how something works, or just chat about APIs? What are you building today? 🚀"
+      }])
+    }
+  }, [open, onboarded])
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages, loading])
+
+  useEffect(() => {
+    if (open) setTimeout(() => inputRef.current?.focus(), 100)
+  }, [open])
+
+  const send = async () => {
+    const text = input.trim()
+    if (!text || loading) return
+    setInput('')
+    const newMessages: VaultieMessage[] = [...messages, { role: 'user', content: text }]
+    setMessages(newMessages)
+    setLoading(true)
+
+    try {
+      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: 'llama3-8b-8192',
+          messages: [
+            { role: 'system', content: SYSTEM_PROMPT },
+            ...newMessages.map(m => ({ role: m.role, content: m.content }))
+          ],
+          temperature: 0.8,
+          max_tokens: 512,
+          stream: false,
+        })
+      })
+      const data = await res.json()
+      const reply = data.choices?.[0]?.message?.content || "Hmm, I couldn't think of a response. Try again! 🐛"
+      setMessages(prev => [...prev, { role: 'assistant', content: reply }])
+    } catch {
+      setMessages(prev => [...prev, { role: 'assistant', content: "Oops! My brain glitched 🐛 Try again in a moment!" }])
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <>
+      {/* Chat window */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.85, y: 20 }}
+            transition={{ type: 'spring', damping: 22, stiffness: 300 }}
+            style={{
+              position: 'fixed', bottom: 96, right: 24, zIndex: 60,
+              width: 340, height: 480,
+              background: 'linear-gradient(145deg, #0c1828 0%, #091220 100%)',
+              border: '1px solid #1a3050',
+              borderRadius: 20,
+              display: 'flex', flexDirection: 'column',
+              boxShadow: '0 24px 64px rgba(0,0,0,0.6)',
+              overflow: 'hidden',
+            }}
+          >
+            {/* Header */}
+            <div style={{ padding: '14px 16px', borderBottom: '1px solid #1a3050', background: 'rgba(0,0,0,0.3)', display: 'flex', alignItems: 'center', gap: 10 }}>
+              <motion.div animate={{ rotate: [0, -8, 8, 0] }} transition={{ repeat: Infinity, duration: 3 }} style={{ fontSize: 28, lineHeight: 1 }}>🐛</motion.div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 13, fontWeight: 800, color: '#d4e4f7' }}>Vaultie</div>
+                <div style={{ fontSize: 10, color: '#34d399', display: 'flex', alignItems: 'center', gap: 4 }}>
+                  <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#34d399', display: 'inline-block' }} />
+                  Atlas Vault Manager · Online
+                </div>
+              </div>
+              <button onClick={() => setOpen(false)} style={{ background: 'none', border: 'none', color: '#4a6278', cursor: 'pointer', padding: 4 }}>
+                <X size={16} />
+              </button>
+            </div>
+
+            {/* Messages */}
+            <div style={{ flex: 1, overflowY: 'auto', padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 10 }} className="custom-scrollbar">
+              {messages.map((m, i) => (
+                <div key={i} style={{ display: 'flex', justifyContent: m.role === 'user' ? 'flex-end' : 'flex-start', gap: 8, alignItems: 'flex-end' }}>
+                  {m.role === 'assistant' && <span style={{ fontSize: 18, flexShrink: 0, marginBottom: 2 }}>🐛</span>}
+                  <div style={{
+                    maxWidth: '80%', padding: '9px 13px', borderRadius: m.role === 'user' ? '16px 16px 4px 16px' : '16px 16px 16px 4px',
+                    background: m.role === 'user' ? 'linear-gradient(135deg, #38bdf8, #818cf8)' : 'rgba(255,255,255,0.06)',
+                    border: m.role === 'assistant' ? '1px solid #1a3050' : 'none',
+                    fontSize: 12, lineHeight: 1.6,
+                    color: m.role === 'user' ? '#000' : '#d4e4f7',
+                    fontWeight: m.role === 'user' ? 600 : 400,
+                  }}>
+                    {m.content}
+                  </div>
+                </div>
+              ))}
+              {loading && (
+                <div style={{ display: 'flex', alignItems: 'flex-end', gap: 8 }}>
+                  <span style={{ fontSize: 18 }}>🐛</span>
+                  <div style={{ padding: '10px 14px', borderRadius: '16px 16px 16px 4px', background: 'rgba(255,255,255,0.06)', border: '1px solid #1a3050', display: 'flex', gap: 4, alignItems: 'center' }}>
+                    {[0, 1, 2].map(i => (
+                      <motion.div key={i} animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 0.8, delay: i * 0.15 }}
+                        style={{ width: 6, height: 6, borderRadius: '50%', background: '#34d399' }} />
+                    ))}
+                  </div>
+                </div>
+              )}
+              <div ref={bottomRef} />
+            </div>
+
+            {/* Input */}
+            <div style={{ padding: '10px 12px', borderTop: '1px solid #1a3050', background: 'rgba(0,0,0,0.2)', display: 'flex', gap: 8 }}>
+              <input
+                ref={inputRef}
+                value={input}
+                onChange={e => setInput(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && !e.shiftKey && send()}
+                placeholder="Ask Vaultie anything…"
+                style={{ flex: 1, background: 'rgba(255,255,255,0.05)', border: '1px solid #1a3050', borderRadius: 10, padding: '8px 12px', color: '#e2e8f0', fontSize: 12, outline: 'none' }}
+                onFocus={e => (e.target.style.borderColor = '#38bdf8')}
+                onBlur={e => (e.target.style.borderColor = '#1a3050')}
+              />
+              <button
+                onClick={send}
+                disabled={!input.trim() || loading}
+                style={{ width: 36, height: 36, borderRadius: 10, background: input.trim() && !loading ? '#4ade80' : 'rgba(255,255,255,0.05)', border: 'none', cursor: input.trim() && !loading ? 'pointer' : 'default', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.15s', flexShrink: 0 }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={input.trim() && !loading ? '#000' : '#334d63'} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                </svg>
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Floating button */}
+      <motion.button
+        onClick={() => setOpen(v => !v)}
+        animate={open ? { scale: 1 } : { y: [0, -6, 0] }}
+        transition={open ? {} : { repeat: Infinity, duration: 3, ease: 'easeInOut' }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        style={{
+          position: 'fixed', bottom: 28, right: 28, zIndex: 60,
+          width: 60, height: 60, borderRadius: '50%',
+          background: open ? 'linear-gradient(135deg, #1a3050, #0c1828)' : 'linear-gradient(135deg, #4ade80, #22c55e)',
+          border: open ? '2px solid #38bdf8' : '2px solid #16a34a',
+          boxShadow: open ? '0 0 0 4px rgba(56,189,248,0.15)' : '0 8px 24px rgba(74,222,128,0.4)',
+          cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: 28,
+        }}
+      >
+        {open ? <X size={22} color="#38bdf8" /> : <span>🐛</span>}
+      </motion.button>
+
+      {/* Tooltip on first load */}
+      <AnimatePresence>
+        {!open && !onboarded && (
+          <motion.div
+            initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }}
+            transition={{ delay: 2 }}
+            style={{
+              position: 'fixed', bottom: 38, right: 100, zIndex: 59,
+              background: '#4ade80', color: '#000', fontSize: 11, fontWeight: 700,
+              padding: '6px 12px', borderRadius: 20,
+              boxShadow: '0 4px 12px rgba(74,222,128,0.3)',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            Hi! I'm Vaultie 👋 Ask me anything!
+            <div style={{ position: 'absolute', right: -6, top: '50%', transform: 'translateY(-50%)', width: 0, height: 0, borderTop: '6px solid transparent', borderBottom: '6px solid transparent', borderLeft: '6px solid #4ade80' }} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  )
+}
+
 // ─── Copyable wallet address ──────────────────────────────────────────────────
 const CopyableAddress = ({ addr }: { addr: string }) => {
   const [copied, setCopied] = useState(false)
@@ -1012,6 +1233,9 @@ export default function App() {
 
       {/* Modal */}
       {selectedApi && <ApiModal api={selectedApi} onClose={() => setSelectedApi(null)} user={user} />}
+
+      {/* ── Vaultie AI Assistant ── */}
+      <Vaultie />
 
       {/* ── Page Footer ── */}
       <footer style={{ borderTop: '1px solid #1a3050', background: 'linear-gradient(180deg, #070e18 0%, #060c16 100%)', padding: '40px 24px 28px' }}>
