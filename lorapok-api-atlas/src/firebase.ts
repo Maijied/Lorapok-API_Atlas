@@ -66,3 +66,79 @@ export function subscribeChatHistory(
     cb(snap.docs.map(d => ({ role: d.data().role, content: d.data().content })))
   })
 }
+
+// ─── Collections (Favorites) ──────────────────────────────────────────────────
+// Path: users/{uid}/collections/{collectionId} → { name, apiNames[], createdAt }
+import { updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore'
+
+export async function getUserCollections(uid: string) {
+  const colRef = collection(db, 'users', uid, 'collections')
+  const snap = await getDocs(colRef)
+  return snap.docs.map(d => ({ id: d.id, ...d.data() })) as { id: string; name: string; apiNames: string[]; createdAt: number }[]
+}
+
+export async function createCollection(uid: string, name: string) {
+  const colRef = collection(db, 'users', uid, 'collections')
+  return addDoc(colRef, { name, apiNames: [], createdAt: Date.now() })
+}
+
+export async function addToCollection(uid: string, collectionId: string, apiName: string) {
+  const ref = doc(db, 'users', uid, 'collections', collectionId)
+  await updateDoc(ref, { apiNames: arrayUnion(apiName) })
+}
+
+export async function removeFromCollection(uid: string, collectionId: string, apiName: string) {
+  const ref = doc(db, 'users', uid, 'collections', collectionId)
+  await updateDoc(ref, { apiNames: arrayRemove(apiName) })
+}
+
+export async function deleteCollection(uid: string, collectionId: string) {
+  const ref = doc(db, 'users', uid, 'collections', collectionId)
+  await deleteDoc(ref)
+}
+
+// ─── Request History ──────────────────────────────────────────────────────────
+// Path: users/{uid}/history/{auto-id} → { apiName, url, status, ts, preview }
+export async function saveRequestHistory(uid: string, entry: { apiName: string; url: string; status: 'success' | 'error' | 'cors'; preview: string }) {
+  const colRef = collection(db, 'users', uid, 'history')
+  await addDoc(colRef, { ...entry, ts: Date.now() })
+  // Keep only last 50 — cleanup old ones
+  const snap = await getDocs(query(colRef, orderBy('ts', 'asc')))
+  if (snap.size > 50) {
+    const toDelete = snap.docs.slice(0, snap.size - 50)
+    await Promise.all(toDelete.map(d => deleteDoc(d.ref)))
+  }
+}
+
+export async function getRequestHistory(uid: string) {
+  const colRef = collection(db, 'users', uid, 'history')
+  const q = query(colRef, orderBy('ts', 'desc'), limit(20))
+  const snap = await getDocs(q)
+  return snap.docs.map(d => ({ id: d.id, ...d.data() })) as { id: string; apiName: string; url: string; status: string; preview: string; ts: number }[]
+}
+
+// ─── Environment Variables ────────────────────────────────────────────────────
+// Path: users/{uid}/envvars/global → { vars: { key: value } }
+export async function getEnvVars(uid: string): Promise<Record<string, string>> {
+  const ref = doc(db, 'users', uid, 'envvars', 'global')
+  const snap = await getDoc(ref)
+  return snap.exists() ? (snap.data().vars as Record<string, string>) : {}
+}
+
+export async function saveEnvVars(uid: string, vars: Record<string, string>) {
+  const ref = doc(db, 'users', uid, 'envvars', 'global')
+  await setDoc(ref, { vars, updatedAt: Date.now() })
+}
+
+// ─── Vaultie Memory ───────────────────────────────────────────────────────────
+// Path: users/{uid}/vaultie_memory/prefs → { recentApis[], favoriteCategories[], theme }
+export async function getVaultieMemory(uid: string) {
+  const ref = doc(db, 'users', uid, 'vaultie_memory', 'prefs')
+  const snap = await getDoc(ref)
+  return snap.exists() ? snap.data() : { recentApis: [], favoriteCategories: [], theme: 'dark' }
+}
+
+export async function updateVaultieMemory(uid: string, data: Partial<{ recentApis: string[]; favoriteCategories: string[]; theme: string }>) {
+  const ref = doc(db, 'users', uid, 'vaultie_memory', 'prefs')
+  await setDoc(ref, data, { merge: true })
+}

@@ -1,11 +1,11 @@
-import { useState, useEffect, useMemo, useRef } from 'react'
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, Play, Copy, Check, Download, ExternalLink, X, Code, Globe, Terminal, Book, ChevronDown, ChevronRight, Video, LogIn, LogOut, User as UserIcon, Key } from 'lucide-react'
+import { Search, Play, Copy, Check, Download, ExternalLink, X, Code, Globe, Terminal, Book, ChevronDown, ChevronRight, Video, LogIn, LogOut, User as UserIcon, Key, Heart, FolderPlus, Folder, Clock, Settings, Share2, Sun, Moon, GitCompare, Plus, Trash2, AlertCircle } from 'lucide-react'
 import apiCollection from './data/api_collection.json'
 import axios from 'axios'
 import { signInWithGoogle, signOutUser } from './firebase'
 import { useAuth, useApiKey } from './useKeyStore'
-import { saveChatMessage, subscribeChatHistory } from './firebase'
+import { saveChatMessage, subscribeChatHistory, getUserCollections, createCollection, addToCollection, removeFromCollection, deleteCollection, saveRequestHistory, getRequestHistory, getEnvVars, saveEnvVars, getVaultieMemory, updateVaultieMemory } from './firebase'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface ApiItem {
@@ -297,6 +297,54 @@ func main() {
   )
 }
 
+// ─── Theme context ────────────────────────────────────────────────────────────
+const useTheme = () => {
+  const [theme, setTheme] = useState<'dark' | 'light'>(() =>
+    (localStorage.getItem('lorapok-theme') as 'dark' | 'light') || 'dark'
+  )
+  const toggle = () => setTheme(t => {
+    const next = t === 'dark' ? 'light' : 'dark'
+    localStorage.setItem('lorapok-theme', next)
+    return next
+  })
+  return { theme, toggle }
+}
+
+const THEME = {
+  dark:  { bg: '#070e18', card: '#0c1828', border: '#1a3050', text: '#d4e4f7', muted: '#4a6278', dim: '#334d63', nav: 'rgba(7,14,24,0.94)' },
+  light: { bg: '#f0f4f8', card: '#ffffff', border: '#d1dce8', text: '#1a2332', muted: '#5a7a9a', dim: '#8aa0b8', nav: 'rgba(240,244,248,0.96)' },
+}
+
+// ─── Env Vars context ─────────────────────────────────────────────────────────
+const EnvVarsContext = React.createContext<{ vars: Record<string, string>; setVars: (v: Record<string, string>) => void }>({ vars: {}, setVars: () => {} })
+import React from 'react'
+
+// ─── Share helper ─────────────────────────────────────────────────────────────
+function buildShareUrl(apiName: string): string {
+  const base = window.location.href.split('?')[0]
+  return `${base}?api=${encodeURIComponent(apiName)}`
+}
+
+// ─── Postman export helper ────────────────────────────────────────────────────
+function exportToPostman(apis: FlatApi[]) {
+  const collection = {
+    info: { name: 'Lorapok Atlas Export', schema: 'https://schema.getpostman.com/json/collection/v2.1.0/collection.json' },
+    item: apis.map(api => ({
+      name: api.name,
+      request: {
+        method: api.method,
+        header: [{ key: 'Accept', value: 'application/json' }],
+        url: { raw: api.url },
+        description: api.desc,
+      },
+    })),
+  }
+  const blob = new Blob([JSON.stringify(collection, null, 2)], { type: 'application/json' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a'); a.href = url; a.download = 'lorapok-atlas-export.postman_collection.json'
+  document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url)
+}
+
 // ─── CORS Panel — interactive cURL runner ────────────────────────────────────
 const CorsPanel = ({ api }: { api?: FlatApi }) => {
   const [copied, setCopied] = useState(false)
@@ -494,7 +542,7 @@ function urlNeedsKey(api: FlatApi): boolean {
 }
 
 // ─── API Modal ────────────────────────────────────────────────────────────────
-const ApiModal = ({ api, onClose, user }: { api: FlatApi; onClose: () => void; user: ReturnType<typeof useAuth>['user'] }) => {
+const ApiModal = ({ api, onClose, user, onShare }: { api: FlatApi; onClose: () => void; user: ReturnType<typeof useAuth>['user']; onShare?: (api: FlatApi) => void }) => {
   const [testResult, setTestResult] = useState<any>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [status, setStatus] = useState<'idle' | 'thinking' | 'happy' | 'sad'>('idle')
@@ -579,6 +627,7 @@ const ApiModal = ({ api, onClose, user }: { api: FlatApi; onClose: () => void; u
         try { setTestResult(JSON.parse(text)) } catch { setTestResult(text) }
         setStatus('happy')
       }
+      if (user) saveRequestHistory(user.uid, { apiName: api.name, url: effectiveUrl, status: 'success', preview: typeof testResult === 'object' ? JSON.stringify(testResult).slice(0, 80) : String(testResult).slice(0, 80) }).catch(() => {})
     } catch (err: any) {
       const isNetworkError = !err.response && (err.message === 'Network Error' || err.code === 'ERR_NETWORK')
       if (isNetworkError) {
@@ -622,6 +671,14 @@ const ApiModal = ({ api, onClose, user }: { api: FlatApi; onClose: () => void; u
               <p className="text-sm" style={{ color: '#4a6278' }}>{api.desc}</p>
             </div>
             <div className="flex items-center gap-2 shrink-0">
+              {onShare && (
+                <button onClick={() => onShare(api)} title="Copy share link"
+                  style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '7px 12px', borderRadius: 8, background: 'transparent', border: '1px solid #1a3050', color: '#4a6278', fontSize: 12, cursor: 'pointer', transition: 'all 0.15s' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#38bdf8'; e.currentTarget.style.color = '#38bdf8' }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#4a6278' }}>
+                  <Share2 size={13} /> Share
+                </button>
+              )}
               <button
                 onClick={runTest} disabled={isLoading}
                 className="flex items-center gap-2 font-bold py-2.5 px-5 rounded-lg transition-all disabled:opacity-50"
@@ -860,8 +917,289 @@ const ApiModal = ({ api, onClose, user }: { api: FlatApi; onClose: () => void; u
   )
 }
 
+// ─── Collections Panel ────────────────────────────────────────────────────────
+const CollectionsPanel = ({ user, onSelectCollection, activeCollection }: {
+  user: ReturnType<typeof useAuth>['user']
+  onSelectCollection: (ids: string[] | null) => void
+  activeCollection: string | null
+}) => {
+  const [collections, setCollections] = useState<{ id: string; name: string; apiNames: string[] }[]>([])
+  const [newName, setNewName] = useState('')
+  const [creating, setCreating] = useState(false)
+  const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    if (!user) return
+    getUserCollections(user.uid).then(setCollections)
+  }, [user])
+
+  const create = async () => {
+    if (!user || !newName.trim()) return
+    await createCollection(user.uid, newName.trim())
+    setNewName(''); setCreating(false)
+    getUserCollections(user.uid).then(setCollections)
+  }
+
+  const del = async (id: string) => {
+    if (!user) return
+    await deleteCollection(user.uid, id)
+    setCollections(c => c.filter(x => x.id !== id))
+    if (activeCollection === id) onSelectCollection(null)
+  }
+
+  if (!user) return null
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <button onClick={() => setOpen(v => !v)} title="Collections"
+        style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 8, background: open ? 'rgba(129,140,248,0.15)' : 'transparent', border: `1px solid ${open ? '#818cf8' : '#1a3050'}`, color: open ? '#818cf8' : '#4a6278', fontSize: 12, cursor: 'pointer', transition: 'all 0.15s' }}>
+        <Folder size={14} /> Collections {collections.length > 0 && <span style={{ background: '#818cf8', color: '#000', borderRadius: 10, padding: '1px 6px', fontSize: 10, fontWeight: 700 }}>{collections.length}</span>}
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }}
+            style={{ position: 'absolute', top: '100%', left: 0, marginTop: 6, width: 260, background: '#0c1828', border: '1px solid #1a3050', borderRadius: 10, boxShadow: '0 16px 40px rgba(0,0,0,0.5)', zIndex: 50, overflow: 'hidden' }}>
+            <div style={{ padding: '10px 12px', borderBottom: '1px solid #1a3050', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: 11, fontWeight: 700, color: '#818cf8', textTransform: 'uppercase', letterSpacing: '0.1em' }}>My Collections</span>
+              <button onClick={() => setCreating(v => !v)} style={{ background: 'none', border: 'none', color: '#818cf8', cursor: 'pointer', padding: 2 }}><Plus size={14} /></button>
+            </div>
+            {creating && (
+              <div style={{ padding: '8px 12px', borderBottom: '1px solid #1a3050', display: 'flex', gap: 6 }}>
+                <input value={newName} onChange={e => setNewName(e.target.value)} onKeyDown={e => e.key === 'Enter' && create()}
+                  placeholder="Collection name…" autoFocus
+                  style={{ flex: 1, background: '#070e18', border: '1px solid #1a3050', borderRadius: 6, padding: '5px 8px', color: '#e2e8f0', fontSize: 12, outline: 'none' }} />
+                <button onClick={create} style={{ background: '#818cf8', border: 'none', borderRadius: 6, padding: '5px 10px', color: '#000', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>Add</button>
+              </div>
+            )}
+            <div style={{ maxHeight: 200, overflowY: 'auto' }} className="custom-scrollbar">
+              {collections.length === 0 && <div style={{ padding: '16px 12px', fontSize: 12, color: '#334d63', textAlign: 'center' }}>No collections yet</div>}
+              {[{ id: '__all__', name: 'All APIs', apiNames: [] }, ...collections].map(col => (
+                <div key={col.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', cursor: 'pointer', background: activeCollection === col.id ? 'rgba(129,140,248,0.1)' : 'transparent', transition: 'background 0.15s' }}
+                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.04)')}
+                  onMouseLeave={e => (e.currentTarget.style.background = activeCollection === col.id ? 'rgba(129,140,248,0.1)' : 'transparent')}
+                  onClick={() => { onSelectCollection(col.id === '__all__' ? null : col.apiNames); setOpen(false) }}>
+                  <Folder size={13} style={{ color: '#818cf8', flexShrink: 0 }} />
+                  <span style={{ flex: 1, fontSize: 12, color: '#d4e4f7' }}>{col.name}</span>
+                  {col.id !== '__all__' && <span style={{ fontSize: 10, color: '#334d63' }}>{col.apiNames.length}</span>}
+                  {col.id !== '__all__' && (
+                    <button onClick={e => { e.stopPropagation(); del(col.id) }} style={{ background: 'none', border: 'none', color: '#334d63', cursor: 'pointer', padding: 2 }}
+                      onMouseEnter={e => (e.currentTarget.style.color = '#f87171')} onMouseLeave={e => (e.currentTarget.style.color = '#334d63')}>
+                      <Trash2 size={12} />
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
+// ─── History Panel ────────────────────────────────────────────────────────────
+const HistoryPanel = ({ user, onSelect }: { user: ReturnType<typeof useAuth>['user']; onSelect: (name: string) => void }) => {
+  const [history, setHistory] = useState<{ id: string; apiName: string; status: string; ts: number; preview: string }[]>([])
+  const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    if (!user || !open) return
+    getRequestHistory(user.uid).then(setHistory)
+  }, [user, open])
+
+  if (!user) return null
+
+  const statusColor = (s: string) => s === 'success' ? '#34d399' : s === 'cors' ? '#fbbf24' : '#f87171'
+  const statusIcon = (s: string) => s === 'success' ? '✓' : s === 'cors' ? '🚧' : '✗'
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <button onClick={() => setOpen(v => !v)} title="Request History"
+        style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 8, background: open ? 'rgba(56,189,248,0.15)' : 'transparent', border: `1px solid ${open ? '#38bdf8' : '#1a3050'}`, color: open ? '#38bdf8' : '#4a6278', fontSize: 12, cursor: 'pointer', transition: 'all 0.15s' }}>
+        <Clock size={14} /> History
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }}
+            style={{ position: 'absolute', top: '100%', left: 0, marginTop: 6, width: 300, background: '#0c1828', border: '1px solid #1a3050', borderRadius: 10, boxShadow: '0 16px 40px rgba(0,0,0,0.5)', zIndex: 50, overflow: 'hidden' }}>
+            <div style={{ padding: '10px 12px', borderBottom: '1px solid #1a3050' }}>
+              <span style={{ fontSize: 11, fontWeight: 700, color: '#38bdf8', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Recent Tests</span>
+            </div>
+            <div style={{ maxHeight: 280, overflowY: 'auto' }} className="custom-scrollbar">
+              {history.length === 0 && <div style={{ padding: '16px 12px', fontSize: 12, color: '#334d63', textAlign: 'center' }}>No history yet — run some tests!</div>}
+              {history.map(h => (
+                <div key={h.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', cursor: 'pointer', borderBottom: '1px solid rgba(26,48,80,0.4)', transition: 'background 0.15s' }}
+                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.04)')}
+                  onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+                  onClick={() => { onSelect(h.apiName); setOpen(false) }}>
+                  <span style={{ fontSize: 12, color: statusColor(h.status), flexShrink: 0 }}>{statusIcon(h.status)}</span>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: 12, fontWeight: 600, color: '#d4e4f7', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{h.apiName}</div>
+                    <div style={{ fontSize: 10, color: '#334d63', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{h.preview}</div>
+                  </div>
+                  <div style={{ fontSize: 10, color: '#334d63', flexShrink: 0 }}>{new Date(h.ts).toLocaleTimeString()}</div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
+// ─── Env Vars Panel ───────────────────────────────────────────────────────────
+const EnvVarsPanel = ({ user }: { user: ReturnType<typeof useAuth>['user'] }) => {
+  const [open, setOpen] = useState(false)
+  const [vars, setVarsState] = useState<Record<string, string>>({})
+  const [newKey, setNewKey] = useState('')
+  const [newVal, setNewVal] = useState('')
+  const [saved, setSaved] = useState(false)
+
+  useEffect(() => {
+    if (!user || !open) return
+    getEnvVars(user.uid).then(setVarsState)
+  }, [user, open])
+
+  const save = async () => {
+    if (!user) return
+    await saveEnvVars(user.uid, vars)
+    setSaved(true); setTimeout(() => setSaved(false), 2000)
+  }
+
+  const addVar = () => {
+    if (!newKey.trim()) return
+    setVarsState(v => ({ ...v, [newKey.trim()]: newVal }))
+    setNewKey(''); setNewVal('')
+  }
+
+  const removeVar = (k: string) => setVarsState(v => { const n = { ...v }; delete n[k]; return n })
+
+  if (!user) return null
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <button onClick={() => setOpen(v => !v)} title="Environment Variables"
+        style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 8, background: open ? 'rgba(52,211,153,0.15)' : 'transparent', border: `1px solid ${open ? '#34d399' : '#1a3050'}`, color: open ? '#34d399' : '#4a6278', fontSize: 12, cursor: 'pointer', transition: 'all 0.15s' }}>
+        <Settings size={14} /> Env Vars {Object.keys(vars).length > 0 && <span style={{ background: '#34d399', color: '#000', borderRadius: 10, padding: '1px 6px', fontSize: 10, fontWeight: 700 }}>{Object.keys(vars).length}</span>}
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }}
+            style={{ position: 'absolute', top: '100%', right: 0, marginTop: 6, width: 340, background: '#0c1828', border: '1px solid #1a3050', borderRadius: 10, boxShadow: '0 16px 40px rgba(0,0,0,0.5)', zIndex: 50, overflow: 'hidden' }}>
+            <div style={{ padding: '10px 12px', borderBottom: '1px solid #1a3050', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: 11, fontWeight: 700, color: '#34d399', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Environment Variables</span>
+              <button onClick={save} style={{ background: saved ? 'rgba(52,211,153,0.2)' : 'rgba(52,211,153,0.1)', border: `1px solid ${saved ? '#34d399' : 'rgba(52,211,153,0.3)'}`, borderRadius: 6, padding: '3px 10px', color: '#34d399', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>
+                {saved ? '✓ Saved' : 'Save'}
+              </button>
+            </div>
+            <div style={{ padding: '8px 12px', borderBottom: '1px solid #1a3050', fontSize: 10, color: '#4a6278', lineHeight: 1.5 }}>
+              Variables are injected into API URLs. Use <code style={{ background: 'rgba(0,0,0,0.3)', padding: '1px 4px', borderRadius: 3, color: '#34d399' }}>{'{{KEY}}'}</code> in URLs.
+            </div>
+            <div style={{ maxHeight: 200, overflowY: 'auto' }} className="custom-scrollbar">
+              {Object.entries(vars).map(([k, v]) => (
+                <div key={k} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderBottom: '1px solid rgba(26,48,80,0.4)' }}>
+                  <code style={{ fontSize: 11, color: '#34d399', minWidth: 100, flexShrink: 0 }}>{k}</code>
+                  <span style={{ fontSize: 11, color: '#4a6278', flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{v}</span>
+                  <button onClick={() => removeVar(k)} style={{ background: 'none', border: 'none', color: '#334d63', cursor: 'pointer', padding: 2 }}
+                    onMouseEnter={e => (e.currentTarget.style.color = '#f87171')} onMouseLeave={e => (e.currentTarget.style.color = '#334d63')}>
+                    <X size={12} />
+                  </button>
+                </div>
+              ))}
+            </div>
+            <div style={{ padding: '8px 12px', display: 'flex', gap: 6 }}>
+              <input value={newKey} onChange={e => setNewKey(e.target.value)} placeholder="KEY"
+                style={{ width: 90, background: '#070e18', border: '1px solid #1a3050', borderRadius: 6, padding: '5px 8px', color: '#34d399', fontSize: 11, fontFamily: 'monospace', outline: 'none' }} />
+              <input value={newVal} onChange={e => setNewVal(e.target.value)} onKeyDown={e => e.key === 'Enter' && addVar()} placeholder="value"
+                style={{ flex: 1, background: '#070e18', border: '1px solid #1a3050', borderRadius: 6, padding: '5px 8px', color: '#e2e8f0', fontSize: 11, outline: 'none' }} />
+              <button onClick={addVar} style={{ background: 'rgba(52,211,153,0.1)', border: '1px solid rgba(52,211,153,0.3)', borderRadius: 6, padding: '5px 10px', color: '#34d399', fontSize: 11, cursor: 'pointer' }}>+</button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
+// ─── Compare Modal ────────────────────────────────────────────────────────────
+const CompareModal = ({ apis, onClose }: { apis: [FlatApi, FlatApi]; onClose: () => void }) => {
+  const [results, setResults] = useState<[any, any]>([null, null])
+  const [loading, setLoading] = useState<[boolean, boolean]>([false, false])
+
+  const runOne = async (idx: 0 | 1) => {
+    const api = apis[idx]
+    setLoading(l => { const n: [boolean, boolean] = [...l] as [boolean, boolean]; n[idx] = true; return n })
+    try {
+      const res = await axios.get(api.url, { responseType: 'arraybuffer' })
+      const text = new TextDecoder().decode(res.data)
+      try { setResults(r => { const n: [any, any] = [...r] as [any, any]; n[idx] = JSON.parse(text); return n }) }
+      catch { setResults(r => { const n: [any, any] = [...r] as [any, any]; n[idx] = text; return n }) }
+    } catch (e: any) {
+      setResults(r => { const n: [any, any] = [...r] as [any, any]; n[idx] = { error: e.message }; return n })
+    } finally {
+      setLoading(l => { const n: [boolean, boolean] = [...l] as [boolean, boolean]; n[idx] = false; return n })
+    }
+  }
+
+  const runBoth = () => { runOne(0); runOne(1) }
+
+  return (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+      style={{ position: 'fixed', inset: 0, zIndex: 55, background: 'rgba(4,10,20,0.9)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}
+      onClick={onClose}>
+      <motion.div initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 20 }}
+        style={{ width: '100%', maxWidth: 1100, maxHeight: '90vh', background: 'linear-gradient(145deg, #0c1828, #091220)', border: '1px solid #1a3050', borderRadius: 16, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}
+        onClick={e => e.stopPropagation()}>
+        <div style={{ padding: '14px 20px', borderBottom: '1px solid #1a3050', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <GitCompare size={16} style={{ color: '#818cf8' }} />
+            <span style={{ fontSize: 14, fontWeight: 800, color: '#d4e4f7' }}>API Comparison</span>
+          </div>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button onClick={runBoth} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '7px 16px', borderRadius: 8, background: '#4ade80', border: 'none', color: '#000', fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>
+              <Play size={13} fill="currentColor" /> Run Both
+            </button>
+            <button onClick={onClose} style={{ background: 'none', border: 'none', color: '#4a6278', cursor: 'pointer', padding: 4 }}><X size={18} /></button>
+          </div>
+        </div>
+        <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', overflow: 'hidden', minHeight: 0 }}>
+          {([0, 1] as const).map(idx => (
+            <div key={idx} style={{ borderRight: idx === 0 ? '1px solid #1a3050' : 'none', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+              <div style={{ padding: '12px 16px', borderBottom: '1px solid #1a3050', background: 'rgba(0,0,0,0.2)' }}>
+                <div style={{ fontSize: 10, color: '#4a6278', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>{apis[idx].category}</div>
+                <div style={{ fontSize: 14, fontWeight: 700, color: '#d4e4f7', marginBottom: 6 }}>{apis[idx].name}</div>
+                <div style={{ fontSize: 10, fontFamily: 'monospace', color: '#34d399', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginBottom: 8 }}>{apis[idx].url}</div>
+                <button onClick={() => runOne(idx)} disabled={loading[idx]}
+                  style={{ padding: '5px 14px', borderRadius: 7, background: 'rgba(74,222,128,0.15)', border: '1px solid rgba(74,222,128,0.3)', color: '#4ade80', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>
+                  {loading[idx] ? 'Running…' : 'Run Test'}
+                </button>
+              </div>
+              <div style={{ flex: 1, overflowY: 'auto', padding: 16 }} className="custom-scrollbar">
+                {loading[idx] && <div style={{ textAlign: 'center', color: '#4a6278', paddingTop: 40 }}>Loading…</div>}
+                {!loading[idx] && results[idx] === null && <div style={{ textAlign: 'center', color: '#334d63', paddingTop: 40, fontSize: 12 }}>Click Run Test to see results</div>}
+                {!loading[idx] && results[idx] !== null && (
+                  <pre style={{ fontSize: 11, fontFamily: 'monospace', color: '#34d399', whiteSpace: 'pre-wrap', wordBreak: 'break-all', margin: 0 }}>
+                    {JSON.stringify(results[idx], null, 2)}
+                  </pre>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </motion.div>
+    </motion.div>
+  )
+}
+
 // ─── API Card ─────────────────────────────────────────────────────────────────
-const ApiCard = ({ api, onClick }: { api: FlatApi; onClick: () => void }) => {
+const ApiCard = ({ api, onClick, onCompare, compareSelected, user, collections, onCollectionChange }: {
+  api: FlatApi; onClick: () => void
+  onCompare?: () => void; compareSelected?: boolean
+  user: ReturnType<typeof useAuth>['user']
+  collections?: { id: string; name: string; apiNames: string[] }[]
+  onCollectionChange?: () => void
+}) => {
   const [hovered, setHovered] = useState(false)
   const [copied, setCopied] = useState(false)
   const authStyle = AUTH_STYLE[api.authRequired || 'None'] || AUTH_STYLE['None']
@@ -896,16 +1234,24 @@ const ApiCard = ({ api, onClick }: { api: FlatApi; onClick: () => void }) => {
       <div style={{ fontSize: 12, color: '#4a6278', lineHeight: 1.5, marginBottom: 12, minHeight: 32 }}>{api.desc}</div>
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <span style={{ padding: '3px 9px', borderRadius: 12, fontSize: 10, background: authStyle.bg, color: authStyle.text, border: `1px solid ${authStyle.border}`, fontWeight: 600 }}>
-          {authStyle.label}
-        </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+          <span style={{ padding: '3px 9px', borderRadius: 12, fontSize: 10, background: authStyle.bg, color: authStyle.text, border: `1px solid ${authStyle.border}`, fontWeight: 600 }}>
+            {authStyle.label}
+          </span>
+          {/* Compare checkbox */}
+          {onCompare && (
+            <button onClick={e => { e.stopPropagation(); onCompare() }}
+              title="Add to comparison"
+              style={{ padding: '3px 7px', borderRadius: 6, fontSize: 10, background: compareSelected ? 'rgba(129,140,248,0.2)' : 'transparent', border: `1px solid ${compareSelected ? '#818cf8' : '#152030'}`, color: compareSelected ? '#818cf8' : '#334d63', cursor: 'pointer', transition: 'all 0.15s' }}>
+              {compareSelected ? '✓ Compare' : '+ Compare'}
+            </button>
+          )}
+        </div>
         <div style={{ display: 'flex', gap: 5 }}>
-          <button
-            onClick={copy}
+          <button onClick={copy}
             style={{ padding: '4px 9px', borderRadius: 6, fontSize: 11, background: copied ? 'rgba(52,211,153,0.15)' : 'transparent', border: `1px solid ${copied ? '#065f46' : '#152030'}`, color: copied ? '#34d399' : '#334d63', cursor: 'pointer', transition: 'all 0.15s' }}
           >{copied ? '✓' : '⎘'}</button>
-          <button
-            onClick={onClick}
+          <button onClick={onClick}
             style={{ padding: '4px 9px', borderRadius: 6, fontSize: 11, background: hovered ? 'rgba(56,189,248,0.1)' : 'transparent', border: `1px solid ${hovered ? '#264560' : '#152030'}`, color: '#38bdf8', cursor: 'pointer', transition: 'all 0.15s' }}
           >Test ▶</button>
         </div>
@@ -1443,18 +1789,72 @@ export default function App() {
   const [sortBy, setSortBy] = useState('default')
   const [selectedApi, setSelectedApi] = useState<FlatApi | null>(null)
   const { user, authLoading } = useAuth()
+  const { theme, toggle: toggleTheme } = useTheme()
+  const T = THEME[theme]
+
+  // Feature states
+  const [compareApis, setCompareApis] = useState<FlatApi[]>([])
+  const [showCompare, setShowCompare] = useState(false)
+  const [collectionFilter, setCollectionFilter] = useState<string[] | null>(null)
+  const [activeCollectionId, setActiveCollectionId] = useState<string | null>(null)
+  const [collections, setCollections] = useState<{ id: string; name: string; apiNames: string[] }[]>([])
+  const [shareToast, setShareToast] = useState(false)
+  const [envVars, setEnvVars] = useState<Record<string, string>>({})
+
+  // Load collections when user signs in
+  useEffect(() => {
+    if (!user) { setCollections([]); return }
+    getUserCollections(user.uid).then(setCollections)
+  }, [user])
+
+  // Load env vars
+  useEffect(() => {
+    if (!user) return
+    getEnvVars(user.uid).then(setEnvVars)
+  }, [user])
+
+  // Handle share URL on load
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const apiName = params.get('api')
+    if (apiName) {
+      const found = ALL_APIS.find(a => a.name === decodeURIComponent(apiName))
+      if (found) setSelectedApi(found)
+    }
+  }, [])
+
+  const handleShare = (api: FlatApi) => {
+    navigator.clipboard.writeText(buildShareUrl(api.name))
+    setShareToast(true)
+    setTimeout(() => setShareToast(false), 2500)
+  }
+
+  const toggleCompare = (api: FlatApi) => {
+    setCompareApis(prev => {
+      if (prev.find(a => a.name === api.name)) return prev.filter(a => a.name !== api.name)
+      if (prev.length >= 2) return [prev[1], api]
+      return [...prev, api]
+    })
+  }
+
+  const handleSelectFromHistory = (name: string) => {
+    const found = ALL_APIS.find(a => a.name === name)
+    if (found) setSelectedApi(found)
+  }
 
   const filtered = useMemo(() => {
     let result = ALL_APIS.filter(api => {
       const q = search.toLowerCase()
-      return (api.name.toLowerCase().includes(q) || api.desc.toLowerCase().includes(q) || api.category.toLowerCase().includes(q))
-        && (activeCategory === 'All' || api.category === activeCategory)
-        && (authFilter === 'All' || (authFilter === 'None' ? !api.authRequired : api.authRequired === authFilter))
+      const matchSearch = api.name.toLowerCase().includes(q) || api.desc.toLowerCase().includes(q) || api.category.toLowerCase().includes(q)
+      const matchCat = activeCategory === 'All' || api.category === activeCategory
+      const matchAuth = authFilter === 'All' || (authFilter === 'None' ? !api.authRequired : api.authRequired === authFilter)
+      const matchCollection = !collectionFilter || collectionFilter.includes(api.name)
+      return matchSearch && matchCat && matchAuth && matchCollection
     })
     if (sortBy === 'name') result = [...result].sort((a, b) => a.name.localeCompare(b.name))
     else if (sortBy === 'category') result = [...result].sort((a, b) => a.category.localeCompare(b.category))
     return result
-  }, [search, activeCategory, authFilter, sortBy])
+  }, [search, activeCategory, authFilter, sortBy, collectionFilter])
 
   const freeCount = ALL_APIS.filter(a => !a.authRequired).length
   const keyCount = ALL_APIS.filter(a => a.authRequired === 'API Key').length
@@ -1565,8 +1965,37 @@ export default function App() {
                 return <button key={a.val} onClick={() => setAuthFilter(a.val)} style={{ padding: '6px 13px', borderRadius: 7, fontSize: 12, cursor: 'pointer', border: `1px solid ${active ? a.abr : '#1a3050'}`, background: active ? a.ab : 'transparent', color: active ? a.ac : '#4a6278', fontWeight: active ? 700 : 400, transition: 'all 0.15s' }}>{a.label}</button>
               })}
             </div>
-            <div style={{ marginLeft: 'auto', fontSize: 12, color: '#334d63', whiteSpace: 'nowrap' }}>
-              <strong style={{ color: '#38bdf8' }}>{filtered.length}</strong> / {ALL_APIS.length}
+            <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+              <span style={{ fontSize: 12, color: '#334d63', whiteSpace: 'nowrap' }}>
+                <strong style={{ color: '#38bdf8' }}>{filtered.length}</strong> / {ALL_APIS.length}
+              </span>
+              {/* Feature toolbar */}
+              <CollectionsPanel user={user} activeCollection={activeCollectionId}
+                onSelectCollection={(names) => { setCollectionFilter(names); setActiveCollectionId(names ? 'active' : null) }} />
+              <HistoryPanel user={user} onSelect={handleSelectFromHistory} />
+              <EnvVarsPanel user={user} />
+              {/* Compare button */}
+              {compareApis.length > 0 && (
+                <button onClick={() => compareApis.length === 2 && setShowCompare(true)}
+                  style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 8, background: compareApis.length === 2 ? 'rgba(129,140,248,0.2)' : 'rgba(129,140,248,0.08)', border: '1px solid rgba(129,140,248,0.4)', color: '#818cf8', fontSize: 12, fontWeight: 700, cursor: compareApis.length === 2 ? 'pointer' : 'default' }}>
+                  <GitCompare size={13} /> Compare ({compareApis.length}/2)
+                  {compareApis.length > 0 && <button onClick={e => { e.stopPropagation(); setCompareApis([]) }} style={{ background: 'none', border: 'none', color: '#818cf8', cursor: 'pointer', padding: 0, marginLeft: 2 }}><X size={11} /></button>}
+                </button>
+              )}
+              {/* Export */}
+              <button onClick={() => exportToPostman(filtered)} title="Export to Postman"
+                style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '6px 12px', borderRadius: 8, background: 'transparent', border: '1px solid #1a3050', color: '#4a6278', fontSize: 12, cursor: 'pointer', transition: 'all 0.15s' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = '#38bdf8'; e.currentTarget.style.color = '#38bdf8' }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#4a6278' }}>
+                <Download size={13} /> Export
+              </button>
+              {/* Theme toggle */}
+              <button onClick={toggleTheme} title="Toggle theme"
+                style={{ display: 'flex', alignItems: 'center', padding: '6px 10px', borderRadius: 8, background: 'transparent', border: '1px solid #1a3050', color: '#4a6278', cursor: 'pointer', transition: 'all 0.15s' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = '#fde047'; e.currentTarget.style.color = '#fde047' }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#4a6278' }}>
+                {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
+              </button>
             </div>
           </div>
           {/* Category pills — multi-row wrap */}
@@ -1595,13 +2024,36 @@ export default function App() {
           </div>
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))', gap: 12 }}>
-            {filtered.map((api, i) => <ApiCard key={i} api={api} onClick={() => setSelectedApi(api)} />)}
+            {filtered.map((api, i) => <ApiCard key={i} api={api} onClick={() => setSelectedApi(api)}
+              user={user} collections={collections}
+              onCompare={() => toggleCompare(api)}
+              compareSelected={compareApis.some(a => a.name === api.name)}
+              onCollectionChange={() => getUserCollections(user!.uid).then(setCollections)}
+            />)}
           </div>
         )}
       </div>
 
       {/* Modal */}
-      {selectedApi && <ApiModal api={selectedApi} onClose={() => setSelectedApi(null)} user={user} />}
+      {selectedApi && <ApiModal api={selectedApi} onClose={() => setSelectedApi(null)} user={user} onShare={handleShare} />}
+
+      {/* Compare Modal */}
+      <AnimatePresence>
+        {showCompare && compareApis.length === 2 && (
+          <CompareModal apis={compareApis as [FlatApi, FlatApi]} onClose={() => setShowCompare(false)} />
+        )}
+      </AnimatePresence>
+
+      {/* Share toast */}
+      <AnimatePresence>
+        {shareToast && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }}
+            style={{ position: 'fixed', bottom: 100, left: '50%', transform: 'translateX(-50%)', zIndex: 70, background: '#34d399', color: '#000', padding: '10px 20px', borderRadius: 10, fontSize: 13, fontWeight: 700, boxShadow: '0 8px 24px rgba(52,211,153,0.4)', whiteSpace: 'nowrap' }}>
+            🔗 Share link copied to clipboard!
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <Vaultie />
 
       {/* ── Footer ── */}
