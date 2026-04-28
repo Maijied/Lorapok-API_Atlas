@@ -832,6 +832,130 @@ export default function App() {
 
       {/* Modal */}
       {selectedApi && <ApiModal api={selectedApi} onClose={() => setSelectedApi(null)} user={user} />}
+
+      {/* ── Page Footer ── */}
+      <footer style={{ borderTop: '1px solid #1a3050', background: 'linear-gradient(180deg, #070e18 0%, #060c16 100%)', padding: '40px 24px 28px' }}>
+        <div style={{ maxWidth: 1500, margin: '0 auto' }}>
+          {/* Top row */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 40, justifyContent: 'space-between', marginBottom: 36 }}>
+
+            {/* Brand */}
+            <div style={{ flex: '1 1 260px', maxWidth: 320 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
+                <img src="/Lorapok-API_Atlas/logo.svg" alt="Lorapok" style={{ width: 40, height: 40, borderRadius: 10 }} />
+                <div>
+                  <div style={{ fontWeight: 800, fontSize: 15, color: '#d4e4f7', letterSpacing: '-0.01em' }}>Lorapok Atlas</div>
+                  <div style={{ fontSize: 10, color: '#334d63', letterSpacing: '0.15em', textTransform: 'uppercase' }}>API Directory</div>
+                </div>
+              </div>
+              <p style={{ fontSize: 12, color: '#4a6278', lineHeight: 1.7, margin: 0 }}>
+                A premium open-source sandbox for exploring and live-testing 600+ curated public APIs. Built for developers, by developers.
+              </p>
+              <div style={{ display: 'flex', gap: 8, marginTop: 16, flexWrap: 'wrap' }}>
+                {[
+                  { label: `${ALL_APIS.length} APIs`, color: '#38bdf8' },
+                  { label: `${CATEGORIES.length - 1} Categories`, color: '#818cf8' },
+                  { label: 'Open Source', color: '#34d399' },
+                ].map(b => (
+                  <span key={b.label} style={{ fontSize: 10, fontWeight: 700, padding: '3px 10px', borderRadius: 20, background: 'rgba(255,255,255,0.04)', border: '1px solid #1a3050', color: b.color, letterSpacing: '0.05em' }}>
+                    {b.label}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Product */}
+            <div style={{ flex: '0 1 160px' }}>
+              <div style={{ fontSize: 10, fontWeight: 700, color: '#38bdf8', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 14 }}>Product</div>
+              {[
+                { label: 'Live API Testing', href: '#' },
+                { label: 'Code Snippets', href: '#' },
+                { label: 'Key Manager', href: '#' },
+                { label: 'Response Visualizer', href: '#' },
+                { label: 'GitHub Actions CI/CD', href: 'https://github.com/Maijied/Lorapok-API_Atlas/actions' },
+              ].map(l => (
+                <a key={l.label} href={l.href} target={l.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer"
+                  style={{ display: 'block', fontSize: 12, color: '#4a6278', marginBottom: 8, textDecoration: 'none', transition: 'color 0.15s' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = '#d4e4f7')}
+                  onMouseLeave={e => (e.currentTarget.style.color = '#4a6278')}
+                >{l.label}</a>
+              ))}
+            </div>
+
+            {/* Resources */}
+            <div style={{ flex: '0 1 160px' }}>
+              <div style={{ fontSize: 10, fontWeight: 700, color: '#818cf8', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 14 }}>Resources</div>
+              {[
+                { label: 'Source Code', href: 'https://github.com/Maijied/Lorapok-API_Atlas' },
+                { label: 'Report an Issue', href: 'https://github.com/Maijied/Lorapok-API_Atlas/issues' },
+                { label: 'Contribute', href: 'https://github.com/Maijied/Lorapok-API_Atlas/pulls' },
+                { label: 'README', href: 'https://github.com/Maijied/Lorapok-API_Atlas#readme' },
+              ].map(l => (
+                <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer"
+                  style={{ display: 'block', fontSize: 12, color: '#4a6278', marginBottom: 8, textDecoration: 'none', transition: 'color 0.15s' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = '#d4e4f7')}
+                  onMouseLeave={e => (e.currentTarget.style.color = '#4a6278')}
+                >{l.label}</a>
+              ))}
+            </div>
+
+            {/* Tech stack */}
+            <div style={{ flex: '0 1 180px' }}>
+              <div style={{ fontSize: 10, fontWeight: 700, color: '#34d399', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 14 }}>Built With</div>
+              {[
+                { label: 'React 18 + TypeScript', icon: '⚛️' },
+                { label: 'Vite 5', icon: '⚡' },
+                { label: 'Tailwind CSS', icon: '🎨' },
+                { label: 'Framer Motion', icon: '🎞️' },
+                { label: 'Firebase + Firestore', icon: '🔥' },
+                { label: 'GitHub Pages', icon: '🚀' },
+              ].map(t => (
+                <div key={t.label} style={{ display: 'flex', alignItems: 'center', gap: 7, fontSize: 12, color: '#4a6278', marginBottom: 7 }}>
+                  <span style={{ fontSize: 13 }}>{t.icon}</span> {t.label}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div style={{ height: 1, background: 'linear-gradient(90deg, transparent, #1a3050 30%, #1a3050 70%, transparent)', marginBottom: 24 }} />
+
+          {/* Bottom row */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <span style={{ fontSize: 20 }}>🐛</span>
+              <div>
+                <span style={{ fontSize: 12, color: '#334d63' }}>
+                  © {new Date().getFullYear()} &nbsp;
+                </span>
+                <a href="https://github.com/Maijied" target="_blank" rel="noopener noreferrer"
+                  style={{ fontSize: 12, fontWeight: 700, color: '#38bdf8', textDecoration: 'none' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = '#7dd3fc')}
+                  onMouseLeave={e => (e.currentTarget.style.color = '#38bdf8')}
+                >Lorapok</a>
+                <span style={{ fontSize: 12, color: '#334d63' }}> · All rights reserved · MIT License</span>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <span style={{ fontSize: 11, color: '#1e3a52' }}>Made with</span>
+              <span style={{ fontSize: 13 }}>💚</span>
+              <span style={{ fontSize: 11, color: '#1e3a52' }}>for the open-source community</span>
+            </div>
+
+            <div style={{ display: 'flex', gap: 12 }}>
+              <a href="https://github.com/Maijied/Lorapok-API_Atlas" target="_blank" rel="noopener noreferrer"
+                style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#334d63', textDecoration: 'none', padding: '5px 12px', borderRadius: 6, border: '1px solid #1a3050', transition: 'all 0.15s' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = '#38bdf8'; e.currentTarget.style.color = '#38bdf8' }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#334d63' }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                Star on GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
