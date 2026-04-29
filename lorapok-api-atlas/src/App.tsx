@@ -1841,6 +1841,25 @@ const Vaultie = () => {
                 </div>
               )}
 
+              {/* Quick action chips */}
+              {messages.length <= 1 && (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, padding: '0 2px' }}>
+                  {[
+                    { label: '🔍 Find me an API', prompt: 'Find me a free weather API that returns JSON' },
+                    { label: '⚡ Generate code', prompt: 'Generate a React hook for the last API I tested' },
+                    { label: '🔥 Trending APIs', prompt: 'What are the most popular APIs on this site?' },
+                    { label: '🗂 Browse categories', prompt: 'What categories of APIs are available here?' },
+                  ].map(chip => (
+                    <button key={chip.label} onClick={() => { setInput(chip.prompt); setTimeout(() => inputRef.current?.focus(), 50) }}
+                      style={{ padding: '4px 10px', borderRadius: 20, fontSize: 10, fontWeight: 600, background: 'rgba(255,255,255,0.05)', border: '1px solid #1a3050', color: '#4a6278', cursor: 'pointer', transition: 'all 0.15s', whiteSpace: 'nowrap' }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = '#38bdf8'; e.currentTarget.style.color = '#38bdf8' }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#4a6278' }}>
+                      {chip.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+
               <div ref={bottomRef} />
             </div>
 
@@ -2216,6 +2235,171 @@ const PersonalDashboard = ({ user }: { user: ReturnType<typeof useAuth>['user'] 
   )
 }
 
+// ─── Code Playground ─────────────────────────────────────────────────────────
+const CodePlayground = ({ onClose }: { onClose: () => void }) => {
+  const [lang, setLang] = useState<'javascript' | 'python' | 'curl'>('javascript')
+  const [code, setCode] = useState(`// JavaScript Playground
+// Write and test your API integration code here
+
+async function testApi() {
+  const response = await fetch('https://api.example.com/data', {
+    method: 'GET',
+    headers: { 'Accept': 'application/json' }
+  });
+  const data = await response.json();
+  console.log(data);
+  return data;
+}
+
+testApi();`)
+  const [output, setOutput] = useState('')
+  const [running, setRunning] = useState(false)
+  const [error, setError] = useState('')
+
+  const TEMPLATES: Record<string, string> = {
+    javascript: `// JavaScript — fetch any API
+async function testApi() {
+  const response = await fetch('https://api.adviceslip.com/advice', {
+    headers: { 'Accept': 'application/json' }
+  });
+  const data = await response.json();
+  console.log(JSON.stringify(data, null, 2));
+  return data;
+}
+testApi();`,
+    python: `# Python — requests example
+import requests
+
+url = "https://api.adviceslip.com/advice"
+headers = {"Accept": "application/json"}
+
+response = requests.get(url, headers=headers)
+print(response.json())`,
+    curl: `curl --request GET \\
+  --url 'https://api.adviceslip.com/advice' \\
+  --header 'Accept: application/json'`,
+  }
+
+  const run = async () => {
+    if (lang !== 'javascript') {
+      setOutput(''); setError('Only JavaScript can run in the browser. Copy the code and run it in your terminal.')
+      return
+    }
+    setRunning(true); setOutput(''); setError('')
+    const logs: string[] = []
+    const origLog = console.log
+    console.log = (...args) => { logs.push(args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ')); origLog(...args) }
+    try {
+      const fn = new Function(`return (async () => { ${code} })()`)
+      const result = await fn()
+      if (result !== undefined) logs.push(typeof result === 'object' ? JSON.stringify(result, null, 2) : String(result))
+      setOutput(logs.join('\n') || '✓ Executed successfully (no output)')
+    } catch (e: any) {
+      setError(e.message)
+    } finally {
+      console.log = origLog
+      setRunning(false)
+    }
+  }
+
+  return (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+      style={{ position: 'fixed', inset: 0, zIndex: 65, background: 'rgba(4,10,20,0.9)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}
+      onClick={onClose}>
+      <motion.div initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 20 }}
+        style={{ width: '100%', maxWidth: 900, maxHeight: '90vh', background: 'linear-gradient(145deg, #0c1828, #091220)', border: '1px solid #1a3050', borderRadius: 16, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}
+        onClick={e => e.stopPropagation()}>
+        {/* Header */}
+        <div style={{ padding: '14px 20px', borderBottom: '1px solid #1a3050', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(0,0,0,0.2)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <Code size={16} style={{ color: '#34d399' }} />
+            <span style={{ fontSize: 14, fontWeight: 800, color: '#d4e4f7' }}>Code Playground</span>
+            <span style={{ fontSize: 10, color: '#334d63', background: 'rgba(52,211,153,0.1)', border: '1px solid rgba(52,211,153,0.2)', padding: '2px 8px', borderRadius: 10 }}>JS runs in browser</span>
+          </div>
+          <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+            {/* Language tabs */}
+            <div style={{ display: 'flex', gap: 4 }}>
+              {(['javascript', 'python', 'curl'] as const).map(l => (
+                <button key={l} onClick={() => { setLang(l); setCode(TEMPLATES[l]); setOutput(''); setError('') }}
+                  style={{ padding: '4px 10px', borderRadius: 6, fontSize: 11, fontWeight: 700, cursor: 'pointer', border: `1px solid ${lang === l ? '#34d399' : '#1a3050'}`, background: lang === l ? 'rgba(52,211,153,0.15)' : 'transparent', color: lang === l ? '#34d399' : '#4a6278', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  {l}
+                </button>
+              ))}
+            </div>
+            <button onClick={run} disabled={running}
+              style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '7px 16px', borderRadius: 8, background: running ? 'rgba(74,222,128,0.3)' : '#4ade80', border: 'none', color: '#000', fontSize: 12, fontWeight: 700, cursor: running ? 'wait' : 'pointer' }}>
+              <Play size={13} fill="currentColor" /> {running ? 'Running…' : 'Run'}
+            </button>
+            <button onClick={onClose} style={{ width: 30, height: 30, borderRadius: 8, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: '#4a6278', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(248,113,113,0.1)'; e.currentTarget.style.color = '#f87171' }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#4a6278' }}>
+              <X size={15} />
+            </button>
+          </div>
+        </div>
+
+        {/* Editor + Output */}
+        <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', overflow: 'hidden', minHeight: 0 }}>
+          {/* Code editor */}
+          <div style={{ borderRight: '1px solid #1a3050', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+            <div style={{ padding: '8px 14px', borderBottom: '1px solid #1a3050', fontSize: 10, fontWeight: 700, color: '#4a6278', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: 6 }}>
+              <Terminal size={11} /> Editor
+            </div>
+            <textarea value={code} onChange={e => setCode(e.target.value)}
+              spellCheck={false}
+              style={{ flex: 1, background: '#050c18', border: 'none', padding: '14px 16px', color: '#a5f3fc', fontSize: 12, fontFamily: "'Fira Code', 'Cascadia Code', 'Courier New', monospace", lineHeight: 1.7, outline: 'none', resize: 'none', tabSize: 2 }}
+              onKeyDown={e => {
+                if (e.key === 'Tab') { e.preventDefault(); const s = e.currentTarget.selectionStart; const v = code; setCode(v.slice(0, s) + '  ' + v.slice(e.currentTarget.selectionEnd)); setTimeout(() => { e.currentTarget.selectionStart = e.currentTarget.selectionEnd = s + 2 }, 0) }
+                if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) run()
+              }} />
+            <div style={{ padding: '6px 14px', borderTop: '1px solid #1a3050', fontSize: 10, color: '#334d63' }}>
+              Ctrl+Enter to run · Tab for indent
+            </div>
+          </div>
+
+          {/* Output */}
+          <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+            <div style={{ padding: '8px 14px', borderBottom: '1px solid #1a3050', fontSize: 10, fontWeight: 700, color: '#4a6278', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: 6, justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <Terminal size={11} /> Output
+              </div>
+              {(output || error) && (
+                <button onClick={() => { setOutput(''); setError('') }} style={{ background: 'none', border: 'none', color: '#334d63', cursor: 'pointer', fontSize: 10 }}>Clear</button>
+              )}
+            </div>
+            <div style={{ flex: 1, overflowY: 'auto', padding: '14px 16px', background: '#050c18' }} className="custom-scrollbar">
+              {running && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#34d399', fontSize: 12 }}>
+                  <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}>
+                    <RefreshCw size={14} />
+                  </motion.div>
+                  Executing…
+                </div>
+              )}
+              {!running && !output && !error && (
+                <div style={{ color: '#334d63', fontSize: 12, lineHeight: 1.6 }}>
+                  Output will appear here.<br />
+                  <span style={{ fontSize: 11 }}>Click Run or press Ctrl+Enter</span>
+                </div>
+              )}
+              {error && (
+                <div style={{ color: '#f87171', fontSize: 12, fontFamily: 'monospace', lineHeight: 1.6, whiteSpace: 'pre-wrap' }}>
+                  ✗ {error}
+                </div>
+              )}
+              {output && (
+                <pre style={{ color: '#34d399', fontSize: 12, fontFamily: 'monospace', lineHeight: 1.7, whiteSpace: 'pre-wrap', margin: 0 }}>
+                  {output}
+                </pre>
+              )}
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  )
+}
+
 // ─── Copyable wallet address ──────────────────────────────────────────────────
 const CopyableAddress = ({ addr }: { addr: string }) => {
   const [copied, setCopied] = useState(false)
@@ -2308,6 +2492,7 @@ export default function App() {
   }, [user])
 
   const [filtersOpen, setFiltersOpen] = useState(true)
+  const [showPlayground, setShowPlayground] = useState(false)
   const [siteStats, setSiteStats] = useState<{ visitors: number; registeredUsers: number } | null>(null)
 
   useEffect(() => { getStats().then(setSiteStats).catch(() => {}) }, [])
@@ -2458,6 +2643,13 @@ export default function App() {
               <TrendingSection onSelect={name => { const f = ALL_APIS.find(a => a.name === name); if (f) setSelectedApi(f) }} />
               <PersonalDashboard user={user} />
               <SubmitApiForm />
+              {/* Playground button */}
+              <button onClick={() => setShowPlayground(true)} title="Code Playground"
+                style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 8, background: 'transparent', border: '1px solid #1a3050', color: '#4a6278', fontSize: 12, cursor: 'pointer', transition: 'all 0.15s', whiteSpace: 'nowrap' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = '#34d399'; e.currentTarget.style.color = '#34d399' }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#4a6278' }}>
+                <Code size={14} /> Playground
+              </button>
               {compareApis.length > 0 && (
                 <button onClick={() => compareApis.length === 2 && setShowCompare(true)}
                   style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '6px 10px', borderRadius: 8, background: compareApis.length === 2 ? 'rgba(129,140,248,0.2)' : 'rgba(129,140,248,0.08)', border: '1px solid rgba(129,140,248,0.4)', color: '#818cf8', fontSize: 11, fontWeight: 700, cursor: compareApis.length === 2 ? 'pointer' : 'default', flexShrink: 0 }}>
@@ -2539,6 +2731,11 @@ export default function App() {
 
       {/* Modal */}
       {selectedApi && <ApiModal api={selectedApi} onClose={() => setSelectedApi(null)} user={user} onShare={handleShare} />}
+
+      {/* Code Playground */}
+      <AnimatePresence>
+        {showPlayground && <CodePlayground onClose={() => setShowPlayground(false)} />}
+      </AnimatePresence>
 
       {/* Compare Modal */}
       <AnimatePresence>
