@@ -558,7 +558,10 @@ const ApiModal = ({ api, onClose, user, onShare }: { api: FlatApi; onClose: () =
   // Sync input when key loads
   useEffect(() => { setKeyInput(apiKey) }, [apiKey])
 
-  const effectiveUrl = substituteKey(api.url, apiKey)
+  // Apply both saved API key AND env vars substitution
+  const { vars: envVars } = React.useContext(EnvVarsContext)
+  const urlWithEnv = Object.entries(envVars).reduce((u, [k, v]) => u.replace(new RegExp(`\\{\\{${k}\\}\\}`, 'g'), v), api.url)
+  const effectiveUrl = substituteKey(urlWithEnv, apiKey)
 
   const handleSave = async () => {
     await saveKey(keyInput.trim())
@@ -622,22 +625,23 @@ const ApiModal = ({ api, onClose, user, onShare }: { api: FlatApi; onClose: () =
         const reader = new FileReader()
         reader.onloadend = () => { setTestResult(reader.result); setStatus('happy') }
         reader.readAsDataURL(blob)
+        if (user) saveRequestHistory(user.uid, { apiName: api.name, url: effectiveUrl, status: 'success', preview: 'Image response' }).catch(() => {})
       } else {
         const text = new TextDecoder('utf-8').decode(res.data)
-        try { setTestResult(JSON.parse(text)) } catch { setTestResult(text) }
+        let parsed: any
+        try { parsed = JSON.parse(text) } catch { parsed = text }
+        setTestResult(parsed)
         setStatus('happy')
+        if (user) saveRequestHistory(user.uid, { apiName: api.name, url: effectiveUrl, status: 'success', preview: typeof parsed === 'object' ? JSON.stringify(parsed).slice(0, 80) : String(parsed).slice(0, 80) }).catch(() => {})
       }
-      if (user) saveRequestHistory(user.uid, { apiName: api.name, url: effectiveUrl, status: 'success', preview: typeof testResult === 'object' ? JSON.stringify(testResult).slice(0, 80) : String(testResult).slice(0, 80) }).catch(() => {})
     } catch (err: any) {
       const isNetworkError = !err.response && (err.message === 'Network Error' || err.code === 'ERR_NETWORK')
       if (isNetworkError) {
-        setTestResult({
-          error: 'CORS / Network Error',
-          detail: 'This API does not allow direct browser requests (missing CORS headers). The API itself works fine — use the curl snippet in your terminal instead.',
-          tip: 'Copy the cURL command above and run it locally, or use a server-side proxy.',
-        })
+        setTestResult({ error: 'CORS / Network Error', detail: 'This API does not allow direct browser requests (missing CORS headers). The API itself works fine — use the curl snippet in your terminal instead.', tip: 'Copy the cURL command above and run it locally, or use a server-side proxy.' })
+        if (user) saveRequestHistory(user.uid, { apiName: api.name, url: effectiveUrl, status: 'cors', preview: 'CORS blocked' }).catch(() => {})
       } else {
         setTestResult({ error: err.message, status: err.response?.status, detail: err.response?.data })
+        if (user) saveRequestHistory(user.uid, { apiName: api.name, url: effectiveUrl, status: 'error', preview: `${err.response?.status || ''} ${err.message}`.slice(0, 80) }).catch(() => {})
       }
       setStatus('sad')
     } finally {
@@ -728,12 +732,13 @@ const ApiModal = ({ api, onClose, user, onShare }: { api: FlatApi; onClose: () =
               <h4 className="font-bold mb-2" style={{ color: '#d4e4f7' }}>How to use</h4>
               <p className="text-sm mb-4" style={{ color: '#4a6278' }}>Send a {api.method} request to the endpoint to retrieve the data.</p>
 
-              {/* Auth badge */}
-              <div className="flex items-center gap-2 mb-4">
+              {/* Auth badge + Add to collection */}
+              <div className="flex items-center gap-2 mb-4 flex-wrap">
                 <span className="px-2.5 py-1 rounded-full text-[11px] font-bold" style={{ background: authStyle.bg, color: authStyle.text, border: `1px solid ${authStyle.border}` }}>
                   {authStyle.label}
                 </span>
                 {api.authRequired && <span className="text-xs" style={{ color: '#4a6278' }}>{api.authRequired} required</span>}
+                <AddToCollectionButton apiName={api.name} user={user} />
               </div>
 
               {/* ── API Key Manager ── */}
@@ -914,6 +919,56 @@ const ApiModal = ({ api, onClose, user, onShare }: { api: FlatApi; onClose: () =
         </motion.div>
       </motion.div>
     </AnimatePresence>
+  )
+}
+
+// ─── Add to Collection Button ─────────────────────────────────────────────────
+const AddToCollectionButton = ({ apiName, user }: { apiName: string; user: ReturnType<typeof useAuth>['user'] }) => {
+  const [collections, setCollections] = useState<{ id: string; name: string; apiNames: string[] }[]>([])
+  const [open, setOpen] = useState(false)
+  const [added, setAdded] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!user || !open) return
+    getUserCollections(user.uid).then(setCollections)
+  }, [user, open])
+
+  const add = async (colId: string, colName: string) => {
+    if (!user) return
+    await addToCollection(user.uid, colId, apiName)
+    setAdded(colName)
+    setTimeout(() => { setAdded(null); setOpen(false) }, 1500)
+  }
+
+  if (!user) return null
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <button onClick={() => setOpen(v => !v)}
+        style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '3px 9px', borderRadius: 20, fontSize: 10, fontWeight: 700, background: added ? 'rgba(129,140,248,0.2)' : 'rgba(129,140,248,0.08)', border: `1px solid ${added ? '#818cf8' : 'rgba(129,140,248,0.25)'}`, color: '#818cf8', cursor: 'pointer', transition: 'all 0.15s' }}>
+        <FolderPlus size={11} /> {added ? `✓ Added to ${added}` : '+ Collection'}
+      </button>
+      <AnimatePresence>
+        {open && !added && (
+          <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 6 }}
+            style={{ position: 'absolute', top: '100%', left: 0, marginTop: 4, width: 200, background: '#0c1828', border: '1px solid #1a3050', borderRadius: 8, boxShadow: '0 12px 32px rgba(0,0,0,0.5)', zIndex: 60, overflow: 'hidden' }}>
+            {collections.length === 0
+              ? <div style={{ padding: '12px', fontSize: 11, color: '#334d63', textAlign: 'center' }}>No collections yet.<br />Create one from the toolbar.</div>
+              : collections.map(col => (
+                <div key={col.id} onClick={() => add(col.id, col.name)}
+                  style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', cursor: 'pointer', fontSize: 12, color: col.apiNames.includes(apiName) ? '#818cf8' : '#d4e4f7', transition: 'background 0.15s' }}
+                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.06)')}
+                  onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}>
+                  <Folder size={12} style={{ color: '#818cf8', flexShrink: 0 }} />
+                  {col.name}
+                  {col.apiNames.includes(apiName) && <Check size={11} style={{ marginLeft: 'auto', color: '#818cf8' }} />}
+                </div>
+              ))
+            }
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   )
 }
 
@@ -1467,11 +1522,13 @@ const SYSTEM_PROMPT = `You are Vaultie 🐛, the cute AI assistant and vault man
 You are a friendly, knowledgeable larva mascot who helps developers explore and use APIs.
 
 About the site:
-- Lorapok Atlas API Directory has 644+ curated free and open-source APIs across 32 categories
+- Lorapok Atlas API Directory has 1001+ curated free and open-source APIs across 32 categories
 - Users can browse, search, filter by auth type (Free/API Key/OAuth), and live-test APIs
 - Each API has a modal with method, endpoint, code snippets (cURL, JS, Python, Go), and a live response visualizer
 - API keys are saved securely in Firebase Firestore, synced across devices via Google sign-in
-- Categories include: AI & ML, Weather, Maps, Crypto, Music, Health, Space, Developer Tools, and more
+- Features: Collections (save API groups), Request History, Env Vars, API Comparison, Share links, Theme toggle
+- Categories include: AI & ML, Weather, Maps, Crypto, Music, Health, Space, Developer Tools, Blockchain, Sports, and more
+- Vaultie (that's you!) is an AI assistant powered by Groq + Qwen3-32B
 
 Your personality:
 - Friendly, enthusiastic, slightly playful — you love APIs
@@ -1861,7 +1918,8 @@ export default function App() {
   const oauthCount = ALL_APIS.filter(a => a.authRequired === 'OAuth').length
 
   return (
-    <div style={{ minHeight: '100vh', background: '#070e18', fontFamily: "'Inter', system-ui, sans-serif", color: '#e2e8f0' }}>
+    <EnvVarsContext.Provider value={{ vars: envVars, setVars: setEnvVars }}>
+    <div style={{ minHeight: '100vh', background: theme === 'dark' ? '#070e18' : '#f0f4f8', fontFamily: "'Inter', system-ui, sans-serif", color: theme === 'dark' ? '#e2e8f0' : '#1a2332', transition: 'background 0.3s, color 0.3s' }}>
 
       {/* ── Sticky Navbar ── */}
       <nav style={{ position: 'sticky', top: 0, zIndex: 40, background: 'rgba(7,14,24,0.94)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(26,48,80,0.7)', padding: '0 24px' }}>
@@ -1982,13 +2040,6 @@ export default function App() {
                   {compareApis.length > 0 && <button onClick={e => { e.stopPropagation(); setCompareApis([]) }} style={{ background: 'none', border: 'none', color: '#818cf8', cursor: 'pointer', padding: 0, marginLeft: 2 }}><X size={11} /></button>}
                 </button>
               )}
-              {/* Export */}
-              <button onClick={() => exportToPostman(filtered)} title="Export to Postman"
-                style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '6px 12px', borderRadius: 8, background: 'transparent', border: '1px solid #1a3050', color: '#4a6278', fontSize: 12, cursor: 'pointer', transition: 'all 0.15s' }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = '#38bdf8'; e.currentTarget.style.color = '#38bdf8' }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#4a6278' }}>
-                <Download size={13} /> Export
-              </button>
               {/* Theme toggle */}
               <button onClick={toggleTheme} title="Toggle theme"
                 style={{ display: 'flex', alignItems: 'center', padding: '6px 10px', borderRadius: 8, background: 'transparent', border: '1px solid #1a3050', color: '#4a6278', cursor: 'pointer', transition: 'all 0.15s' }}
@@ -2277,5 +2328,6 @@ export default function App() {
         </div>
       </footer>
     </div>
+    </EnvVarsContext.Provider>
   )
 }

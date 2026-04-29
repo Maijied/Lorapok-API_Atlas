@@ -33,7 +33,13 @@ Built around **Vaultie** 🐛 — the AI-powered Atlas Vault Manager — the app
 ## Features
 
 ### Core Experience
-- **644+ curated APIs** across 32 categories — weather, AI, crypto, maps, music, health, space, developer tools, and more
+- **1001+ curated APIs** across 32 categories — weather, AI, crypto, maps, music, health, space, developer tools, blockchain, sports, and more
+- **Collections** — save APIs into named groups, filter the grid by collection (synced to Firestore)
+- **Request History** — last 20 tests with status icons, click to reopen any API
+- **Environment Variables** — global `{{KEY}}` injection into URLs, synced to Firestore
+- **API Comparison** — select 2 APIs and run them side-by-side
+- **Share links** — copy a `?api=Name` URL to share any API directly
+- **Theme toggle** — dark/light mode, persisted in localStorage
 - **Sticky navbar** with ◈ Lorapok · Open Source Intelligence branding and Google sign-in
 - **Hero header** with live stats (total APIs, categories, free/key/OAuth counts)
 - **Sticky controls bar** — search, sort, auth filter, and horizontally scrollable category pills
