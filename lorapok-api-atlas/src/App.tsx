@@ -722,7 +722,7 @@ const ApiModal = ({ api, onClose, user, onShare }: { api: FlatApi; onClose: () =
           </div>
 
           {/* Body: Docs + Response */}
-          <div className="flex-1 grid grid-cols-2 overflow-hidden" style={{ minHeight: 0 }}>
+          <div className="flex-1 modal-body overflow-hidden" style={{ minHeight: 0, display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
             {/* Docs */}
             <div className="border-r overflow-y-auto custom-scrollbar p-5" style={{ borderColor: '#1a3050' }}>
               <div className="flex items-center gap-2 mb-4">
@@ -1304,8 +1304,9 @@ const ApiCard = ({ api, onClick, onCompare, compareSelected, user, collections, 
         </div>
         <div style={{ display: 'flex', gap: 5 }}>
           <button onClick={copy}
+            title="Copy API URL to clipboard"
             style={{ padding: '4px 9px', borderRadius: 6, fontSize: 11, background: copied ? 'rgba(52,211,153,0.15)' : 'transparent', border: `1px solid ${copied ? '#065f46' : '#152030'}`, color: copied ? '#34d399' : '#334d63', cursor: 'pointer', transition: 'all 0.15s' }}
-          >{copied ? '✓' : '⎘'}</button>
+          >{copied ? '✓ Copied' : '⎘ URL'}</button>
           <button onClick={onClick}
             style={{ padding: '4px 9px', borderRadius: 6, fontSize: 11, background: hovered ? 'rgba(56,189,248,0.1)' : 'transparent', border: `1px solid ${hovered ? '#264560' : '#152030'}`, color: '#38bdf8', cursor: 'pointer', transition: 'all 0.15s' }}
           >Test ▶</button>
@@ -1899,6 +1900,8 @@ export default function App() {
     if (found) setSelectedApi(found)
   }
 
+  const [filtersOpen, setFiltersOpen] = useState(true)
+
   const filtered = useMemo(() => {
     let result = ALL_APIS.filter(api => {
       const q = search.toLowerCase()
@@ -1922,16 +1925,17 @@ export default function App() {
     <div style={{ minHeight: '100vh', background: theme === 'dark' ? '#070e18' : '#f0f4f8', fontFamily: "'Inter', system-ui, sans-serif", color: theme === 'dark' ? '#e2e8f0' : '#1a2332', transition: 'background 0.3s, color 0.3s' }}>
 
       {/* ── Sticky Navbar ── */}
-      <nav style={{ position: 'sticky', top: 0, zIndex: 40, background: 'rgba(7,14,24,0.94)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(26,48,80,0.7)', padding: '0 24px' }}>
-        <div style={{ maxWidth: 1400, margin: '0 auto', height: 58, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+      <nav style={{ position: 'sticky', top: 0, zIndex: 40, background: theme === 'dark' ? 'rgba(7,14,24,0.94)' : 'rgba(240,244,248,0.96)', backdropFilter: 'blur(20px)', borderBottom: `1px solid ${theme === 'dark' ? 'rgba(26,48,80,0.7)' : 'rgba(209,220,232,0.8)'}`, padding: '0 16px' }}>
+        <div style={{ maxWidth: 1400, margin: '0 auto', height: 58, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
             <motion.img src="/Lorapok-API_Atlas/logo.svg" alt="Lorapok" animate={{ y: [0,-3,0] }} transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }} style={{ width: 34, height: 34, borderRadius: 8 }} />
             <div>
-              <div style={{ fontSize: 14, fontWeight: 800, color: '#d4e4f7', letterSpacing: '-0.02em', lineHeight: 1.1 }}>Lorapok Atlas</div>
+              <div style={{ fontSize: 14, fontWeight: 800, color: theme === 'dark' ? '#d4e4f7' : '#1a2332', letterSpacing: '-0.02em', lineHeight: 1.1 }}>Lorapok Atlas</div>
               <div style={{ fontSize: 9, color: '#334d63', letterSpacing: '0.18em', textTransform: 'uppercase' }}>API Directory</div>
             </div>
           </div>
-          <div style={{ fontSize: 10, letterSpacing: '0.22em', color: '#38bdf8', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: 6, opacity: 0.8 }}>
+          {/* Center tagline — hidden on small screens via overflow */}
+          <div style={{ fontSize: 10, letterSpacing: '0.22em', color: '#38bdf8', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: 6, opacity: 0.8, overflow: 'hidden', whiteSpace: 'nowrap', flex: '0 1 auto', minWidth: 0 }}>
             <span>◈</span> Lorapok · Open Source Intelligence
           </div>
           <div style={{ flexShrink: 0 }}>
@@ -1939,10 +1943,10 @@ export default function App() {
               <div style={{ width: 100, height: 32, borderRadius: 8, background: 'rgba(255,255,255,0.04)', border: '1px solid #1a3050' }} />
             ) : user ? (
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '4px 10px 4px 5px', borderRadius: 40, background: 'rgba(52,211,153,0.07)', border: '1px solid rgba(52,211,153,0.18)' }}>
-                  {user.photoURL ? <img src={user.photoURL} alt="" style={{ width: 24, height: 24, borderRadius: '50%', border: '1.5px solid rgba(52,211,153,0.4)' }} /> : <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'rgba(52,211,153,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><UserIcon size={12} style={{ color: '#34d399' }} /></div>}
-                  <div>
-                    <div style={{ fontSize: 11, fontWeight: 700, color: '#d4e4f7', maxWidth: 110, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', lineHeight: 1.2 }}>{user.displayName || 'User'}</div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '4px 10px 4px 5px', borderRadius: 40, background: 'rgba(52,211,153,0.07)', border: '1px solid rgba(52,211,153,0.18)', maxWidth: 180 }}>
+                  {user.photoURL ? <img src={user.photoURL} alt="" style={{ width: 24, height: 24, borderRadius: '50%', border: '1.5px solid rgba(52,211,153,0.4)', flexShrink: 0 }} /> : <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'rgba(52,211,153,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><UserIcon size={12} style={{ color: '#34d399' }} /></div>}
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ fontSize: 11, fontWeight: 700, color: theme === 'dark' ? '#d4e4f7' : '#1a2332', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', lineHeight: 1.2 }}>{user.displayName?.split(' ')[0] || 'User'}</div>
                     <div style={{ fontSize: 9, color: '#34d399', lineHeight: 1.2 }}>● Signed in</div>
                   </div>
                 </div>
@@ -1997,84 +2001,120 @@ export default function App() {
       </div>
 
       {/* ── Sticky Controls ── */}
-      <div style={{ background: 'rgba(7,14,24,0.97)', borderBottom: '1px solid #1a3050', position: 'sticky', top: 58, zIndex: 30, padding: '12px 24px' }}>
-        <div style={{ maxWidth: 1400, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', alignItems: 'center' }}>
-            <div style={{ position: 'relative', flex: '1 1 280px' }}>
-              <Search style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#334d63', pointerEvents: 'none' }} size={14} />
-              <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search APIs by name, description, or category…"
-                style={{ width: '100%', boxSizing: 'border-box', background: '#0c1828', border: '1px solid #1a3050', borderRadius: 9, padding: '9px 36px 9px 36px', color: '#e2e8f0', fontSize: 13, outline: 'none', transition: 'border-color 0.15s' }}
-                onFocus={e => (e.target.style.borderColor = '#38bdf8')} onBlur={e => (e.target.style.borderColor = '#1a3050')} />
-              {search && <button onClick={() => setSearch('')} style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: '#334d63', cursor: 'pointer', padding: 2 }}><X size={13} /></button>}
+      <div style={{ background: theme === 'dark' ? 'rgba(7,14,24,0.97)' : 'rgba(240,244,248,0.97)', borderBottom: `1px solid ${theme === 'dark' ? '#1a3050' : '#d1dce8'}`, position: 'sticky', top: 58, zIndex: 30, padding: '10px 16px' }}>
+        <div style={{ maxWidth: 1400, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 8 }}>
+
+          {/* ── Top row: search + actions ── */}
+          <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+            {/* Search */}
+            <div style={{ position: 'relative', flex: '1 1 200px', minWidth: 0 }}>
+              <Search style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: '#334d63', pointerEvents: 'none' }} size={13} />
+              <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search APIs…"
+                style={{ width: '100%', boxSizing: 'border-box', background: theme === 'dark' ? '#0c1828' : '#fff', border: `1px solid ${theme === 'dark' ? '#1a3050' : '#d1dce8'}`, borderRadius: 8, padding: '8px 32px 8px 32px', color: theme === 'dark' ? '#e2e8f0' : '#1a2332', fontSize: 13, outline: 'none', transition: 'border-color 0.15s' }}
+                onFocus={e => (e.target.style.borderColor = '#38bdf8')} onBlur={e => (e.target.style.borderColor = theme === 'dark' ? '#1a3050' : '#d1dce8')} />
+              {search && <button onClick={() => setSearch('')} style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: '#334d63', cursor: 'pointer', padding: 2 }}><X size={12} /></button>}
             </div>
-            <select value={sortBy} onChange={e => setSortBy(e.target.value)} style={{ background: '#0c1828', border: '1px solid #1a3050', borderRadius: 9, padding: '9px 14px', color: '#64748b', fontSize: 12, outline: 'none', cursor: 'pointer' }}>
-              <option value="default">Default order</option>
-              <option value="name">Sort A → Z</option>
-              <option value="category">Sort by Category</option>
+
+            {/* Sort — hidden on very small screens */}
+            <select value={sortBy} onChange={e => setSortBy(e.target.value)}
+              style={{ background: theme === 'dark' ? '#0c1828' : '#fff', border: `1px solid ${theme === 'dark' ? '#1a3050' : '#d1dce8'}`, borderRadius: 8, padding: '8px 12px', color: '#64748b', fontSize: 12, outline: 'none', cursor: 'pointer', flexShrink: 0 }}>
+              <option value="default">Default</option>
+              <option value="name">A → Z</option>
+              <option value="category">Category</option>
             </select>
-            <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
-              {[
-                { val: 'All', label: 'All', ac: '#38bdf8', ab: 'rgba(56,189,248,0.1)', abr: '#38bdf8' },
-                { val: 'None', label: '🔓 Free', ac: '#34d399', ab: 'rgba(52,211,153,0.1)', abr: '#34d399' },
-                { val: 'API Key', label: '🗝 Key', ac: '#818cf8', ab: 'rgba(129,140,248,0.1)', abr: '#818cf8' },
-                { val: 'OAuth', label: '🔑 OAuth', ac: '#f87171', ab: 'rgba(248,113,113,0.1)', abr: '#f87171' },
-              ].map(a => {
-                const active = authFilter === a.val
-                return <button key={a.val} onClick={() => setAuthFilter(a.val)} style={{ padding: '6px 13px', borderRadius: 7, fontSize: 12, cursor: 'pointer', border: `1px solid ${active ? a.abr : '#1a3050'}`, background: active ? a.ab : 'transparent', color: active ? a.ac : '#4a6278', fontWeight: active ? 700 : 400, transition: 'all 0.15s' }}>{a.label}</button>
-              })}
-            </div>
-            <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+
+            {/* Filter toggle button */}
+            <button onClick={() => setFiltersOpen(v => !v)}
+              style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '7px 12px', borderRadius: 8, background: filtersOpen ? 'rgba(56,189,248,0.1)' : 'transparent', border: `1px solid ${filtersOpen ? '#38bdf8' : (theme === 'dark' ? '#1a3050' : '#d1dce8')}`, color: filtersOpen ? '#38bdf8' : '#4a6278', fontSize: 12, cursor: 'pointer', transition: 'all 0.15s', flexShrink: 0 }}>
+              <Search size={12} /> Filters {filtersOpen ? '▲' : '▼'}
+              {(authFilter !== 'All' || activeCategory !== 'All') && (
+                <span style={{ background: '#38bdf8', color: '#000', borderRadius: 10, padding: '1px 5px', fontSize: 9, fontWeight: 800 }}>
+                  {(authFilter !== 'All' ? 1 : 0) + (activeCategory !== 'All' ? 1 : 0)}
+                </span>
+              )}
+            </button>
+
+            {/* Count + tools */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginLeft: 'auto', flexWrap: 'wrap' }}>
               <span style={{ fontSize: 12, color: '#334d63', whiteSpace: 'nowrap' }}>
-                <strong style={{ color: '#38bdf8' }}>{filtered.length}</strong> / {ALL_APIS.length}
+                <strong style={{ color: '#38bdf8' }}>{filtered.length}</strong>
+                <span style={{ display: 'none' }} className="sm-show"> / {ALL_APIS.length}</span>
               </span>
-              {/* Feature toolbar */}
               <CollectionsPanel user={user} activeCollection={activeCollectionId}
                 onSelectCollection={(names) => { setCollectionFilter(names); setActiveCollectionId(names ? 'active' : null) }} />
               <HistoryPanel user={user} onSelect={handleSelectFromHistory} />
               <EnvVarsPanel user={user} />
-              {/* Compare button */}
               {compareApis.length > 0 && (
                 <button onClick={() => compareApis.length === 2 && setShowCompare(true)}
-                  style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 8, background: compareApis.length === 2 ? 'rgba(129,140,248,0.2)' : 'rgba(129,140,248,0.08)', border: '1px solid rgba(129,140,248,0.4)', color: '#818cf8', fontSize: 12, fontWeight: 700, cursor: compareApis.length === 2 ? 'pointer' : 'default' }}>
-                  <GitCompare size={13} /> Compare ({compareApis.length}/2)
-                  {compareApis.length > 0 && <button onClick={e => { e.stopPropagation(); setCompareApis([]) }} style={{ background: 'none', border: 'none', color: '#818cf8', cursor: 'pointer', padding: 0, marginLeft: 2 }}><X size={11} /></button>}
+                  style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '6px 10px', borderRadius: 8, background: compareApis.length === 2 ? 'rgba(129,140,248,0.2)' : 'rgba(129,140,248,0.08)', border: '1px solid rgba(129,140,248,0.4)', color: '#818cf8', fontSize: 11, fontWeight: 700, cursor: compareApis.length === 2 ? 'pointer' : 'default', flexShrink: 0 }}>
+                  <GitCompare size={12} /> {compareApis.length}/2
+                  <button onClick={e => { e.stopPropagation(); setCompareApis([]) }} style={{ background: 'none', border: 'none', color: '#818cf8', cursor: 'pointer', padding: 0, marginLeft: 2 }}><X size={10} /></button>
                 </button>
               )}
-              {/* Theme toggle */}
               <button onClick={toggleTheme} title="Toggle theme"
-                style={{ display: 'flex', alignItems: 'center', padding: '6px 10px', borderRadius: 8, background: 'transparent', border: '1px solid #1a3050', color: '#4a6278', cursor: 'pointer', transition: 'all 0.15s' }}
+                style={{ display: 'flex', alignItems: 'center', padding: '6px 9px', borderRadius: 8, background: 'transparent', border: `1px solid ${theme === 'dark' ? '#1a3050' : '#d1dce8'}`, color: '#4a6278', cursor: 'pointer', transition: 'all 0.15s', flexShrink: 0 }}
                 onMouseEnter={e => { e.currentTarget.style.borderColor = '#fde047'; e.currentTarget.style.color = '#fde047' }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#4a6278' }}>
-                {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = theme === 'dark' ? '#1a3050' : '#d1dce8'; e.currentTarget.style.color = '#4a6278' }}>
+                {theme === 'dark' ? <Sun size={13} /> : <Moon size={13} />}
               </button>
             </div>
           </div>
-          {/* Category pills — multi-row wrap */}
-          <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
-            {CATEGORIES.map(cat => {
-              const count = cat === 'All' ? ALL_APIS.length : ALL_APIS.filter(a => a.category === cat).length
-              const active = activeCategory === cat
-              return (
-                <button key={cat} onClick={() => setActiveCategory(cat)} style={{ padding: '4px 11px', borderRadius: 20, fontSize: 11, cursor: 'pointer', border: `1px solid ${active ? '#818cf8' : '#151f2e'}`, background: active ? 'rgba(129,140,248,0.14)' : 'rgba(12,24,40,0.8)', color: active ? '#818cf8' : '#4a6278', transition: 'all 0.15s', whiteSpace: 'nowrap', flexShrink: 0, fontWeight: active ? 700 : 400 }}>
-                  {cat !== 'All' ? `${CAT_ICONS[cat] || '●'} ` : ''}{cat} <span style={{ opacity: 0.4, fontSize: 10 }}>({count})</span>
-                </button>
-              )
-            })}
-          </div>
+
+          {/* ── Collapsible filters ── */}
+          <AnimatePresence>
+            {filtersOpen && (
+              <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} style={{ overflow: 'hidden' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 8, paddingTop: 4 }}>
+                  {/* Auth filter */}
+                  <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', alignItems: 'center' }}>
+                    <span style={{ fontSize: 10, color: '#334d63', letterSpacing: '0.1em', textTransform: 'uppercase', flexShrink: 0 }}>Auth:</span>
+                    {[
+                      { val: 'All', label: 'All', ac: '#38bdf8', ab: 'rgba(56,189,248,0.1)', abr: '#38bdf8' },
+                      { val: 'None', label: '🔓 Free', ac: '#34d399', ab: 'rgba(52,211,153,0.1)', abr: '#34d399' },
+                      { val: 'API Key', label: '🗝 Key', ac: '#818cf8', ab: 'rgba(129,140,248,0.1)', abr: '#818cf8' },
+                      { val: 'OAuth', label: '🔑 OAuth', ac: '#f87171', ab: 'rgba(248,113,113,0.1)', abr: '#f87171' },
+                    ].map(a => {
+                      const active = authFilter === a.val
+                      return <button key={a.val} onClick={() => setAuthFilter(a.val)} style={{ padding: '5px 12px', borderRadius: 7, fontSize: 12, cursor: 'pointer', border: `1px solid ${active ? a.abr : (theme === 'dark' ? '#1a3050' : '#d1dce8')}`, background: active ? a.ab : 'transparent', color: active ? a.ac : '#4a6278', fontWeight: active ? 700 : 400, transition: 'all 0.15s' }}>{a.label}</button>
+                    })}
+                    {(authFilter !== 'All' || activeCategory !== 'All') && (
+                      <button onClick={() => { setAuthFilter('All'); setActiveCategory('All'); setCollectionFilter(null) }}
+                        style={{ padding: '5px 10px', borderRadius: 7, fontSize: 11, cursor: 'pointer', border: '1px solid rgba(248,113,113,0.3)', background: 'transparent', color: '#f87171' }}>
+                        Clear filters
+                      </button>
+                    )}
+                  </div>
+                  {/* Category pills */}
+                  <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
+                    {CATEGORIES.map(cat => {
+                      const count = cat === 'All' ? ALL_APIS.length : ALL_APIS.filter(a => a.category === cat).length
+                      const active = activeCategory === cat
+                      return (
+                        <button key={cat} onClick={() => setActiveCategory(cat)}
+                          style={{ padding: '4px 10px', borderRadius: 20, fontSize: 11, cursor: 'pointer', border: `1px solid ${active ? '#818cf8' : (theme === 'dark' ? '#151f2e' : '#d1dce8')}`, background: active ? 'rgba(129,140,248,0.14)' : (theme === 'dark' ? 'rgba(12,24,40,0.8)' : 'rgba(255,255,255,0.8)'), color: active ? '#818cf8' : '#4a6278', transition: 'all 0.15s', whiteSpace: 'nowrap', fontWeight: active ? 700 : 400 }}>
+                          {cat !== 'All' ? `${CAT_ICONS[cat] || '●'} ` : ''}{cat} <span style={{ opacity: 0.4, fontSize: 10 }}>({count})</span>
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 
       {/* ── Grid ── */}
-      <div style={{ maxWidth: 1400, margin: '0 auto', padding: '28px 24px 72px' }}>
+      <div style={{ maxWidth: 1400, margin: '0 auto', padding: '20px 12px 72px' }}>
         {filtered.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '100px 0', color: '#334d63' }}>
-            <div style={{ fontSize: 52, marginBottom: 16, opacity: 0.3 }}>⊘</div>
+          <div style={{ textAlign: 'center', padding: '80px 0', color: '#334d63' }}>
+            <div style={{ fontSize: 48, marginBottom: 16, opacity: 0.3 }}>⊘</div>
             <div style={{ fontSize: 18, fontWeight: 700, color: '#4a6278', marginBottom: 8 }}>No results found</div>
             <div style={{ fontSize: 13 }}>Try "<span style={{ color: '#38bdf8' }}>{search}</span>" with different filters</div>
             <button onClick={() => { setSearch(''); setActiveCategory('All'); setAuthFilter('All') }} style={{ marginTop: 20, padding: '8px 20px', borderRadius: 8, background: 'rgba(56,189,248,0.1)', border: '1px solid rgba(56,189,248,0.3)', color: '#38bdf8', fontSize: 13, cursor: 'pointer' }}>Clear all filters</button>
           </div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))', gap: 12 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(290px, 100%), 1fr))', gap: 10 }}>
             {filtered.map((api, i) => <ApiCard key={i} api={api} onClick={() => setSelectedApi(api)}
               user={user} collections={collections}
               onCompare={() => toggleCompare(api)}

@@ -33,3 +33,50 @@ body {
     @apply bg-white bg-opacity-10 backdrop-blur-lg border border-white border-opacity-20 rounded-xl shadow-xl;
   }
 }
+
+/* ── Mobile responsive ── */
+@media (max-width: 640px) {
+  /* Hide tagline on mobile */
+  nav > div > div:nth-child(2) {
+    display: none !important;
+  }
+  /* Sign out text — icon only */
+  nav button span:not(:first-child) {
+    display: none;
+  }
+  /* Hero padding */
+  .hero-section {
+    padding: 32px 16px 28px !important;
+  }
+  /* Modal full screen */
+  .api-modal {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    border-radius: 0 !important;
+    height: 100dvh !important;
+  }
+  /* Modal body stack vertically */
+  .modal-body {
+    grid-template-columns: 1fr !important;
+  }
+  /* Footer columns */
+  footer .footer-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Vaultie chat window */
+  .vaultie-chat {
+    right: 8px !important;
+    left: 8px !important;
+    width: auto !important;
+    bottom: 90px !important;
+  }
+}
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #1a3050; border-radius: 4px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #264560; }
