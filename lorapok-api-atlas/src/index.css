@@ -35,23 +35,23 @@
 
 /* ── CSS Variables — Light theme ── */
 :root.light {
-  --bg:        #f0f4fb;
+  --bg:        #f6f8fc;
   --bg2:       #ffffff;
-  --bg3:       #e8eef8;
-  --border:    #d0daea;
-  --border2:   #e2e8f4;
-  --text:      #0d1b2e;
-  --text2:     #4a6080;
-  --text3:     #8a9ab8;
-  --nav-bg:    rgba(240,244,251,0.96);
-  --card-bg:   linear-gradient(145deg, #ffffff 0%, #f8fafd 100%);
+  --bg3:       #eef1f8;
+  --border:    #e2e8f2;
+  --border2:   #eaeff8;
+  --text:      #1e2d42;
+  --text2:     #5a7090;
+  --text3:     #9aaec4;
+  --nav-bg:    rgba(246,248,252,0.95);
+  --card-bg:   linear-gradient(145deg, #ffffff 0%, #f9fbfe 100%);
   --input-bg:  #ffffff;
   --drop-bg:   #ffffff;
-  --hero-bg:   linear-gradient(160deg, #dce8f8 0%, #f0f4fb 70%);
-  --ctrl-bg:   rgba(240,244,251,0.98);
-  --footer-bg: linear-gradient(180deg, #e8eef8 0%, #dde5f2 100%);
-  --shadow:    0 20px 48px rgba(13,27,46,0.12);
-  --shadow-sm: 0 8px 24px rgba(13,27,46,0.08);
+  --hero-bg:   linear-gradient(160deg, #e8f0fc 0%, #f6f8fc 70%);
+  --ctrl-bg:   rgba(246,248,252,0.98);
+  --footer-bg: linear-gradient(180deg, #eef1f8 0%, #e6ecf6 100%);
+  --shadow:    0 20px 48px rgba(30,45,66,0.08);
+  --shadow-sm: 0 8px 24px rgba(30,45,66,0.06);
   color-scheme: light;
   color: var(--text);
   background-color: var(--bg);
@@ -73,59 +73,60 @@ body {
 
 /* ── Light theme card styles ── */
 :root.light .api-card {
-  background: linear-gradient(145deg, #ffffff 0%, #f8fafd 100%) !important;
-  border-color: #d0daea !important;
-  box-shadow: 0 2px 8px rgba(13,27,46,0.06) !important;
+  background: #ffffff !important;
+  border-color: #e2e8f2 !important;
+  box-shadow: 0 1px 4px rgba(30,45,66,0.05) !important;
 }
 :root.light .api-card:hover {
-  border-color: #a8bcd8 !important;
-  box-shadow: 0 8px 28px rgba(13,27,46,0.12) !important;
+  border-color: #b8cce0 !important;
+  box-shadow: 0 6px 20px rgba(30,45,66,0.09) !important;
   transform: translateY(-2px) !important;
 }
 
 /* ── Light theme nav ── */
 :root.light nav {
-  background: rgba(240,244,251,0.96) !important;
-  border-bottom-color: #d0daea !important;
+  background: rgba(246,248,252,0.95) !important;
+  border-bottom-color: #e2e8f2 !important;
 }
 
 /* ── Light theme controls bar ── */
 :root.light .ctrl-bar {
-  background: rgba(240,244,251,0.98) !important;
-  border-bottom-color: #d0daea !important;
+  background: rgba(246,248,252,0.98) !important;
+  border-bottom-color: #e2e8f2 !important;
 }
 
 /* ── Light theme hero ── */
 :root.light .hero-section {
-  background: linear-gradient(160deg, #dce8f8 0%, #f0f4fb 70%) !important;
-  border-bottom-color: #d0daea !important;
+  background: linear-gradient(160deg, #e8f0fc 0%, #f6f8fc 70%) !important;
+  border-bottom-color: #e2e8f2 !important;
 }
-:root.light .hero-section::before {
-  background-image: linear-gradient(rgba(176,196,224,0.3) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(176,196,224,0.3) 1px, transparent 1px) !important;
+/* Softer grid in light mode */
+:root.light .hero-grid {
+  background-image: linear-gradient(rgba(148,180,220,0.15) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(148,180,220,0.15) 1px, transparent 1px) !important;
 }
 
 /* ── Light theme dropdowns ── */
 :root.light .t-drop {
   background: #ffffff !important;
-  border-color: #d0daea !important;
-  box-shadow: 0 20px 48px rgba(13,27,46,0.12) !important;
+  border-color: #e2e8f2 !important;
+  box-shadow: 0 20px 48px rgba(30,45,66,0.1) !important;
 }
 :root.light .t-drop-header {
-  background: #f4f7fb !important;
-  border-bottom-color: #d0daea !important;
+  background: #f6f8fc !important;
+  border-bottom-color: #e2e8f2 !important;
 }
 :root.light .t-drop-item:hover {
-  background: rgba(56,130,248,0.06) !important;
+  background: rgba(56,130,248,0.05) !important;
 }
 
 /* ── Light theme inputs ── */
 :root.light input, :root.light select {
   background: #ffffff !important;
-  border-color: #d0daea !important;
-  color: #0d1b2e !important;
+  border-color: #e2e8f2 !important;
+  color: #1e2d42 !important;
 }
-:root.light input::placeholder { color: #8a9ab8 !important; }
+:root.light input::placeholder { color: #9aaec4 !important; }
 
 /* ── Light theme modal ── */
 :root.light .api-modal-inner {

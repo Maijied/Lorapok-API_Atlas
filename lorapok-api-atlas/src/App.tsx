@@ -686,10 +686,10 @@ const ApiModal = ({ api, onClose, user, onShare }: { api: FlatApi; onClose: () =
             <div className="flex items-center gap-2 shrink-0">
               {onShare && (
                 <button onClick={() => onShare(api)} title="Copy share link"
-                  style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '7px 12px', borderRadius: 8, background: 'transparent', border: '1px solid #1a3050', color: '#4a6278', fontSize: 12, cursor: 'pointer', transition: 'all 0.15s' }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#38bdf8'; e.currentTarget.style.color = '#38bdf8' }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#4a6278' }}>
-                  <Share2 size={13} /> Share
+                  style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '6px 11px', borderRadius: 7, background: 'rgba(56,189,248,0.06)', border: '1px solid rgba(56,189,248,0.2)', color: '#38bdf8', fontSize: 11, fontWeight: 600, cursor: 'pointer', transition: 'all 0.15s', letterSpacing: '0.02em' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(56,189,248,0.12)'; e.currentTarget.style.borderColor = 'rgba(56,189,248,0.4)' }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(56,189,248,0.06)'; e.currentTarget.style.borderColor = 'rgba(56,189,248,0.2)' }}>
+                  <Share2 size={12} /> Share
                 </button>
               )}
               <button
@@ -702,7 +702,12 @@ const ApiModal = ({ api, onClose, user, onShare }: { api: FlatApi; onClose: () =
                 {isLoading ? 'Running…' : 'Run Test'}
                 <Play size={15} fill="currentColor" />
               </button>
-              <button onClick={onClose} className="p-2 rounded-lg hover:bg-white/10 transition-colors" style={{ color: '#4a6278' }}><X size={18} /></button>
+              <button onClick={onClose}
+                style={{ width: 30, height: 30, borderRadius: 8, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: '#4a6278', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.15s' }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(248,113,113,0.1)'; e.currentTarget.style.borderColor = 'rgba(248,113,113,0.3)'; e.currentTarget.style.color = '#f87171' }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.color = '#4a6278' }}>
+                <X size={15} />
+              </button>
             </div>
           </div>
 
@@ -1016,12 +1021,13 @@ const CollectionsPanel = ({ user, onSelectCollection, activeCollection }: {
     if (!user || !newName.trim()) return
     const name = newName.trim()
     setNewName(''); setCreating(false)
-    // Optimistic update — add to local state immediately
+    // Optimistic update — add to local state immediately, no reload needed
     const tempId = `temp_${Date.now()}`
-    setCollections(prev => [...prev, { id: tempId, name, apiNames: [], createdAt: Date.now() }])
+    const newCol = { id: tempId, name, apiNames: [], createdAt: Date.now() }
+    setCollections(prev => [...prev, newCol])
     try {
       const docRef = await createCollection(user.uid, name)
-      // Replace temp entry with real Firestore ID
+      // Replace temp ID with real Firestore ID
       setCollections(prev => prev.map(c => c.id === tempId ? { ...c, id: docRef.id } : c))
     } catch (e) {
       // Rollback on error
@@ -2051,7 +2057,7 @@ export default function App() {
       {/* ── Hero ── */}
       <div className="hero-section" style={{ background: 'var(--hero-bg)', borderBottom: '1px solid var(--border)', padding: '56px 24px 48px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(ellipse at 20% 50%, rgba(56,189,248,0.06) 0%, transparent 55%), radial-gradient(ellipse at 80% 30%, rgba(129,140,248,0.06) 0%, transparent 55%), radial-gradient(ellipse at 50% 100%, rgba(52,211,153,0.04) 0%, transparent 50%)' }} />
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(26,48,80,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(26,48,80,0.25) 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(26,48,80,0.18) 1px, transparent 1px), linear-gradient(90deg, rgba(26,48,80,0.18) 1px, transparent 1px)', backgroundSize: '48px 48px' }} className="hero-grid" />
         <div style={{ position: 'relative', maxWidth: 760, margin: '0 auto' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 7, padding: '5px 16px', borderRadius: 20, background: 'rgba(52,211,153,0.07)', border: '1px solid rgba(52,211,153,0.2)', marginBottom: 22 }}>
             <motion.span animate={{ opacity: [1,0.3,1] }} transition={{ repeat: Infinity, duration: 2 }} style={{ width: 6, height: 6, borderRadius: '50%', background: '#34d399', display: 'inline-block' }} />
