@@ -2,31 +2,184 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── CSS Variables — Dark theme (default) ── */
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --bg:        #070e18;
+  --bg2:       #0c1828;
+  --bg3:       #091220;
+  --border:    #1a3050;
+  --border2:   #152030;
+  --text:      #d4e4f7;
+  --text2:     #4a6278;
+  --text3:     #334d63;
+  --nav-bg:    rgba(7,14,24,0.94);
+  --card-bg:   linear-gradient(145deg, #0c1828 0%, #091220 100%);
+  --input-bg:  #0c1828;
+  --drop-bg:   #0c1828;
+  --hero-bg:   linear-gradient(160deg, #0a1628 0%, #070e18 70%);
+  --ctrl-bg:   rgba(7,14,24,0.97);
+  --footer-bg: linear-gradient(180deg, #060d1a 0%, #040810 100%);
+  --shadow:    0 20px 48px rgba(0,0,0,0.6);
+  --shadow-sm: 0 8px 24px rgba(0,0,0,0.4);
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: dark;
-  color: #e2e8f0;
-  background-color: #070e18;
-
+  color: var(--text);
+  background-color: var(--bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* ── CSS Variables — Light theme ── */
+:root.light {
+  --bg:        #f0f4fb;
+  --bg2:       #ffffff;
+  --bg3:       #e8eef8;
+  --border:    #d0daea;
+  --border2:   #e2e8f4;
+  --text:      #0d1b2e;
+  --text2:     #4a6080;
+  --text3:     #8a9ab8;
+  --nav-bg:    rgba(240,244,251,0.96);
+  --card-bg:   linear-gradient(145deg, #ffffff 0%, #f8fafd 100%);
+  --input-bg:  #ffffff;
+  --drop-bg:   #ffffff;
+  --hero-bg:   linear-gradient(160deg, #dce8f8 0%, #f0f4fb 70%);
+  --ctrl-bg:   rgba(240,244,251,0.98);
+  --footer-bg: linear-gradient(180deg, #e8eef8 0%, #dde5f2 100%);
+  --shadow:    0 20px 48px rgba(13,27,46,0.12);
+  --shadow-sm: 0 8px 24px rgba(13,27,46,0.08);
+  color-scheme: light;
+  color: var(--text);
+  background-color: var(--bg);
+}
+
+/* ── Smooth theme transition on root elements only ── */
+body, nav, footer, .t-transition {
+  transition: background-color 0.3s ease, color 0.2s ease, border-color 0.3s ease;
+}
+
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: #070e18;
+  background: var(--bg);
 }
 
-#root {
-  width: 100%;
+#root { width: 100%; }
+
+/* ── Light theme card styles ── */
+:root.light .api-card {
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafd 100%) !important;
+  border-color: #d0daea !important;
+  box-shadow: 0 2px 8px rgba(13,27,46,0.06) !important;
 }
+:root.light .api-card:hover {
+  border-color: #a8bcd8 !important;
+  box-shadow: 0 8px 28px rgba(13,27,46,0.12) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* ── Light theme nav ── */
+:root.light nav {
+  background: rgba(240,244,251,0.96) !important;
+  border-bottom-color: #d0daea !important;
+}
+
+/* ── Light theme controls bar ── */
+:root.light .ctrl-bar {
+  background: rgba(240,244,251,0.98) !important;
+  border-bottom-color: #d0daea !important;
+}
+
+/* ── Light theme hero ── */
+:root.light .hero-section {
+  background: linear-gradient(160deg, #dce8f8 0%, #f0f4fb 70%) !important;
+  border-bottom-color: #d0daea !important;
+}
+:root.light .hero-section::before {
+  background-image: linear-gradient(rgba(176,196,224,0.3) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(176,196,224,0.3) 1px, transparent 1px) !important;
+}
+
+/* ── Light theme dropdowns ── */
+:root.light .t-drop {
+  background: #ffffff !important;
+  border-color: #d0daea !important;
+  box-shadow: 0 20px 48px rgba(13,27,46,0.12) !important;
+}
+:root.light .t-drop-header {
+  background: #f4f7fb !important;
+  border-bottom-color: #d0daea !important;
+}
+:root.light .t-drop-item:hover {
+  background: rgba(56,130,248,0.06) !important;
+}
+
+/* ── Light theme inputs ── */
+:root.light input, :root.light select {
+  background: #ffffff !important;
+  border-color: #d0daea !important;
+  color: #0d1b2e !important;
+}
+:root.light input::placeholder { color: #8a9ab8 !important; }
+
+/* ── Light theme modal ── */
+:root.light .api-modal-inner {
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafd 100%) !important;
+  border-color: #d0daea !important;
+}
+:root.light .modal-section-border {
+  border-color: #d0daea !important;
+}
+
+/* ── Light theme footer ── */
+:root.light footer {
+  background: linear-gradient(180deg, #e8eef8 0%, #dde5f2 100%) !important;
+  border-top-color: #d0daea !important;
+}
+
+/* ── Light theme text overrides ── */
+:root.light .t-text-primary { color: #0d1b2e !important; }
+:root.light .t-text-muted   { color: #4a6080 !important; }
+:root.light .t-text-dim     { color: #8a9ab8 !important; }
+
+/* ── Light theme category pills ── */
+:root.light .cat-pill {
+  background: rgba(255,255,255,0.9) !important;
+  border-color: #d0daea !important;
+  color: #4a6080 !important;
+}
+:root.light .cat-pill.active {
+  background: rgba(129,140,248,0.12) !important;
+  border-color: #818cf8 !important;
+  color: #818cf8 !important;
+}
+
+/* ── Light theme auth badges ── */
+:root.light .auth-badge-free   { background: #e8faf3 !important; color: #16a34a !important; border-color: #86efac !important; }
+:root.light .auth-badge-key    { background: #ede9fe !important; color: #7c3aed !important; border-color: #c4b5fd !important; }
+:root.light .auth-badge-oauth  { background: #fee2e2 !important; color: #dc2626 !important; border-color: #fca5a5 !important; }
+
+/* ── Light theme Vaultie chat ── */
+:root.light .vaultie-window {
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafd 100%) !important;
+  border-color: #d0daea !important;
+}
+:root.light .vaultie-msg-assistant {
+  background: #f0f4fb !important;
+  border-color: #d0daea !important;
+  color: #0d1b2e !important;
+}
+
+/* ── Custom scrollbar ── */
+.custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--text3); }
 
 @layer components {
   .glass {
@@ -36,37 +189,17 @@ body {
 
 /* ── Mobile responsive ── */
 @media (max-width: 640px) {
-  /* Hide tagline on mobile */
-  nav > div > div:nth-child(2) {
-    display: none !important;
-  }
-  /* Sign out text — icon only */
-  nav button span:not(:first-child) {
-    display: none;
-  }
-  /* Hero padding */
-  .hero-section {
-    padding: 32px 16px 28px !important;
-  }
-  /* Modal full screen */
   .api-modal {
     max-width: 100% !important;
     max-height: 100% !important;
     border-radius: 0 !important;
     height: 100dvh !important;
   }
-  /* Modal body stack vertically */
   .modal-body {
     grid-template-columns: 1fr !important;
   }
-  /* Footer columns */
-  footer .footer-grid {
-    grid-template-columns: 1fr !important;
-  }
 }
-
 @media (max-width: 480px) {
-  /* Vaultie chat window */
   .vaultie-chat {
     right: 8px !important;
     left: 8px !important;
@@ -74,9 +207,3 @@ body {
     bottom: 90px !important;
   }
 }
-
-/* Custom scrollbar */
-.custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
-.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-.custom-scrollbar::-webkit-scrollbar-thumb { background: #1a3050; border-radius: 4px; }
-.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #264560; }

@@ -299,9 +299,18 @@ func main() {
 
 // ─── Theme context ────────────────────────────────────────────────────────────
 const useTheme = () => {
-  const [theme, setTheme] = useState<'dark' | 'light'>(() =>
-    (localStorage.getItem('lorapok-theme') as 'dark' | 'light') || 'dark'
-  )
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    const saved = localStorage.getItem('lorapok-theme') as 'dark' | 'light' | null
+    return saved || 'dark'
+  })
+  useEffect(() => {
+    const root = document.documentElement
+    if (theme === 'light') {
+      root.classList.add('light')
+    } else {
+      root.classList.remove('light')
+    }
+  }, [theme])
   const toggle = () => setTheme(t => {
     const next = t === 'dark' ? 'light' : 'dark'
     localStorage.setItem('lorapok-theme', next)
@@ -660,8 +669,8 @@ const ApiModal = ({ api, onClose, user, onShare }: { api: FlatApi; onClose: () =
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="w-full max-w-5xl max-h-[90vh] overflow-hidden rounded-xl flex flex-col"
-          style={{ background: 'linear-gradient(145deg, #0c1828 0%, #091220 100%)', border: '1px solid #1a3050' }}
+          className="w-full max-w-5xl max-h-[90vh] overflow-hidden rounded-xl flex flex-col api-modal-inner"
+          style={{ background: 'var(--card-bg)', border: '1px solid var(--border)' }}
           onClick={e => e.stopPropagation()}
         >
           {/* Modal Header */}
@@ -1005,9 +1014,20 @@ const CollectionsPanel = ({ user, onSelectCollection, activeCollection }: {
 
   const create = async () => {
     if (!user || !newName.trim()) return
-    await createCollection(user.uid, newName.trim())
+    const name = newName.trim()
     setNewName(''); setCreating(false)
-    reload()
+    // Optimistic update — add to local state immediately
+    const tempId = `temp_${Date.now()}`
+    setCollections(prev => [...prev, { id: tempId, name, apiNames: [], createdAt: Date.now() }])
+    try {
+      const docRef = await createCollection(user.uid, name)
+      // Replace temp entry with real Firestore ID
+      setCollections(prev => prev.map(c => c.id === tempId ? { ...c, id: docRef.id } : c))
+    } catch (e) {
+      // Rollback on error
+      setCollections(prev => prev.filter(c => c.id !== tempId))
+      console.error('Failed to create collection', e)
+    }
   }
 
   const del = async (id: string) => {
@@ -1327,11 +1347,12 @@ const ApiCard = ({ api, onClick, onCompare, compareSelected, user, collections, 
   return (
     <div
       onClick={onClick}
+      className="api-card"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        background: 'linear-gradient(145deg, #0c1828 0%, #091220 100%)',
-        border: `1px solid ${hovered ? '#264560' : '#152030'}`,
+        background: 'var(--card-bg)',
+        border: `1px solid ${hovered ? '#264560' : 'var(--border2)'}`,
         borderRadius: 10, padding: 15, cursor: 'pointer',
         transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
         boxShadow: hovered ? '0 8px 32px rgba(0,0,0,0.4)' : 'none',
@@ -1341,11 +1362,11 @@ const ApiCard = ({ api, onClick, onCompare, compareSelected, user, collections, 
       {/* Subtle glow on hover */}
       {hovered && <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 0%, rgba(56,189,248,0.04) 0%, transparent 70%)', pointerEvents: 'none' }} />}
 
-      <div style={{ fontSize: 10, color: '#334d63', letterSpacing: '0.1em', marginBottom: 6, textTransform: 'uppercase' }}>
+      <div style={{ fontSize: 10, color: 'var(--text3)', letterSpacing: '0.1em', marginBottom: 6, textTransform: 'uppercase' }}>
         {CAT_ICONS[api.category] || '●'} {api.category}
       </div>
-      <div style={{ fontSize: 14, fontWeight: 700, color: '#d4e4f7', marginBottom: 5, lineHeight: 1.3 }}>{api.name}</div>
-      <div style={{ fontSize: 12, color: '#4a6278', lineHeight: 1.5, marginBottom: 12, minHeight: 32 }}>{api.desc}</div>
+      <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 5, lineHeight: 1.3 }}>{api.name}</div>
+      <div style={{ fontSize: 12, color: 'var(--text2)', lineHeight: 1.5, marginBottom: 12, minHeight: 32 }}>{api.desc}</div>
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
@@ -1981,15 +2002,15 @@ export default function App() {
 
   return (
     <EnvVarsContext.Provider value={{ vars: envVars, setVars: setEnvVars }}>
-    <div style={{ minHeight: '100vh', background: theme === 'dark' ? '#070e18' : '#f0f4f8', fontFamily: "'Inter', system-ui, sans-serif", color: theme === 'dark' ? '#e2e8f0' : '#1a2332', transition: 'background 0.3s, color 0.3s' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--bg)', fontFamily: "'Inter', system-ui, sans-serif", color: 'var(--text)' }}>
 
       {/* ── Sticky Navbar ── */}
-      <nav style={{ position: 'sticky', top: 0, zIndex: 40, background: theme === 'dark' ? 'rgba(7,14,24,0.94)' : 'rgba(240,244,248,0.96)', backdropFilter: 'blur(20px)', borderBottom: `1px solid ${theme === 'dark' ? 'rgba(26,48,80,0.7)' : 'rgba(209,220,232,0.8)'}`, padding: '0 16px' }}>
+      <nav style={{ position: 'sticky', top: 0, zIndex: 40, background: 'var(--nav-bg)', backdropFilter: 'blur(20px)', borderBottom: '1px solid var(--border)', padding: '0 16px' }}>
         <div style={{ maxWidth: 1400, margin: '0 auto', height: 58, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
             <motion.img src="/Lorapok-API_Atlas/logo.svg" alt="Lorapok" animate={{ y: [0,-3,0] }} transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }} style={{ width: 34, height: 34, borderRadius: 8 }} />
             <div>
-              <div style={{ fontSize: 14, fontWeight: 800, color: theme === 'dark' ? '#d4e4f7' : '#1a2332', letterSpacing: '-0.02em', lineHeight: 1.1 }}>Lorapok Atlas</div>
+              <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', lineHeight: 1.1 }}>Lorapok Atlas</div>
               <div style={{ fontSize: 9, color: '#334d63', letterSpacing: '0.18em', textTransform: 'uppercase' }}>API Directory</div>
             </div>
           </div>
@@ -2005,7 +2026,7 @@ export default function App() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '4px 10px 4px 5px', borderRadius: 40, background: 'rgba(52,211,153,0.07)', border: '1px solid rgba(52,211,153,0.18)', maxWidth: 180 }}>
                   {user.photoURL ? <img src={user.photoURL} alt="" style={{ width: 24, height: 24, borderRadius: '50%', border: '1.5px solid rgba(52,211,153,0.4)', flexShrink: 0 }} /> : <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'rgba(52,211,153,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><UserIcon size={12} style={{ color: '#34d399' }} /></div>}
                   <div style={{ minWidth: 0 }}>
-                    <div style={{ fontSize: 11, fontWeight: 700, color: theme === 'dark' ? '#d4e4f7' : '#1a2332', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', lineHeight: 1.2 }}>{user.displayName?.split(' ')[0] || 'User'}</div>
+                    <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', lineHeight: 1.2 }}>{user.displayName?.split(' ')[0] || 'User'}</div>
                     <div style={{ fontSize: 9, color: '#34d399', lineHeight: 1.2 }}>● Signed in</div>
                   </div>
                 </div>
@@ -2028,7 +2049,7 @@ export default function App() {
       </nav>
 
       {/* ── Hero ── */}
-      <div style={{ background: 'linear-gradient(160deg, #0a1628 0%, #070e18 70%)', borderBottom: '1px solid #1a3050', padding: '56px 24px 48px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+      <div className="hero-section" style={{ background: 'var(--hero-bg)', borderBottom: '1px solid var(--border)', padding: '56px 24px 48px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(ellipse at 20% 50%, rgba(56,189,248,0.06) 0%, transparent 55%), radial-gradient(ellipse at 80% 30%, rgba(129,140,248,0.06) 0%, transparent 55%), radial-gradient(ellipse at 50% 100%, rgba(52,211,153,0.04) 0%, transparent 50%)' }} />
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(26,48,80,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(26,48,80,0.25) 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
         <div style={{ position: 'relative', maxWidth: 760, margin: '0 auto' }}>
@@ -2060,7 +2081,7 @@ export default function App() {
       </div>
 
       {/* ── Sticky Controls ── */}
-      <div style={{ background: theme === 'dark' ? 'rgba(7,14,24,0.97)' : 'rgba(240,244,248,0.97)', borderBottom: `1px solid ${theme === 'dark' ? '#1a3050' : '#d1dce8'}`, position: 'sticky', top: 58, zIndex: 30, padding: '10px 16px' }}>
+      <div className="ctrl-bar" style={{ background: 'var(--ctrl-bg)', borderBottom: '1px solid var(--border)', position: 'sticky', top: 58, zIndex: 30, padding: '10px 16px' }}>
         <div style={{ maxWidth: 1400, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 8 }}>
 
           {/* ── Top row: search + actions ── */}
@@ -2069,14 +2090,14 @@ export default function App() {
             <div style={{ position: 'relative', flex: '1 1 200px', minWidth: 0 }}>
               <Search style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: '#334d63', pointerEvents: 'none' }} size={13} />
               <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search APIs…"
-                style={{ width: '100%', boxSizing: 'border-box', background: theme === 'dark' ? '#0c1828' : '#fff', border: `1px solid ${theme === 'dark' ? '#1a3050' : '#d1dce8'}`, borderRadius: 8, padding: '8px 32px 8px 32px', color: theme === 'dark' ? '#e2e8f0' : '#1a2332', fontSize: 13, outline: 'none', transition: 'border-color 0.15s' }}
-                onFocus={e => (e.target.style.borderColor = '#38bdf8')} onBlur={e => (e.target.style.borderColor = theme === 'dark' ? '#1a3050' : '#d1dce8')} />
+                style={{ width: '100%', boxSizing: 'border-box', background: 'var(--input-bg)', border: '1px solid var(--border)', borderRadius: 8, padding: '8px 32px 8px 32px', color: 'var(--text)', fontSize: 13, outline: 'none', transition: 'border-color 0.15s' }}
+                onFocus={e => (e.target.style.borderColor = '#38bdf8')} onBlur={e => (e.target.style.borderColor = 'var(--border)')} />
               {search && <button onClick={() => setSearch('')} style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: '#334d63', cursor: 'pointer', padding: 2 }}><X size={12} /></button>}
             </div>
 
             {/* Sort — hidden on very small screens */}
             <select value={sortBy} onChange={e => setSortBy(e.target.value)}
-              style={{ background: theme === 'dark' ? '#0c1828' : '#fff', border: `1px solid ${theme === 'dark' ? '#1a3050' : '#d1dce8'}`, borderRadius: 8, padding: '8px 12px', color: '#64748b', fontSize: 12, outline: 'none', cursor: 'pointer', flexShrink: 0 }}>
+              style={{ background: 'var(--input-bg)', border: '1px solid var(--border)', borderRadius: 8, padding: '8px 12px', color: 'var(--text2)', fontSize: 12, outline: 'none', cursor: 'pointer', flexShrink: 0 }}>
               <option value="default">Default</option>
               <option value="name">A → Z</option>
               <option value="category">Category</option>
@@ -2084,7 +2105,7 @@ export default function App() {
 
             {/* Filter toggle button */}
             <button onClick={() => setFiltersOpen(v => !v)}
-              style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '7px 12px', borderRadius: 8, background: filtersOpen ? 'rgba(56,189,248,0.1)' : 'transparent', border: `1px solid ${filtersOpen ? '#38bdf8' : (theme === 'dark' ? '#1a3050' : '#d1dce8')}`, color: filtersOpen ? '#38bdf8' : '#4a6278', fontSize: 12, cursor: 'pointer', transition: 'all 0.15s', flexShrink: 0 }}>
+              style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '7px 12px', borderRadius: 8, background: filtersOpen ? 'rgba(56,189,248,0.1)' : 'transparent', border: `1px solid ${filtersOpen ? '#38bdf8' : 'var(--border)'}`, color: filtersOpen ? '#38bdf8' : 'var(--text2)', fontSize: 12, cursor: 'pointer', transition: 'all 0.15s', flexShrink: 0 }}>
               <Search size={12} /> Filters {filtersOpen ? '▲' : '▼'}
               {(authFilter !== 'All' || activeCategory !== 'All') && (
                 <span style={{ background: '#38bdf8', color: '#000', borderRadius: 10, padding: '1px 5px', fontSize: 9, fontWeight: 800 }}>
@@ -2110,11 +2131,9 @@ export default function App() {
                   <button onClick={e => { e.stopPropagation(); setCompareApis([]) }} style={{ background: 'none', border: 'none', color: '#818cf8', cursor: 'pointer', padding: 0, marginLeft: 2 }}><X size={10} /></button>
                 </button>
               )}
-              <button onClick={toggleTheme} title="Toggle theme"
-                style={{ display: 'flex', alignItems: 'center', padding: '6px 9px', borderRadius: 8, background: 'transparent', border: `1px solid ${theme === 'dark' ? '#1a3050' : '#d1dce8'}`, color: '#4a6278', cursor: 'pointer', transition: 'all 0.15s', flexShrink: 0 }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = '#fde047'; e.currentTarget.style.color = '#fde047' }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = theme === 'dark' ? '#1a3050' : '#d1dce8'; e.currentTarget.style.color = '#4a6278' }}>
-                {theme === 'dark' ? <Sun size={13} /> : <Moon size={13} />}
+              <button onClick={toggleTheme} title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 10px', borderRadius: 8, background: theme === 'light' ? 'rgba(253,224,71,0.15)' : 'transparent', border: `1px solid ${theme === 'light' ? 'rgba(253,224,71,0.4)' : 'var(--border)'}`, color: theme === 'light' ? '#b45309' : 'var(--text2)', cursor: 'pointer', transition: 'all 0.2s', flexShrink: 0, fontSize: 12 }}>
+                {theme === 'dark' ? <><Sun size={13} /> Light</> : <><Moon size={13} /> Dark</>}
               </button>
             </div>
           </div>
@@ -2134,7 +2153,7 @@ export default function App() {
                       { val: 'OAuth', label: '🔑 OAuth', ac: '#f87171', ab: 'rgba(248,113,113,0.1)', abr: '#f87171' },
                     ].map(a => {
                       const active = authFilter === a.val
-                      return <button key={a.val} onClick={() => setAuthFilter(a.val)} style={{ padding: '5px 12px', borderRadius: 7, fontSize: 12, cursor: 'pointer', border: `1px solid ${active ? a.abr : (theme === 'dark' ? '#1a3050' : '#d1dce8')}`, background: active ? a.ab : 'transparent', color: active ? a.ac : '#4a6278', fontWeight: active ? 700 : 400, transition: 'all 0.15s' }}>{a.label}</button>
+                      return <button key={a.val} onClick={() => setAuthFilter(a.val)} style={{ padding: '5px 12px', borderRadius: 7, fontSize: 12, cursor: 'pointer', border: `1px solid ${active ? a.abr : 'var(--border)'}`, background: active ? a.ab : 'transparent', color: active ? a.ac : 'var(--text2)', fontWeight: active ? 700 : 400, transition: 'all 0.15s' }}>{a.label}</button>
                     })}
                     {(authFilter !== 'All' || activeCategory !== 'All') && (
                       <button onClick={() => { setAuthFilter('All'); setActiveCategory('All'); setCollectionFilter(null) }}
@@ -2150,7 +2169,7 @@ export default function App() {
                       const active = activeCategory === cat
                       return (
                         <button key={cat} onClick={() => setActiveCategory(cat)}
-                          style={{ padding: '4px 10px', borderRadius: 20, fontSize: 11, cursor: 'pointer', border: `1px solid ${active ? '#818cf8' : (theme === 'dark' ? '#151f2e' : '#d1dce8')}`, background: active ? 'rgba(129,140,248,0.14)' : (theme === 'dark' ? 'rgba(12,24,40,0.8)' : 'rgba(255,255,255,0.8)'), color: active ? '#818cf8' : '#4a6278', transition: 'all 0.15s', whiteSpace: 'nowrap', fontWeight: active ? 700 : 400 }}>
+                          style={{ padding: '4px 10px', borderRadius: 20, fontSize: 11, cursor: 'pointer', border: `1px solid ${active ? '#818cf8' : 'var(--border2)'}`, background: active ? 'rgba(129,140,248,0.14)' : 'var(--bg2)', color: active ? '#818cf8' : 'var(--text2)', transition: 'all 0.15s', whiteSpace: 'nowrap', fontWeight: active ? 700 : 400 }}>
                           {cat !== 'All' ? `${CAT_ICONS[cat] || '●'} ` : ''}{cat} <span style={{ opacity: 0.4, fontSize: 10 }}>({count})</span>
                         </button>
                       )

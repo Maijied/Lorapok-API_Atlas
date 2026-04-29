@@ -102,19 +102,21 @@ export async function deleteCollection(uid: string, collectionId: string) {
 export async function saveRequestHistory(uid: string, entry: { apiName: string; url: string; status: 'success' | 'error' | 'cors'; preview: string }) {
   const colRef = collection(db, 'users', uid, 'history')
   await addDoc(colRef, { ...entry, ts: Date.now() })
-  // Keep only last 50 — cleanup old ones
-  const snap = await getDocs(query(colRef, orderBy('ts', 'asc')))
+  // Keep only last 50 — cleanup old ones (no orderBy to avoid index requirement)
+  const snap = await getDocs(colRef)
   if (snap.size > 50) {
-    const toDelete = snap.docs.slice(0, snap.size - 50)
+    const sorted = snap.docs.sort((a, b) => (a.data().ts || 0) - (b.data().ts || 0))
+    const toDelete = sorted.slice(0, snap.size - 50)
     await Promise.all(toDelete.map(d => deleteDoc(d.ref)))
   }
 }
 
 export async function getRequestHistory(uid: string) {
   const colRef = collection(db, 'users', uid, 'history')
-  const q = query(colRef, orderBy('ts', 'desc'), limit(20))
-  const snap = await getDocs(q)
-  return snap.docs.map(d => ({ id: d.id, ...d.data() })) as { id: string; apiName: string; url: string; status: string; preview: string; ts: number }[]
+  // Avoid composite index requirement — fetch all and sort client-side
+  const snap = await getDocs(colRef)
+  const all = snap.docs.map(d => ({ id: d.id, ...d.data() })) as { id: string; apiName: string; url: string; status: string; preview: string; ts: number }[]
+  return all.sort((a, b) => (b.ts || 0) - (a.ts || 0)).slice(0, 20)
 }
 
 // ─── Environment Variables ────────────────────────────────────────────────────
