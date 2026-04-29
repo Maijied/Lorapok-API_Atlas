@@ -35,23 +35,24 @@
 
 /* ── CSS Variables — Light theme ── */
 :root.light {
-  --bg:        #f6f8fc;
+  /* Soft lavender-white background like your portfolio */
+  --bg:        #eef0f8;
   --bg2:       #ffffff;
-  --bg3:       #eef1f8;
-  --border:    #e2e8f2;
-  --border2:   #eaeff8;
-  --text:      #1e2d42;
-  --text2:     #5a7090;
-  --text3:     #9aaec4;
-  --nav-bg:    rgba(246,248,252,0.95);
-  --card-bg:   linear-gradient(145deg, #ffffff 0%, #f9fbfe 100%);
+  --bg3:       #e8eaf4;
+  --border:    #e0e3f0;
+  --border2:   #eaecf6;
+  --text:      #1a1f3a;
+  --text2:     #5a6080;
+  --text3:     #9aa0c0;
+  --nav-bg:    rgba(238,240,248,0.96);
+  --card-bg:   linear-gradient(145deg, #ffffff 0%, #fafbff 100%);
   --input-bg:  #ffffff;
   --drop-bg:   #ffffff;
-  --hero-bg:   linear-gradient(160deg, #e8f0fc 0%, #f6f8fc 70%);
-  --ctrl-bg:   rgba(246,248,252,0.98);
-  --footer-bg: linear-gradient(180deg, #eef1f8 0%, #e6ecf6 100%);
-  --shadow:    0 20px 48px rgba(30,45,66,0.08);
-  --shadow-sm: 0 8px 24px rgba(30,45,66,0.06);
+  --hero-bg:   linear-gradient(160deg, #e4e8f8 0%, #eef0f8 70%);
+  --ctrl-bg:   rgba(238,240,248,0.98);
+  --footer-bg: linear-gradient(180deg, #e8eaf4 0%, #e0e3f0 100%);
+  --shadow:    0 20px 48px rgba(26,31,58,0.07);
+  --shadow-sm: 0 4px 16px rgba(26,31,58,0.05);
   color-scheme: light;
   color: var(--text);
   background-color: var(--bg);
@@ -74,106 +75,106 @@ body {
 /* ── Light theme card styles ── */
 :root.light .api-card {
   background: #ffffff !important;
-  border-color: #e2e8f2 !important;
-  box-shadow: 0 1px 4px rgba(30,45,66,0.05) !important;
+  border-color: #e8eaf4 !important;
+  box-shadow: 0 2px 8px rgba(26,31,58,0.06), 0 0 0 1px rgba(26,31,58,0.03) !important;
 }
 :root.light .api-card:hover {
-  border-color: #b8cce0 !important;
-  box-shadow: 0 6px 20px rgba(30,45,66,0.09) !important;
+  border-color: #c8ccec !important;
+  box-shadow: 0 8px 28px rgba(26,31,58,0.1) !important;
   transform: translateY(-2px) !important;
 }
 
 /* ── Light theme nav ── */
 :root.light nav {
-  background: rgba(246,248,252,0.95) !important;
-  border-bottom-color: #e2e8f2 !important;
+  background: rgba(238,240,248,0.96) !important;
+  border-bottom-color: #e0e3f0 !important;
 }
 
 /* ── Light theme controls bar ── */
 :root.light .ctrl-bar {
-  background: rgba(246,248,252,0.98) !important;
-  border-bottom-color: #e2e8f2 !important;
+  background: rgba(238,240,248,0.98) !important;
+  border-bottom-color: #e0e3f0 !important;
 }
 
 /* ── Light theme hero ── */
 :root.light .hero-section {
-  background: linear-gradient(160deg, #e8f0fc 0%, #f6f8fc 70%) !important;
-  border-bottom-color: #e2e8f2 !important;
+  background: linear-gradient(160deg, #e4e8f8 0%, #eef0f8 70%) !important;
+  border-bottom-color: #e0e3f0 !important;
 }
-/* Softer grid in light mode */
+/* Soft dot pattern in light mode */
 :root.light .hero-grid {
-  background-image: linear-gradient(rgba(148,180,220,0.15) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(148,180,220,0.15) 1px, transparent 1px) !important;
+  background-image: radial-gradient(circle, rgba(100,110,200,0.12) 1px, transparent 1px) !important;
+  background-size: 24px 24px !important;
 }
 
 /* ── Light theme dropdowns ── */
 :root.light .t-drop {
   background: #ffffff !important;
-  border-color: #e2e8f2 !important;
-  box-shadow: 0 20px 48px rgba(30,45,66,0.1) !important;
+  border-color: #e0e3f0 !important;
+  box-shadow: 0 20px 48px rgba(26,31,58,0.1) !important;
 }
 :root.light .t-drop-header {
-  background: #f6f8fc !important;
-  border-bottom-color: #e2e8f2 !important;
+  background: #f4f5fc !important;
+  border-bottom-color: #e0e3f0 !important;
 }
 :root.light .t-drop-item:hover {
-  background: rgba(56,130,248,0.05) !important;
+  background: rgba(100,110,200,0.05) !important;
 }
 
 /* ── Light theme inputs ── */
 :root.light input, :root.light select {
   background: #ffffff !important;
-  border-color: #e2e8f2 !important;
-  color: #1e2d42 !important;
+  border-color: #e0e3f0 !important;
+  color: #1a1f3a !important;
 }
-:root.light input::placeholder { color: #9aaec4 !important; }
+:root.light input::placeholder { color: #9aa0c0 !important; }
 
 /* ── Light theme modal ── */
 :root.light .api-modal-inner {
-  background: linear-gradient(145deg, #ffffff 0%, #f8fafd 100%) !important;
-  border-color: #d0daea !important;
+  background: linear-gradient(145deg, #ffffff 0%, #fafbff 100%) !important;
+  border-color: #e0e3f0 !important;
 }
 :root.light .modal-section-border {
-  border-color: #d0daea !important;
+  border-color: #e0e3f0 !important;
 }
 
 /* ── Light theme footer ── */
 :root.light footer {
-  background: linear-gradient(180deg, #e8eef8 0%, #dde5f2 100%) !important;
-  border-top-color: #d0daea !important;
+  background: linear-gradient(180deg, #e8eaf4 0%, #e0e3f0 100%) !important;
+  border-top-color: #e0e3f0 !important;
 }
 
 /* ── Light theme text overrides ── */
-:root.light .t-text-primary { color: #0d1b2e !important; }
-:root.light .t-text-muted   { color: #4a6080 !important; }
-:root.light .t-text-dim     { color: #8a9ab8 !important; }
+:root.light .t-text-primary { color: #1a1f3a !important; }
+:root.light .t-text-muted   { color: #5a6080 !important; }
+:root.light .t-text-dim     { color: #9aa0c0 !important; }
 
 /* ── Light theme category pills ── */
 :root.light .cat-pill {
   background: rgba(255,255,255,0.9) !important;
-  border-color: #d0daea !important;
-  color: #4a6080 !important;
+  border-color: #e0e3f0 !important;
+  color: #5a6080 !important;
 }
 :root.light .cat-pill.active {
-  background: rgba(129,140,248,0.12) !important;
+  background: rgba(100,110,200,0.1) !important;
   border-color: #818cf8 !important;
-  color: #818cf8 !important;
+  color: #5560c8 !important;
 }
 
 /* ── Light theme auth badges ── */
-:root.light .auth-badge-free   { background: #e8faf3 !important; color: #16a34a !important; border-color: #86efac !important; }
-:root.light .auth-badge-key    { background: #ede9fe !important; color: #7c3aed !important; border-color: #c4b5fd !important; }
-:root.light .auth-badge-oauth  { background: #fee2e2 !important; color: #dc2626 !important; border-color: #fca5a5 !important; }
+:root.light .auth-badge-free   { background: #edfaf4 !important; color: #16a34a !important; border-color: #a7f3d0 !important; }
+:root.light .auth-badge-key    { background: #f0eeff !important; color: #6d28d9 !important; border-color: #c4b5fd !important; }
+:root.light .auth-badge-oauth  { background: #fff0f0 !important; color: #dc2626 !important; border-color: #fca5a5 !important; }
 
 /* ── Light theme Vaultie chat ── */
 :root.light .vaultie-window {
-  background: linear-gradient(145deg, #ffffff 0%, #f8fafd 100%) !important;
-  border-color: #d0daea !important;
+  background: linear-gradient(145deg, #ffffff 0%, #fafbff 100%) !important;
+  border-color: #e0e3f0 !important;
 }
 :root.light .vaultie-msg-assistant {
-  background: #f0f4fb !important;
-  border-color: #d0daea !important;
-  color: #0d1b2e !important;
+  background: #f4f5fc !important;
+  border-color: #e0e3f0 !important;
+  color: #1a1f3a !important;
 }
 
 /* ── Custom scrollbar ── */
