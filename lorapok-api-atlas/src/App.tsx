@@ -2307,7 +2307,7 @@ print(response.json())`,
       style={{ position: 'fixed', inset: 0, zIndex: 65, background: 'rgba(4,10,20,0.9)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}
       onClick={onClose}>
       <motion.div initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 20 }}
-        style={{ width: '100%', maxWidth: 900, maxHeight: '90vh', background: 'linear-gradient(145deg, #0c1828, #091220)', border: '1px solid #1a3050', borderRadius: 16, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}
+        style={{ width: '100%', maxWidth: 1200, height: '92vh', background: 'linear-gradient(145deg, #0c1828, #091220)', border: '1px solid #1a3050', borderRadius: 16, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}
         onClick={e => e.stopPropagation()}>
         {/* Header */}
         <div style={{ padding: '14px 20px', borderBottom: '1px solid #1a3050', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(0,0,0,0.2)' }}>
@@ -2341,25 +2341,25 @@ print(response.json())`,
         {/* Editor + Output */}
         <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', overflow: 'hidden', minHeight: 0 }}>
           {/* Code editor */}
-          <div style={{ borderRight: '1px solid #1a3050', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-            <div style={{ padding: '8px 14px', borderBottom: '1px solid #1a3050', fontSize: 10, fontWeight: 700, color: '#4a6278', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: 6 }}>
+          <div style={{ borderRight: '1px solid #1a3050', display: 'flex', flexDirection: 'column', overflow: 'hidden', minHeight: 0 }}>
+            <div style={{ padding: '8px 14px', borderBottom: '1px solid #1a3050', fontSize: 10, fontWeight: 700, color: '#4a6278', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
               <Terminal size={11} /> Editor
             </div>
             <textarea value={code} onChange={e => setCode(e.target.value)}
               spellCheck={false}
-              style={{ flex: 1, background: '#050c18', border: 'none', padding: '14px 16px', color: '#a5f3fc', fontSize: 12, fontFamily: "'Fira Code', 'Cascadia Code', 'Courier New', monospace", lineHeight: 1.7, outline: 'none', resize: 'none', tabSize: 2 }}
+              style={{ flex: 1, background: '#050c18', border: 'none', padding: '16px 18px', color: '#a5f3fc', fontSize: 13, fontFamily: "'Fira Code', 'Cascadia Code', 'Courier New', monospace", lineHeight: 1.75, outline: 'none', resize: 'none', tabSize: 2, minHeight: 0 }}
               onKeyDown={e => {
                 if (e.key === 'Tab') { e.preventDefault(); const s = e.currentTarget.selectionStart; const v = code; setCode(v.slice(0, s) + '  ' + v.slice(e.currentTarget.selectionEnd)); setTimeout(() => { e.currentTarget.selectionStart = e.currentTarget.selectionEnd = s + 2 }, 0) }
                 if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) run()
               }} />
-            <div style={{ padding: '6px 14px', borderTop: '1px solid #1a3050', fontSize: 10, color: '#334d63' }}>
+            <div style={{ padding: '6px 14px', borderTop: '1px solid #1a3050', fontSize: 10, color: '#334d63', flexShrink: 0 }}>
               Ctrl+Enter to run · Tab for indent
             </div>
           </div>
 
           {/* Output */}
-          <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-            <div style={{ padding: '8px 14px', borderBottom: '1px solid #1a3050', fontSize: 10, fontWeight: 700, color: '#4a6278', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: 6, justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden', minHeight: 0 }}>
+            <div style={{ padding: '8px 14px', borderBottom: '1px solid #1a3050', fontSize: 10, fontWeight: 700, color: '#4a6278', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: 6, justifyContent: 'space-between', flexShrink: 0 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                 <Terminal size={11} /> Output
               </div>
@@ -2367,7 +2367,7 @@ print(response.json())`,
                 <button onClick={() => { setOutput(''); setError('') }} style={{ background: 'none', border: 'none', color: '#334d63', cursor: 'pointer', fontSize: 10 }}>Clear</button>
               )}
             </div>
-            <div style={{ flex: 1, overflowY: 'auto', padding: '14px 16px', background: '#050c18' }} className="custom-scrollbar">
+            <div style={{ flex: 1, overflowY: 'auto', padding: '16px 18px', background: '#050c18', minHeight: 0 }} className="custom-scrollbar">
               {running && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#34d399', fontSize: 12 }}>
                   <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}>
@@ -2585,9 +2585,13 @@ export default function App() {
               { val: freeCount, label: '🔓 Free', color: '#34d399' },
               { val: keyCount, label: '🗝 API Key', color: '#818cf8' },
               { val: oauthCount, label: '🔑 OAuth', color: '#f87171' },
+              ...(siteStats ? [
+                { val: siteStats.visitors, label: '👁 Visitors', color: '#38bdf8' },
+                { val: siteStats.registeredUsers, label: '👤 Members', color: '#818cf8' },
+              ] : []),
             ].map(s => (
               <div key={s.label} style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: 'clamp(22px, 3.5vw, 36px)', fontWeight: 900, color: s.color, letterSpacing: '-0.02em', lineHeight: 1 }}>{s.val}</div>
+                <div style={{ fontSize: 'clamp(22px, 3.5vw, 36px)', fontWeight: 900, color: s.color, letterSpacing: '-0.02em', lineHeight: 1 }}>{typeof s.val === 'number' ? s.val.toLocaleString() : s.val}</div>
                 <div style={{ fontSize: 10, color: '#334d63', letterSpacing: '0.12em', textTransform: 'uppercase', marginTop: 5 }}>{s.label}</div>
               </div>
             ))}
