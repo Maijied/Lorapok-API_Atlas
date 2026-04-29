@@ -1170,6 +1170,19 @@
             "description": "Random cat facts"
           },
           "response": []
+        },
+        {
+          "name": "Shibe Online",
+          "id": "c6244a34-cf72-4429-99d5-f3c64e2763b4",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://shibe.online/api/shibes?count=1&urls=true&httpsUrls=true"
+            },
+            "description": "Random Shiba Inu dog images"
+          },
+          "response": []
         }
       ]
     },
@@ -2456,6 +2469,34 @@
             "description": "Crypto exchange market data"
           },
           "response": []
+        },
+        {
+          "name": "Polygon Scan API",
+          "id": "dce95eea-3abf-401c-8645-24d003fcefee",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.polygonscan.com/api?module=stats&action=maticprice&apikey=YOUR_API_KEY"
+            },
+            "description": "Polygon blockchain data and transactions"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://polygonscan.com/register"
+        },
+        {
+          "name": "Aave Protocol API",
+          "id": "98f29ea9-adca-4ad1-b4c8-56080159ecc1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://aave-api-v2.aave.com/data/markets-data"
+            },
+            "description": "DeFi lending protocol data"
+          },
+          "response": []
         }
       ]
     },
@@ -3369,6 +3410,21 @@
           "response": [],
           "authRequired": "API Key",
           "authLink": "https://heapanalytics.com/signup"
+        },
+        {
+          "name": "Socrata Open Data",
+          "id": "4487db76-f47c-4eb1-9772-1426c3442450",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://data.cityofnewyork.us/resource/h9gi-nx95.json?limit=5"
+            },
+            "description": "Government open data platform"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://dev.socrata.com/register"
         }
       ]
     },
@@ -5132,6 +5188,90 @@
             "description": "DNS resolution over HTTPS"
           },
           "response": []
+        },
+        {
+          "name": "Hunter Domain Search",
+          "id": "62d8eb9f-af9c-4071-ba2e-f5ee9f18cd52",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.hunter.io/v2/domain-search?domain=stripe.com&api_key=YOUR_API_KEY"
+            },
+            "description": "Find email addresses associated with a domain"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://hunter.io/users/sign_up"
+        },
+        {
+          "name": "Microlink Meta",
+          "id": "56914c7e-2827-4937-987f-f3b8d1bdd6b4",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.microlink.io/?url=https://github.com"
+            },
+            "description": "Extract metadata and screenshots from any URL"
+          },
+          "response": []
+        },
+        {
+          "name": "Jina AI Reader",
+          "id": "67c9fbc7-c9d3-4662-9f7e-b7928639cd98",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://r.jina.ai/https://example.com"
+            },
+            "description": "Convert any URL to LLM-friendly markdown"
+          },
+          "response": []
+        },
+        {
+          "name": "Firecrawl Scrape",
+          "id": "a84acb52-d111-4d49-b1f7-eff5a3437284",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.firecrawl.dev/v0/scrape"
+            },
+            "description": "Web crawling and scraping to markdown"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.firecrawl.dev/"
+        },
+        {
+          "name": "DNS over HTTPS",
+          "id": "6c8a0a4c-d0d8-496b-bd65-204887432023",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://cloudflare-dns.com/dns-query?name=example.com&type=A"
+            },
+            "description": "DNS resolution over HTTPS via Cloudflare"
+          },
+          "response": []
+        },
+        {
+          "name": "Abstract Phone",
+          "id": "9f392224-7416-4479-a13b-5e9d213db796",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://phonevalidation.abstractapi.com/v1/?api_key=YOUR_API_KEY&phone=14152007986"
+            },
+            "description": "Phone number validation and carrier info"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://app.abstractapi.com/users/signup"
         }
       ]
     },
@@ -7963,6 +8103,19 @@
           "response": [],
           "authRequired": "API Key",
           "authLink": "https://data.gov.in/user/register"
+        },
+        {
+          "name": "Nager Date Holidays",
+          "id": "311d9a5d-6b5e-400d-8b0f-1ca4d68fa254",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://date.nager.at/api/v3/PublicHolidays/2024/US"
+            },
+            "description": "Public holidays worldwide by country"
+          },
+          "response": []
         }
       ]
     },
@@ -9868,6 +10021,34 @@
           "response": [],
           "authRequired": "API Key",
           "authLink": "https://developers.giphy.com/dashboard/"
+        },
+        {
+          "name": "Clearbit Logo",
+          "id": "f5e974dd-28ef-468a-bde1-29688a929da3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://logo.clearbit.com/stripe.com"
+            },
+            "description": "Get company logos by domain name"
+          },
+          "response": []
+        },
+        {
+          "name": "Brandfetch Logos",
+          "id": "d7a2c57b-302f-4b2f-9c30-d6149514489d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.brandfetch.io/v2/brands/stripe.com"
+            },
+            "description": "Brand logos, colors, fonts by domain"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://brandfetch.com/developers"
         }
       ]
     },
@@ -10321,6 +10502,19 @@
         {
           "name": "Lingva Translate API",
           "id": "a0ab5c9d-21c4-47b4-881e-6a9c13f20f3d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://lingva.ml/api/v1/en/es/hello"
+            },
+            "description": "Privacy-focused Google Translate frontend"
+          },
+          "response": []
+        },
+        {
+          "name": "Lingva Translate",
+          "id": "a8afb43b-0898-4724-8e86-753b480b0cb8",
           "request": {
             "method": "GET",
             "header": [],
@@ -11282,6 +11476,47 @@
           "response": [],
           "authRequired": "API Key",
           "authLink": "https://developer.here.com/sign-up"
+        },
+        {
+          "name": "Abstract IP Geo",
+          "id": "3067eeec-ecc3-4dd2-878f-987f8ad71b8b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://ipgeolocation.abstractapi.com/v1/?api_key=YOUR_API_KEY"
+            },
+            "description": "IP geolocation with timezone and currency"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://app.abstractapi.com/users/signup"
+        },
+        {
+          "name": "Zippopotam US",
+          "id": "1ab5d300-8b0c-4f2a-9067-8a0e2a2a7aaa",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://api.zippopotamus.us/us/90210"
+            },
+            "description": "US zip code to city/state lookup"
+          },
+          "response": []
+        },
+        {
+          "name": "Sunrise Sunset",
+          "id": "ea55b6be-6954-4504-9fb8-a8c2bbb27b3c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.sunrise-sunset.org/json?lat=36.72&lng=-4.42&formatted=0"
+            },
+            "description": "Sunrise and sunset times for any location"
+          },
+          "response": []
         }
       ]
     },
@@ -12275,6 +12510,49 @@
           "response": [],
           "authRequired": "OAuth",
           "authLink": "https://dev.twitch.tv/console/apps/create"
+        },
+        {
+          "name": "Twitch Streams",
+          "id": "cbbd9c40-7ed3-4b65-9c68-60e149cc2310",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.twitch.tv/helix/streams?game_id=33214"
+            },
+            "description": "Live streams, games, clips from Twitch"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://dev.twitch.tv/console/apps/create"
+        },
+        {
+          "name": "Anime News Network",
+          "id": "23ea6119-19cb-4cd8-b44b-c78b34b13788",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.animenewsnetwork.com/encyclopedia/api.xml?anime=4658"
+            },
+            "description": "Anime and manga news and encyclopedia"
+          },
+          "response": []
+        },
+        {
+          "name": "Pokemon TCG API",
+          "id": "5c14ca45-3009-4686-91fc-8dd5b3bde84b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.pokemontcg.io/v2/cards?pageSize=5"
+            },
+            "description": "Pokemon Trading Card Game data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://dev.pokemontcg.io/"
         }
       ]
     },
@@ -13282,6 +13560,34 @@
             "description": "Music mood and genre classification"
           },
           "response": []
+        },
+        {
+          "name": "Deezer Charts",
+          "id": "68f2c67f-a711-4773-9c19-237d2ec75e8f",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.deezer.com/chart/0/tracks"
+            },
+            "description": "Top charts from Deezer"
+          },
+          "response": []
+        },
+        {
+          "name": "Bandsintown Events",
+          "id": "c4954aba-5bf5-4739-8ea8-2650bde4312d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://rest.bandsintown.com/artists/Radiohead/events?app_id=YOUR_API_KEY"
+            },
+            "description": "Concert and event data for artists"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://artists.bandsintown.com/support/bandsintown-api"
         }
       ]
     },
@@ -13997,6 +14303,21 @@
           "response": [],
           "authRequired": "API Key",
           "authLink": "https://www.zillow.com/howzillow/"
+        },
+        {
+          "name": "Geocodio API",
+          "id": "049022b2-7450-46cb-8d70-1a18affe6062",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.geocod.io/v1.7/geocode?q=1109+N+Highland+St%2C+Arlington+VA&api_key=YOUR_API_KEY"
+            },
+            "description": "US/Canada geocoding and census data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://dash.geocod.io/register"
         }
       ]
     },
@@ -14286,6 +14607,19 @@
           "response": [],
           "authRequired": "API Key",
           "authLink": "https://www.volcanodiscovery.com/"
+        },
+        {
+          "name": "OpenAlex API",
+          "id": "e3395ce4-1d03-4bcc-ace3-a95df779c5b4",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.openalex.org/works?search=machine+learning&per-page=5"
+            },
+            "description": "Open catalog of scholarly works"
+          },
+          "response": []
         }
       ]
     },
@@ -14603,6 +14937,66 @@
           "response": [],
           "authRequired": "API Key",
           "authLink": "https://dash.cloudflare.com/sign-up"
+        },
+        {
+          "name": "AbuseIPDB API",
+          "id": "71d96af4-c1eb-489e-a244-6b59aa2a4d59",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.abuseipdb.com/api/v2/check?ipAddress=118.25.6.39"
+            },
+            "description": "IP abuse and threat intelligence"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.abuseipdb.com/register"
+        },
+        {
+          "name": "Shodan Facets",
+          "id": "679d971e-b270-40ad-9c94-b375d91166ce",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.shodan.io/shodan/host/search/facets?key=YOUR_API_KEY"
+            },
+            "description": "Shodan faceted search for internet devices"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://account.shodan.io/register"
+        },
+        {
+          "name": "CVE API NIST",
+          "id": "42292b1b-d943-4982-9cf2-3b77389c6729",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://services.nvd.nist.gov/rest/json/cves/2.0?resultsPerPage=5"
+            },
+            "description": "Common vulnerability and exposure data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://nvd.nist.gov/developers/request-an-api-key"
+        },
+        {
+          "name": "URLScan.io API",
+          "id": "776a4066-1283-4340-a592-fc1907a66a30",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://urlscan.io/api/v1/search/?q=domain:example.com"
+            },
+            "description": "URL scanning and analysis"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://urlscan.io/user/signup"
         }
       ]
     },
@@ -16109,6 +16503,32 @@
           "response": [],
           "authRequired": "API Key",
           "authLink": "https://developer.riotgames.com/"
+        },
+        {
+          "name": "CheapShark Deals",
+          "id": "61711a05-6034-4ea8-9bca-d6c12032c8b5",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.cheapshark.com/api/1.0/deals?upperPrice=15&pageSize=5"
+            },
+            "description": "PC game deals and price history"
+          },
+          "response": []
+        },
+        {
+          "name": "Minecraft Server API",
+          "id": "9cafdab3-8672-4991-a8bb-d1d439dd224d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.mcsrvstat.us/2/hypixel.net"
+            },
+            "description": "Minecraft server status and player data"
+          },
+          "response": []
         }
       ]
     },
@@ -16424,6 +16844,21 @@
           "response": [],
           "authRequired": "API Key",
           "authLink": "https://www.adsbexchange.com/data/"
+        },
+        {
+          "name": "Aviationstack API",
+          "id": "b2b63d30-23bb-4eaa-bc2a-92c516a73c71",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://api.aviationstack.com/v1/flights?access_key=YOUR_API_KEY"
+            },
+            "description": "Real-time flight status and data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://aviationstack.com/product"
         }
       ]
     },
@@ -16937,6 +17372,67 @@
           "response": [],
           "authRequired": "API Key",
           "authLink": "https://api.windy.com/keys"
+        }
+      ]
+    },
+    {
+      "name": "Streaming & Live",
+      "item": [
+        {
+          "name": "Twitch EventSub",
+          "id": "8a272891-b44c-4111-bb2a-ca1e82d592ad",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.twitch.tv/helix/eventsub/subscriptions"
+            },
+            "description": "Twitch real-time event notifications"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://dev.twitch.tv/console/apps/create"
+        },
+        {
+          "name": "YouTube Live API",
+          "id": "e2ae4626-e9b4-4037-aea0-0501ce3b8b92",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.googleapis.com/youtube/v3/liveBroadcasts?part=snippet&broadcastStatus=active&key=YOUR_API_KEY"
+            },
+            "description": "YouTube live streaming data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://console.cloud.google.com/"
+        },
+        {
+          "name": "Kick API",
+          "id": "3a20de03-8489-462f-ab76-24aae9cc1fe1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://kick.com/api/v1/channels/xqc"
+            },
+            "description": "Kick.com streaming platform data"
+          },
+          "response": []
+        },
+        {
+          "name": "Rumble API",
+          "id": "871a2779-f166-4148-95ae-bfbb6e83167d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://rumble.com/api/Media/oembed.json?url=https://rumble.com/v1"
+            },
+            "description": "Rumble video platform data"
+          },
+          "response": []
         }
       ]
     }
