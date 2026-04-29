@@ -1,11 +1,11 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, Play, Copy, Check, Download, ExternalLink, X, Code, Globe, Terminal, Book, ChevronDown, ChevronRight, Video, LogIn, LogOut, User as UserIcon, Key, Heart, FolderPlus, Folder, Clock, Settings, Share2, Sun, Moon, GitCompare, Plus, Trash2, AlertCircle } from 'lucide-react'
+import { Search, Play, Copy, Check, Download, ExternalLink, X, Code, Globe, Terminal, Book, ChevronDown, ChevronRight, Video, LogIn, LogOut, User as UserIcon, Key, Heart, FolderPlus, Folder, Clock, Settings, Share2, Sun, Moon, GitCompare, Plus, Trash2, AlertCircle, Star, TrendingUp, Bookmark, BookmarkCheck, Users, BarChart2, Zap, MessageSquare, Send, RefreshCw } from 'lucide-react'
 import apiCollection from './data/api_collection.json'
 import axios from 'axios'
 import { signInWithGoogle, signOutUser } from './firebase'
 import { useAuth, useApiKey } from './useKeyStore'
-import { saveChatMessage, subscribeChatHistory, getUserCollections, createCollection, addToCollection, removeFromCollection, deleteCollection, saveRequestHistory, getRequestHistory, getEnvVars, saveEnvVars, getVaultieMemory, updateVaultieMemory } from './firebase'
+import { saveChatMessage, subscribeChatHistory, getUserCollections, createCollection, addToCollection, removeFromCollection, deleteCollection, saveRequestHistory, getRequestHistory, getEnvVars, saveEnvVars, getVaultieMemory, updateVaultieMemory, saveSnippet, getSnippets, deleteSnippet, rateApi, getApiRatings, trackApiTest, getTrending, incrementVisitor, incrementRegisteredUser, getStats, getUserStats } from './firebase'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface ApiItem {
@@ -642,6 +642,7 @@ const ApiModal = ({ api, onClose, user, onShare }: { api: FlatApi; onClose: () =
         setTestResult(parsed)
         setStatus('happy')
         if (user) saveRequestHistory(user.uid, { apiName: api.name, url: effectiveUrl, status: 'success', preview: typeof parsed === 'object' ? JSON.stringify(parsed).slice(0, 80) : String(parsed).slice(0, 80) }).catch(() => {})
+        trackApiTest(api.name).catch(() => {})
       }
     } catch (err: any) {
       const isNetworkError = !err.response && (err.message === 'Network Error' || err.code === 'ERR_NETWORK')
@@ -684,14 +685,6 @@ const ApiModal = ({ api, onClose, user, onShare }: { api: FlatApi; onClose: () =
               <p className="text-sm" style={{ color: '#4a6278' }}>{api.desc}</p>
             </div>
             <div className="flex items-center gap-2 shrink-0">
-              {onShare && (
-                <button onClick={() => onShare(api)} title="Copy share link"
-                  style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '6px 11px', borderRadius: 7, background: 'rgba(56,189,248,0.06)', border: '1px solid rgba(56,189,248,0.2)', color: '#38bdf8', fontSize: 11, fontWeight: 600, cursor: 'pointer', transition: 'all 0.15s', letterSpacing: '0.02em' }}
-                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(56,189,248,0.12)'; e.currentTarget.style.borderColor = 'rgba(56,189,248,0.4)' }}
-                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(56,189,248,0.06)'; e.currentTarget.style.borderColor = 'rgba(56,189,248,0.2)' }}>
-                  <Share2 size={12} /> Share
-                </button>
-              )}
               <button
                 onClick={runTest} disabled={isLoading}
                 className="flex items-center gap-2 font-bold py-2.5 px-5 rounded-lg transition-all disabled:opacity-50"
@@ -925,10 +918,22 @@ const ApiModal = ({ api, onClose, user, onShare }: { api: FlatApi; onClose: () =
                 {status === 'sad' && (testResult?.error === 'CORS / Network Error' ? 'CORS blocked — use the cURL snippet instead.' : 'Darn! The API returned an error.')}
               </span>
             </div>
-            <a href={effectiveUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-xs transition-colors" style={{ color: '#38bdf8' }}
-              onMouseEnter={e => (e.currentTarget.style.color = '#7dd3fc')}
-              onMouseLeave={e => (e.currentTarget.style.color = '#38bdf8')}
-            >Open in browser <ExternalLink size={11} /></a>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              {onShare && (
+                <button onClick={() => onShare(api)} title="Copy share link"
+                  style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 10px', borderRadius: 7, background: 'transparent', border: '1px solid #1a3050', color: '#4a6278', fontSize: 11, cursor: 'pointer', transition: 'all 0.15s' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#38bdf8'; e.currentTarget.style.color = '#38bdf8' }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#4a6278' }}>
+                  <Share2 size={11} /> Share
+                </button>
+              )}
+              <a href={effectiveUrl} target="_blank" rel="noopener noreferrer"
+                style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 10px', borderRadius: 7, background: 'transparent', border: '1px solid #1a3050', color: '#38bdf8', fontSize: 11, textDecoration: 'none', transition: 'all 0.15s' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = '#38bdf8'; e.currentTarget.style.background = 'rgba(56,189,248,0.06)' }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.background = 'transparent' }}>
+                Open in browser <ExternalLink size={11} />
+              </a>
+            </div>
           </div>
         </motion.div>
       </motion.div>
@@ -1387,6 +1392,9 @@ const ApiCard = ({ api, onClick, onCompare, compareSelected, user, collections, 
               {compareSelected ? '✓ Compare' : '+ Compare'}
             </button>
           )}
+          <div onClick={e => e.stopPropagation()}>
+            <RatingWidget apiName={api.name} user={user} />
+          </div>
         </div>
         <div style={{ display: 'flex', gap: 5 }}>
           <button onClick={copy}
@@ -1613,16 +1621,21 @@ About the site:
 - Users can browse, search, filter by auth type (Free/API Key/OAuth), and live-test APIs
 - Each API has a modal with method, endpoint, code snippets (cURL, JS, Python, Go), and a live response visualizer
 - API keys are saved securely in Firebase Firestore, synced across devices via Google sign-in
-- Features: Collections (save API groups), Request History, Env Vars, API Comparison, Share links, Theme toggle
+- Features: Collections (save API groups), Request History, Env Vars, API Comparison, Share links, Theme toggle, Saved Snippets, Ratings & Reviews, Trending APIs
 - Categories include: AI & ML, Weather, Maps, Crypto, Music, Health, Space, Developer Tools, Blockchain, Sports, and more
 - Vaultie (that's you!) is an AI assistant powered by Groq + Qwen3-32B
+
+Special modes you support:
+- FIND MODE: When user says "find me an API for X" or "I need an API that does Y", search the collection and recommend the best match with name, category, URL, and why it fits
+- EXPLAIN MODE: When user shares JSON data and asks "explain this", break down each field in plain English
+- ERROR MODE: When user shares an error (401, 403, 429, 500, CORS), diagnose it and suggest the exact fix
+- CODEGEN MODE: When user asks "generate code for X API" or after a successful test, generate a complete working integration (React hook, Express route, or Python script)
 
 Your personality:
 - Friendly, enthusiastic, slightly playful — you love APIs
 - Keep answers concise and developer-friendly
 - Use emojis occasionally but don't overdo it
 - Always offer to help with more questions
-- If asked about a specific API, give useful tips about it
 - After answering, ask a follow-up question to keep the conversation going`
 
 interface VaultieMessage { role: 'user' | 'assistant'; content: string }
@@ -1907,6 +1920,302 @@ const Vaultie = () => {
   )
 }
 
+// ─── API Rating Widget ────────────────────────────────────────────────────────
+const RatingWidget = ({ apiName, user }: { apiName: string; user: ReturnType<typeof useAuth>['user'] }) => {
+  const [rating, setRating] = useState(0)
+  const [hover, setHover] = useState(0)
+  const [review, setReview] = useState('')
+  const [submitted, setSubmitted] = useState(false)
+  const [stats, setStats] = useState<{ avg: number; count: number } | null>(null)
+  const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    getApiRatings(apiName).then(r => setStats({ avg: r.avg, count: r.count })).catch(() => {})
+  }, [apiName, submitted])
+
+  const submit = async () => {
+    if (!user || !rating) return
+    await rateApi(user.uid, user.displayName || 'User', apiName, rating, review)
+    setSubmitted(true); setOpen(false)
+  }
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <button onClick={() => setOpen(v => !v)}
+        style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '3px 8px', borderRadius: 20, fontSize: 10, fontWeight: 700, background: 'rgba(253,224,71,0.08)', border: '1px solid rgba(253,224,71,0.2)', color: '#fde047', cursor: 'pointer', transition: 'all 0.15s' }}>
+        <Star size={10} fill={stats && stats.avg > 0 ? '#fde047' : 'none'} />
+        {stats && stats.count > 0 ? `${stats.avg} (${stats.count})` : 'Rate'}
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 6 }}
+            style={{ position: 'absolute', bottom: '100%', left: 0, marginBottom: 6, width: 220, background: '#0c1828', border: '1px solid #1a3050', borderRadius: 10, boxShadow: '0 16px 40px rgba(0,0,0,0.6)', zIndex: 60, overflow: 'hidden', padding: 12 }}>
+            {!user ? (
+              <div style={{ fontSize: 11, color: '#334d63', textAlign: 'center' }}>Sign in to rate this API</div>
+            ) : submitted ? (
+              <div style={{ fontSize: 11, color: '#34d399', textAlign: 'center' }}>✓ Thanks for your rating!</div>
+            ) : (
+              <>
+                <div style={{ fontSize: 10, fontWeight: 700, color: '#fde047', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Rate this API</div>
+                <div style={{ display: 'flex', gap: 4, marginBottom: 8 }}>
+                  {[1,2,3,4,5].map(s => (
+                    <button key={s} onClick={() => setRating(s)} onMouseEnter={() => setHover(s)} onMouseLeave={() => setHover(0)}
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: s <= (hover || rating) ? '#fde047' : '#334d63', transition: 'color 0.1s' }}>
+                      <Star size={18} fill={s <= (hover || rating) ? '#fde047' : 'none'} />
+                    </button>
+                  ))}
+                </div>
+                <textarea value={review} onChange={e => setReview(e.target.value)} placeholder="Optional review…" rows={2}
+                  style={{ width: '100%', boxSizing: 'border-box', background: '#070e18', border: '1px solid #1a3050', borderRadius: 6, padding: '5px 8px', color: '#e2e8f0', fontSize: 11, outline: 'none', resize: 'none', marginBottom: 8 }} />
+                <button onClick={submit} disabled={!rating}
+                  style={{ width: '100%', padding: '6px', borderRadius: 7, background: rating ? '#fde047' : 'rgba(253,224,71,0.2)', border: 'none', color: rating ? '#000' : '#4a6278', fontSize: 11, fontWeight: 700, cursor: rating ? 'pointer' : 'default' }}>
+                  Submit Rating
+                </button>
+              </>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
+// ─── Saved Snippets Panel ─────────────────────────────────────────────────────
+const SnippetsPanel = ({ user, onLoad }: { user: ReturnType<typeof useAuth>['user']; onLoad: (s: { url: string; method: string; headers: Record<string,string>; body: string }) => void }) => {
+  const [snippets, setSnippets] = useState<{ id: string; name: string; apiName: string; url: string; method: string; headers: Record<string,string>; body: string; ts: number }[]>([])
+  const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    if (!user || !open) return
+    setLoading(true)
+    getSnippets(user.uid).then(s => { setSnippets(s.sort((a,b) => b.ts - a.ts)); setLoading(false) }).catch(() => setLoading(false))
+  }, [user, open])
+
+  const del = async (id: string) => {
+    if (!user) return
+    await deleteSnippet(user.uid, id)
+    setSnippets(prev => prev.filter(s => s.id !== id))
+  }
+
+  if (!user) return null
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <button onClick={() => setOpen(v => !v)} title="Saved Snippets"
+        style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 8, background: open ? 'rgba(52,211,153,0.15)' : 'transparent', border: `1px solid ${open ? '#34d399' : '#1a3050'}`, color: open ? '#34d399' : '#4a6278', fontSize: 12, cursor: 'pointer', transition: 'all 0.15s', whiteSpace: 'nowrap' }}>
+        <Bookmark size={14} /> Snippets
+        {snippets.length > 0 && <span style={{ background: '#34d399', color: '#000', borderRadius: 10, padding: '1px 6px', fontSize: 10, fontWeight: 700 }}>{snippets.length}</span>}
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }}
+            style={{ position: 'absolute', top: '100%', right: 0, marginTop: 6, width: 300, background: '#0c1828', border: '1px solid #1a3050', borderRadius: 12, boxShadow: '0 20px 48px rgba(0,0,0,0.6)', zIndex: 50, overflow: 'hidden' }}>
+            <div style={{ padding: '12px 14px', borderBottom: '1px solid #1a3050', background: 'rgba(0,0,0,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: 11, fontWeight: 800, color: '#34d399', textTransform: 'uppercase', letterSpacing: '0.12em' }}>Saved Snippets</span>
+            </div>
+            <div style={{ maxHeight: 280, overflowY: 'auto' }} className="custom-scrollbar">
+              {loading && <div style={{ padding: '20px', textAlign: 'center', color: '#334d63', fontSize: 12 }}>Loading…</div>}
+              {!loading && snippets.length === 0 && <div style={{ padding: '20px 14px', fontSize: 12, color: '#334d63', textAlign: 'center', lineHeight: 1.6 }}>No snippets yet.<br />Save a request from the API modal.</div>}
+              {!loading && snippets.map(s => (
+                <div key={s.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', borderBottom: '1px solid rgba(26,48,80,0.3)', transition: 'background 0.15s' }}
+                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.04)')}
+                  onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}>
+                  <div style={{ flex: 1, minWidth: 0, cursor: 'pointer' }} onClick={() => { onLoad(s); setOpen(false) }}>
+                    <div style={{ fontSize: 12, fontWeight: 600, color: '#d4e4f7', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.name}</div>
+                    <div style={{ fontSize: 10, color: '#334d63' }}>{s.method} · {s.apiName}</div>
+                  </div>
+                  <button onClick={() => del(s.id)} style={{ background: 'none', border: 'none', color: '#334d63', cursor: 'pointer', padding: 2, display: 'flex' }}
+                    onMouseEnter={e => (e.currentTarget.style.color = '#f87171')} onMouseLeave={e => (e.currentTarget.style.color = '#334d63')}>
+                    <Trash2 size={12} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
+// ─── Trending Section ─────────────────────────────────────────────────────────
+const TrendingSection = ({ onSelect }: { onSelect: (name: string) => void }) => {
+  const [trending, setTrending] = useState<{ id: string; name: string; count: number }[]>([])
+  const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    getTrending(8).then(setTrending).catch(() => {})
+  }, [])
+
+  if (trending.length === 0) return null
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <button onClick={() => setOpen(v => !v)} title="Trending APIs"
+        style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 8, background: open ? 'rgba(248,113,113,0.15)' : 'transparent', border: `1px solid ${open ? '#f87171' : '#1a3050'}`, color: open ? '#f87171' : '#4a6278', fontSize: 12, cursor: 'pointer', transition: 'all 0.15s', whiteSpace: 'nowrap' }}>
+        <TrendingUp size={14} /> Trending
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }}
+            style={{ position: 'absolute', top: '100%', right: 0, marginTop: 6, width: 260, background: '#0c1828', border: '1px solid #1a3050', borderRadius: 12, boxShadow: '0 20px 48px rgba(0,0,0,0.6)', zIndex: 50, overflow: 'hidden' }}>
+            <div style={{ padding: '12px 14px', borderBottom: '1px solid #1a3050', background: 'rgba(0,0,0,0.2)' }}>
+              <span style={{ fontSize: 11, fontWeight: 800, color: '#f87171', textTransform: 'uppercase', letterSpacing: '0.12em' }}>🔥 Trending APIs</span>
+            </div>
+            <div style={{ maxHeight: 280, overflowY: 'auto' }} className="custom-scrollbar">
+              {trending.map((t, i) => (
+                <div key={t.id} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 14px', cursor: 'pointer', borderBottom: '1px solid rgba(26,48,80,0.3)', transition: 'background 0.15s' }}
+                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.04)')}
+                  onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+                  onClick={() => { onSelect(t.name); setOpen(false) }}>
+                  <span style={{ fontSize: 11, fontWeight: 800, color: i < 3 ? '#f87171' : '#334d63', minWidth: 18 }}>#{i+1}</span>
+                  <span style={{ flex: 1, fontSize: 12, color: '#d4e4f7', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{t.name}</span>
+                  <span style={{ fontSize: 10, color: '#334d63' }}>{t.count} tests</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
+// ─── Submit API Form ──────────────────────────────────────────────────────────
+const SubmitApiForm = () => {
+  const [open, setOpen] = useState(false)
+  const [name, setName] = useState('')
+  const [url, setUrl] = useState('')
+  const [category, setCategory] = useState('')
+  const [desc, setDesc] = useState('')
+
+  const submit = () => {
+    const body = encodeURIComponent(`**API Name:** ${name}\n**URL:** ${url}\n**Category:** ${category}\n**Description:** ${desc}\n\n*Submitted via Lorapok Atlas*`)
+    const title = encodeURIComponent(`[API Submission] ${name}`)
+    window.open(`https://github.com/Maijied/Lorapok-API_Atlas/issues/new?title=${title}&body=${body}&labels=api-submission`, '_blank')
+    setOpen(false); setName(''); setUrl(''); setCategory(''); setDesc('')
+  }
+
+  return (
+    <>
+      <button onClick={() => setOpen(true)}
+        style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 8, background: 'transparent', border: '1px solid #1a3050', color: '#4a6278', fontSize: 12, cursor: 'pointer', transition: 'all 0.15s', whiteSpace: 'nowrap' }}
+        onMouseEnter={e => { e.currentTarget.style.borderColor = '#38bdf8'; e.currentTarget.style.color = '#38bdf8' }}
+        onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#4a6278' }}>
+        <Plus size={14} /> Submit API
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            style={{ position: 'fixed', inset: 0, zIndex: 70, background: 'rgba(4,10,20,0.85)', backdropFilter: 'blur(6px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}
+            onClick={() => setOpen(false)}>
+            <motion.div initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 20 }}
+              style={{ width: '100%', maxWidth: 440, background: 'linear-gradient(145deg, #0c1828, #091220)', border: '1px solid #1a3050', borderRadius: 16, overflow: 'hidden' }}
+              onClick={e => e.stopPropagation()}>
+              <div style={{ padding: '16px 20px', borderBottom: '1px solid #1a3050', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span style={{ fontSize: 14, fontWeight: 800, color: '#d4e4f7' }}>Submit an API</span>
+                <button onClick={() => setOpen(false)} style={{ background: 'none', border: 'none', color: '#4a6278', cursor: 'pointer' }}><X size={16} /></button>
+              </div>
+              <div style={{ padding: 20, display: 'flex', flexDirection: 'column', gap: 12 }}>
+                {[
+                  { label: 'API Name', val: name, set: setName, ph: 'e.g. OpenWeatherMap' },
+                  { label: 'API URL', val: url, set: setUrl, ph: 'https://api.example.com/endpoint' },
+                  { label: 'Category', val: category, set: setCategory, ph: 'e.g. Weather & Environment' },
+                ].map(f => (
+                  <div key={f.label}>
+                    <div style={{ fontSize: 10, fontWeight: 700, color: '#4a6278', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 5 }}>{f.label}</div>
+                    <input value={f.val} onChange={e => f.set(e.target.value)} placeholder={f.ph}
+                      style={{ width: '100%', boxSizing: 'border-box', background: '#070e18', border: '1px solid #1a3050', borderRadius: 8, padding: '8px 12px', color: '#e2e8f0', fontSize: 13, outline: 'none' }}
+                      onFocus={e => (e.target.style.borderColor = '#38bdf8')} onBlur={e => (e.target.style.borderColor = '#1a3050')} />
+                  </div>
+                ))}
+                <div>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: '#4a6278', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 5 }}>Description</div>
+                  <textarea value={desc} onChange={e => setDesc(e.target.value)} placeholder="What does this API do?" rows={3}
+                    style={{ width: '100%', boxSizing: 'border-box', background: '#070e18', border: '1px solid #1a3050', borderRadius: 8, padding: '8px 12px', color: '#e2e8f0', fontSize: 13, outline: 'none', resize: 'none' }}
+                    onFocus={e => (e.target.style.borderColor = '#38bdf8')} onBlur={e => (e.target.style.borderColor = '#1a3050')} />
+                </div>
+                <p style={{ fontSize: 11, color: '#334d63', lineHeight: 1.5 }}>This will open a GitHub Issue pre-filled with your submission. Our team reviews and adds it to the directory.</p>
+                <button onClick={submit} disabled={!name || !url}
+                  style={{ padding: '10px', borderRadius: 9, background: name && url ? '#4ade80' : 'rgba(74,222,128,0.2)', border: 'none', color: name && url ? '#000' : '#4a6278', fontSize: 13, fontWeight: 700, cursor: name && url ? 'pointer' : 'default' }}>
+                  Submit via GitHub Issues →
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  )
+}
+
+// ─── Personal Dashboard ───────────────────────────────────────────────────────
+const PersonalDashboard = ({ user }: { user: ReturnType<typeof useAuth>['user'] }) => {
+  const [open, setOpen] = useState(false)
+  const [stats, setStats] = useState<{ total: number; success: number; cors: number; errors: number; successRate: number; topApis: { name: string; count: number }[] } | null>(null)
+
+  useEffect(() => {
+    if (!user || !open) return
+    getUserStats(user.uid).then(setStats).catch(() => {})
+  }, [user, open])
+
+  if (!user) return null
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <button onClick={() => setOpen(v => !v)} title="My Dashboard"
+        style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 8, background: open ? 'rgba(129,140,248,0.15)' : 'transparent', border: `1px solid ${open ? '#818cf8' : '#1a3050'}`, color: open ? '#818cf8' : '#4a6278', fontSize: 12, cursor: 'pointer', transition: 'all 0.15s', whiteSpace: 'nowrap' }}>
+        <BarChart2 size={14} /> Dashboard
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }}
+            style={{ position: 'absolute', top: '100%', right: 0, marginTop: 6, width: 300, background: '#0c1828', border: '1px solid #1a3050', borderRadius: 12, boxShadow: '0 20px 48px rgba(0,0,0,0.6)', zIndex: 50, overflow: 'hidden' }}>
+            <div style={{ padding: '12px 14px', borderBottom: '1px solid #1a3050', background: 'rgba(0,0,0,0.2)' }}>
+              <span style={{ fontSize: 11, fontWeight: 800, color: '#818cf8', textTransform: 'uppercase', letterSpacing: '0.12em' }}>My Usage</span>
+            </div>
+            {!stats ? (
+              <div style={{ padding: '20px', textAlign: 'center', color: '#334d63', fontSize: 12 }}>Loading…</div>
+            ) : (
+              <div style={{ padding: 14 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 14 }}>
+                  {[
+                    { label: 'Total Tests', val: stats.total, color: '#38bdf8' },
+                    { label: 'Success Rate', val: `${stats.successRate}%`, color: '#34d399' },
+                    { label: 'CORS Blocked', val: stats.cors, color: '#fbbf24' },
+                    { label: 'Errors', val: stats.errors, color: '#f87171' },
+                  ].map(s => (
+                    <div key={s.label} style={{ padding: '10px 12px', borderRadius: 8, background: 'rgba(255,255,255,0.04)', border: '1px solid #1a3050', textAlign: 'center' }}>
+                      <div style={{ fontSize: 18, fontWeight: 800, color: s.color }}>{s.val}</div>
+                      <div style={{ fontSize: 10, color: '#334d63', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 2 }}>{s.label}</div>
+                    </div>
+                  ))}
+                </div>
+                {stats.topApis.length > 0 && (
+                  <>
+                    <div style={{ fontSize: 10, fontWeight: 700, color: '#4a6278', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Most Tested</div>
+                    {stats.topApis.map((a, i) => (
+                      <div key={a.name} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                        <span style={{ fontSize: 10, color: '#334d63', minWidth: 16 }}>#{i+1}</span>
+                        <div style={{ flex: 1, height: 4, borderRadius: 2, background: '#1a3050', overflow: 'hidden' }}>
+                          <div style={{ height: '100%', borderRadius: 2, background: '#818cf8', width: `${(a.count / stats.topApis[0].count) * 100}%` }} />
+                        </div>
+                        <span style={{ fontSize: 11, color: '#d4e4f7', maxWidth: 120, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{a.name}</span>
+                        <span style={{ fontSize: 10, color: '#334d63' }}>{a.count}</span>
+                      </div>
+                    ))}
+                  </>
+                )}
+              </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
 // ─── Copyable wallet address ──────────────────────────────────────────────────
 const CopyableAddress = ({ addr }: { addr: string }) => {
   const [copied, setCopied] = useState(false)
@@ -1986,7 +2295,22 @@ export default function App() {
     if (found) setSelectedApi(found)
   }
 
+  // Track visitor on mount
+  useEffect(() => { incrementVisitor().catch(() => {}) }, [])
+
+  // Track registered user on first sign-in
+  const prevUser = useRef<string | null>(null)
+  useEffect(() => {
+    if (user && user.uid !== prevUser.current) {
+      prevUser.current = user.uid
+      incrementRegisteredUser().catch(() => {})
+    }
+  }, [user])
+
   const [filtersOpen, setFiltersOpen] = useState(true)
+  const [siteStats, setSiteStats] = useState<{ visitors: number; registeredUsers: number } | null>(null)
+
+  useEffect(() => { getStats().then(setSiteStats).catch(() => {}) }, [])
 
   const filtered = useMemo(() => {
     let result = ALL_APIS.filter(api => {
@@ -2130,6 +2454,10 @@ export default function App() {
                 onSelectCollection={(names) => { setCollectionFilter(names); setActiveCollectionId(names ? 'active' : null) }} />
               <HistoryPanel user={user} onSelect={handleSelectFromHistory} />
               <EnvVarsPanel user={user} />
+              <SnippetsPanel user={user} onLoad={() => {}} />
+              <TrendingSection onSelect={name => { const f = ALL_APIS.find(a => a.name === name); if (f) setSelectedApi(f) }} />
+              <PersonalDashboard user={user} />
+              <SubmitApiForm />
               {compareApis.length > 0 && (
                 <button onClick={() => compareApis.length === 2 && setShowCompare(true)}
                   style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '6px 10px', borderRadius: 8, background: compareApis.length === 2 ? 'rgba(129,140,248,0.2)' : 'rgba(129,140,248,0.08)', border: '1px solid rgba(129,140,248,0.4)', color: '#818cf8', fontSize: 11, fontWeight: 700, cursor: compareApis.length === 2 ? 'pointer' : 'default', flexShrink: 0 }}>
@@ -2447,6 +2775,15 @@ export default function App() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#1e3a52' }}>
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#34d399', display: 'inline-block' }} />
               {ALL_APIS.length} APIs live · v1.0.0
+              {siteStats && (
+                <>
+                  <span style={{ color: '#1a3050' }}>·</span>
+                  <Users size={11} style={{ color: '#38bdf8' }} />
+                  <span style={{ color: '#38bdf8', fontWeight: 700 }}>{siteStats.visitors.toLocaleString()}</span> visitors
+                  <span style={{ color: '#1a3050' }}>·</span>
+                  <span style={{ color: '#818cf8', fontWeight: 700 }}>{siteStats.registeredUsers.toLocaleString()}</span> members
+                </>
+              )}
             </div>
           </div>
         </div>

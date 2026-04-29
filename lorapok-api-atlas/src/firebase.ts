@@ -144,3 +144,72 @@ export async function updateVaultieMemory(uid: string, data: Partial<{ recentApi
   const ref = doc(db, 'users', uid, 'vaultie_memory', 'prefs')
   await setDoc(ref, data, { merge: true })
 }
+
+// ─── Saved Snippets ───────────────────────────────────────────────────────────
+// Path: users/{uid}/snippets/{id} → { name, apiName, url, method, headers, body, ts }
+export async function saveSnippet(uid: string, snippet: { name: string; apiName: string; url: string; method: string; headers: Record<string,string>; body: string }) {
+  const colRef = collection(db, 'users', uid, 'snippets')
+  return addDoc(colRef, { ...snippet, ts: Date.now() })
+}
+export async function getSnippets(uid: string) {
+  const snap = await getDocs(collection(db, 'users', uid, 'snippets'))
+  return snap.docs.map(d => ({ id: d.id, ...d.data() })) as { id: string; name: string; apiName: string; url: string; method: string; headers: Record<string,string>; body: string; ts: number }[]
+}
+export async function deleteSnippet(uid: string, id: string) {
+  await deleteDoc(doc(db, 'users', uid, 'snippets', id))
+}
+
+// ─── Ratings & Reviews ────────────────────────────────────────────────────────
+// Path: ratings/{apiName}/reviews/{uid} → { rating, review, displayName, ts }
+export async function rateApi(uid: string, displayName: string, apiName: string, rating: number, review: string) {
+  const ref = doc(db, 'ratings', apiName, 'reviews', uid)
+  await setDoc(ref, { rating, review, displayName, ts: Date.now() })
+}
+export async function getApiRatings(apiName: string) {
+  const snap = await getDocs(collection(db, 'ratings', apiName, 'reviews'))
+  const reviews = snap.docs.map(d => d.data()) as { rating: number; review: string; displayName: string; ts: number }[]
+  const avg = reviews.length ? reviews.reduce((s, r) => s + r.rating, 0) / reviews.length : 0
+  return { avg: Math.round(avg * 10) / 10, count: reviews.length, reviews }
+}
+
+// ─── Trending (anonymous test counts) ────────────────────────────────────────
+// Path: trending/{apiName} → { count, lastTested }
+import { increment } from 'firebase/firestore'
+export async function trackApiTest(apiName: string) {
+  const ref = doc(db, 'trending', apiName)
+  await setDoc(ref, { count: increment(1), lastTested: Date.now(), name: apiName }, { merge: true })
+}
+export async function getTrending(limit_n = 10) {
+  const snap = await getDocs(collection(db, 'trending'))
+  const all = snap.docs.map(d => ({ id: d.id, ...d.data() })) as { id: string; name: string; count: number; lastTested: number }[]
+  return all.sort((a, b) => (b.count || 0) - (a.count || 0)).slice(0, limit_n)
+}
+
+// ─── Visitor / User counters ──────────────────────────────────────────────────
+// Path: stats/global → { visitors, registeredUsers }
+export async function incrementVisitor() {
+  const ref = doc(db, 'stats', 'global')
+  await setDoc(ref, { visitors: increment(1) }, { merge: true })
+}
+export async function incrementRegisteredUser() {
+  const ref = doc(db, 'stats', 'global')
+  await setDoc(ref, { registeredUsers: increment(1) }, { merge: true })
+}
+export async function getStats() {
+  const snap = await getDoc(doc(db, 'stats', 'global'))
+  return snap.exists() ? snap.data() as { visitors: number; registeredUsers: number } : { visitors: 0, registeredUsers: 0 }
+}
+
+// ─── Personal Usage Dashboard ─────────────────────────────────────────────────
+export async function getUserStats(uid: string) {
+  const histSnap = await getDocs(collection(db, 'users', uid, 'history'))
+  const history = histSnap.docs.map(d => d.data()) as { apiName: string; status: string; ts: number }[]
+  const total = history.length
+  const success = history.filter(h => h.status === 'success').length
+  const cors = history.filter(h => h.status === 'cors').length
+  const errors = history.filter(h => h.status === 'error').length
+  const apiCounts: Record<string, number> = {}
+  history.forEach(h => { apiCounts[h.apiName] = (apiCounts[h.apiName] || 0) + 1 })
+  const topApis = Object.entries(apiCounts).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([name, count]) => ({ name, count }))
+  return { total, success, cors, errors, successRate: total ? Math.round(success / total * 100) : 0, topApis }
+}
