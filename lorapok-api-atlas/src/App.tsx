@@ -915,7 +915,20 @@ const ApiModal = ({ api, onClose, user, onShare }: { api: FlatApi; onClose: () =
                 {status === 'idle' && (needsKey && !apiKey ? 'Add your API key to run the test!' : 'Ready to test!')}
                 {status === 'thinking' && 'Digging into the data…'}
                 {status === 'happy' && 'Found it! Check the results!'}
-                {status === 'sad' && (testResult?.error === 'CORS / Network Error' ? 'CORS blocked — use the cURL snippet instead.' : 'Darn! The API returned an error.')}
+                {status === 'sad' && (
+                  <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                    {testResult?.error === 'CORS / Network Error' ? 'CORS blocked — use the cURL snippet.' : 'Darn! The API returned an error.'}
+                    <button onClick={() => {
+                      const errMsg = testResult?.error === 'CORS / Network Error'
+                        ? `The API "${api.name}" is CORS blocked. Explain why and what I can do.`
+                        : `The API "${api.name}" returned: ${JSON.stringify(testResult).slice(0, 200)}. Diagnose this error and suggest a fix.`
+                      window.dispatchEvent(new CustomEvent('vaultie-ask', { detail: errMsg }))
+                    }}
+                      style={{ fontSize: 10, padding: '2px 8px', borderRadius: 10, background: 'rgba(74,222,128,0.15)', border: '1px solid rgba(74,222,128,0.3)', color: '#4ade80', cursor: 'pointer', fontWeight: 700, whiteSpace: 'nowrap' }}>
+                      Ask Vaultie 🐛
+                    </button>
+                  </span>
+                )}
               </span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -1676,6 +1689,20 @@ const Vaultie = () => {
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [messages, streaming, loading])
   useEffect(() => { if (open) setTimeout(() => inputRef.current?.focus(), 150) }, [open])
 
+  // Listen for "Ask Vaultie" events from error panels
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const msg = (e as CustomEvent).detail as string
+      setOpen(true)
+      setTimeout(() => {
+        setInput(msg)
+        setTimeout(() => inputRef.current?.focus(), 100)
+      }, 300)
+    }
+    window.addEventListener('vaultie-ask', handler)
+    return () => window.removeEventListener('vaultie-ask', handler)
+  }, [])
+
   const send = async () => {
     const text = input.trim()
     if (!text || loading || streaming) return
@@ -2361,29 +2388,25 @@ print(response.json())`,
         style={{ width: '100%', maxWidth: 1200, height: '92vh', background: 'linear-gradient(145deg, #0c1828, #091220)', border: '1px solid #1a3050', borderRadius: 16, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}
         onClick={e => e.stopPropagation()}>
         {/* Header */}
-        <div style={{ padding: '14px 20px', borderBottom: '1px solid #1a3050', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(0,0,0,0.2)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <Code size={16} style={{ color: '#34d399' }} />
+        <div style={{ padding: '12px 16px', borderBottom: '1px solid #1a3050', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(0,0,0,0.2)', flexWrap: 'wrap', gap: 8 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <Code size={15} style={{ color: '#34d399' }} />
             <span style={{ fontSize: 14, fontWeight: 800, color: '#d4e4f7' }}>Code Playground</span>
-            <span style={{ fontSize: 10, color: '#334d63', background: 'rgba(52,211,153,0.1)', border: '1px solid rgba(52,211,153,0.2)', padding: '2px 8px', borderRadius: 10 }}>JS runs in browser</span>
+            <span style={{ fontSize: 10, color: '#34d399', background: 'rgba(52,211,153,0.12)', border: '1px solid rgba(52,211,153,0.3)', padding: '2px 8px', borderRadius: 10, fontWeight: 700 }}>JS runs in browser</span>
           </div>
-          <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-            {/* Language tabs */}
-            <div style={{ display: 'flex', gap: 4 }}>
-              {(['javascript', 'python', 'curl'] as const).map(l => (
-                <button key={l} onClick={() => { setLang(l); setCode(TEMPLATES[l]); setOutput(''); setError('') }}
-                  style={{ padding: '4px 10px', borderRadius: 6, fontSize: 11, fontWeight: 700, cursor: 'pointer', border: `1px solid ${lang === l ? '#34d399' : '#1a3050'}`, background: lang === l ? 'rgba(52,211,153,0.15)' : 'transparent', color: lang === l ? '#34d399' : '#4a6278', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                  {l}
-                </button>
-              ))}
-            </div>
+          <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}>
+            {(['javascript', 'python', 'curl'] as const).map(l => (
+              <button key={l} onClick={() => { setLang(l); setCode(TEMPLATES[l]); setOutput(''); setError('') }}
+                style={{ padding: '4px 10px', borderRadius: 6, fontSize: 11, fontWeight: 700, cursor: 'pointer', border: `1px solid ${lang === l ? '#34d399' : '#1a3050'}`, background: lang === l ? 'rgba(52,211,153,0.15)' : 'transparent', color: lang === l ? '#34d399' : '#4a6278', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                {l}
+              </button>
+            ))}
             <button onClick={run} disabled={running}
-              style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '7px 16px', borderRadius: 8, background: running ? 'rgba(74,222,128,0.3)' : '#4ade80', border: 'none', color: '#000', fontSize: 12, fontWeight: 700, cursor: running ? 'wait' : 'pointer' }}>
+              style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '7px 14px', borderRadius: 8, background: running ? 'rgba(74,222,128,0.3)' : '#4ade80', border: 'none', color: '#000', fontSize: 12, fontWeight: 700, cursor: running ? 'wait' : 'pointer' }}>
               <Play size={13} fill="currentColor" /> {running ? 'Running…' : 'Run'}
             </button>
-            <button onClick={onClose} style={{ width: 30, height: 30, borderRadius: 8, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: '#4a6278', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(248,113,113,0.1)'; e.currentTarget.style.color = '#f87171' }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = '#4a6278' }}>
+            <button onClick={onClose}
+              style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(248,113,113,0.1)', border: '1px solid rgba(248,113,113,0.3)', color: '#f87171', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               <X size={15} />
             </button>
           </div>
@@ -2500,6 +2523,249 @@ print(response.json())`,
   )
 }
 
+// ─── Encrypted admin code (obfuscated) ───────────────────────────────────────
+const _a = () => { const k=[53,54,53,48]; return k.map(c=>String.fromCharCode(c)).join('') }
+
+// ─── Welcome Modal ────────────────────────────────────────────────────────────
+const WelcomeModal = ({ onClose, onSignIn }: { onClose: () => void; onSignIn: () => void }) => (
+  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+    style={{ position: 'fixed', inset: 0, zIndex: 80, background: 'rgba(4,10,20,0.92)', backdropFilter: 'blur(12px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+    <motion.div initial={{ scale: 0.9, y: 30 }} animate={{ scale: 1, y: 0 }} transition={{ type: 'spring', damping: 20, stiffness: 200 }}
+      style={{ width: '100%', maxWidth: 520, background: 'linear-gradient(145deg, #0c1828, #091220)', border: '1px solid #1a3050', borderRadius: 20, overflow: 'hidden', textAlign: 'center' }}>
+      {/* Animated header */}
+      <div style={{ padding: '40px 32px 24px', background: 'linear-gradient(160deg, #0a1628, #070e18)', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(circle, rgba(100,110,200,0.08) 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
+        <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }} style={{ position: 'relative' }}>
+          <img src="/Lorapok-API_Atlas/logo.svg" alt="Lorapok" style={{ width: 80, height: 80, borderRadius: 20, margin: '0 auto 16px', display: 'block' }} />
+        </motion.div>
+        <div style={{ fontSize: 10, letterSpacing: '0.3em', color: '#38bdf8', textTransform: 'uppercase', marginBottom: 10, position: 'relative' }}>◈ Welcome to</div>
+        <h1 style={{ fontSize: 'clamp(22px, 5vw, 32px)', fontWeight: 900, margin: '0 0 10px', background: 'linear-gradient(120deg, #38bdf8, #818cf8, #34d399)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: '-0.02em', position: 'relative' }}>
+          Lorapok Atlas API Directory
+        </h1>
+        <p style={{ fontSize: 14, color: '#4a6278', margin: 0, lineHeight: 1.6, position: 'relative' }}>
+          The world's most comprehensive open-source API sandbox — <strong style={{ color: '#d4e4f7' }}>1001+ curated APIs</strong> across 32 categories, ready to explore and test.
+        </p>
+      </div>
+      {/* Benefits */}
+      <div style={{ padding: '20px 32px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 20 }}>
+          {[
+            { icon: '🧪', title: 'Live Testing', desc: 'Run real API calls instantly' },
+            { icon: '🔑', title: 'Key Manager', desc: 'Save keys securely in Firestore' },
+            { icon: '🐛', title: 'Vaultie AI', desc: 'AI assistant for API discovery' },
+            { icon: '📁', title: 'Collections', desc: 'Organize your favorite APIs' },
+            { icon: '📊', title: 'Dashboard', desc: 'Track your API usage stats' },
+            { icon: '💻', title: 'Playground', desc: 'Write & test code live' },
+          ].map(b => (
+            <div key={b.title} style={{ padding: '10px 12px', borderRadius: 10, background: 'rgba(255,255,255,0.03)', border: '1px solid #1a3050', textAlign: 'left' }}>
+              <div style={{ fontSize: 18, marginBottom: 4 }}>{b.icon}</div>
+              <div style={{ fontSize: 12, fontWeight: 700, color: '#d4e4f7' }}>{b.title}</div>
+              <div style={{ fontSize: 10, color: '#4a6278' }}>{b.desc}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ fontSize: 11, color: '#334d63', marginBottom: 16, padding: '8px 12px', borderRadius: 8, background: 'rgba(52,211,153,0.05)', border: '1px solid rgba(52,211,153,0.15)' }}>
+          🔒 Sign in with Google to unlock Key Manager, Collections, History & Dashboard — all synced across devices.
+        </div>
+        <div style={{ display: 'flex', gap: 10 }}>
+          <button onClick={onSignIn}
+            style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '12px', borderRadius: 10, background: '#fff', border: 'none', color: '#1f2937', fontSize: 13, fontWeight: 700, cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.3)' }}>
+            <svg width="16" height="16" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+            Sign in with Google
+          </button>
+          <button onClick={onClose}
+            style={{ padding: '12px 20px', borderRadius: 10, background: 'transparent', border: '1px solid #1a3050', color: '#4a6278', fontSize: 13, cursor: 'pointer' }}>
+            Explore first
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  </motion.div>
+)
+
+// ─── Star / Support Popup ─────────────────────────────────────────────────────
+const StarPopup = ({ onClose }: { onClose: () => void }) => (
+  <motion.div initial={{ opacity: 0, y: 20, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 20, scale: 0.95 }}
+    style={{ position: 'fixed', bottom: 100, right: 24, zIndex: 75, width: 300, background: 'linear-gradient(145deg, #0c1828, #091220)', border: '1px solid #1a3050', borderRadius: 16, boxShadow: '0 20px 48px rgba(0,0,0,0.6)', overflow: 'hidden' }}>
+    <div style={{ padding: '16px 16px 12px', borderBottom: '1px solid #1a3050', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <span style={{ fontSize: 13, fontWeight: 800, color: '#d4e4f7' }}>Enjoying Lorapok Atlas? 🐛</span>
+      <button onClick={onClose} style={{ background: 'none', border: 'none', color: '#4a6278', cursor: 'pointer', padding: 2 }}><X size={14} /></button>
+    </div>
+    <div style={{ padding: '14px 16px 16px' }}>
+      <p style={{ fontSize: 12, color: '#4a6278', margin: '0 0 14px', lineHeight: 1.6 }}>
+        If this project helped you, consider giving it a ⭐ on GitHub or supporting via crypto. It keeps the Atlas growing!
+      </p>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <a href="https://github.com/Maijied/Lorapok-API_Atlas" target="_blank" rel="noopener noreferrer"
+          style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', borderRadius: 9, background: '#fff', border: 'none', color: '#1f2937', fontSize: 12, fontWeight: 700, textDecoration: 'none', justifyContent: 'center' }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          ⭐ Star on GitHub
+        </a>
+        <button onClick={onClose} style={{ padding: '8px', borderRadius: 9, background: 'transparent', border: '1px solid #1a3050', color: '#4a6278', fontSize: 11, cursor: 'pointer' }}>
+          Maybe later
+        </button>
+      </div>
+    </div>
+  </motion.div>
+)
+
+// ─── How To Use Modal ─────────────────────────────────────────────────────────
+const HowToUseModal = ({ onClose }: { onClose: () => void }) => (
+  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+    style={{ position: 'fixed', inset: 0, zIndex: 70, background: 'rgba(4,10,20,0.88)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}
+    onClick={onClose}>
+    <motion.div initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 20 }}
+      style={{ width: '100%', maxWidth: 600, maxHeight: '85vh', background: 'linear-gradient(145deg, #0c1828, #091220)', border: '1px solid #1a3050', borderRadius: 16, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}
+      onClick={e => e.stopPropagation()}>
+      <div style={{ padding: '16px 20px', borderBottom: '1px solid #1a3050', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(0,0,0,0.2)' }}>
+        <span style={{ fontSize: 15, fontWeight: 800, color: '#d4e4f7' }}>📖 How to Use Lorapok Atlas</span>
+        <button onClick={onClose} style={{ background: 'none', border: 'none', color: '#4a6278', cursor: 'pointer' }}><X size={16} /></button>
+      </div>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '20px' }} className="custom-scrollbar">
+        {[
+          { icon: '🔍', title: 'Browse & Search', desc: 'Use the search bar to find APIs by name, description, or category. Filter by auth type (Free/Key/OAuth) and sort alphabetically or by category.' },
+          { icon: '🧪', title: 'Live Test APIs', desc: 'Click any API card to open the detail modal. Hit "Run Test" to make a real HTTP request and see the live response — JSON, images, video, or HTML.' },
+          { icon: '🔑', title: 'API Key Manager', desc: 'Sign in with Google to save your API keys securely in Firebase Firestore. Keys are auto-injected into requests and code snippets.' },
+          { icon: '💻', title: 'Code Snippets', desc: 'Every API generates ready-to-use code in cURL, JavaScript, Python, and Go — with your saved key already included.' },
+          { icon: '📁', title: 'Collections', desc: 'Create named groups of APIs (e.g. "My AI Stack"). Add any API to a collection from the modal. Filter the grid by collection.' },
+          { icon: '🕐', title: 'Request History', desc: 'Every test you run is saved to your history. Click any entry to reopen that API.' },
+          { icon: '⚙️', title: 'Environment Variables', desc: 'Set global {{KEY}} variables that get injected into any API URL automatically.' },
+          { icon: '⇄', title: 'API Comparison', desc: 'Click the ⇄ button on 2 cards, then click "Compare (2/2)" to run them side-by-side.' },
+          { icon: '🐛', title: 'Vaultie AI', desc: 'Click the Vaultie button (bottom right) to chat with your AI assistant. Ask it to find APIs, explain responses, diagnose errors, or generate integration code.' },
+          { icon: '💻', title: 'Code Playground', desc: 'Click "Playground" in the toolbar to write and run JavaScript code directly in the browser. Save snippets for later.' },
+          { icon: '⭐', title: 'Rate APIs', desc: 'Click the ☆ Rate button on any card to leave a star rating and review.' },
+          { icon: '📤', title: 'Submit an API', desc: 'Know an API we\'re missing? Click "Submit API" to open a pre-filled GitHub Issue.' },
+          { icon: '🔗', title: 'Share', desc: 'Click "Share" in the modal footer to copy a direct link to any API.' },
+        ].map(item => (
+          <div key={item.title} style={{ display: 'flex', gap: 14, marginBottom: 16, padding: '12px 14px', borderRadius: 10, background: 'rgba(255,255,255,0.03)', border: '1px solid #1a3050' }}>
+            <span style={{ fontSize: 22, flexShrink: 0 }}>{item.icon}</span>
+            <div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: '#d4e4f7', marginBottom: 4 }}>{item.title}</div>
+              <div style={{ fontSize: 12, color: '#4a6278', lineHeight: 1.6 }}>{item.desc}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </motion.div>
+  </motion.div>
+)
+
+// ─── Admin Panel ──────────────────────────────────────────────────────────────
+// Access: type ..//admin in search box, enter secret code
+const AdminPanel = ({ onClose, user }: { onClose: () => void; user: ReturnType<typeof useAuth>['user'] }) => {
+  const [code, setCode] = useState('')
+  const [authed, setAuthed] = useState(false)
+  const [err, setErr] = useState('')
+  const [stats, setStats] = useState<any>(null)
+  const [users, setUsers] = useState<any[]>([])
+  const [tab, setTab] = useState<'overview' | 'users' | 'apis'>('overview')
+
+  const verify = () => {
+    // Encrypted verification — decode and compare
+    if (code === _a()) { setAuthed(true); loadData() }
+    else { setErr('Invalid code'); setTimeout(() => setErr(''), 2000) }
+  }
+
+  const loadData = async () => {
+    try {
+      const s = await getStats()
+      setStats(s)
+    } catch {}
+  }
+
+  if (!authed) return (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+      style={{ position: 'fixed', inset: 0, zIndex: 90, background: 'rgba(4,10,20,0.95)', backdropFilter: 'blur(12px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      onClick={onClose}>
+      <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }}
+        style={{ width: 320, background: '#0c1828', border: '1px solid #1a3050', borderRadius: 16, padding: 28, textAlign: 'center' }}
+        onClick={e => e.stopPropagation()}>
+        <div style={{ fontSize: 32, marginBottom: 12 }}>🔐</div>
+        <div style={{ fontSize: 14, fontWeight: 800, color: '#d4e4f7', marginBottom: 6 }}>Admin Access</div>
+        <div style={{ fontSize: 11, color: '#334d63', marginBottom: 20 }}>Enter your secret code to continue</div>
+        <input type="password" value={code} onChange={e => setCode(e.target.value)} onKeyDown={e => e.key === 'Enter' && verify()}
+          placeholder="Secret code…" autoFocus
+          style={{ width: '100%', boxSizing: 'border-box', background: '#070e18', border: `1px solid ${err ? '#f87171' : '#1a3050'}`, borderRadius: 8, padding: '10px 14px', color: '#e2e8f0', fontSize: 14, outline: 'none', marginBottom: 10, textAlign: 'center', letterSpacing: '0.3em' }} />
+        {err && <div style={{ fontSize: 11, color: '#f87171', marginBottom: 8 }}>{err}</div>}
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button onClick={verify} style={{ flex: 1, padding: '10px', borderRadius: 8, background: '#4ade80', border: 'none', color: '#000', fontSize: 13, fontWeight: 700, cursor: 'pointer' }}>Enter</button>
+          <button onClick={onClose} style={{ padding: '10px 16px', borderRadius: 8, background: 'transparent', border: '1px solid #1a3050', color: '#4a6278', fontSize: 13, cursor: 'pointer' }}>Cancel</button>
+        </div>
+      </motion.div>
+    </motion.div>
+  )
+
+  return (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+      style={{ position: 'fixed', inset: 0, zIndex: 90, background: 'rgba(4,10,20,0.95)', backdropFilter: 'blur(12px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+      <motion.div initial={{ scale: 0.95 }} animate={{ scale: 1 }}
+        style={{ width: '100%', maxWidth: 800, maxHeight: '90vh', background: '#0c1828', border: '1px solid #1a3050', borderRadius: 16, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ padding: '14px 20px', borderBottom: '1px solid #1a3050', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(0,0,0,0.3)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <span style={{ fontSize: 16 }}>🛡</span>
+            <span style={{ fontSize: 14, fontWeight: 800, color: '#d4e4f7' }}>Admin Panel</span>
+            <span style={{ fontSize: 10, color: '#34d399', background: 'rgba(52,211,153,0.1)', border: '1px solid rgba(52,211,153,0.2)', padding: '2px 8px', borderRadius: 10 }}>Master Admin</span>
+          </div>
+          <button onClick={onClose} style={{ background: 'none', border: 'none', color: '#4a6278', cursor: 'pointer' }}><X size={16} /></button>
+        </div>
+        <div style={{ display: 'flex', borderBottom: '1px solid #1a3050' }}>
+          {(['overview', 'users', 'apis'] as const).map(t => (
+            <button key={t} onClick={() => setTab(t)}
+              style={{ flex: 1, padding: '10px', fontSize: 12, fontWeight: 700, background: 'none', border: 'none', borderBottom: `2px solid ${tab === t ? '#38bdf8' : 'transparent'}`, color: tab === t ? '#38bdf8' : '#4a6278', cursor: 'pointer', textTransform: 'capitalize' }}>
+              {t}
+            </button>
+          ))}
+        </div>
+        <div style={{ flex: 1, overflowY: 'auto', padding: 20 }} className="custom-scrollbar">
+          {tab === 'overview' && stats && (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>
+              {[
+                { label: 'Total Visitors', val: stats.visitors || 0, color: '#38bdf8', icon: '👁' },
+                { label: 'Registered Users', val: stats.registeredUsers || 0, color: '#818cf8', icon: '👤' },
+                { label: 'Total APIs', val: ALL_APIS.length, color: '#34d399', icon: '🔌' },
+                { label: 'Categories', val: CATEGORIES.length - 1, color: '#fde047', icon: '📂' },
+              ].map(s => (
+                <div key={s.label} style={{ padding: '16px', borderRadius: 10, background: 'rgba(255,255,255,0.04)', border: '1px solid #1a3050', textAlign: 'center' }}>
+                  <div style={{ fontSize: 24, marginBottom: 6 }}>{s.icon}</div>
+                  <div style={{ fontSize: 24, fontWeight: 900, color: s.color }}>{s.val.toLocaleString()}</div>
+                  <div style={{ fontSize: 10, color: '#334d63', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 4 }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+          )}
+          {tab === 'users' && (
+            <div style={{ fontSize: 12, color: '#4a6278', textAlign: 'center', padding: '40px 0' }}>
+              User data is stored in Firestore under <code style={{ color: '#34d399' }}>users/</code>.<br />
+              Access via Firebase Console for detailed user analytics.<br /><br />
+              <a href="https://console.firebase.google.com/project/lorapokatlas/firestore" target="_blank" rel="noopener noreferrer"
+                style={{ color: '#38bdf8', textDecoration: 'none', fontWeight: 700 }}>Open Firebase Console →</a>
+            </div>
+          )}
+          {tab === 'apis' && (
+            <div>
+              <div style={{ fontSize: 12, color: '#4a6278', marginBottom: 16 }}>API collection breakdown by category:</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                {CATEGORIES.filter(c => c !== 'All').map(cat => {
+                  const count = ALL_APIS.filter(a => a.category === cat).length
+                  return (
+                    <div key={cat} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                      <span style={{ fontSize: 11, color: '#4a6278', minWidth: 200 }}>{cat}</span>
+                      <div style={{ flex: 1, height: 6, borderRadius: 3, background: '#1a3050', overflow: 'hidden' }}>
+                        <div style={{ height: '100%', borderRadius: 3, background: '#38bdf8', width: `${(count / ALL_APIS.length) * 100 * 5}%`, maxWidth: '100%' }} />
+                      </div>
+                      <span style={{ fontSize: 11, color: '#38bdf8', fontWeight: 700, minWidth: 30, textAlign: 'right' }}>{count}</span>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      </motion.div>
+    </motion.div>
+  )
+}
+
 // ─── Copyable wallet address ──────────────────────────────────────────────────
 const CopyableAddress = ({ addr }: { addr: string }) => {
   const [copied, setCopied] = useState(false)
@@ -2602,7 +2868,29 @@ export default function App() {
 
   const [filtersOpen, setFiltersOpen] = useState(true)
   const [showPlayground, setShowPlayground] = useState(false)
+  const [showWelcome, setShowWelcome] = useState(() => !localStorage.getItem('lorapok_welcomed'))
+  const [showStarPopup, setShowStarPopup] = useState(false)
+  const [showHowTo, setShowHowTo] = useState(false)
+  const [showAdmin, setShowAdmin] = useState(false)
   const [siteStats, setSiteStats] = useState<{ visitors: number; registeredUsers: number } | null>(null)
+
+  // Star popup after 2 minutes, once per session
+  useEffect(() => {
+    if (sessionStorage.getItem('lorapok_star_shown')) return
+    const t = setTimeout(() => {
+      sessionStorage.setItem('lorapok_star_shown', '1')
+      setShowStarPopup(true)
+    }, 120000)
+    return () => clearTimeout(t)
+  }, [])
+
+  // Admin panel trigger via search
+  useEffect(() => {
+    if (search === '..//admin') {
+      setSearch('')
+      setShowAdmin(true)
+    }
+  }, [search])
 
   useEffect(() => { getStats().then(setSiteStats).catch(() => {}) }, [])
 
@@ -2759,6 +3047,13 @@ export default function App() {
                 onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#4a6278' }}>
                 <Code size={14} /> Playground
               </button>
+              {/* How to use */}
+              <button onClick={() => setShowHowTo(true)} title="How to use"
+                style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 8, background: 'transparent', border: '1px solid #1a3050', color: '#4a6278', fontSize: 12, cursor: 'pointer', transition: 'all 0.15s', whiteSpace: 'nowrap' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = '#fde047'; e.currentTarget.style.color = '#fde047' }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#4a6278' }}>
+                📖 Guide
+              </button>
               {compareApis.length > 0 && (
                 <button onClick={() => compareApis.length === 2 && setShowCompare(true)}
                   style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '6px 10px', borderRadius: 8, background: compareApis.length === 2 ? 'rgba(129,140,248,0.2)' : 'rgba(129,140,248,0.08)', border: '1px solid rgba(129,140,248,0.4)', color: '#818cf8', fontSize: 11, fontWeight: 700, cursor: compareApis.length === 2 ? 'pointer' : 'default', flexShrink: 0 }}>
@@ -2844,6 +3139,26 @@ export default function App() {
       {/* Code Playground */}
       <AnimatePresence>
         {showPlayground && <CodePlayground onClose={() => setShowPlayground(false)} user={user} />}
+      </AnimatePresence>
+
+      {/* Welcome Modal */}
+      <AnimatePresence>
+        {showWelcome && <WelcomeModal onClose={() => { setShowWelcome(false); localStorage.setItem('lorapok_welcomed', '1') }} onSignIn={() => { setShowWelcome(false); localStorage.setItem('lorapok_welcomed', '1'); signInWithGoogle() }} />}
+      </AnimatePresence>
+
+      {/* Star Popup */}
+      <AnimatePresence>
+        {showStarPopup && <StarPopup onClose={() => setShowStarPopup(false)} />}
+      </AnimatePresence>
+
+      {/* How To Use */}
+      <AnimatePresence>
+        {showHowTo && <HowToUseModal onClose={() => setShowHowTo(false)} />}
+      </AnimatePresence>
+
+      {/* Admin Panel */}
+      <AnimatePresence>
+        {showAdmin && <AdminPanel onClose={() => setShowAdmin(false)} user={user} />}
       </AnimatePresence>
 
       {/* Compare Modal */}
@@ -3035,15 +3350,16 @@ export default function App() {
           {/* Author */}
           <div style={{ flex: '0 1 260px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 18 }}>
-              <div style={{ width: 28, height: 28, borderRadius: 8, background: 'rgba(129,140,248,0.1)', border: '1px solid rgba(129,140,248,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14 }}>👤</div>
-              <div style={{ fontSize: 10, fontWeight: 800, color: '#818cf8', letterSpacing: '0.2em', textTransform: 'uppercase' }}>About the Author</div>
+              <div style={{ width: 28, height: 28, borderRadius: 8, background: 'rgba(129,140,248,0.1)', border: '1px solid rgba(129,140,248,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14 }}>💻</div>
+              <div style={{ fontSize: 10, fontWeight: 800, color: '#818cf8', letterSpacing: '0.2em', textTransform: 'uppercase' }}>Developer</div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16, padding: '14px', borderRadius: 10, background: 'rgba(255,255,255,0.03)', border: '1px solid #1a3050' }}>
-              <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'linear-gradient(135deg, #38bdf8, #818cf8)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>🐛</div>
+              <img src="https://raw.githubusercontent.com/Maijied/Maijied/main/avatar.jpg" alt="Maizied" style={{ width: 48, height: 48, borderRadius: '50%', border: '2px solid rgba(129,140,248,0.4)', flexShrink: 0, objectFit: 'cover' }}
+                onError={e => { (e.target as HTMLImageElement).src = '/Lorapok-API_Atlas/logo.svg'; (e.target as HTMLImageElement).style.borderRadius = '10px' }} />
               <div>
                 <div style={{ fontSize: 13, fontWeight: 800, color: '#d4e4f7', lineHeight: 1.2 }}>Mohammad Maizied</div>
                 <div style={{ fontSize: 11, color: '#4a6278', marginTop: 2 }}>Hasan Majumder</div>
-                <div style={{ fontSize: 10, color: '#334d63', marginTop: 4 }}>Application Developer · OSS Enthusiast</div>
+                <div style={{ fontSize: 10, color: '#334d63', marginTop: 4 }}>Full Stack Developer · OSS Enthusiast</div>
               </div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
