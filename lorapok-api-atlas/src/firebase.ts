@@ -213,3 +213,69 @@ export async function getUserStats(uid: string) {
   const topApis = Object.entries(apiCounts).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([name, count]) => ({ name, count }))
   return { total, success, cors, errors, successRate: total ? Math.round(success / total * 100) : 0, topApis }
 }
+
+// ─── Admin System ─────────────────────────────────────────────────────────────
+// Path: admins/{email} → { role: 'admin'|'moderator', addedBy, secretKey, code, ts }
+export const MASTER_ADMIN = 'mdshuvo40@gmail.com'
+
+export async function isAdmin(email: string): Promise<{ allowed: boolean; role: string }> {
+  if (email === MASTER_ADMIN) return { allowed: true, role: 'master' }
+  const ref = doc(db, 'admins', email.replace(/\./g, '_'))
+  const snap = await getDoc(ref)
+  if (snap.exists()) return { allowed: true, role: snap.data().role }
+  return { allowed: false, role: '' }
+}
+
+export async function addAdmin(email: string, role: 'admin' | 'moderator', secretKey: string, code: string, addedBy: string) {
+  const ref = doc(db, 'admins', email.replace(/\./g, '_'))
+  await setDoc(ref, { email, role, secretKey, code, addedBy, ts: Date.now() })
+}
+
+export async function getAdmins() {
+  const snap = await getDocs(collection(db, 'admins'))
+  return snap.docs.map(d => ({ id: d.id, ...d.data() })) as { id: string; email: string; role: string; addedBy: string; ts: number; code?: string }[]
+}
+
+export async function removeAdmin(email: string) {
+  await deleteDoc(doc(db, 'admins', email.replace(/\./g, '_')))
+}
+
+// ─── Admin: fetch all users data ──────────────────────────────────────────────
+export async function getAllUsersData() {
+  // Fetch all user subcollections we know about
+  // We can't list all users directly from client SDK, but we can read the stats
+  // and any user data that's been written to known paths
+  const statsSnap = await getDoc(doc(db, 'stats', 'global'))
+  const stats = statsSnap.exists() ? statsSnap.data() : {}
+
+  // Get trending data
+  const trendingSnap = await getDocs(collection(db, 'trending'))
+  const trending = trendingSnap.docs.map(d => ({ name: d.id, ...d.data() }))
+    .sort((a: any, b: any) => (b.count || 0) - (a.count || 0))
+
+  // Get all ratings
+  const ratingsSnap = await getDocs(collection(db, 'ratings'))
+  const ratings: { apiName: string; count: number }[] = []
+  for (const rDoc of ratingsSnap.docs) {
+    const reviewsSnap = await getDocs(collection(db, 'ratings', rDoc.id, 'reviews'))
+    if (reviewsSnap.size > 0) ratings.push({ apiName: rDoc.id, count: reviewsSnap.size })
+  }
+
+  return { stats, trending: trending.slice(0, 20), ratings: ratings.sort((a, b) => b.count - a.count).slice(0, 20) }
+}
+
+// ─── Admin: fetch specific user data ─────────────────────────────────────────
+export async function getUserData(uid: string) {
+  const [keysSnap, histSnap, colSnap, snippetsSnap] = await Promise.all([
+    getDocs(collection(db, 'users', uid, 'apikeys')),
+    getDocs(collection(db, 'users', uid, 'history')),
+    getDocs(collection(db, 'users', uid, 'collections')),
+    getDocs(collection(db, 'users', uid, 'snippets')),
+  ])
+  return {
+    apiKeys: keysSnap.docs.map(d => ({ name: d.id, ...d.data() })),
+    history: histSnap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a: any, b: any) => (b.ts || 0) - (a.ts || 0)).slice(0, 20),
+    collections: colSnap.docs.map(d => ({ id: d.id, ...d.data() })),
+    snippets: snippetsSnap.docs.map(d => ({ id: d.id, ...d.data() })),
+  }
+}

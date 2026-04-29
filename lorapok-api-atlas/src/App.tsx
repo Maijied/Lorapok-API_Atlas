@@ -5,7 +5,7 @@ import apiCollection from './data/api_collection.json'
 import axios from 'axios'
 import { signInWithGoogle, signOutUser } from './firebase'
 import { useAuth, useApiKey } from './useKeyStore'
-import { saveChatMessage, subscribeChatHistory, getUserCollections, createCollection, addToCollection, removeFromCollection, deleteCollection, saveRequestHistory, getRequestHistory, getEnvVars, saveEnvVars, getVaultieMemory, updateVaultieMemory, saveSnippet, getSnippets, deleteSnippet, rateApi, getApiRatings, trackApiTest, getTrending, incrementVisitor, incrementRegisteredUser, getStats, getUserStats } from './firebase'
+import { saveChatMessage, subscribeChatHistory, getUserCollections, createCollection, addToCollection, removeFromCollection, deleteCollection, saveRequestHistory, getRequestHistory, getEnvVars, saveEnvVars, getVaultieMemory, updateVaultieMemory, saveSnippet, getSnippets, deleteSnippet, rateApi, getApiRatings, trackApiTest, getTrending, incrementVisitor, incrementRegisteredUser, getStats, getUserStats, isAdmin, addAdmin, getAdmins, removeAdmin, getAllUsersData, getUserData, MASTER_ADMIN } from './firebase'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface ApiItem {
@@ -455,6 +455,25 @@ const CorsPanel = ({ api }: { api?: FlatApi }) => {
       {/* Why CORS explanation */}
       <div style={{ padding: '10px 12px', borderRadius: 8, background: 'rgba(129,140,248,0.06)', border: '1px solid rgba(129,140,248,0.15)', fontSize: 11, color: '#4a6278', lineHeight: 1.6 }}>
         <span style={{ color: '#818cf8', fontWeight: 700 }}>Why is this blocked?</span> Browsers enforce CORS (Cross-Origin Resource Sharing) security policy. This API doesn't send the required headers to allow browser requests — but it works perfectly from curl, Postman, or any server-side code.
+      </div>
+
+      {/* Proxy workaround */}
+      <div style={{ padding: '10px 12px', borderRadius: 8, background: 'rgba(52,211,153,0.04)', border: '1px solid rgba(52,211,153,0.15)' }}>
+        <div style={{ fontSize: 11, fontWeight: 700, color: '#34d399', marginBottom: 6 }}>💡 Workaround: Build a simple proxy</div>
+        <div style={{ fontSize: 10, color: '#4a6278', marginBottom: 8, lineHeight: 1.5 }}>Create a tiny Node.js/Express server that fetches the API server-side and returns the result to your frontend:</div>
+        <pre style={{ fontSize: 10, fontFamily: 'monospace', color: '#a5f3fc', background: 'rgba(0,0,0,0.4)', padding: '8px 10px', borderRadius: 6, overflowX: 'auto', margin: 0, lineHeight: 1.6 }}>{`const express = require("express");
+const fetch = require("node-fetch");
+const app = express();
+
+app.get("/proxy", async (req, res) => {
+  const url = req.query.url;
+  const response = await fetch(url);
+  const data = await response.json();
+  res.json(data);
+});
+
+app.listen(3000);`}</pre>
+        <div style={{ fontSize: 10, color: '#334d63', marginTop: 6 }}>Then call <code style={{ color: '#34d399' }}>http://localhost:3000/proxy?url={api?.url || 'YOUR_API_URL'}</code> from your frontend.</div>
       </div>
     </div>
   )
@@ -1976,7 +1995,7 @@ const RatingWidget = ({ apiName, user, popupDirection = 'down' }: { apiName: str
   const [stats, setStats] = useState<{ avg: number; count: number } | null>(null)
   const [open, setOpen] = useState(false)
   const btnRef = useRef<HTMLButtonElement>(null)
-  const [pos, setPos] = useState({ top: 0, left: 0 })
+  const [popupPos, setPopupPos] = useState({ bottom: 100, left: 100 })
 
   useEffect(() => {
     getApiRatings(apiName).then(r => setStats({ avg: r.avg, count: r.count })).catch(() => {})
@@ -1985,9 +2004,9 @@ const RatingWidget = ({ apiName, user, popupDirection = 'down' }: { apiName: str
   const handleOpen = () => {
     if (btnRef.current) {
       const rect = btnRef.current.getBoundingClientRect()
-      setPos({
-        top: rect.top - 10,  // will be adjusted below
-        left: Math.min(rect.left, window.innerWidth - 220),
+      setPopupPos({
+        bottom: window.innerHeight - rect.top + 8,
+        left: Math.max(8, Math.min(rect.left, window.innerWidth - 210)),
       })
     }
     setOpen(v => !v)
@@ -2001,7 +2020,7 @@ const RatingWidget = ({ apiName, user, popupDirection = 'down' }: { apiName: str
 
   return (
     <div style={{ position: 'relative' }}>
-      <button ref={btnRef} onClick={handleOpen}
+      <button ref={btnRef} onClick={e => { e.stopPropagation(); handleOpen() }}
         style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '3px 8px', borderRadius: 20, fontSize: 10, fontWeight: 700, background: 'rgba(253,224,71,0.08)', border: '1px solid rgba(253,224,71,0.2)', color: '#fde047', cursor: 'pointer', transition: 'all 0.15s' }}>
         <Star size={10} fill={stats && stats.avg > 0 ? '#fde047' : 'none'} />
         {stats && stats.count > 0 ? `${stats.avg} (${stats.count})` : 'Rate'}
@@ -2009,11 +2028,9 @@ const RatingWidget = ({ apiName, user, popupDirection = 'down' }: { apiName: str
       <AnimatePresence>
         {open && (
           <>
-            {/* Backdrop */}
-            <div style={{ position: 'fixed', inset: 0, zIndex: 59 }} onClick={() => setOpen(false)} />
-            {/* Popup — fixed position, always visible */}
+            <div style={{ position: 'fixed', inset: 0, zIndex: 59 }} onClick={e => { e.stopPropagation(); setOpen(false) }} />
             <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }}
-              style={{ position: 'fixed', bottom: btnRef.current ? window.innerHeight - (btnRef.current.getBoundingClientRect().top) + 8 : 100, left: btnRef.current ? Math.min(btnRef.current.getBoundingClientRect().left, window.innerWidth - 210) : 100, width: 200, background: '#0c1828', border: '1px solid #1a3050', borderRadius: 10, boxShadow: '0 16px 40px rgba(0,0,0,0.8)', zIndex: 60, overflow: 'hidden', padding: 12 }}
+              style={{ position: 'fixed', bottom: popupPos.bottom, left: popupPos.left, width: 200, background: '#0c1828', border: '1px solid #1a3050', borderRadius: 10, boxShadow: '0 16px 40px rgba(0,0,0,0.8)', zIndex: 60, padding: 12 }}
               onClick={e => e.stopPropagation()}>
               {!user ? (
                 <div style={{ fontSize: 11, color: '#334d63', textAlign: 'center', lineHeight: 1.5 }}>Sign in to rate this API</div>
@@ -2651,26 +2668,53 @@ const HowToUseModal = ({ onClose }: { onClose: () => void }) => (
 )
 
 // ─── Admin Panel ──────────────────────────────────────────────────────────────
-// Access: type ..//admin in search box, enter secret code
 const AdminPanel = ({ onClose, user }: { onClose: () => void; user: ReturnType<typeof useAuth>['user'] }) => {
   const [code, setCode] = useState('')
   const [authed, setAuthed] = useState(false)
   const [err, setErr] = useState('')
-  const [stats, setStats] = useState<any>(null)
-  const [users, setUsers] = useState<any[]>([])
-  const [tab, setTab] = useState<'overview' | 'users' | 'apis'>('overview')
+  const [adminRole, setAdminRole] = useState('')
+  const [tab, setTab] = useState<'overview' | 'trending' | 'ratings' | 'admins'>('overview')
+  const [data, setData] = useState<any>(null)
+  const [admins, setAdmins] = useState<any[]>([])
+  const [loading, setLoading] = useState(false)
+  // Add admin form
+  const [newEmail, setNewEmail] = useState('')
+  const [newRole, setNewRole] = useState<'admin' | 'moderator'>('moderator')
+  const [newKey, setNewKey] = useState('')
+  const [newCode, setNewCode] = useState('')
+  const [addMsg, setAddMsg] = useState('')
 
-  const verify = () => {
-    // Encrypted verification — decode and compare
-    if (code === _a()) { setAuthed(true); loadData() }
-    else { setErr('Invalid code'); setTimeout(() => setErr(''), 2000) }
+  const verify = async () => {
+    if (!user?.email) { setErr('Must be signed in'); return }
+    const adminInfo = await isAdmin(user.email)
+    if (!adminInfo.allowed) { setErr('Not authorized'); setTimeout(() => setErr(''), 2000); return }
+    // For non-master admins, verify their stored code
+    if (user.email !== MASTER_ADMIN) {
+      const adminList = await getAdmins()
+      const me = adminList.find(a => a.email === user.email)
+      if (!me || me.code !== code) { setErr('Invalid code'); setTimeout(() => setErr(''), 2000); return }
+    } else {
+      if (code !== _a()) { setErr('Invalid code'); setTimeout(() => setErr(''), 2000); return }
+    }
+    setAdminRole(adminInfo.role)
+    setAuthed(true)
+    loadData()
   }
 
   const loadData = async () => {
+    setLoading(true)
     try {
-      const s = await getStats()
-      setStats(s)
-    } catch {}
+      const [d, a] = await Promise.all([getAllUsersData(), getAdmins()])
+      setData(d); setAdmins(a)
+    } finally { setLoading(false) }
+  }
+
+  const addNewAdmin = async () => {
+    if (!newEmail || !newKey || !newCode) return
+    await addAdmin(newEmail, newRole, newKey, newCode, user?.email || '')
+    setAddMsg('✓ Added!'); setNewEmail(''); setNewKey(''); setNewCode('')
+    setTimeout(() => setAddMsg(''), 2000)
+    getAdmins().then(setAdmins)
   }
 
   if (!authed) return (
@@ -2681,8 +2725,11 @@ const AdminPanel = ({ onClose, user }: { onClose: () => void; user: ReturnType<t
         style={{ width: 320, background: '#0c1828', border: '1px solid #1a3050', borderRadius: 16, padding: 28, textAlign: 'center' }}
         onClick={e => e.stopPropagation()}>
         <div style={{ fontSize: 32, marginBottom: 12 }}>🔐</div>
-        <div style={{ fontSize: 14, fontWeight: 800, color: '#d4e4f7', marginBottom: 6 }}>Admin Access</div>
-        <div style={{ fontSize: 11, color: '#334d63', marginBottom: 20 }}>Enter your secret code to continue</div>
+        <div style={{ fontSize: 14, fontWeight: 800, color: '#d4e4f7', marginBottom: 4 }}>Admin Access</div>
+        <div style={{ fontSize: 11, color: '#334d63', marginBottom: 6 }}>
+          {user?.email ? `Signed in as ${user.email}` : 'Sign in first'}
+        </div>
+        <div style={{ fontSize: 11, color: '#334d63', marginBottom: 20 }}>Enter your secret code</div>
         <input type="password" value={code} onChange={e => setCode(e.target.value)} onKeyDown={e => e.key === 'Enter' && verify()}
           placeholder="Secret code…" autoFocus
           style={{ width: '100%', boxSizing: 'border-box', background: '#070e18', border: `1px solid ${err ? '#f87171' : '#1a3050'}`, borderRadius: 8, padding: '10px 14px', color: '#e2e8f0', fontSize: 14, outline: 'none', marginBottom: 10, textAlign: 'center', letterSpacing: '0.3em' }} />
@@ -2699,65 +2746,134 @@ const AdminPanel = ({ onClose, user }: { onClose: () => void; user: ReturnType<t
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       style={{ position: 'fixed', inset: 0, zIndex: 90, background: 'rgba(4,10,20,0.95)', backdropFilter: 'blur(12px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
       <motion.div initial={{ scale: 0.95 }} animate={{ scale: 1 }}
-        style={{ width: '100%', maxWidth: 800, maxHeight: '90vh', background: '#0c1828', border: '1px solid #1a3050', borderRadius: 16, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-        <div style={{ padding: '14px 20px', borderBottom: '1px solid #1a3050', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(0,0,0,0.3)' }}>
+        style={{ width: '100%', maxWidth: 900, maxHeight: '92vh', background: '#0c1828', border: '1px solid #1a3050', borderRadius: 16, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+        {/* Header */}
+        <div style={{ padding: '14px 20px', borderBottom: '1px solid #1a3050', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(0,0,0,0.3)', flexShrink: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 16 }}>🛡</span>
             <span style={{ fontSize: 14, fontWeight: 800, color: '#d4e4f7' }}>Admin Panel</span>
-            <span style={{ fontSize: 10, color: '#34d399', background: 'rgba(52,211,153,0.1)', border: '1px solid rgba(52,211,153,0.2)', padding: '2px 8px', borderRadius: 10 }}>Master Admin</span>
+            <span style={{ fontSize: 10, color: adminRole === 'master' ? '#fde047' : '#34d399', background: adminRole === 'master' ? 'rgba(253,224,71,0.1)' : 'rgba(52,211,153,0.1)', border: `1px solid ${adminRole === 'master' ? 'rgba(253,224,71,0.3)' : 'rgba(52,211,153,0.3)'}`, padding: '2px 8px', borderRadius: 10, fontWeight: 700 }}>
+              {adminRole === 'master' ? '👑 Master Admin' : adminRole}
+            </span>
           </div>
-          <button onClick={onClose} style={{ background: 'none', border: 'none', color: '#4a6278', cursor: 'pointer' }}><X size={16} /></button>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button onClick={loadData} style={{ background: 'none', border: '1px solid #1a3050', borderRadius: 7, padding: '5px 10px', color: '#4a6278', cursor: 'pointer', fontSize: 11 }}>↻ Refresh</button>
+            <button onClick={onClose} style={{ background: 'none', border: 'none', color: '#4a6278', cursor: 'pointer' }}><X size={16} /></button>
+          </div>
         </div>
-        <div style={{ display: 'flex', borderBottom: '1px solid #1a3050' }}>
-          {(['overview', 'users', 'apis'] as const).map(t => (
+        {/* Tabs */}
+        <div style={{ display: 'flex', borderBottom: '1px solid #1a3050', flexShrink: 0 }}>
+          {(['overview', 'trending', 'ratings', ...(adminRole === 'master' ? ['admins'] : [])] as const).map((t: any) => (
             <button key={t} onClick={() => setTab(t)}
               style={{ flex: 1, padding: '10px', fontSize: 12, fontWeight: 700, background: 'none', border: 'none', borderBottom: `2px solid ${tab === t ? '#38bdf8' : 'transparent'}`, color: tab === t ? '#38bdf8' : '#4a6278', cursor: 'pointer', textTransform: 'capitalize' }}>
               {t}
             </button>
           ))}
         </div>
+        {/* Content */}
         <div style={{ flex: 1, overflowY: 'auto', padding: 20 }} className="custom-scrollbar">
-          {tab === 'overview' && stats && (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>
-              {[
-                { label: 'Total Visitors', val: stats.visitors || 0, color: '#38bdf8', icon: '👁' },
-                { label: 'Registered Users', val: stats.registeredUsers || 0, color: '#818cf8', icon: '👤' },
-                { label: 'Total APIs', val: ALL_APIS.length, color: '#34d399', icon: '🔌' },
-                { label: 'Categories', val: CATEGORIES.length - 1, color: '#fde047', icon: '📂' },
-              ].map(s => (
-                <div key={s.label} style={{ padding: '16px', borderRadius: 10, background: 'rgba(255,255,255,0.04)', border: '1px solid #1a3050', textAlign: 'center' }}>
-                  <div style={{ fontSize: 24, marginBottom: 6 }}>{s.icon}</div>
-                  <div style={{ fontSize: 24, fontWeight: 900, color: s.color }}>{s.val.toLocaleString()}</div>
-                  <div style={{ fontSize: 10, color: '#334d63', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 4 }}>{s.label}</div>
-                </div>
-              ))}
-            </div>
-          )}
-          {tab === 'users' && (
-            <div style={{ fontSize: 12, color: '#4a6278', textAlign: 'center', padding: '40px 0' }}>
-              User data is stored in Firestore under <code style={{ color: '#34d399' }}>users/</code>.<br />
-              Access via Firebase Console for detailed user analytics.<br /><br />
-              <a href="https://console.firebase.google.com/project/lorapokatlas/firestore" target="_blank" rel="noopener noreferrer"
-                style={{ color: '#38bdf8', textDecoration: 'none', fontWeight: 700 }}>Open Firebase Console →</a>
-            </div>
-          )}
-          {tab === 'apis' && (
+          {loading && <div style={{ textAlign: 'center', color: '#334d63', padding: '40px 0' }}>Loading data…</div>}
+          {!loading && tab === 'overview' && data && (
             <div>
-              <div style={{ fontSize: 12, color: '#4a6278', marginBottom: 16 }}>API collection breakdown by category:</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: 12, marginBottom: 24 }}>
+                {[
+                  { label: 'Total Visitors', val: data.stats?.visitors || 0, color: '#38bdf8', icon: '👁' },
+                  { label: 'Registered Users', val: data.stats?.registeredUsers || 0, color: '#818cf8', icon: '👤' },
+                  { label: 'Total APIs', val: ALL_APIS.length, color: '#34d399', icon: '🔌' },
+                  { label: 'Categories', val: CATEGORIES.length - 1, color: '#fde047', icon: '📂' },
+                  { label: 'Trending APIs', val: data.trending?.length || 0, color: '#f87171', icon: '🔥' },
+                  { label: 'Rated APIs', val: data.ratings?.length || 0, color: '#fbbf24', icon: '⭐' },
+                ].map(s => (
+                  <div key={s.label} style={{ padding: '14px', borderRadius: 10, background: 'rgba(255,255,255,0.04)', border: '1px solid #1a3050', textAlign: 'center' }}>
+                    <div style={{ fontSize: 20, marginBottom: 4 }}>{s.icon}</div>
+                    <div style={{ fontSize: 22, fontWeight: 900, color: s.color }}>{typeof s.val === 'number' ? s.val.toLocaleString() : s.val}</div>
+                    <div style={{ fontSize: 9, color: '#334d63', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 3 }}>{s.label}</div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ fontSize: 11, fontWeight: 700, color: '#4a6278', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>API Category Breakdown</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
                 {CATEGORIES.filter(c => c !== 'All').map(cat => {
                   const count = ALL_APIS.filter(a => a.category === cat).length
                   return (
                     <div key={cat} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                      <span style={{ fontSize: 11, color: '#4a6278', minWidth: 200 }}>{cat}</span>
-                      <div style={{ flex: 1, height: 6, borderRadius: 3, background: '#1a3050', overflow: 'hidden' }}>
-                        <div style={{ height: '100%', borderRadius: 3, background: '#38bdf8', width: `${(count / ALL_APIS.length) * 100 * 5}%`, maxWidth: '100%' }} />
+                      <span style={{ fontSize: 11, color: '#4a6278', minWidth: 180, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{cat}</span>
+                      <div style={{ flex: 1, height: 5, borderRadius: 3, background: '#1a3050', overflow: 'hidden' }}>
+                        <div style={{ height: '100%', borderRadius: 3, background: '#38bdf8', width: `${(count / Math.max(...CATEGORIES.filter(c=>c!=='All').map(c=>ALL_APIS.filter(a=>a.category===c).length))) * 100}%` }} />
                       </div>
-                      <span style={{ fontSize: 11, color: '#38bdf8', fontWeight: 700, minWidth: 30, textAlign: 'right' }}>{count}</span>
+                      <span style={{ fontSize: 11, color: '#38bdf8', fontWeight: 700, minWidth: 28, textAlign: 'right' }}>{count}</span>
                     </div>
                   )
                 })}
               </div>
+            </div>
+          )}
+          {!loading && tab === 'trending' && data?.trending && (
+            <div>
+              <div style={{ fontSize: 11, fontWeight: 700, color: '#f87171', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 14 }}>🔥 Most Tested APIs</div>
+              {data.trending.map((t: any, i: number) => (
+                <div key={t.name} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px', borderRadius: 8, background: 'rgba(255,255,255,0.03)', border: '1px solid #1a3050', marginBottom: 6 }}>
+                  <span style={{ fontSize: 12, fontWeight: 800, color: i < 3 ? '#f87171' : '#334d63', minWidth: 24 }}>#{i+1}</span>
+                  <span style={{ flex: 1, fontSize: 13, color: '#d4e4f7', fontWeight: 600 }}>{t.name}</span>
+                  <span style={{ fontSize: 12, color: '#f87171', fontWeight: 700 }}>{t.count} tests</span>
+                  <span style={{ fontSize: 10, color: '#334d63' }}>{t.lastTested ? new Date(t.lastTested).toLocaleDateString() : ''}</span>
+                </div>
+              ))}
+            </div>
+          )}
+          {!loading && tab === 'ratings' && data?.ratings && (
+            <div>
+              <div style={{ fontSize: 11, fontWeight: 700, color: '#fbbf24', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 14 }}>⭐ Most Rated APIs</div>
+              {data.ratings.map((r: any, i: number) => (
+                <div key={r.apiName} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px', borderRadius: 8, background: 'rgba(255,255,255,0.03)', border: '1px solid #1a3050', marginBottom: 6 }}>
+                  <span style={{ fontSize: 12, fontWeight: 800, color: '#fbbf24', minWidth: 24 }}>#{i+1}</span>
+                  <span style={{ flex: 1, fontSize: 13, color: '#d4e4f7', fontWeight: 600 }}>{r.apiName}</span>
+                  <span style={{ fontSize: 12, color: '#fbbf24', fontWeight: 700 }}>{r.count} reviews</span>
+                </div>
+              ))}
+            </div>
+          )}
+          {!loading && tab === 'admins' && adminRole === 'master' && (
+            <div>
+              <div style={{ fontSize: 11, fontWeight: 700, color: '#818cf8', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 14 }}>Admin & Moderator Management</div>
+              {/* Add new admin */}
+              <div style={{ padding: '16px', borderRadius: 10, background: 'rgba(129,140,248,0.06)', border: '1px solid rgba(129,140,248,0.2)', marginBottom: 20 }}>
+                <div style={{ fontSize: 12, fontWeight: 700, color: '#818cf8', marginBottom: 12 }}>Add New Admin / Moderator</div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 8 }}>
+                  <input value={newEmail} onChange={e => setNewEmail(e.target.value)} placeholder="Email address"
+                    style={{ background: '#070e18', border: '1px solid #1a3050', borderRadius: 7, padding: '7px 10px', color: '#e2e8f0', fontSize: 12, outline: 'none' }} />
+                  <select value={newRole} onChange={e => setNewRole(e.target.value as any)}
+                    style={{ background: '#070e18', border: '1px solid #1a3050', borderRadius: 7, padding: '7px 10px', color: '#e2e8f0', fontSize: 12, outline: 'none' }}>
+                    <option value="moderator">Moderator</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                  <input value={newKey} onChange={e => setNewKey(e.target.value)} placeholder="Secret key (for their records)"
+                    style={{ background: '#070e18', border: '1px solid #1a3050', borderRadius: 7, padding: '7px 10px', color: '#e2e8f0', fontSize: 12, outline: 'none' }} />
+                  <input value={newCode} onChange={e => setNewCode(e.target.value)} placeholder="Access code (they'll use this)"
+                    style={{ background: '#070e18', border: '1px solid #1a3050', borderRadius: 7, padding: '7px 10px', color: '#e2e8f0', fontSize: 12, outline: 'none' }} />
+                </div>
+                <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                  <button onClick={addNewAdmin} disabled={!newEmail || !newKey || !newCode}
+                    style={{ padding: '7px 16px', borderRadius: 7, background: newEmail && newKey && newCode ? '#818cf8' : 'rgba(129,140,248,0.2)', border: 'none', color: newEmail && newKey && newCode ? '#000' : '#4a6278', fontSize: 12, fontWeight: 700, cursor: newEmail && newKey && newCode ? 'pointer' : 'default' }}>
+                    Add
+                  </button>
+                  {addMsg && <span style={{ fontSize: 11, color: '#34d399', fontWeight: 700 }}>{addMsg}</span>}
+                </div>
+              </div>
+              {/* Existing admins */}
+              <div style={{ fontSize: 11, color: '#334d63', marginBottom: 10 }}>Current admins ({admins.length})</div>
+              {admins.map(a => (
+                <div key={a.id} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', borderRadius: 8, background: 'rgba(255,255,255,0.03)', border: '1px solid #1a3050', marginBottom: 6 }}>
+                  <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 10, background: a.role === 'admin' ? 'rgba(129,140,248,0.15)' : 'rgba(52,211,153,0.1)', color: a.role === 'admin' ? '#818cf8' : '#34d399', fontWeight: 700 }}>{a.role}</span>
+                  <span style={{ flex: 1, fontSize: 12, color: '#d4e4f7' }}>{a.email}</span>
+                  <span style={{ fontSize: 10, color: '#334d63' }}>Added by {a.addedBy}</span>
+                  <button onClick={() => removeAdmin(a.email).then(() => setAdmins(prev => prev.filter(x => x.id !== a.id)))}
+                    style={{ background: 'none', border: 'none', color: '#334d63', cursor: 'pointer', padding: 2 }}
+                    onMouseEnter={e => (e.currentTarget.style.color = '#f87171')} onMouseLeave={e => (e.currentTarget.style.color = '#334d63')}>
+                    <Trash2 size={13} />
+                  </button>
+                </div>
+              ))}
             </div>
           )}
         </div>
@@ -2807,7 +2923,20 @@ export default function App() {
   // Load collections when user signs in
   useEffect(() => {
     if (!user) { setCollections([]); return }
-    getUserCollections(user.uid).then(setCollections)
+    getUserCollections(user.uid).then(async cols => {
+      setCollections(cols)
+      // Auto-create "API Key Enabled" collection if it doesn't exist
+      const hasKeyCol = cols.some(c => c.name === 'API Key Enabled')
+      if (!hasKeyCol) {
+        const keyApis = ALL_APIS.filter(a => a.authRequired === 'API Key').map(a => a.name)
+        const ref = await createCollection(user.uid, 'API Key Enabled')
+        // Add all key-required APIs to it
+        for (const name of keyApis.slice(0, 50)) {
+          await addToCollection(user.uid, ref.id, name).catch(() => {})
+        }
+        getUserCollections(user.uid).then(setCollections)
+      }
+    })
   }, [user])
 
   // Load env vars
