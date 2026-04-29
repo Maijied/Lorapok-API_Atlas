@@ -210,6 +210,54 @@ body {
   }
 }
 
+/* ── API Modal mobile ── */
+@media (max-width: 768px) {
+  .api-modal-inner {
+    max-width: 100% !important;
+    max-height: 100dvh !important;
+    border-radius: 0 !important;
+    height: 100dvh !important;
+  }
+  /* Stack modal body vertically */
+  .modal-body {
+    grid-template-columns: 1fr !important;
+    overflow-y: auto !important;
+  }
+  /* Compact modal header */
+  .api-modal-inner .p-5.border-b {
+    padding: 12px 14px !important;
+  }
+  .api-modal-inner h2 {
+    font-size: 16px !important;
+  }
+  .api-modal-inner .text-sm {
+    display: none !important;
+  }
+  /* Compact method/endpoint row */
+  .api-modal-inner .grid.grid-cols-2.gap-3.p-5 {
+    padding: 8px 12px !important;
+    gap: 6px !important;
+  }
+  /* Hide border-r on docs panel */
+  .modal-body > div:first-child {
+    border-right: none !important;
+    border-bottom: 1px solid #1a3050 !important;
+    max-height: 50vh !important;
+  }
+}
+
+/* ── Toolbar mobile — wrap and scroll ── */
+@media (max-width: 640px) {
+  /* Toolbar buttons — hide text labels, show icons only for some */
+  .toolbar-btn-text {
+    display: none !important;
+  }
+  /* Controls bar — tighter */
+  .ctrl-bar {
+    padding: 8px 12px !important;
+  }
+}
+
 /* ── Code Playground mobile ── */
 @media (max-width: 768px) {
   .playground-modal {
@@ -223,13 +271,11 @@ body {
   .playground-grid {
     grid-template-columns: 1fr !important;
   }
-  /* Show/hide panes based on active tab — controlled via CSS data attribute */
   .playground-pane-editor {
     border-right: none !important;
   }
 }
 
-/* Mobile pane visibility — use JS activePane state via data attribute */
 @media (max-width: 768px) {
   .playground-grid[data-pane="output"] .playground-pane-editor {
     display: none !important;
