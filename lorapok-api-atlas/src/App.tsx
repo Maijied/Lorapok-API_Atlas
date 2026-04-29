@@ -1948,10 +1948,23 @@ const RatingWidget = ({ apiName, user, popupDirection = 'down' }: { apiName: str
   const [submitted, setSubmitted] = useState(false)
   const [stats, setStats] = useState<{ avg: number; count: number } | null>(null)
   const [open, setOpen] = useState(false)
+  const btnRef = useRef<HTMLButtonElement>(null)
+  const [pos, setPos] = useState({ top: 0, left: 0 })
 
   useEffect(() => {
     getApiRatings(apiName).then(r => setStats({ avg: r.avg, count: r.count })).catch(() => {})
   }, [apiName, submitted])
+
+  const handleOpen = () => {
+    if (btnRef.current) {
+      const rect = btnRef.current.getBoundingClientRect()
+      setPos({
+        top: rect.top - 10,  // will be adjusted below
+        left: Math.min(rect.left, window.innerWidth - 220),
+      })
+    }
+    setOpen(v => !v)
+  }
 
   const submit = async () => {
     if (!user || !rating) return
@@ -1961,40 +1974,45 @@ const RatingWidget = ({ apiName, user, popupDirection = 'down' }: { apiName: str
 
   return (
     <div style={{ position: 'relative' }}>
-      <button onClick={() => setOpen(v => !v)}
+      <button ref={btnRef} onClick={handleOpen}
         style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '3px 8px', borderRadius: 20, fontSize: 10, fontWeight: 700, background: 'rgba(253,224,71,0.08)', border: '1px solid rgba(253,224,71,0.2)', color: '#fde047', cursor: 'pointer', transition: 'all 0.15s' }}>
         <Star size={10} fill={stats && stats.avg > 0 ? '#fde047' : 'none'} />
         {stats && stats.count > 0 ? `${stats.avg} (${stats.count})` : 'Rate'}
       </button>
       <AnimatePresence>
         {open && (
-          <motion.div initial={{ opacity: 0, y: popupDirection === 'up' ? 6 : -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: popupDirection === 'up' ? 6 : -6 }}
-            style={{ position: 'absolute', ...(popupDirection === 'up' ? { bottom: '100%', marginBottom: 6 } : { top: '100%', marginTop: 6 }), right: 0, width: 200, background: '#0c1828', border: '1px solid #1a3050', borderRadius: 10, boxShadow: '0 16px 40px rgba(0,0,0,0.7)', zIndex: 60, overflow: 'hidden', padding: 12 }}
-            onClick={e => e.stopPropagation()}>
-            {!user ? (
-              <div style={{ fontSize: 11, color: '#334d63', textAlign: 'center' }}>Sign in to rate this API</div>
-            ) : submitted ? (
-              <div style={{ fontSize: 11, color: '#34d399', textAlign: 'center' }}>✓ Thanks for your rating!</div>
-            ) : (
-              <>
-                <div style={{ fontSize: 10, fontWeight: 700, color: '#fde047', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Rate this API</div>
-                <div style={{ display: 'flex', gap: 4, marginBottom: 8 }}>
-                  {[1,2,3,4,5].map(s => (
-                    <button key={s} onClick={() => setRating(s)} onMouseEnter={() => setHover(s)} onMouseLeave={() => setHover(0)}
-                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 2, color: s <= (hover || rating) ? '#fde047' : '#334d63', transition: 'color 0.1s' }}>
-                      <Star size={18} fill={s <= (hover || rating) ? '#fde047' : 'none'} />
-                    </button>
-                  ))}
-                </div>
-                <textarea value={review} onChange={e => setReview(e.target.value)} placeholder="Optional review…" rows={2}
-                  style={{ width: '100%', boxSizing: 'border-box', background: '#070e18', border: '1px solid #1a3050', borderRadius: 6, padding: '5px 8px', color: '#e2e8f0', fontSize: 11, outline: 'none', resize: 'none', marginBottom: 8, fontFamily: 'inherit' }} />
-                <button onClick={submit} disabled={!rating}
-                  style={{ width: '100%', padding: '6px', borderRadius: 7, background: rating ? '#fde047' : 'rgba(253,224,71,0.2)', border: 'none', color: rating ? '#000' : '#4a6278', fontSize: 11, fontWeight: 700, cursor: rating ? 'pointer' : 'default' }}>
-                  Submit Rating
-                </button>
-              </>
-            )}
-          </motion.div>
+          <>
+            {/* Backdrop */}
+            <div style={{ position: 'fixed', inset: 0, zIndex: 59 }} onClick={() => setOpen(false)} />
+            {/* Popup — fixed position, always visible */}
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }}
+              style={{ position: 'fixed', bottom: btnRef.current ? window.innerHeight - (btnRef.current.getBoundingClientRect().top) + 8 : 100, left: btnRef.current ? Math.min(btnRef.current.getBoundingClientRect().left, window.innerWidth - 210) : 100, width: 200, background: '#0c1828', border: '1px solid #1a3050', borderRadius: 10, boxShadow: '0 16px 40px rgba(0,0,0,0.8)', zIndex: 60, overflow: 'hidden', padding: 12 }}
+              onClick={e => e.stopPropagation()}>
+              {!user ? (
+                <div style={{ fontSize: 11, color: '#334d63', textAlign: 'center', lineHeight: 1.5 }}>Sign in to rate this API</div>
+              ) : submitted ? (
+                <div style={{ fontSize: 11, color: '#34d399', textAlign: 'center' }}>✓ Thanks for your rating!</div>
+              ) : (
+                <>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: '#fde047', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Rate this API</div>
+                  <div style={{ display: 'flex', gap: 2, marginBottom: 8 }}>
+                    {[1,2,3,4,5].map(s => (
+                      <button key={s} onClick={() => setRating(s)} onMouseEnter={() => setHover(s)} onMouseLeave={() => setHover(0)}
+                        style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '2px 3px', color: s <= (hover || rating) ? '#fde047' : '#334d63', transition: 'color 0.1s' }}>
+                        <Star size={20} fill={s <= (hover || rating) ? '#fde047' : 'none'} />
+                      </button>
+                    ))}
+                  </div>
+                  <textarea value={review} onChange={e => setReview(e.target.value)} placeholder="Optional review…" rows={2}
+                    style={{ width: '100%', boxSizing: 'border-box', background: '#070e18', border: '1px solid #1a3050', borderRadius: 6, padding: '6px 8px', color: '#e2e8f0', fontSize: 11, outline: 'none', resize: 'none', marginBottom: 8, fontFamily: 'inherit', display: 'block' }} />
+                  <button onClick={submit} disabled={!rating}
+                    style={{ width: '100%', padding: '7px', borderRadius: 7, background: rating ? '#fde047' : 'rgba(253,224,71,0.15)', border: 'none', color: rating ? '#000' : '#4a6278', fontSize: 11, fontWeight: 700, cursor: rating ? 'pointer' : 'default' }}>
+                    Submit Rating
+                  </button>
+                </>
+              )}
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </div>
@@ -2238,7 +2256,7 @@ const PersonalDashboard = ({ user }: { user: ReturnType<typeof useAuth>['user'] 
 }
 
 // ─── Code Playground ─────────────────────────────────────────────────────────
-const CodePlayground = ({ onClose }: { onClose: () => void }) => {
+const CodePlayground = ({ onClose, user }: { onClose: () => void; user: ReturnType<typeof useAuth>['user'] }) => {
   const [lang, setLang] = useState<'javascript' | 'python' | 'curl'>('javascript')
   const [code, setCode] = useState(`// JavaScript Playground
 // Write and test your API integration code here
@@ -2257,6 +2275,34 @@ testApi();`)
   const [output, setOutput] = useState('')
   const [running, setRunning] = useState(false)
   const [error, setError] = useState('')
+  const [snippetName, setSnippetName] = useState('')
+  const [saving, setSaving] = useState(false)
+  const [savedMsg, setSavedMsg] = useState('')
+  const [savedSnippets, setSavedSnippets] = useState<{ id: string; name: string; body: string; ts: number }[]>([])
+  const [showSnippets, setShowSnippets] = useState(false)
+
+  useEffect(() => {
+    if (!user) return
+    getSnippets(user.uid).then(s => setSavedSnippets(s.sort((a,b) => b.ts - a.ts))).catch(() => {})
+  }, [user])
+
+  const saveCurrentSnippet = async () => {
+    if (!user || !snippetName.trim() || !code.trim()) return
+    setSaving(true)
+    try {
+      await saveSnippet(user.uid, { name: snippetName.trim(), apiName: 'Playground', url: '', method: lang.toUpperCase(), headers: {}, body: code })
+      setSavedMsg('✓ Saved!'); setSnippetName('')
+      getSnippets(user.uid).then(s => setSavedSnippets(s.sort((a,b) => b.ts - a.ts))).catch(() => {})
+      setTimeout(() => setSavedMsg(''), 2000)
+    } finally { setSaving(false) }
+  }
+
+  const loadSnippet = (body: string) => { setCode(body); setShowSnippets(false); setOutput(''); setError('') }
+  const delSnippet = async (id: string) => {
+    if (!user) return
+    await deleteSnippet(user.uid, id)
+    setSavedSnippets(prev => prev.filter(s => s.id !== id))
+  }
 
   const TEMPLATES: Record<string, string> = {
     javascript: `// JavaScript — fetch any API
@@ -2354,9 +2400,47 @@ print(response.json())`,
                 if (e.key === 'Tab') { e.preventDefault(); const s = e.currentTarget.selectionStart; const v = code; setCode(v.slice(0, s) + '  ' + v.slice(e.currentTarget.selectionEnd)); setTimeout(() => { e.currentTarget.selectionStart = e.currentTarget.selectionEnd = s + 2 }, 0) }
                 if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) run()
               }} />
-            <div style={{ padding: '6px 14px', borderTop: '1px solid #1a3050', fontSize: 10, color: '#334d63', flexShrink: 0 }}>
-              Ctrl+Enter to run · Tab for indent
+            <div style={{ padding: '6px 14px', borderTop: '1px solid #1a3050', fontSize: 10, color: '#334d63', flexShrink: 0, display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span>Ctrl+Enter to run · Tab for indent</span>
+              {user && (
+                <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 6 }}>
+                  {savedMsg && <span style={{ fontSize: 10, color: '#34d399', fontWeight: 700 }}>{savedMsg}</span>}
+                  <input value={snippetName} onChange={e => setSnippetName(e.target.value)}
+                    onKeyDown={e => e.key === 'Enter' && saveCurrentSnippet()}
+                    placeholder="Snippet name…"
+                    style={{ background: '#0c1828', border: '1px solid #1a3050', borderRadius: 6, padding: '3px 8px', color: '#e2e8f0', fontSize: 10, outline: 'none', width: 120 }}
+                    onFocus={e => (e.target.style.borderColor = '#34d399')} onBlur={e => (e.target.style.borderColor = '#1a3050')} />
+                  <button onClick={saveCurrentSnippet} disabled={!snippetName.trim() || saving}
+                    style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '3px 8px', borderRadius: 6, background: snippetName.trim() ? 'rgba(52,211,153,0.15)' : 'transparent', border: `1px solid ${snippetName.trim() ? '#34d399' : '#1a3050'}`, color: snippetName.trim() ? '#34d399' : '#334d63', fontSize: 10, fontWeight: 700, cursor: snippetName.trim() ? 'pointer' : 'default' }}>
+                    <Bookmark size={10} /> Save
+                  </button>
+                  <button onClick={() => setShowSnippets(v => !v)}
+                    style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '3px 8px', borderRadius: 6, background: showSnippets ? 'rgba(52,211,153,0.15)' : 'transparent', border: `1px solid ${showSnippets ? '#34d399' : '#1a3050'}`, color: showSnippets ? '#34d399' : '#334d63', fontSize: 10, fontWeight: 700, cursor: 'pointer' }}>
+                    <BookmarkCheck size={10} /> Load {savedSnippets.length > 0 && `(${savedSnippets.length})`}
+                  </button>
+                </div>
+              )}
             </div>
+            {/* Snippets dropdown */}
+            {showSnippets && savedSnippets.length > 0 && (
+              <div style={{ borderTop: '1px solid #1a3050', background: '#070e18', maxHeight: 160, overflowY: 'auto', flexShrink: 0 }} className="custom-scrollbar">
+                {savedSnippets.map(s => (
+                  <div key={s.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 14px', borderBottom: '1px solid rgba(26,48,80,0.3)', cursor: 'pointer', transition: 'background 0.15s' }}
+                    onMouseEnter={e => (e.currentTarget.style.background = 'rgba(52,211,153,0.05)')}
+                    onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+                    onClick={() => loadSnippet(s.body)}>
+                    <Bookmark size={11} style={{ color: '#34d399', flexShrink: 0 }} />
+                    <span style={{ flex: 1, fontSize: 12, color: '#d4e4f7', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.name}</span>
+                    <span style={{ fontSize: 10, color: '#334d63' }}>{new Date(s.ts).toLocaleDateString()}</span>
+                    <button onClick={e => { e.stopPropagation(); delSnippet(s.id) }}
+                      style={{ background: 'none', border: 'none', color: '#334d63', cursor: 'pointer', padding: 2, display: 'flex' }}
+                      onMouseEnter={e => (e.currentTarget.style.color = '#f87171')} onMouseLeave={e => (e.currentTarget.style.color = '#334d63')}>
+                      <Trash2 size={11} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Output */}
@@ -2481,15 +2565,24 @@ export default function App() {
     if (found) setSelectedApi(found)
   }
 
-  // Track visitor on mount
-  useEffect(() => { incrementVisitor().catch(() => {}) }, [])
+  // Track visitor on mount (once per session)
+  useEffect(() => {
+    if (!sessionStorage.getItem('lorapok_visited')) {
+      sessionStorage.setItem('lorapok_visited', '1')
+      incrementVisitor().catch(() => {})
+    }
+  }, [])
 
-  // Track registered user on first sign-in
+  // Track registered user only on first-ever sign-in (not on every reload)
   const prevUser = useRef<string | null>(null)
   useEffect(() => {
     if (user && user.uid !== prevUser.current) {
       prevUser.current = user.uid
-      incrementRegisteredUser().catch(() => {})
+      const key = `lorapok_registered_${user.uid}`
+      if (!localStorage.getItem(key)) {
+        localStorage.setItem(key, '1')
+        incrementRegisteredUser().catch(() => {})
+      }
     }
   }, [user])
 
@@ -2587,10 +2680,6 @@ export default function App() {
               { val: freeCount, label: '🔓 Free', color: '#34d399' },
               { val: keyCount, label: '🗝 API Key', color: '#818cf8' },
               { val: oauthCount, label: '🔑 OAuth', color: '#f87171' },
-              ...(siteStats ? [
-                { val: siteStats.visitors, label: '👁 Visitors', color: '#38bdf8' },
-                { val: siteStats.registeredUsers, label: '👤 Members', color: '#818cf8' },
-              ] : []),
             ].map(s => (
               <div key={s.label} style={{ textAlign: 'center' }}>
                 <div style={{ fontSize: 'clamp(22px, 3.5vw, 36px)', fontWeight: 900, color: s.color, letterSpacing: '-0.02em', lineHeight: 1 }}>{typeof s.val === 'number' ? s.val.toLocaleString() : s.val}</div>
@@ -2740,7 +2829,7 @@ export default function App() {
 
       {/* Code Playground */}
       <AnimatePresence>
-        {showPlayground && <CodePlayground onClose={() => setShowPlayground(false)} />}
+        {showPlayground && <CodePlayground onClose={() => setShowPlayground(false)} user={user} />}
       </AnimatePresence>
 
       {/* Compare Modal */}
@@ -2960,31 +3049,34 @@ export default function App() {
         </div>
 
         {/* ── Bottom bar ── */}
-        <div style={{ position: 'relative', borderTop: '1px solid rgba(26,48,80,0.6)', padding: '16px 24px' }}>
-          <div style={{ maxWidth: 1400, margin: '0 auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+        <div style={{ position: 'relative', borderTop: '1px solid rgba(26,48,80,0.6)', padding: '18px 24px' }}>
+          <div style={{ maxWidth: 1400, margin: '0 auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 14 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <img src="/Lorapok-API_Atlas/logo.svg" alt="" style={{ width: 20, height: 20, borderRadius: 5, opacity: 0.6 }} />
-              <span style={{ fontSize: 12, color: '#334d63' }}>© {new Date().getFullYear()}</span>
-              <a href="https://github.com/Maijied" target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, fontWeight: 700, color: '#38bdf8', textDecoration: 'none' }}>Lorapok</a>
-              <span style={{ fontSize: 12, color: '#1e3a52' }}>·</span>
-              <span style={{ fontSize: 12, color: '#334d63' }}>All rights reserved</span>
-              <span style={{ fontSize: 12, color: '#1e3a52' }}>·</span>
-              <a href="https://github.com/Maijied/Lorapok-API_Atlas/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: '#334d63', textDecoration: 'none' }}
+              <img src="/Lorapok-API_Atlas/logo.svg" alt="" style={{ width: 22, height: 22, borderRadius: 6, opacity: 0.7 }} />
+              <span style={{ fontSize: 14, color: '#334d63' }}>© {new Date().getFullYear()}</span>
+              <a href="https://github.com/Maijied" target="_blank" rel="noopener noreferrer" style={{ fontSize: 14, fontWeight: 700, color: '#38bdf8', textDecoration: 'none' }}>Lorapok</a>
+              <span style={{ fontSize: 14, color: '#1e3a52' }}>·</span>
+              <span style={{ fontSize: 14, color: '#334d63' }}>All rights reserved</span>
+              <span style={{ fontSize: 14, color: '#1e3a52' }}>·</span>
+              <a href="https://github.com/Maijied/Lorapok-API_Atlas/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" style={{ fontSize: 14, color: '#334d63', textDecoration: 'none' }}
                 onMouseEnter={e => (e.currentTarget.style.color = '#34d399')} onMouseLeave={e => (e.currentTarget.style.color = '#334d63')}>MIT License</a>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 11, color: '#1e3a52' }}>
-              Made with <span style={{ fontSize: 13 }}>💚</span> for the open-source community
+            <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 13, color: '#1e3a52' }}>
+              Made with <span style={{ fontSize: 15 }}>💚</span> for the open-source community
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#1e3a52' }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#34d399', display: 'inline-block' }} />
-              {ALL_APIS.length} APIs live · v1.0.0
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: '#1e3a52' }}>
+              <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#34d399', display: 'inline-block' }} />
+              <span style={{ color: '#4a6278' }}>{ALL_APIS.length} APIs live</span>
+              <span style={{ color: '#1a3050' }}>·</span>
+              <span style={{ color: '#4a6278' }}>v1.0.0</span>
               {siteStats && (
                 <>
                   <span style={{ color: '#1a3050' }}>·</span>
-                  <Users size={11} style={{ color: '#38bdf8' }} />
-                  <span style={{ color: '#38bdf8', fontWeight: 700 }}>{siteStats.visitors.toLocaleString()}</span> visitors
+                  <span style={{ color: '#38bdf8', fontWeight: 700 }}>{siteStats.visitors.toLocaleString()}</span>
+                  <span style={{ color: '#4a6278' }}>visitors</span>
                   <span style={{ color: '#1a3050' }}>·</span>
-                  <span style={{ color: '#818cf8', fontWeight: 700 }}>{siteStats.registeredUsers.toLocaleString()}</span> members
+                  <span style={{ color: '#818cf8', fontWeight: 700 }}>{siteStats.registeredUsers.toLocaleString()}</span>
+                  <span style={{ color: '#4a6278' }}>members</span>
                 </>
               )}
             </div>
