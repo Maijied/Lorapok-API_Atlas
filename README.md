@@ -79,12 +79,6 @@ Built around **Vaultie** 🐛 — the AI-powered Atlas Vault Manager — the app
 - **API Ratings & Reviews** — star ratings on every card
 - **Visitor & Member counters** — live stats in hero and footer
 
-### Admin Panel
-- Access: type `..//admin` in search box (master admin: `mdshuvo40@gmail.com`)
-- Real-time stats: visitors, registered users, trending APIs, rated APIs
-- Admin management: add/remove admins and moderators with email + role + code
-- API category breakdown with visual bars
-
 ### Onboarding
 - **Welcome modal** — animated Lorapok logo, feature grid, sign-in benefits (first visit)
 - **Star popup** — appears after 2 minutes, once per session
