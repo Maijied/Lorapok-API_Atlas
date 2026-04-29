@@ -927,17 +927,22 @@ const AddToCollectionButton = ({ apiName, user }: { apiName: string; user: Retur
   const [collections, setCollections] = useState<{ id: string; name: string; apiNames: string[] }[]>([])
   const [open, setOpen] = useState(false)
   const [added, setAdded] = useState<string | null>(null)
+  const [saving, setSaving] = useState(false)
 
   useEffect(() => {
     if (!user || !open) return
-    getUserCollections(user.uid).then(setCollections)
+    getUserCollections(user.uid).then(setCollections).catch(() => {})
   }, [user, open])
 
   const add = async (colId: string, colName: string) => {
-    if (!user) return
-    await addToCollection(user.uid, colId, apiName)
-    setAdded(colName)
-    setTimeout(() => { setAdded(null); setOpen(false) }, 1500)
+    if (!user || saving) return
+    setSaving(true)
+    try {
+      await addToCollection(user.uid, colId, apiName)
+      setCollections(prev => prev.map(c => c.id === colId ? { ...c, apiNames: [...c.apiNames, apiName] } : c))
+      setAdded(colName)
+      setTimeout(() => { setAdded(null); setOpen(false) }, 1500)
+    } finally { setSaving(false) }
   }
 
   if (!user) return null
@@ -945,25 +950,31 @@ const AddToCollectionButton = ({ apiName, user }: { apiName: string; user: Retur
   return (
     <div style={{ position: 'relative' }}>
       <button onClick={() => setOpen(v => !v)}
-        style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '3px 9px', borderRadius: 20, fontSize: 10, fontWeight: 700, background: added ? 'rgba(129,140,248,0.2)' : 'rgba(129,140,248,0.08)', border: `1px solid ${added ? '#818cf8' : 'rgba(129,140,248,0.25)'}`, color: '#818cf8', cursor: 'pointer', transition: 'all 0.15s' }}>
-        <FolderPlus size={11} /> {added ? `✓ Added to ${added}` : '+ Collection'}
+        style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '3px 9px', borderRadius: 20, fontSize: 10, fontWeight: 700, background: added ? 'rgba(129,140,248,0.2)' : 'rgba(129,140,248,0.08)', border: `1px solid ${added ? '#818cf8' : 'rgba(129,140,248,0.25)'}`, color: '#818cf8', cursor: 'pointer', transition: 'all 0.15s', whiteSpace: 'nowrap' }}>
+        <FolderPlus size={11} /> {added ? `✓ ${added}` : '+ Collection'}
       </button>
       <AnimatePresence>
         {open && !added && (
           <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 6 }}
-            style={{ position: 'absolute', top: '100%', left: 0, marginTop: 4, width: 200, background: '#0c1828', border: '1px solid #1a3050', borderRadius: 8, boxShadow: '0 12px 32px rgba(0,0,0,0.5)', zIndex: 60, overflow: 'hidden' }}>
+            style={{ position: 'absolute', top: '100%', left: 0, marginTop: 4, width: 220, background: '#0c1828', border: '1px solid #1a3050', borderRadius: 10, boxShadow: '0 16px 40px rgba(0,0,0,0.6)', zIndex: 60, overflow: 'hidden' }}>
+            <div style={{ padding: '8px 12px', borderBottom: '1px solid #1a3050', background: 'rgba(0,0,0,0.2)' }}>
+              <span style={{ fontSize: 10, fontWeight: 700, color: '#818cf8', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Add to Collection</span>
+            </div>
             {collections.length === 0
-              ? <div style={{ padding: '12px', fontSize: 11, color: '#334d63', textAlign: 'center' }}>No collections yet.<br />Create one from the toolbar.</div>
-              : collections.map(col => (
-                <div key={col.id} onClick={() => add(col.id, col.name)}
-                  style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', cursor: 'pointer', fontSize: 12, color: col.apiNames.includes(apiName) ? '#818cf8' : '#d4e4f7', transition: 'background 0.15s' }}
-                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.06)')}
-                  onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}>
-                  <Folder size={12} style={{ color: '#818cf8', flexShrink: 0 }} />
-                  {col.name}
-                  {col.apiNames.includes(apiName) && <Check size={11} style={{ marginLeft: 'auto', color: '#818cf8' }} />}
+              ? <div style={{ padding: '16px 12px', fontSize: 11, color: '#334d63', textAlign: 'center', lineHeight: 1.6 }}>No collections yet.<br />Create one from the toolbar above.</div>
+              : <div style={{ maxHeight: 200, overflowY: 'auto' }} className="custom-scrollbar">
+                  {collections.map(col => (
+                    <div key={col.id} onClick={() => add(col.id, col.name)}
+                      style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '9px 12px', cursor: saving ? 'wait' : 'pointer', fontSize: 12, transition: 'background 0.15s', opacity: saving ? 0.6 : 1 }}
+                      onMouseEnter={e => (e.currentTarget.style.background = 'rgba(129,140,248,0.08)')}
+                      onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}>
+                      <Folder size={13} style={{ color: '#818cf8', flexShrink: 0 }} />
+                      <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: col.apiNames.includes(apiName) ? '#818cf8' : '#d4e4f7' }}>{col.name}</span>
+                      <span style={{ fontSize: 10, color: '#334d63', flexShrink: 0 }}>{col.apiNames.length}</span>
+                      {col.apiNames.includes(apiName) && <Check size={11} style={{ color: '#818cf8', flexShrink: 0, marginLeft: 4 }} />}
+                    </div>
+                  ))}
                 </div>
-              ))
             }
           </motion.div>
         )}
@@ -982,17 +993,21 @@ const CollectionsPanel = ({ user, onSelectCollection, activeCollection }: {
   const [newName, setNewName] = useState('')
   const [creating, setCreating] = useState(false)
   const [open, setOpen] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
 
-  useEffect(() => {
+  const reload = useCallback(() => {
     if (!user) return
-    getUserCollections(user.uid).then(setCollections)
+    getUserCollections(user.uid).then(setCollections).catch(() => {})
   }, [user])
+
+  useEffect(() => { reload() }, [reload])
+  useEffect(() => { if (creating) setTimeout(() => inputRef.current?.focus(), 50) }, [creating])
 
   const create = async () => {
     if (!user || !newName.trim()) return
     await createCollection(user.uid, newName.trim())
     setNewName(''); setCreating(false)
-    getUserCollections(user.uid).then(setCollections)
+    reload()
   }
 
   const del = async (id: string) => {
@@ -1006,42 +1021,67 @@ const CollectionsPanel = ({ user, onSelectCollection, activeCollection }: {
 
   return (
     <div style={{ position: 'relative' }}>
-      <button onClick={() => setOpen(v => !v)} title="Collections"
-        style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 8, background: open ? 'rgba(129,140,248,0.15)' : 'transparent', border: `1px solid ${open ? '#818cf8' : '#1a3050'}`, color: open ? '#818cf8' : '#4a6278', fontSize: 12, cursor: 'pointer', transition: 'all 0.15s' }}>
-        <Folder size={14} /> Collections {collections.length > 0 && <span style={{ background: '#818cf8', color: '#000', borderRadius: 10, padding: '1px 6px', fontSize: 10, fontWeight: 700 }}>{collections.length}</span>}
+      <button onClick={() => setOpen(v => !v)} title="My Collections"
+        style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 8, background: open ? 'rgba(129,140,248,0.15)' : 'transparent', border: `1px solid ${open ? '#818cf8' : '#1a3050'}`, color: open ? '#818cf8' : '#4a6278', fontSize: 12, cursor: 'pointer', transition: 'all 0.15s', whiteSpace: 'nowrap' }}>
+        <Folder size={14} /> Collections
+        {collections.length > 0 && <span style={{ background: '#818cf8', color: '#000', borderRadius: 10, padding: '1px 6px', fontSize: 10, fontWeight: 700 }}>{collections.length}</span>}
       </button>
       <AnimatePresence>
         {open && (
           <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }}
-            style={{ position: 'absolute', top: '100%', left: 0, marginTop: 6, width: 260, background: '#0c1828', border: '1px solid #1a3050', borderRadius: 10, boxShadow: '0 16px 40px rgba(0,0,0,0.5)', zIndex: 50, overflow: 'hidden' }}>
-            <div style={{ padding: '10px 12px', borderBottom: '1px solid #1a3050', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: 11, fontWeight: 700, color: '#818cf8', textTransform: 'uppercase', letterSpacing: '0.1em' }}>My Collections</span>
-              <button onClick={() => setCreating(v => !v)} style={{ background: 'none', border: 'none', color: '#818cf8', cursor: 'pointer', padding: 2 }}><Plus size={14} /></button>
+            style={{ position: 'absolute', top: '100%', right: 0, marginTop: 6, width: 280, background: '#0c1828', border: '1px solid #1a3050', borderRadius: 12, boxShadow: '0 20px 48px rgba(0,0,0,0.6)', zIndex: 50, overflow: 'hidden' }}>
+            <div style={{ padding: '12px 14px', borderBottom: '1px solid #1a3050', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(0,0,0,0.2)' }}>
+              <span style={{ fontSize: 11, fontWeight: 800, color: '#818cf8', textTransform: 'uppercase', letterSpacing: '0.12em' }}>My Collections</span>
+              <button onClick={() => setCreating(v => !v)}
+                style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '4px 8px', borderRadius: 6, background: creating ? 'rgba(129,140,248,0.2)' : 'rgba(129,140,248,0.1)', border: '1px solid rgba(129,140,248,0.3)', color: '#818cf8', cursor: 'pointer', fontSize: 11, fontWeight: 700 }}>
+                <Plus size={12} /> New
+              </button>
             </div>
             {creating && (
-              <div style={{ padding: '8px 12px', borderBottom: '1px solid #1a3050', display: 'flex', gap: 6 }}>
-                <input value={newName} onChange={e => setNewName(e.target.value)} onKeyDown={e => e.key === 'Enter' && create()}
-                  placeholder="Collection name…" autoFocus
-                  style={{ flex: 1, background: '#070e18', border: '1px solid #1a3050', borderRadius: 6, padding: '5px 8px', color: '#e2e8f0', fontSize: 12, outline: 'none' }} />
-                <button onClick={create} style={{ background: '#818cf8', border: 'none', borderRadius: 6, padding: '5px 10px', color: '#000', fontSize: 11, fontWeight: 700, cursor: 'pointer' }}>Add</button>
+              <div style={{ padding: '10px 12px', borderBottom: '1px solid #1a3050', background: 'rgba(129,140,248,0.04)' }}>
+                <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                  <input ref={inputRef} value={newName} onChange={e => setNewName(e.target.value)}
+                    onKeyDown={e => { if (e.key === 'Enter') create(); if (e.key === 'Escape') setCreating(false) }}
+                    placeholder="Collection name…"
+                    style={{ flex: 1, minWidth: 0, background: '#070e18', border: '1px solid #1a3050', borderRadius: 7, padding: '7px 10px', color: '#e2e8f0', fontSize: 12, outline: 'none' }}
+                    onFocus={e => (e.target.style.borderColor = '#818cf8')}
+                    onBlur={e => (e.target.style.borderColor = '#1a3050')} />
+                  <button onClick={create} disabled={!newName.trim()}
+                    style={{ padding: '7px 14px', borderRadius: 7, background: newName.trim() ? '#818cf8' : 'rgba(129,140,248,0.2)', border: 'none', color: newName.trim() ? '#000' : '#4a6278', fontSize: 12, fontWeight: 700, cursor: newName.trim() ? 'pointer' : 'default', flexShrink: 0 }}>
+                    Create
+                  </button>
+                </div>
               </div>
             )}
-            <div style={{ maxHeight: 200, overflowY: 'auto' }} className="custom-scrollbar">
-              {collections.length === 0 && <div style={{ padding: '16px 12px', fontSize: 12, color: '#334d63', textAlign: 'center' }}>No collections yet</div>}
-              {[{ id: '__all__', name: 'All APIs', apiNames: [] }, ...collections].map(col => (
-                <div key={col.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', cursor: 'pointer', background: activeCollection === col.id ? 'rgba(129,140,248,0.1)' : 'transparent', transition: 'background 0.15s' }}
+            <div style={{ maxHeight: 240, overflowY: 'auto' }} className="custom-scrollbar">
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', cursor: 'pointer', background: !activeCollection ? 'rgba(129,140,248,0.08)' : 'transparent', borderBottom: '1px solid rgba(26,48,80,0.4)', transition: 'background 0.15s' }}
+                onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.04)')}
+                onMouseLeave={e => (e.currentTarget.style.background = !activeCollection ? 'rgba(129,140,248,0.08)' : 'transparent')}
+                onClick={() => { onSelectCollection(null); setOpen(false) }}>
+                <Globe size={13} style={{ color: '#38bdf8', flexShrink: 0 }} />
+                <span style={{ flex: 1, fontSize: 12, fontWeight: 600, color: '#d4e4f7' }}>All APIs</span>
+                <span style={{ fontSize: 10, color: '#334d63' }}>{ALL_APIS.length}</span>
+                {!activeCollection && <Check size={12} style={{ color: '#818cf8', flexShrink: 0 }} />}
+              </div>
+              {collections.length === 0 && (
+                <div style={{ padding: '20px 14px', fontSize: 12, color: '#334d63', textAlign: 'center', lineHeight: 1.6 }}>
+                  No collections yet.<br />Click <strong style={{ color: '#818cf8' }}>+ New</strong> to create one.
+                </div>
+              )}
+              {collections.map(col => (
+                <div key={col.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', cursor: 'pointer', background: activeCollection === col.id ? 'rgba(129,140,248,0.08)' : 'transparent', borderBottom: '1px solid rgba(26,48,80,0.3)', transition: 'background 0.15s' }}
                   onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.04)')}
-                  onMouseLeave={e => (e.currentTarget.style.background = activeCollection === col.id ? 'rgba(129,140,248,0.1)' : 'transparent')}
-                  onClick={() => { onSelectCollection(col.id === '__all__' ? null : col.apiNames); setOpen(false) }}>
+                  onMouseLeave={e => (e.currentTarget.style.background = activeCollection === col.id ? 'rgba(129,140,248,0.08)' : 'transparent')}
+                  onClick={() => { onSelectCollection(col.apiNames); setOpen(false) }}>
                   <Folder size={13} style={{ color: '#818cf8', flexShrink: 0 }} />
-                  <span style={{ flex: 1, fontSize: 12, color: '#d4e4f7' }}>{col.name}</span>
-                  {col.id !== '__all__' && <span style={{ fontSize: 10, color: '#334d63' }}>{col.apiNames.length}</span>}
-                  {col.id !== '__all__' && (
-                    <button onClick={e => { e.stopPropagation(); del(col.id) }} style={{ background: 'none', border: 'none', color: '#334d63', cursor: 'pointer', padding: 2 }}
-                      onMouseEnter={e => (e.currentTarget.style.color = '#f87171')} onMouseLeave={e => (e.currentTarget.style.color = '#334d63')}>
-                      <Trash2 size={12} />
-                    </button>
-                  )}
+                  <span style={{ flex: 1, fontSize: 12, color: '#d4e4f7', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{col.name}</span>
+                  <span style={{ fontSize: 10, color: '#334d63', flexShrink: 0, marginRight: 4 }}>{col.apiNames.length}</span>
+                  {activeCollection === col.id && <Check size={12} style={{ color: '#818cf8', flexShrink: 0 }} />}
+                  <button onClick={e => { e.stopPropagation(); del(col.id) }}
+                    style={{ background: 'none', border: 'none', color: '#334d63', cursor: 'pointer', padding: '2px', flexShrink: 0, display: 'flex', alignItems: 'center' }}
+                    onMouseEnter={e => (e.currentTarget.style.color = '#f87171')} onMouseLeave={e => (e.currentTarget.style.color = '#334d63')}>
+                    <Trash2 size={12} />
+                  </button>
                 </div>
               ))}
             </div>
@@ -1056,11 +1096,17 @@ const CollectionsPanel = ({ user, onSelectCollection, activeCollection }: {
 const HistoryPanel = ({ user, onSelect }: { user: ReturnType<typeof useAuth>['user']; onSelect: (name: string) => void }) => {
   const [history, setHistory] = useState<{ id: string; apiName: string; status: string; ts: number; preview: string }[]>([])
   const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-    if (!user || !open) return
-    getRequestHistory(user.uid).then(setHistory)
-  }, [user, open])
+  const reload = useCallback(async () => {
+    if (!user) return
+    setLoading(true)
+    try { setHistory(await getRequestHistory(user.uid)) }
+    catch (e) { console.error('History load failed', e) }
+    finally { setLoading(false) }
+  }, [user])
+
+  useEffect(() => { if (open) reload() }, [open, reload])
 
   if (!user) return null
 
@@ -1070,29 +1116,42 @@ const HistoryPanel = ({ user, onSelect }: { user: ReturnType<typeof useAuth>['us
   return (
     <div style={{ position: 'relative' }}>
       <button onClick={() => setOpen(v => !v)} title="Request History"
-        style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 8, background: open ? 'rgba(56,189,248,0.15)' : 'transparent', border: `1px solid ${open ? '#38bdf8' : '#1a3050'}`, color: open ? '#38bdf8' : '#4a6278', fontSize: 12, cursor: 'pointer', transition: 'all 0.15s' }}>
+        style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 8, background: open ? 'rgba(56,189,248,0.15)' : 'transparent', border: `1px solid ${open ? '#38bdf8' : '#1a3050'}`, color: open ? '#38bdf8' : '#4a6278', fontSize: 12, cursor: 'pointer', transition: 'all 0.15s', whiteSpace: 'nowrap' }}>
         <Clock size={14} /> History
+        {history.length > 0 && <span style={{ background: '#38bdf8', color: '#000', borderRadius: 10, padding: '1px 6px', fontSize: 10, fontWeight: 700 }}>{history.length}</span>}
       </button>
       <AnimatePresence>
         {open && (
           <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }}
-            style={{ position: 'absolute', top: '100%', left: 0, marginTop: 6, width: 300, background: '#0c1828', border: '1px solid #1a3050', borderRadius: 10, boxShadow: '0 16px 40px rgba(0,0,0,0.5)', zIndex: 50, overflow: 'hidden' }}>
-            <div style={{ padding: '10px 12px', borderBottom: '1px solid #1a3050' }}>
-              <span style={{ fontSize: 11, fontWeight: 700, color: '#38bdf8', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Recent Tests</span>
+            style={{ position: 'absolute', top: '100%', right: 0, marginTop: 6, width: 320, background: '#0c1828', border: '1px solid #1a3050', borderRadius: 12, boxShadow: '0 20px 48px rgba(0,0,0,0.6)', zIndex: 50, overflow: 'hidden' }}>
+            <div style={{ padding: '12px 14px', borderBottom: '1px solid #1a3050', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(0,0,0,0.2)' }}>
+              <span style={{ fontSize: 11, fontWeight: 800, color: '#38bdf8', textTransform: 'uppercase', letterSpacing: '0.12em' }}>Recent Tests</span>
+              <button onClick={reload} title="Refresh"
+                style={{ background: 'none', border: 'none', color: '#334d63', cursor: 'pointer', padding: 2, display: 'flex' }}
+                onMouseEnter={e => (e.currentTarget.style.color = '#38bdf8')} onMouseLeave={e => (e.currentTarget.style.color = '#334d63')}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              </button>
             </div>
-            <div style={{ maxHeight: 280, overflowY: 'auto' }} className="custom-scrollbar">
-              {history.length === 0 && <div style={{ padding: '16px 12px', fontSize: 12, color: '#334d63', textAlign: 'center' }}>No history yet — run some tests!</div>}
-              {history.map(h => (
-                <div key={h.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', cursor: 'pointer', borderBottom: '1px solid rgba(26,48,80,0.4)', transition: 'background 0.15s' }}
+            <div style={{ maxHeight: 300, overflowY: 'auto' }} className="custom-scrollbar">
+              {loading && <div style={{ padding: '20px', textAlign: 'center', color: '#334d63', fontSize: 12 }}>Loading…</div>}
+              {!loading && history.length === 0 && (
+                <div style={{ padding: '24px 14px', fontSize: 12, color: '#334d63', textAlign: 'center', lineHeight: 1.6 }}>
+                  No history yet.<br />Run some API tests to see them here.
+                </div>
+              )}
+              {!loading && history.map(h => (
+                <div key={h.id} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', cursor: 'pointer', borderBottom: '1px solid rgba(26,48,80,0.3)', transition: 'background 0.15s' }}
                   onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.04)')}
                   onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
                   onClick={() => { onSelect(h.apiName); setOpen(false) }}>
-                  <span style={{ fontSize: 12, color: statusColor(h.status), flexShrink: 0 }}>{statusIcon(h.status)}</span>
+                  <div style={{ width: 22, height: 22, borderRadius: '50%', background: `${statusColor(h.status)}18`, border: `1px solid ${statusColor(h.status)}40`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, color: statusColor(h.status), flexShrink: 0 }}>
+                    {statusIcon(h.status)}
+                  </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: 12, fontWeight: 600, color: '#d4e4f7', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{h.apiName}</div>
-                    <div style={{ fontSize: 10, color: '#334d63', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{h.preview}</div>
+                    <div style={{ fontSize: 10, color: '#334d63', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginTop: 1 }}>{h.preview}</div>
                   </div>
-                  <div style={{ fontSize: 10, color: '#334d63', flexShrink: 0 }}>{new Date(h.ts).toLocaleTimeString()}</div>
+                  <div style={{ fontSize: 10, color: '#334d63', flexShrink: 0 }}>{new Date(h.ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
                 </div>
               ))}
             </div>
