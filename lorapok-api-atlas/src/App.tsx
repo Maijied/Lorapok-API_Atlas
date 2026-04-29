@@ -1379,31 +1379,32 @@ const ApiCard = ({ api, onClick, onCompare, compareSelected, user, collections, 
       <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 5, lineHeight: 1.3 }}>{api.name}</div>
       <div style={{ fontSize: 12, color: 'var(--text2)', lineHeight: 1.5, marginBottom: 12, minHeight: 32 }}>{api.desc}</div>
 
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-          <span style={{ padding: '3px 9px', borderRadius: 12, fontSize: 10, background: authStyle.bg, color: authStyle.text, border: `1px solid ${authStyle.border}`, fontWeight: 600 }}>
-            {authStyle.label}
-          </span>
-          {/* Compare checkbox */}
+      {/* Card footer */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6 }}>
+        {/* Left: auth badge */}
+        <span style={{ padding: '3px 9px', borderRadius: 12, fontSize: 10, background: authStyle.bg, color: authStyle.text, border: `1px solid ${authStyle.border}`, fontWeight: 600, flexShrink: 0 }}>
+          {authStyle.label}
+        </span>
+
+        {/* Right: actions */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0 }}>
+          {/* Compare */}
           {onCompare && (
             <button onClick={e => { e.stopPropagation(); onCompare() }}
-              title="Add to comparison"
-              style={{ padding: '3px 7px', borderRadius: 6, fontSize: 10, background: compareSelected ? 'rgba(129,140,248,0.2)' : 'transparent', border: `1px solid ${compareSelected ? '#818cf8' : '#152030'}`, color: compareSelected ? '#818cf8' : '#334d63', cursor: 'pointer', transition: 'all 0.15s' }}>
-              {compareSelected ? '✓ Compare' : '+ Compare'}
+              title={compareSelected ? 'Remove from comparison' : 'Add to comparison'}
+              style={{ padding: '3px 8px', borderRadius: 6, fontSize: 10, fontWeight: 600, background: compareSelected ? 'rgba(129,140,248,0.2)' : 'transparent', border: `1px solid ${compareSelected ? '#818cf8' : '#1a3050'}`, color: compareSelected ? '#818cf8' : '#4a6278', cursor: 'pointer', transition: 'all 0.15s', whiteSpace: 'nowrap' }}>
+              {compareSelected ? '✓' : '⇄'}
             </button>
           )}
+          {/* Copy URL */}
+          <button onClick={copy} title="Copy API URL"
+            style={{ padding: '3px 8px', borderRadius: 6, fontSize: 10, fontWeight: 600, background: copied ? 'rgba(52,211,153,0.15)' : 'transparent', border: `1px solid ${copied ? '#065f46' : '#1a3050'}`, color: copied ? '#34d399' : '#4a6278', cursor: 'pointer', transition: 'all 0.15s' }}>
+            {copied ? '✓' : '⎘'}
+          </button>
+          {/* Rating */}
           <div onClick={e => e.stopPropagation()}>
-            <RatingWidget apiName={api.name} user={user} />
+            <RatingWidget apiName={api.name} user={user} popupDirection="up" />
           </div>
-        </div>
-        <div style={{ display: 'flex', gap: 5 }}>
-          <button onClick={copy}
-            title="Copy API URL to clipboard"
-            style={{ padding: '4px 9px', borderRadius: 6, fontSize: 11, background: copied ? 'rgba(52,211,153,0.15)' : 'transparent', border: `1px solid ${copied ? '#065f46' : '#152030'}`, color: copied ? '#34d399' : '#334d63', cursor: 'pointer', transition: 'all 0.15s' }}
-          >{copied ? '✓ Copied' : '⎘ URL'}</button>
-          <button onClick={onClick}
-            style={{ padding: '4px 9px', borderRadius: 6, fontSize: 11, background: hovered ? 'rgba(56,189,248,0.1)' : 'transparent', border: `1px solid ${hovered ? '#264560' : '#152030'}`, color: '#38bdf8', cursor: 'pointer', transition: 'all 0.15s' }}
-          >Test ▶</button>
         </div>
       </div>
     </div>
@@ -1940,7 +1941,7 @@ const Vaultie = () => {
 }
 
 // ─── API Rating Widget ────────────────────────────────────────────────────────
-const RatingWidget = ({ apiName, user }: { apiName: string; user: ReturnType<typeof useAuth>['user'] }) => {
+const RatingWidget = ({ apiName, user, popupDirection = 'down' }: { apiName: string; user: ReturnType<typeof useAuth>['user']; popupDirection?: 'up' | 'down' }) => {
   const [rating, setRating] = useState(0)
   const [hover, setHover] = useState(0)
   const [review, setReview] = useState('')
@@ -1967,8 +1968,9 @@ const RatingWidget = ({ apiName, user }: { apiName: string; user: ReturnType<typ
       </button>
       <AnimatePresence>
         {open && (
-          <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 6 }}
-            style={{ position: 'absolute', bottom: '100%', left: 0, marginBottom: 6, width: 220, background: '#0c1828', border: '1px solid #1a3050', borderRadius: 10, boxShadow: '0 16px 40px rgba(0,0,0,0.6)', zIndex: 60, overflow: 'hidden', padding: 12 }}>
+          <motion.div initial={{ opacity: 0, y: popupDirection === 'up' ? 6 : -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: popupDirection === 'up' ? 6 : -6 }}
+            style={{ position: 'absolute', ...(popupDirection === 'up' ? { bottom: '100%', marginBottom: 6 } : { top: '100%', marginTop: 6 }), right: 0, width: 200, background: '#0c1828', border: '1px solid #1a3050', borderRadius: 10, boxShadow: '0 16px 40px rgba(0,0,0,0.7)', zIndex: 60, overflow: 'hidden', padding: 12 }}
+            onClick={e => e.stopPropagation()}>
             {!user ? (
               <div style={{ fontSize: 11, color: '#334d63', textAlign: 'center' }}>Sign in to rate this API</div>
             ) : submitted ? (
@@ -1985,7 +1987,7 @@ const RatingWidget = ({ apiName, user }: { apiName: string; user: ReturnType<typ
                   ))}
                 </div>
                 <textarea value={review} onChange={e => setReview(e.target.value)} placeholder="Optional review…" rows={2}
-                  style={{ width: '100%', boxSizing: 'border-box', background: '#070e18', border: '1px solid #1a3050', borderRadius: 6, padding: '5px 8px', color: '#e2e8f0', fontSize: 11, outline: 'none', resize: 'none', marginBottom: 8 }} />
+                  style={{ width: '100%', boxSizing: 'border-box', background: '#070e18', border: '1px solid #1a3050', borderRadius: 6, padding: '5px 8px', color: '#e2e8f0', fontSize: 11, outline: 'none', resize: 'none', marginBottom: 8, fontFamily: 'inherit' }} />
                 <button onClick={submit} disabled={!rating}
                   style={{ width: '100%', padding: '6px', borderRadius: 7, background: rating ? '#fde047' : 'rgba(253,224,71,0.2)', border: 'none', color: rating ? '#000' : '#4a6278', fontSize: 11, fontWeight: 700, cursor: rating ? 'pointer' : 'default' }}>
                   Submit Rating
