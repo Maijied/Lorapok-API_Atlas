@@ -2258,6 +2258,7 @@ const PersonalDashboard = ({ user }: { user: ReturnType<typeof useAuth>['user'] 
 // ─── Code Playground ─────────────────────────────────────────────────────────
 const CodePlayground = ({ onClose, user }: { onClose: () => void; user: ReturnType<typeof useAuth>['user'] }) => {
   const [lang, setLang] = useState<'javascript' | 'python' | 'curl'>('javascript')
+  const [activePane, setActivePane] = useState<'editor' | 'output'>('editor')
   const [code, setCode] = useState(`// JavaScript Playground
 // Write and test your API integration code here
 
@@ -2342,6 +2343,7 @@ print(response.json())`,
       const result = await fn()
       if (result !== undefined) logs.push(typeof result === 'object' ? JSON.stringify(result, null, 2) : String(result))
       setOutput(logs.join('\n') || '✓ Executed successfully (no output)')
+      setActivePane('output') // auto-switch to output on mobile
     } catch (e: any) {
       setError(e.message)
     } finally {
@@ -2355,6 +2357,7 @@ print(response.json())`,
       style={{ position: 'fixed', inset: 0, zIndex: 65, background: 'rgba(4,10,20,0.9)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}
       onClick={onClose}>
       <motion.div initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 20 }}
+        className="playground-modal"
         style={{ width: '100%', maxWidth: 1200, height: '92vh', background: 'linear-gradient(145deg, #0c1828, #091220)', border: '1px solid #1a3050', borderRadius: 16, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}
         onClick={e => e.stopPropagation()}>
         {/* Header */}
@@ -2386,10 +2389,21 @@ print(response.json())`,
           </div>
         </div>
 
+        {/* Mobile pane switcher */}
+        <div className="playground-tabs" style={{ display: 'none', borderBottom: '1px solid #1a3050', background: 'rgba(0,0,0,0.2)' }}>
+          {(['editor', 'output'] as const).map(p => (
+            <button key={p} onClick={() => setActivePane(p)}
+              style={{ flex: 1, padding: '10px', fontSize: 12, fontWeight: 700, background: 'none', border: 'none', borderBottom: `2px solid ${activePane === p ? '#34d399' : 'transparent'}`, color: activePane === p ? '#34d399' : '#4a6278', cursor: 'pointer', textTransform: 'capitalize', transition: 'all 0.15s' }}>
+              {p === 'editor' ? '📝 Editor' : '▶ Output'}
+            </button>
+          ))}
+        </div>
+
         {/* Editor + Output */}
-        <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', overflow: 'hidden', minHeight: 0 }}>
+        <div className="playground-grid" style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', overflow: 'hidden', minHeight: 0 }}
+          data-pane={activePane}>
           {/* Code editor */}
-          <div style={{ borderRight: '1px solid #1a3050', display: 'flex', flexDirection: 'column', overflow: 'hidden', minHeight: 0 }}>
+          <div className="playground-pane-editor" style={{ borderRight: '1px solid #1a3050', display: 'flex', flexDirection: 'column', overflow: 'hidden', minHeight: 0 }}>
             <div style={{ padding: '8px 14px', borderBottom: '1px solid #1a3050', fontSize: 10, fontWeight: 700, color: '#4a6278', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
               <Terminal size={11} /> Editor
             </div>
@@ -2444,7 +2458,7 @@ print(response.json())`,
           </div>
 
           {/* Output */}
-          <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden', minHeight: 0 }}>
+          <div className="playground-pane-output" style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden', minHeight: 0 }}>
             <div style={{ padding: '8px 14px', borderBottom: '1px solid #1a3050', fontSize: 10, fontWeight: 700, color: '#4a6278', textTransform: 'uppercase', letterSpacing: '0.1em', display: 'flex', alignItems: 'center', gap: 6, justifyContent: 'space-between', flexShrink: 0 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                 <Terminal size={11} /> Output
