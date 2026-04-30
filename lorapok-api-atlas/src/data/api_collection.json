@@ -8152,6 +8152,358 @@
           "response": [],
           "authRequired": "OAuth",
           "authLink": "https://developer.atlassian.com/cloud/trello/rest"
+        },
+        {
+          "name": "GitHub Actions Runs",
+          "id": "257124a8-3028-48a6-b05a-ae03645c2072",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.github.com/repos/octocat/hello-world/actions/runs"
+            },
+            "description": "List GitHub Actions workflow runs"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://github.com/settings/tokens"
+        },
+        {
+          "name": "GitHub Releases",
+          "id": "03d2ec8f-1467-4428-92bc-13e16d3f3580",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.github.com/repos/facebook/react/releases?per_page=5"
+            },
+            "description": "List GitHub repository releases"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://github.com/settings/tokens"
+        },
+        {
+          "name": "GitHub Stars",
+          "id": "7d178963-7990-4fa7-9c47-382dbb35f760",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.github.com/repos/facebook/react/stargazers?per_page=5"
+            },
+            "description": "List GitHub repository stargazers"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://github.com/settings/tokens"
+        },
+        {
+          "name": "GitHub Forks",
+          "id": "dc08ed2b-d711-4fa7-ad97-cc1110fb7851",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.github.com/repos/facebook/react/forks?per_page=5"
+            },
+            "description": "List GitHub repository forks"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://github.com/settings/tokens"
+        },
+        {
+          "name": "GitHub Topics",
+          "id": "15426af9-36e3-47f9-8f87-5961f9a18c74",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.github.com/search/topics?q=react"
+            },
+            "description": "Search GitHub repositories by topic"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://github.com/settings/tokens"
+        },
+        {
+          "name": "GitLab Pipelines",
+          "id": "c234e148-80f9-41d6-9ba6-f52c404531ad",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://gitlab.com/api/v4/projects/YOUR_PROJECT_ID/pipelines"
+            },
+            "description": "List GitLab CI/CD pipelines"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://gitlab.com/users/sign_up"
+        },
+        {
+          "name": "GitLab Commits",
+          "id": "e4f16136-4146-46b6-b1d0-481d2bd13033",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://gitlab.com/api/v4/projects/YOUR_PROJECT_ID/repository/commits"
+            },
+            "description": "List GitLab repository commits"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://gitlab.com/users/sign_up"
+        },
+        {
+          "name": "npm Versions",
+          "id": "4b2519c8-3dd3-4923-840e-3e4f886202b1",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://registry.npmjs.org/react"
+            },
+            "description": "List npm package versions"
+          },
+          "response": []
+        },
+        {
+          "name": "PyPI Releases",
+          "id": "29c19afd-3f48-410f-a6c7-18c8e806474b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://pypi.org/pypi/django/json"
+            },
+            "description": "List PyPI package releases"
+          },
+          "response": []
+        },
+        {
+          "name": "Crates.io Versions",
+          "id": "a66c008b-3266-4b1e-87ab-ef35f29da852",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://crates.io/api/v1/crates/tokio/versions"
+            },
+            "description": "List Rust crate versions"
+          },
+          "response": []
+        },
+        {
+          "name": "Docker Hub Tags",
+          "id": "bc0bef2c-c2ea-4963-b77a-76f92814e63c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://hub.docker.com/v2/repositories/library/nginx/tags/?page_size=5"
+            },
+            "description": "List Docker image tags"
+          },
+          "response": []
+        },
+        {
+          "name": "Netlify Forms",
+          "id": "efaed7b4-49d2-43fa-9189-bdc147aa34d9",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.netlify.com/api/v1/forms"
+            },
+            "description": "List Netlify form submissions"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://app.netlify.com/signup"
+        },
+        {
+          "name": "Render Deploys",
+          "id": "e10571a4-f1e7-4c65-80bb-af524d8baf7b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.render.com/v1/services/YOUR_SERVICE_ID/deploys"
+            },
+            "description": "List Render service deploys"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://dashboard.render.com/register"
+        },
+        {
+          "name": "Supabase Functions",
+          "id": "785651f4-b4b1-4410-815e-2c98fedff75c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.supabase.com/v1/projects/YOUR_PROJECT_ID/functions"
+            },
+            "description": "List Supabase edge functions"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://supabase.com/dashboard/sign-up"
+        },
+        {
+          "name": "PlanetScale Branches",
+          "id": "39436dc3-c421-448a-a1af-af02920d4ed3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.planetscale.com/v1/organizations/YOUR_ORG/databases/YOUR_DB/branches"
+            },
+            "description": "List PlanetScale database branches"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://auth.planetscale.com/sign-up"
+        },
+        {
+          "name": "Neon Endpoints",
+          "id": "644a5b09-f35e-436b-a6e2-c4ca221cd7cb",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://console.neon.tech/api/v2/projects/YOUR_PROJECT_ID/endpoints"
+            },
+            "description": "List Neon database endpoints"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://console.neon.tech/signup"
+        },
+        {
+          "name": "Upstash Kafka",
+          "id": "cf0a4d47-b1c2-4808-99b9-858cf29d2c48",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.upstash.com/v2/kafka/cluster"
+            },
+            "description": "Upstash Kafka topics"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://console.upstash.com/"
+        },
+        {
+          "name": "Sentry Issues",
+          "id": "22f07c99-4c11-49dd-a6c0-82c4b2d3f20f",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://sentry.io/api/0/projects/YOUR_ORG/YOUR_PROJECT/issues/"
+            },
+            "description": "List Sentry project issues"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://sentry.io/signup/"
+        },
+        {
+          "name": "Datadog Hosts",
+          "id": "d1e1a6e7-22ba-4634-b2e7-d734f681f88e",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.datadoghq.com/api/v1/hosts"
+            },
+            "description": "List Datadog monitored hosts"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://app.datadoghq.com/signup/agent"
+        },
+        {
+          "name": "PagerDuty Incidents",
+          "id": "5b67a3fb-0263-4400-8168-f568cdf5ca14",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.pagerduty.com/incidents"
+            },
+            "description": "List PagerDuty incidents"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://www.pagerduty.com/sign-up/"
+        },
+        {
+          "name": "Jira Issues",
+          "id": "b4c8e789-f5f3-4572-9d5f-395d761c83a5",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://YOUR_DOMAIN.atlassian.net/rest/api/3/search?jql=project=YOUR_PROJECT"
+            },
+            "description": "List Jira project issues"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://www.atlassian.com/software/jira/free"
+        },
+        {
+          "name": "Trello Cards",
+          "id": "8f6ebc7d-d8e3-41ba-a504-30f8945cdc88",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.trello.com/1/boards/YOUR_BOARD_ID/cards?key=YOUR_API_KEY&token=YOUR_TOKEN"
+            },
+            "description": "List Trello board cards"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://developer.atlassian.com/cloud/trello/rest"
+        },
+        {
+          "name": "CircleCI Pipelines",
+          "id": "e9f25f0c-5689-48e5-a54c-fc38f8ff9acc",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://circleci.com/api/v2/project/github/YOUR_ORG/YOUR_REPO/pipeline"
+            },
+            "description": "List CircleCI pipelines"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://circleci.com/signup/"
+        },
+        {
+          "name": "Travis CI Builds",
+          "id": "7163ca16-d57f-471b-a46f-2f0a6582331f",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.travis-ci.com/repos/YOUR_REPO/builds"
+            },
+            "description": "List Travis CI builds"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://app.travis-ci.com/signup"
         }
       ]
     },
@@ -10089,6 +10441,296 @@
           "response": [],
           "authRequired": "API Key",
           "authLink": "https://iexcloud.io/cloud-login#/register"
+        },
+        {
+          "name": "Stripe Balance",
+          "id": "be0a014e-41c1-49f1-891f-4a5317f86e22",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.stripe.com/v1/balance"
+            },
+            "description": "Retrieve Stripe account balance"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://dashboard.stripe.com/register"
+        },
+        {
+          "name": "Stripe Refunds",
+          "id": "72f81148-e487-4b34-ad21-aab55a5dafd3",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.stripe.com/v1/refunds"
+            },
+            "description": "List Stripe refunds"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://dashboard.stripe.com/register"
+        },
+        {
+          "name": "PayPal Orders",
+          "id": "eca3b5b4-6c64-455b-8b3c-2f334d60f4e7",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api-m.sandbox.paypal.com/v2/checkout/orders"
+            },
+            "description": "Create PayPal orders"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://developer.paypal.com/dashboard/"
+        },
+        {
+          "name": "Shopify Products",
+          "id": "94718062-1292-49cd-bf6a-a6521011afc0",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://YOUR_STORE.myshopify.com/admin/api/2024-01/products.json"
+            },
+            "description": "List Shopify products"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://partners.shopify.com/signup"
+        },
+        {
+          "name": "WooCommerce Products",
+          "id": "5c297de5-d81d-4700-9697-44eea65fe30f",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://YOUR_STORE.com/wp-json/wc/v3/products"
+            },
+            "description": "List WooCommerce products"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://woocommerce.com/"
+        },
+        {
+          "name": "Recurly Plans",
+          "id": "1fed9d90-ceb7-483e-94f9-dec3b1d2d4be",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://v3.recurly.com/plans"
+            },
+            "description": "List Recurly subscription plans"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://app.recurly.com/signup"
+        },
+        {
+          "name": "Chargebee Plans",
+          "id": "dc675d52-204c-44e3-988e-aa1318d8fc24",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://YOUR_SITE.chargebee.com/api/v2/plans"
+            },
+            "description": "List Chargebee plans"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.chargebee.com/trial-signup/"
+        },
+        {
+          "name": "Paddle Transactions",
+          "id": "c434d36f-c0fa-410d-b089-52e8da4d43e7",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.paddle.com/transactions"
+            },
+            "description": "List Paddle transactions"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://login.paddle.com/signup"
+        },
+        {
+          "name": "Gumroad Followers",
+          "id": "b6e131ab-91e3-45c9-b076-b54f576fe21a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.gumroad.com/v2/followers"
+            },
+            "description": "List Gumroad followers"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://gumroad.com/signup"
+        },
+        {
+          "name": "Open Exchange Historical",
+          "id": "0de3c79c-7770-4110-834b-d10f99786847",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://openexchangerates.org/api/historical/2024-01-01.json?app_id=YOUR_API_KEY"
+            },
+            "description": "Historical currency rates"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://openexchangerates.org/signup"
+        },
+        {
+          "name": "Frankfurter Historical",
+          "id": "b66863bf-004e-4666-a377-7622bb6fa579",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.frankfurter.app/2024-01-01"
+            },
+            "description": "Historical ECB exchange rates"
+          },
+          "response": []
+        },
+        {
+          "name": "CoinGecko Global",
+          "id": "35c0c275-e32a-4e81-a80e-2cfa9706eb3a",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.coingecko.com/api/v3/global"
+            },
+            "description": "Global crypto market data"
+          },
+          "response": []
+        },
+        {
+          "name": "CoinCap History",
+          "id": "4df1a406-4238-465e-b50f-326231e8518b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.coincap.io/v2/assets/bitcoin/history?interval=d1"
+            },
+            "description": "Crypto asset price history"
+          },
+          "response": []
+        },
+        {
+          "name": "Binance Avg Price",
+          "id": "a2a032d0-52af-49fe-8544-a2591a29c872",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.binance.com/api/v3/avgPrice?symbol=BTCUSDT"
+            },
+            "description": "Binance current average price"
+          },
+          "response": []
+        },
+        {
+          "name": "KuCoin Symbols",
+          "id": "c5f81ce1-8f99-4a85-b91c-879236f07b5d",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.kucoin.com/api/v1/symbols"
+            },
+            "description": "KuCoin trading symbols"
+          },
+          "response": []
+        },
+        {
+          "name": "Polygon Dividends",
+          "id": "07d286db-3887-44e8-a9b0-226b7c7eb786",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.polygon.io/v3/reference/dividends?apiKey=YOUR_API_KEY"
+            },
+            "description": "Stock dividend data from Polygon"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://polygon.io/dashboard/signup"
+        },
+        {
+          "name": "IEX Cloud Earnings",
+          "id": "f8929b9c-804a-4111-b225-4096338a8403",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://cloud.iexapis.com/stable/stock/aapl/earnings?token=YOUR_API_KEY"
+            },
+            "description": "Company earnings data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://iexcloud.io/cloud-login#/register"
+        },
+        {
+          "name": "Alpha Vantage Earnings",
+          "id": "c7f2aac2-0c64-4e8e-a182-698daf638733",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.alphavantage.co/query?function=EARNINGS_CALENDAR&apikey=YOUR_API_KEY"
+            },
+            "description": "Company earnings calendar"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.alphavantage.co/support/#api-key"
+        },
+        {
+          "name": "Twelve Data Indicators",
+          "id": "f67c4e5f-5e6d-4097-9d7b-7c283621edd4",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.twelvedata.com/rsi?symbol=AAPL&interval=1day&apikey=YOUR_API_KEY"
+            },
+            "description": "Technical indicators data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://twelvedata.com/register"
+        },
+        {
+          "name": "Marketstack Intraday",
+          "id": "9047209c-0d70-4dfb-98a5-2c4c76632c7e",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://api.marketstack.com/v1/intraday?access_key=YOUR_API_KEY&symbols=AAPL"
+            },
+            "description": "Intraday stock data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://marketstack.com/signup/free"
         }
       ]
     },
