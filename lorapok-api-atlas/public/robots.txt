@@ -1,0 +1,8 @@
+# Lorapok Atlas API Directory — robots.txt
+# https://maijied.github.io/Lorapok-API_Atlas/
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://maijied.github.io/Lorapok-API_Atlas/sitemap.xml
