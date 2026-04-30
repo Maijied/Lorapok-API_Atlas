@@ -1451,15 +1451,48 @@ function stripThink(text: string): string {
 }
 
 // Minimal markdown → JSX renderer (bold, inline code, code blocks, lists, links)
+// Normalize LLM output: expand inline code blocks that lack newlines
+function normalizeMarkdown(text: string): string {
+  // Insert newline before ``` if it's preceded by non-newline content
+  return text
+    .replace(/([^\n])(```)/g, '$1\n$2')
+    .replace(/(```[^\n]*)\s*\n?/g, (m, p1) => p1 + '\n')
+}
+
+function VaultieCodeBlock({ lang, code }: { lang: string; code: string }) {
+  const [copied, setCopied] = React.useState(false)
+  const copy = () => {
+    navigator.clipboard.writeText(code).then(() => { setCopied(true); setTimeout(() => setCopied(false), 1500) })
+  }
+  return (
+    <div style={{ margin: '8px 0', borderRadius: 10, overflow: 'hidden', border: '1px solid #1e3a5f', background: '#060e1e' }}>
+      {/* header bar */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '5px 10px', background: 'rgba(56,189,248,0.07)', borderBottom: '1px solid #1e3a5f' }}>
+        <span style={{ fontSize: 10, fontWeight: 700, color: '#38bdf8', textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: 'monospace' }}>
+          {lang || 'code'}
+        </span>
+        <button onClick={copy} style={{ background: 'none', border: 'none', cursor: 'pointer', color: copied ? '#4ade80' : '#4a6278', fontSize: 10, display: 'flex', alignItems: 'center', gap: 4, padding: '2px 4px', borderRadius: 4, transition: 'color 0.2s' }}>
+          {copied ? '✓ Copied' : '⎘ Copy'}
+        </button>
+      </div>
+      {/* code body */}
+      <pre style={{ margin: 0, padding: '10px 12px', fontSize: 11, fontFamily: '"Fira Code", "Cascadia Code", monospace', color: '#a5f3c0', overflowX: 'auto', whiteSpace: 'pre', lineHeight: 1.6 }}>
+        {code}
+      </pre>
+    </div>
+  )
+}
+
 function renderMarkdown(text: string): React.ReactNode {
-  const lines = text.split('\n')
+  const normalized = normalizeMarkdown(text)
+  const lines = normalized.split('\n')
   const nodes: React.ReactNode[] = []
   let i = 0
 
   while (i < lines.length) {
     const line = lines[i]
 
-    // Code block
+    // Fenced code block
     if (line.startsWith('```')) {
       const lang = line.slice(3).trim()
       const codeLines: string[] = []
@@ -1467,26 +1500,21 @@ function renderMarkdown(text: string): React.ReactNode {
       while (i < lines.length && !lines[i].startsWith('```')) {
         codeLines.push(lines[i]); i++
       }
-      nodes.push(
-        <pre key={i} style={{ background: 'rgba(0,0,0,0.5)', border: '1px solid #1a3050', borderRadius: 8, padding: '10px 12px', fontSize: 11, fontFamily: 'monospace', color: '#34d399', overflowX: 'auto', margin: '6px 0', whiteSpace: 'pre' }}>
-          {lang && <div style={{ fontSize: 9, color: '#4a6278', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{lang}</div>}
-          {codeLines.join('\n')}
-        </pre>
-      )
+      nodes.push(<VaultieCodeBlock key={`cb-${i}`} lang={lang} code={codeLines.join('\n')} />)
       i++; continue
     }
 
-    // Heading
-    if (line.startsWith('### ')) { nodes.push(<div key={i} style={{ fontWeight: 800, fontSize: 13, color: '#38bdf8', margin: '8px 0 2px' }}>{inlineFormat(line.slice(4))}</div>); i++; continue }
-    if (line.startsWith('## '))  { nodes.push(<div key={i} style={{ fontWeight: 800, fontSize: 14, color: '#818cf8', margin: '8px 0 2px' }}>{inlineFormat(line.slice(3))}</div>); i++; continue }
-    if (line.startsWith('# '))   { nodes.push(<div key={i} style={{ fontWeight: 900, fontSize: 15, color: '#d4e4f7', margin: '8px 0 4px' }}>{inlineFormat(line.slice(2))}</div>); i++; continue }
+    // Headings
+    if (line.startsWith('### ')) { nodes.push(<div key={i} style={{ fontWeight: 800, fontSize: 12, color: '#38bdf8', margin: '10px 0 3px', letterSpacing: '0.02em' }}>{inlineFormat(line.slice(4))}</div>); i++; continue }
+    if (line.startsWith('## '))  { nodes.push(<div key={i} style={{ fontWeight: 800, fontSize: 13, color: '#818cf8', margin: '10px 0 3px' }}>{inlineFormat(line.slice(3))}</div>); i++; continue }
+    if (line.startsWith('# '))   { nodes.push(<div key={i} style={{ fontWeight: 900, fontSize: 14, color: '#d4e4f7', margin: '10px 0 4px' }}>{inlineFormat(line.slice(2))}</div>); i++; continue }
 
-    // List item
+    // Bullet list
     if (/^[-*•]\s/.test(line)) {
       nodes.push(
-        <div key={i} style={{ display: 'flex', gap: 6, margin: '2px 0' }}>
-          <span style={{ color: '#4ade80', flexShrink: 0, marginTop: 1 }}>▸</span>
-          <span>{inlineFormat(line.replace(/^[-*•]\s/, ''))}</span>
+        <div key={i} style={{ display: 'flex', gap: 7, margin: '3px 0', paddingLeft: 2 }}>
+          <span style={{ color: '#4ade80', flexShrink: 0, marginTop: 2, fontSize: 10 }}>▸</span>
+          <span style={{ lineHeight: 1.6 }}>{inlineFormat(line.replace(/^[-*•]\s/, ''))}</span>
         </div>
       ); i++; continue
     }
@@ -1495,9 +1523,18 @@ function renderMarkdown(text: string): React.ReactNode {
     if (/^\d+\.\s/.test(line)) {
       const num = line.match(/^(\d+)\./)?.[1]
       nodes.push(
-        <div key={i} style={{ display: 'flex', gap: 6, margin: '2px 0' }}>
-          <span style={{ color: '#818cf8', flexShrink: 0, minWidth: 16, fontWeight: 700 }}>{num}.</span>
-          <span>{inlineFormat(line.replace(/^\d+\.\s/, ''))}</span>
+        <div key={i} style={{ display: 'flex', gap: 7, margin: '3px 0', paddingLeft: 2 }}>
+          <span style={{ color: '#818cf8', flexShrink: 0, minWidth: 18, fontWeight: 700 }}>{num}.</span>
+          <span style={{ lineHeight: 1.6 }}>{inlineFormat(line.replace(/^\d+\.\s/, ''))}</span>
+        </div>
+      ); i++; continue
+    }
+
+    // Blockquote
+    if (line.startsWith('> ')) {
+      nodes.push(
+        <div key={i} style={{ borderLeft: '3px solid #38bdf8', paddingLeft: 10, margin: '4px 0', color: '#7aa8c7', fontStyle: 'italic', fontSize: 11 }}>
+          {inlineFormat(line.slice(2))}
         </div>
       ); i++; continue
     }
@@ -1508,28 +1545,27 @@ function renderMarkdown(text: string): React.ReactNode {
     }
 
     // Empty line → spacer
-    if (line.trim() === '') { nodes.push(<div key={i} style={{ height: 4 }} />); i++; continue }
+    if (line.trim() === '') { nodes.push(<div key={i} style={{ height: 5 }} />); i++; continue }
 
     // Normal paragraph
-    nodes.push(<div key={i} style={{ margin: '1px 0' }}>{inlineFormat(line)}</div>)
+    nodes.push(<div key={i} style={{ margin: '2px 0', lineHeight: 1.65 }}>{inlineFormat(line)}</div>)
     i++
   }
   return <>{nodes}</>
 }
 
 function inlineFormat(text: string): React.ReactNode {
-  // Split on **bold**, *italic*, `code`, [link](url)
   const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`|\[[^\]]+\]\([^)]+\))/g)
   return parts.map((part, i) => {
     if (part.startsWith('**') && part.endsWith('**'))
-      return <strong key={i} style={{ color: '#d4e4f7', fontWeight: 700 }}>{part.slice(2, -2)}</strong>
+      return <strong key={i} style={{ color: '#e2eaf7', fontWeight: 700 }}>{part.slice(2, -2)}</strong>
     if (part.startsWith('*') && part.endsWith('*'))
       return <em key={i} style={{ color: '#a5b4fc' }}>{part.slice(1, -1)}</em>
     if (part.startsWith('`') && part.endsWith('`'))
-      return <code key={i} style={{ background: 'rgba(0,0,0,0.4)', border: '1px solid #1a3050', borderRadius: 4, padding: '1px 5px', fontSize: 11, fontFamily: 'monospace', color: '#34d399' }}>{part.slice(1, -1)}</code>
+      return <code key={i} style={{ background: 'rgba(56,189,248,0.1)', border: '1px solid rgba(56,189,248,0.2)', borderRadius: 4, padding: '1px 6px', fontSize: 11, fontFamily: 'monospace', color: '#38bdf8' }}>{part.slice(1, -1)}</code>
     const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/)
     if (linkMatch)
-      return <a key={i} href={linkMatch[2]} target="_blank" rel="noopener noreferrer" style={{ color: '#38bdf8', textDecoration: 'underline' }}>{linkMatch[1]}</a>
+      return <a key={i} href={linkMatch[2]} target="_blank" rel="noopener noreferrer" style={{ color: '#38bdf8', textDecoration: 'underline', textUnderlineOffset: 2 }}>{linkMatch[1]}</a>
     return part
   })
 }
