@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, Play, Copy, Check, Download, ExternalLink, X, Code, Globe, Terminal, Book, ChevronDown, ChevronRight, Video, LogIn, LogOut, User as UserIcon, Key, Heart, FolderPlus, Folder, Clock, Settings, Share2, Sun, Moon, GitCompare, Plus, Trash2, AlertCircle, Star, TrendingUp, Bookmark, BookmarkCheck, Users, BarChart2, Zap, MessageSquare, Send, RefreshCw } from 'lucide-react'
 import apiCollection from './data/api_collection.json'
@@ -2069,106 +2070,127 @@ const RatingWidget = ({ apiName, user }: { apiName: string; user: ReturnType<typ
 
   const handleOpen = (e: React.MouseEvent) => {
     e.stopPropagation()
+    e.preventDefault()
     if (btnRef.current) {
       const rect = btnRef.current.getBoundingClientRect()
-      const popupH = 220 // approx popup height
-      const popupW = 210
-      // prefer opening upward; fall back to downward if not enough space
-      const spaceAbove = rect.top
+      const popupH = 240
+      const popupW = 215
       const spaceBelow = window.innerHeight - rect.bottom
-      const openUp = spaceAbove > popupH || spaceAbove > spaceBelow
+      const openUp = spaceBelow < popupH && rect.top > popupH
       const left = Math.max(8, Math.min(rect.left, window.innerWidth - popupW - 8))
       setPopupStyle(openUp
-        ? { bottom: window.innerHeight - rect.top + 6, top: 'auto', left }
-        : { top: rect.bottom + 6, bottom: 'auto', left }
+        ? { position: 'fixed', bottom: window.innerHeight - rect.top + 6, top: 'auto', left, width: popupW, zIndex: 99999 }
+        : { position: 'fixed', top: rect.bottom + 6, bottom: 'auto', left, width: popupW, zIndex: 99999 }
       )
     }
     setOpen(v => !v)
   }
 
-  const submit = async () => {
+  const submit = async (e: React.MouseEvent) => {
+    e.stopPropagation()
     if (!user || !rating) return
     setSubmitErr('')
     try {
       await rateApi(user.uid, user.displayName || 'User', apiName, rating, review)
-      setSubmitted(true); setOpen(false)
-    } catch (e: any) {
-      setSubmitErr(e?.code === 'permission-denied' ? 'Sign in again — permission denied.' : 'Failed to submit. Try again.')
+      setSubmitted(true)
+      setOpen(false)
+    } catch (err: any) {
+      setSubmitErr(err?.code === 'permission-denied' ? 'Permission denied — update Firestore rules.' : 'Failed. Try again.')
     }
   }
 
+  const popup = open ? (
+    <>
+      {/* full-screen backdrop rendered in body */}
+      <div
+        style={{ position: 'fixed', inset: 0, zIndex: 99998 }}
+        onClick={e => { e.stopPropagation(); setOpen(false) }}
+      />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9, y: -6 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.9, y: -6 }}
+        transition={{ duration: 0.15 }}
+        style={{
+          ...popupStyle,
+          background: 'linear-gradient(145deg,#0f1e35,#091220)',
+          border: '1px solid #2a4060',
+          borderRadius: 12,
+          boxShadow: '0 24px 64px rgba(0,0,0,0.95)',
+          padding: 14,
+        }}
+        onClick={e => e.stopPropagation()}
+      >
+        {!user ? (
+          <div style={{ fontSize: 11, color: '#4a6278', textAlign: 'center', lineHeight: 1.7 }}>
+            <div style={{ fontSize: 22, marginBottom: 6 }}>🔒</div>
+            Sign in to rate this API
+          </div>
+        ) : submitted ? (
+          <div style={{ fontSize: 12, color: '#34d399', textAlign: 'center', lineHeight: 1.7 }}>
+            <div style={{ fontSize: 22, marginBottom: 4 }}>✓</div>
+            Thanks for rating!
+          </div>
+        ) : (
+          <>
+            <div style={{ fontSize: 10, fontWeight: 800, color: '#fde047', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>
+              ⭐ Rate this API
+            </div>
+            <div style={{ display: 'flex', gap: 3, marginBottom: 6, justifyContent: 'center' }}>
+              {[1,2,3,4,5].map(s => (
+                <button key={s}
+                  onClick={e => { e.stopPropagation(); setRating(s) }}
+                  onMouseEnter={() => setHover(s)}
+                  onMouseLeave={() => setHover(0)}
+                  style={{
+                    background: 'none', border: 'none', cursor: 'pointer', padding: '3px',
+                    transform: s <= (hover || rating) ? 'scale(1.25)' : 'scale(1)',
+                    transition: 'transform 0.1s',
+                  }}>
+                  <Star size={22} color={s <= (hover || rating) ? '#fde047' : '#2a4060'} fill={s <= (hover || rating) ? '#fde047' : 'none'} />
+                </button>
+              ))}
+            </div>
+            {(hover || rating) > 0 && (
+              <div style={{ fontSize: 10, color: '#fde047', textAlign: 'center', marginBottom: 8, fontWeight: 700 }}>
+                {['','Terrible','Poor','Okay','Good','Excellent'][hover || rating]}
+              </div>
+            )}
+            <textarea
+              value={review}
+              onChange={e => setReview(e.target.value)}
+              onClick={e => e.stopPropagation()}
+              placeholder="Optional review…"
+              rows={2}
+              style={{ width: '100%', boxSizing: 'border-box', background: 'rgba(0,0,0,0.35)', border: '1px solid #1a3050', borderRadius: 7, padding: '6px 8px', color: '#d4e4f7', fontSize: 11, outline: 'none', resize: 'none', marginBottom: 10, fontFamily: 'inherit', display: 'block' }}
+            />
+            <button
+              onClick={submit}
+              disabled={!rating}
+              style={{ width: '100%', padding: '8px', borderRadius: 8, background: rating ? 'linear-gradient(90deg,#fde047,#f59e0b)' : 'rgba(253,224,71,0.1)', border: 'none', color: rating ? '#000' : '#4a6278', fontSize: 11, fontWeight: 800, cursor: rating ? 'pointer' : 'default', transition: 'all 0.2s' }}>
+              {rating ? 'Submit Rating' : 'Pick a star first'}
+            </button>
+            {submitErr && <div style={{ fontSize: 10, color: '#f87171', marginTop: 8, textAlign: 'center' }}>{submitErr}</div>}
+          </>
+        )}
+      </motion.div>
+    </>
+  ) : null
+
   return (
     <div style={{ position: 'relative' }}>
-      <button ref={btnRef} onClick={handleOpen}
+      <button
+        ref={btnRef}
+        onClick={handleOpen}
         style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '3px 8px', borderRadius: 20, fontSize: 10, fontWeight: 700, background: 'rgba(253,224,71,0.08)', border: '1px solid rgba(253,224,71,0.2)', color: '#fde047', cursor: 'pointer', transition: 'all 0.15s' }}>
         <Star size={10} fill={stats && stats.avg > 0 ? '#fde047' : 'none'} />
         {stats && stats.count > 0 ? `${stats.avg} (${stats.count})` : 'Rate'}
       </button>
-      <AnimatePresence>
-        {open && (
-          <>
-            {/* backdrop */}
-            <div style={{ position: 'fixed', inset: 0, zIndex: 998 }} onClick={e => { e.stopPropagation(); setOpen(false) }} />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.92, y: -4 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.92, y: -4 }}
-              transition={{ duration: 0.15 }}
-              style={{
-                position: 'fixed', zIndex: 999, width: 210,
-                background: 'linear-gradient(145deg,#0f1e35,#091220)',
-                border: '1px solid #2a4060', borderRadius: 12,
-                boxShadow: '0 20px 60px rgba(0,0,0,0.9)', padding: 14,
-                ...popupStyle,
-              }}
-              onClick={e => e.stopPropagation()}>
-              {!user ? (
-                <div style={{ fontSize: 11, color: '#4a6278', textAlign: 'center', lineHeight: 1.6 }}>
-                  <div style={{ fontSize: 20, marginBottom: 6 }}>🔒</div>
-                  Sign in to rate this API
-                </div>
-              ) : submitted ? (
-                <div style={{ fontSize: 12, color: '#34d399', textAlign: 'center', lineHeight: 1.6 }}>
-                  <div style={{ fontSize: 20, marginBottom: 4 }}>✓</div>
-                  Thanks for rating!
-                </div>
-              ) : (
-                <>
-                  <div style={{ fontSize: 10, fontWeight: 800, color: '#fde047', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>
-                    ⭐ Rate this API
-                  </div>
-                  {/* Stars */}
-                  <div style={{ display: 'flex', gap: 3, marginBottom: 10, justifyContent: 'center' }}>
-                    {[1,2,3,4,5].map(s => (
-                      <button key={s}
-                        onClick={e => { e.stopPropagation(); setRating(s) }}
-                        onMouseEnter={() => setHover(s)}
-                        onMouseLeave={() => setHover(0)}
-                        style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '2px', lineHeight: 1, transition: 'transform 0.1s', transform: s <= (hover || rating) ? 'scale(1.2)' : 'scale(1)' }}>
-                        <Star size={22} color={s <= (hover || rating) ? '#fde047' : '#2a4060'} fill={s <= (hover || rating) ? '#fde047' : 'none'} />
-                      </button>
-                    ))}
-                  </div>
-                  {/* Selected label */}
-                  {(hover || rating) > 0 && (
-                    <div style={{ fontSize: 10, color: '#fde047', textAlign: 'center', marginBottom: 8 }}>
-                      {['','Terrible','Poor','Okay','Good','Excellent'][hover || rating]}
-                    </div>
-                  )}
-                  <textarea value={review} onChange={e => setReview(e.target.value)}
-                    placeholder="Optional review…" rows={2}
-                    style={{ width: '100%', boxSizing: 'border-box', background: 'rgba(0,0,0,0.3)', border: '1px solid #1a3050', borderRadius: 7, padding: '6px 8px', color: '#d4e4f7', fontSize: 11, outline: 'none', resize: 'none', marginBottom: 10, fontFamily: 'inherit', display: 'block' }} />
-                  <button onClick={e => { e.stopPropagation(); submit() }} disabled={!rating}
-                    style={{ width: '100%', padding: '8px', borderRadius: 8, background: rating ? 'linear-gradient(90deg,#fde047,#f59e0b)' : 'rgba(253,224,71,0.1)', border: 'none', color: rating ? '#000' : '#4a6278', fontSize: 11, fontWeight: 800, cursor: rating ? 'pointer' : 'default', transition: 'all 0.2s' }}>
-                    {rating ? 'Submit Rating' : 'Select a star first'}
-                  </button>
-                  {submitErr && <div style={{ fontSize: 10, color: '#f87171', marginTop: 8, textAlign: 'center' }}>{submitErr}</div>}
-                </>
-              )}
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+      {/* Portal: renders outside card DOM — bypasses overflow:hidden stacking context */}
+      {typeof document !== 'undefined' && createPortal(
+        <AnimatePresence>{popup}</AnimatePresence>,
+        document.body
+      )}
     </div>
   )
 }
