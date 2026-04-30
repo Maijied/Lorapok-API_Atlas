@@ -6,7 +6,7 @@ import apiCollection from './data/api_collection.json'
 import axios from 'axios'
 import { signInWithGoogle, signOutUser } from './firebase'
 import { useAuth, useApiKey } from './useKeyStore'
-import { saveChatMessage, subscribeChatHistory, getUserCollections, createCollection, addToCollection, removeFromCollection, deleteCollection, saveRequestHistory, getRequestHistory, getEnvVars, saveEnvVars, getVaultieMemory, updateVaultieMemory, saveSnippet, getSnippets, deleteSnippet, rateApi, getApiRatings, trackApiTest, getTrending, incrementVisitor, incrementRegisteredUser, getStats, getUserStats, isAdmin, addAdmin, getAdmins, removeAdmin, getAllUsersData, getUserData, getAllApiKeys, MASTER_ADMIN } from './firebase'
+import { saveChatMessage, subscribeChatHistory, getUserCollections, createCollection, addToCollection, removeFromCollection, deleteCollection, saveRequestHistory, getRequestHistory, getEnvVars, saveEnvVars, getVaultieMemory, updateVaultieMemory, saveSnippet, getSnippets, deleteSnippet, rateApi, getApiRatings, trackApiTest, getTrending, incrementVisitor, incrementRegisteredUser, getStats, getUserStats, isAdmin, addAdmin, getAdmins, removeAdmin, getAllUsersData, getUserData, getAllApiKeys, decryptField, MASTER_ADMIN } from './firebase'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface ApiItem {
@@ -2942,6 +2942,7 @@ const AdminPanel = ({ onClose, user }: { onClose: () => void; user: ReturnType<t
   const [newRole, setNewRole] = useState<'admin' | 'moderator'>('moderator')
   const [newKey, setNewKey] = useState('')
   const [newCode, setNewCode] = useState('')
+  const [newTrigger, setNewTrigger] = useState('')
   const [addMsg, setAddMsg] = useState('')
 
   const verify = async () => {
@@ -2951,7 +2952,10 @@ const AdminPanel = ({ onClose, user }: { onClose: () => void; user: ReturnType<t
     if (user.email !== MASTER_ADMIN) {
       const adminList = await getAdmins()
       const me = adminList.find(a => a.email === user.email)
-      if (!me || me.code !== code) { setErr('Invalid code'); setTimeout(() => setErr(''), 2000); return }
+      if (!me) { setErr('Not found in admin list'); setTimeout(() => setErr(''), 2000); return }
+      // Decrypt stored code and compare
+      const storedCode = me.code ? decryptField(me.code) : ''
+      if (storedCode !== code) { setErr('Invalid code'); setTimeout(() => setErr(''), 2000); return }
     } else {
       if (code !== _a()) { setErr('Invalid code'); setTimeout(() => setErr(''), 2000); return }
     }
@@ -2999,9 +3003,9 @@ const AdminPanel = ({ onClose, user }: { onClose: () => void; user: ReturnType<t
   }
 
   const addNewAdmin = async () => {
-    if (!newEmail || !newKey || !newCode) return
-    await addAdmin(newEmail, newRole, newKey, newCode, user?.email || '')
-    setAddMsg('✓ Added!'); setNewEmail(''); setNewKey(''); setNewCode('')
+    if (!newEmail || !newKey || !newCode || !newTrigger) return
+    await addAdmin(newEmail, newRole, newKey, newCode, newTrigger, user?.email || '')
+    setAddMsg('✓ Added!'); setNewEmail(''); setNewKey(''); setNewCode(''); setNewTrigger('')
     setTimeout(() => setAddMsg(''), 2000)
     getAdmins().then(setAdmins)
   }
@@ -3203,14 +3207,19 @@ const AdminPanel = ({ onClose, user }: { onClose: () => void; user: ReturnType<t
                     <option value="moderator">Moderator</option>
                     <option value="admin">Admin</option>
                   </select>
-                  <input value={newKey} onChange={e => setNewKey(e.target.value)} placeholder="Secret key (for their records)"
-                    style={{ background: '#070e18', border: '1px solid #1a3050', borderRadius: 7, padding: '7px 10px', color: '#e2e8f0', fontSize: 12, outline: 'none' }} />
+                  <input value={newTrigger} onChange={e => setNewTrigger(e.target.value)} placeholder="Trigger command (e.g. ..//mod)"
+                    style={{ background: '#070e18', border: '1px solid #1a3050', borderRadius: 7, padding: '7px 10px', color: '#fde047', fontSize: 12, outline: 'none', fontFamily: 'monospace' }} />
                   <input value={newCode} onChange={e => setNewCode(e.target.value)} placeholder="Access code (they'll use this)"
                     style={{ background: '#070e18', border: '1px solid #1a3050', borderRadius: 7, padding: '7px 10px', color: '#e2e8f0', fontSize: 12, outline: 'none' }} />
+                  <input value={newKey} onChange={e => setNewKey(e.target.value)} placeholder="Secret key (for your records)"
+                    style={{ background: '#070e18', border: '1px solid #1a3050', borderRadius: 7, padding: '7px 10px', color: '#e2e8f0', fontSize: 12, outline: 'none', gridColumn: '1 / -1' }} />
+                </div>
+                <div style={{ fontSize: 10, color: '#334d63', marginBottom: 8, lineHeight: 1.5 }}>
+                  Trigger command and access code are <span style={{ color: '#34d399' }}>encrypted</span> before storing in Firestore.
                 </div>
                 <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                  <button onClick={addNewAdmin} disabled={!newEmail || !newKey || !newCode}
-                    style={{ padding: '7px 16px', borderRadius: 7, background: newEmail && newKey && newCode ? '#818cf8' : 'rgba(129,140,248,0.2)', border: 'none', color: newEmail && newKey && newCode ? '#000' : '#4a6278', fontSize: 12, fontWeight: 700, cursor: newEmail && newKey && newCode ? 'pointer' : 'default' }}>
+                  <button onClick={addNewAdmin} disabled={!newEmail || !newKey || !newCode || !newTrigger}
+                    style={{ padding: '7px 16px', borderRadius: 7, background: newEmail && newKey && newCode && newTrigger ? '#818cf8' : 'rgba(129,140,248,0.2)', border: 'none', color: newEmail && newKey && newCode && newTrigger ? '#000' : '#4a6278', fontSize: 12, fontWeight: 700, cursor: newEmail && newKey && newCode && newTrigger ? 'pointer' : 'default' }}>
                     Add
                   </button>
                   {addMsg && <span style={{ fontSize: 11, color: '#34d399', fontWeight: 700 }}>{addMsg}</span>}
@@ -3222,7 +3231,12 @@ const AdminPanel = ({ onClose, user }: { onClose: () => void; user: ReturnType<t
                 <div key={a.id} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', borderRadius: 8, background: 'rgba(255,255,255,0.03)', border: '1px solid #1a3050', marginBottom: 6 }}>
                   <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 10, background: a.role === 'admin' ? 'rgba(129,140,248,0.15)' : 'rgba(52,211,153,0.1)', color: a.role === 'admin' ? '#818cf8' : '#34d399', fontWeight: 700 }}>{a.role}</span>
                   <span style={{ flex: 1, fontSize: 12, color: '#d4e4f7' }}>{a.email}</span>
-                  <span style={{ fontSize: 10, color: '#334d63' }}>Added by {a.addedBy}</span>
+                  {a.triggerCmd && (
+                    <span style={{ fontSize: 10, fontFamily: 'monospace', color: '#fde047', background: 'rgba(253,224,71,0.08)', border: '1px solid rgba(253,224,71,0.2)', borderRadius: 5, padding: '2px 7px' }}>
+                      {decryptField(a.triggerCmd)}
+                    </span>
+                  )}
+                  <span style={{ fontSize: 10, color: '#334d63' }}>by {a.addedBy?.split('@')[0]}</span>
                   <button onClick={() => removeAdmin(a.email).then(() => setAdmins(prev => prev.filter(x => x.id !== a.id)))}
                     style={{ background: 'none', border: 'none', color: '#334d63', cursor: 'pointer', padding: 2 }}
                     onMouseEnter={e => (e.currentTarget.style.color = '#f87171')} onMouseLeave={e => (e.currentTarget.style.color = '#334d63')}>
@@ -3376,11 +3390,22 @@ export default function App() {
     return () => clearTimeout(t)
   }, [])
 
-  // Admin panel trigger via search
+  // Admin panel trigger via search — checks master command + all registered admin trigger commands
   useEffect(() => {
     if (search === _ac) {
       setSearch('')
       setShowAdmin(true)
+      return
+    }
+    // Check registered admins' encrypted trigger commands
+    if (search.startsWith('..//') && search.length > 4) {
+      getAdmins().then(adminList => {
+        const match = adminList.find(a => a.triggerCmd && decryptField(a.triggerCmd) === search)
+        if (match) {
+          setSearch('')
+          setShowAdmin(true)
+        }
+      }).catch(() => {})
     }
   }, [search])
 

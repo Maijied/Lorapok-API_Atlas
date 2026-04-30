@@ -218,6 +218,18 @@ export async function getUserStats(uid: string) {
 // Path: admins/{email} → { role: 'admin'|'moderator', addedBy, secretKey, code, ts }
 export const MASTER_ADMIN = 'mdshuvo40@gmail.com'
 
+// ─── Admin encryption helpers ─────────────────────────────────────────────────
+const _XK = [11, 7, 19, 3, 13, 5, 17, 2]
+export function encryptField(plain: string): string {
+  const xored = plain.split('').map((c, i) => String.fromCharCode(c.charCodeAt(0) ^ _XK[i % _XK.length]))
+  return btoa(xored.join(''))
+}
+export function decryptField(enc: string): string {
+  try {
+    return atob(enc).split('').map((c, i) => String.fromCharCode(c.charCodeAt(0) ^ _XK[i % _XK.length])).join('')
+  } catch { return '' }
+}
+
 export async function isAdmin(email: string): Promise<{ allowed: boolean; role: string }> {
   if (email === MASTER_ADMIN) return { allowed: true, role: 'master' }
   const ref = doc(db, 'admins', email.replace(/\./g, '_'))
@@ -226,14 +238,20 @@ export async function isAdmin(email: string): Promise<{ allowed: boolean; role: 
   return { allowed: false, role: '' }
 }
 
-export async function addAdmin(email: string, role: 'admin' | 'moderator', secretKey: string, code: string, addedBy: string) {
+export async function addAdmin(email: string, role: 'admin' | 'moderator', secretKey: string, code: string, triggerCmd: string, addedBy: string) {
   const ref = doc(db, 'admins', email.replace(/\./g, '_'))
-  await setDoc(ref, { email, role, secretKey, code, addedBy, ts: Date.now() })
+  await setDoc(ref, {
+    email, role,
+    secretKey: encryptField(secretKey),
+    code: encryptField(code),
+    triggerCmd: encryptField(triggerCmd),
+    addedBy, ts: Date.now()
+  })
 }
 
 export async function getAdmins() {
   const snap = await getDocs(collection(db, 'admins'))
-  return snap.docs.map(d => ({ id: d.id, ...d.data() })) as { id: string; email: string; role: string; addedBy: string; ts: number; code?: string }[]
+  return snap.docs.map(d => ({ id: d.id, ...d.data() })) as { id: string; email: string; role: string; addedBy: string; ts: number; code?: string; triggerCmd?: string }[]
 }
 
 export async function removeAdmin(email: string) {
