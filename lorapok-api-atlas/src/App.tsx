@@ -224,7 +224,7 @@ const DataVisualizer = ({ data, baseUrl }: { data: any; baseUrl?: string }) => {
   )
 }
 
-const CodeSnippets = ({ api }: { api: FlatApi }) => {
+const CodeSnippets = ({ api, onOpenPlayground }: { api: FlatApi; onOpenPlayground?: (code: string, lang: 'javascript' | 'python' | 'curl') => void }) => {
   const [lang, setLang] = useState('curl')
   const [copied, setCopied] = useState(false)
   const url = api.url, method = api.method
@@ -276,6 +276,7 @@ func main() {
 }`,
   }
   const copy = () => { navigator.clipboard.writeText(snippets[lang]); setCopied(true); setTimeout(() => setCopied(false), 2000) }
+  const playgroundLang = lang === 'javascript' ? 'javascript' : lang === 'python' ? 'python' : 'curl'
   return (
     <div className="mt-4">
       <div className="flex items-center gap-1 mb-2">
@@ -288,10 +289,19 @@ func main() {
             <button key={l} onClick={() => setLang(l)} className={`text-[10px] uppercase font-bold px-2.5 py-1 rounded transition-all ${lang === l ? 'bg-emerald-400 text-black' : 'bg-white/5 text-gray-400 hover:bg-white/10'}`}>{l}</button>
           ))}
         </div>
-        <button onClick={copy} className="flex items-center gap-1 text-xs text-gray-400 hover:text-white transition-colors">
-          {copied ? <Check size={13} className="text-emerald-400" /> : <Copy size={13} />}
-          {copied ? 'Copied!' : 'Copy'}
-        </button>
+        <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+          {onOpenPlayground && (
+            <button onClick={() => onOpenPlayground(snippets[playgroundLang as keyof typeof snippets], playgroundLang as any)}
+              style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '4px 10px', borderRadius: 7, background: 'rgba(52,211,153,0.12)', border: '1px solid rgba(52,211,153,0.35)', color: '#34d399', fontSize: 11, fontWeight: 700, cursor: 'pointer', transition: 'all 0.15s' }}
+              title="Open this snippet in the Code Playground">
+              <Play size={11} fill="currentColor" /> Playground
+            </button>
+          )}
+          <button onClick={copy} className="flex items-center gap-1 text-xs text-gray-400 hover:text-white transition-colors">
+            {copied ? <Check size={13} className="text-emerald-400" /> : <Copy size={13} />}
+            {copied ? 'Copied!' : 'Copy'}
+          </button>
+        </div>
       </div>
       <pre className="bg-black/50 p-3 rounded-lg text-[11px] font-mono text-gray-300 overflow-x-auto border border-white/5 leading-relaxed">{snippets[lang]}</pre>
     </div>
@@ -622,6 +632,7 @@ const ApiModal = ({ api, onClose, user, onShare, onKeyChange }: { api: FlatApi; 
   const [keyInput, setKeyInput] = useState('')
   const [keySaved, setKeySaved] = useState(false)
   const [showKeyInput, setShowKeyInput] = useState(false)
+  const [playgroundCode, setPlaygroundCode] = useState<{code: string; lang: 'javascript'|'python'|'curl'} | null>(null)
   const authStyle = AUTH_STYLE[api.authRequired || 'None'] || AUTH_STYLE['None']
   const needsKey = urlNeedsKey(api) || !!api.authRequired
 
@@ -795,10 +806,10 @@ const ApiModal = ({ api, onClose, user, onShare, onKeyChange }: { api: FlatApi; 
                 <Play size={15} fill="currentColor" />
               </button>
               <button onClick={onClose}
-                style={{ width: 30, height: 30, borderRadius: 8, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: '#4a6278', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.15s' }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(248,113,113,0.1)'; e.currentTarget.style.borderColor = 'rgba(248,113,113,0.3)'; e.currentTarget.style.color = '#f87171' }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; e.currentTarget.style.color = '#4a6278' }}>
-                <X size={15} />
+                style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(248,113,113,0.12)', border: '1px solid rgba(248,113,113,0.35)', color: '#f87171', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.15s', flexShrink: 0 }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(248,113,113,0.25)'; e.currentTarget.style.borderColor = '#f87171' }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(248,113,113,0.12)'; e.currentTarget.style.borderColor = 'rgba(248,113,113,0.35)' }}>
+                <X size={16} />
               </button>
             </div>
           </div>
@@ -835,57 +846,58 @@ const ApiModal = ({ api, onClose, user, onShare, onKeyChange }: { api: FlatApi; 
             const mc = methodColors[api.method] || '#4a6278'
 
             return (
-              <div style={{ padding: '12px 16px', borderBottom: '1px solid #1a3050', display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <div style={{ padding: '14px 18px', borderBottom: '1px solid #1a3050', display: 'flex', flexDirection: 'column', gap: 10 }}>
                 {/* URL bar */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   {/* Method badge */}
-                  <span style={{ fontSize: 10, fontWeight: 800, fontFamily: 'monospace', padding: '4px 10px', borderRadius: 6, background: `${mc}18`, border: `1px solid ${mc}40`, color: mc, flexShrink: 0, letterSpacing: '0.05em' }}>
+                  <span style={{ fontSize: 12, fontWeight: 800, fontFamily: 'monospace', padding: '7px 14px', borderRadius: 8, background: `${mc}22`, border: `1.5px solid ${mc}60`, color: mc, flexShrink: 0, letterSpacing: '0.08em' }}>
                     {api.method}
                   </span>
                   {/* Editable URL */}
                   <input
                     value={editUrl}
                     onChange={e => { setEditUrl(e.target.value); setParams(parseParams(e.target.value)) }}
-                    style={{ flex: 1, background: 'rgba(0,0,0,0.3)', border: '1px solid #1a3050', borderRadius: 7, padding: '6px 10px', color: '#34d399', fontSize: 11, fontFamily: 'monospace', outline: 'none', minWidth: 0 }}
+                    style={{ flex: 1, background: 'rgba(0,0,0,0.35)', border: '1.5px solid #1e3a5f', borderRadius: 8, padding: '8px 12px', color: '#4ade80', fontSize: 12, fontFamily: 'monospace', outline: 'none', minWidth: 0 }}
                     onFocus={e => (e.target.style.borderColor = '#34d399')}
-                    onBlur={e => (e.target.style.borderColor = '#1a3050')}
+                    onBlur={e => (e.target.style.borderColor = '#1e3a5f')}
                   />
                   {/* Copy URL */}
                   <button
                     onClick={() => { navigator.clipboard.writeText(editUrl); setUrlCopied(true); setTimeout(() => setUrlCopied(false), 1500) }}
                     title="Copy URL"
-                    style={{ flexShrink: 0, padding: '6px 10px', borderRadius: 7, background: urlCopied ? 'rgba(52,211,153,0.15)' : 'rgba(255,255,255,0.05)', border: `1px solid ${urlCopied ? '#34d399' : '#1a3050'}`, color: urlCopied ? '#34d399' : '#4a6278', cursor: 'pointer', fontSize: 11, display: 'flex', alignItems: 'center', gap: 4, transition: 'all 0.15s' }}>
-                    {urlCopied ? <Check size={12} /> : <Copy size={12} />}
+                    style={{ flexShrink: 0, padding: '8px 14px', borderRadius: 8, background: urlCopied ? 'rgba(52,211,153,0.2)' : 'rgba(56,189,248,0.1)', border: `1.5px solid ${urlCopied ? '#34d399' : '#38bdf8'}`, color: urlCopied ? '#34d399' : '#38bdf8', cursor: 'pointer', fontSize: 12, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 5, transition: 'all 0.15s' }}>
+                    {urlCopied ? <Check size={13} /> : <Copy size={13} />}
+                    {urlCopied ? 'Copied' : 'Copy'}
                   </button>
                   {/* Params toggle */}
                   <button
                     onClick={() => setShowParams(v => !v)}
                     title="Edit query parameters"
-                    style={{ flexShrink: 0, padding: '6px 10px', borderRadius: 7, background: showParams ? 'rgba(56,189,248,0.12)' : 'rgba(255,255,255,0.05)', border: `1px solid ${showParams ? '#38bdf8' : '#1a3050'}`, color: showParams ? '#38bdf8' : '#4a6278', cursor: 'pointer', fontSize: 11, display: 'flex', alignItems: 'center', gap: 4, transition: 'all 0.15s' }}>
-                    <Settings size={12} /> Params
+                    style={{ flexShrink: 0, padding: '8px 14px', borderRadius: 8, background: showParams ? 'rgba(56,189,248,0.15)' : 'rgba(255,255,255,0.05)', border: `1.5px solid ${showParams ? '#38bdf8' : '#1e3a5f'}`, color: showParams ? '#38bdf8' : '#7aa8c7', cursor: 'pointer', fontSize: 12, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 5, transition: 'all 0.15s' }}>
+                    <Settings size={13} /> Params
                   </button>
                 </div>
                 {/* Query param editor */}
                 {showParams && (
-                  <div style={{ background: 'rgba(0,0,0,0.25)', border: '1px solid #1a3050', borderRadius: 8, padding: '10px 12px' }}>
-                    <div style={{ fontSize: 10, fontWeight: 700, color: '#4a6278', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Query Parameters</div>
-                    {params.length === 0 && <div style={{ fontSize: 11, color: '#334d63' }}>No query params detected. Add one below.</div>}
+                  <div style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid #1e3a5f', borderRadius: 10, padding: '12px 14px' }}>
+                    <div style={{ fontSize: 11, fontWeight: 700, color: '#7aa8c7', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>Query Parameters</div>
+                    {params.length === 0 && <div style={{ fontSize: 12, color: '#4a6278', marginBottom: 8 }}>No query params detected. Add one below.</div>}
                     {params.map((p, i) => (
-                      <div key={i} style={{ display: 'flex', gap: 6, marginBottom: 6, alignItems: 'center' }}>
+                      <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8, alignItems: 'center' }}>
                         <input value={p.key} onChange={e => { const np = [...params]; np[i] = {...np[i], key: e.target.value}; setParams(np); setEditUrl(rebuildUrl(np)) }}
-                          placeholder="key" style={{ width: 120, background: '#070e18', border: '1px solid #1a3050', borderRadius: 6, padding: '5px 8px', color: '#818cf8', fontSize: 11, fontFamily: 'monospace', outline: 'none' }} />
-                        <span style={{ color: '#334d63', fontSize: 12 }}>=</span>
+                          placeholder="key" style={{ width: 130, background: '#070e18', border: '1px solid #1e3a5f', borderRadius: 7, padding: '7px 10px', color: '#818cf8', fontSize: 12, fontFamily: 'monospace', outline: 'none' }} />
+                        <span style={{ color: '#4a6278', fontSize: 14, fontWeight: 700 }}>=</span>
                         <input value={p.value} onChange={e => { const np = [...params]; np[i] = {...np[i], value: e.target.value}; setParams(np); setEditUrl(rebuildUrl(np)) }}
-                          placeholder="value" style={{ flex: 1, background: '#070e18', border: '1px solid #1a3050', borderRadius: 6, padding: '5px 8px', color: '#34d399', fontSize: 11, fontFamily: 'monospace', outline: 'none' }} />
+                          placeholder="value" style={{ flex: 1, background: '#070e18', border: '1px solid #1e3a5f', borderRadius: 7, padding: '7px 10px', color: '#4ade80', fontSize: 12, fontFamily: 'monospace', outline: 'none' }} />
                         <button onClick={() => { const np = params.filter((_,j) => j !== i); setParams(np); setEditUrl(rebuildUrl(np)) }}
-                          style={{ background: 'none', border: 'none', color: '#334d63', cursor: 'pointer', padding: 2 }}
-                          onMouseEnter={e => (e.currentTarget.style.color = '#f87171')} onMouseLeave={e => (e.currentTarget.style.color = '#334d63')}>
-                          <X size={12} />
+                          style={{ background: 'rgba(248,113,113,0.1)', border: '1px solid rgba(248,113,113,0.3)', borderRadius: 6, color: '#f87171', cursor: 'pointer', padding: '6px 8px', display: 'flex', alignItems: 'center' }}
+                          onMouseEnter={e => (e.currentTarget.style.background = 'rgba(248,113,113,0.2)')} onMouseLeave={e => (e.currentTarget.style.background = 'rgba(248,113,113,0.1)')}>
+                          <X size={13} />
                         </button>
                       </div>
                     ))}
                     <button onClick={() => { const np = [...params, {key:'',value:''}]; setParams(np) }}
-                      style={{ fontSize: 11, color: '#38bdf8', background: 'none', border: '1px dashed #1a3050', borderRadius: 6, padding: '4px 10px', cursor: 'pointer', marginTop: 4 }}>
+                      style={{ fontSize: 12, fontWeight: 700, color: '#38bdf8', background: 'rgba(56,189,248,0.08)', border: '1px dashed rgba(56,189,248,0.3)', borderRadius: 7, padding: '6px 14px', cursor: 'pointer', marginTop: 4 }}>
                       + Add param
                     </button>
                   </div>
@@ -1059,7 +1071,27 @@ const ApiModal = ({ api, onClose, user, onShare, onKeyChange }: { api: FlatApi; 
                 )}
               </AnimatePresence>
 
-              <CodeSnippets api={{ ...api, url: effectiveUrl }} />
+              <CodeSnippets api={{ ...api, url: effectiveUrl }} onOpenPlayground={(code, lang) => setPlaygroundCode({ code, lang })} />
+
+              {/* Inline playground launch */}
+              {playgroundCode && (
+                <AnimatePresence>
+                  <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                    style={{ marginTop: 8, padding: '10px 14px', borderRadius: 10, background: 'rgba(52,211,153,0.08)', border: '1px solid rgba(52,211,153,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10 }}>
+                    <span style={{ fontSize: 12, color: '#34d399', fontWeight: 600 }}>✓ Ready to open in Playground ({playgroundCode.lang})</span>
+                    <div style={{ display: 'flex', gap: 6 }}>
+                      <button onClick={() => { onClose(); window.dispatchEvent(new CustomEvent('open-playground', { detail: playgroundCode })) }}
+                        style={{ padding: '6px 14px', borderRadius: 7, background: '#34d399', border: 'none', color: '#000', fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>
+                        Open Playground →
+                      </button>
+                      <button onClick={() => setPlaygroundCode(null)}
+                        style={{ padding: '6px 10px', borderRadius: 7, background: 'transparent', border: '1px solid #1a3050', color: '#4a6278', fontSize: 12, cursor: 'pointer' }}>
+                        ✕
+                      </button>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              )}
 
               <div className="mt-4">
                 <div className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{ color: '#4a6278' }}>Request Headers</div>
@@ -1577,7 +1609,7 @@ const ApiCard = ({ api, onClick, onCompare, compareSelected, user, collections, 
         {CAT_ICONS[api.category] || '●'} {api.category}
       </div>
       <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)', marginBottom: 5, lineHeight: 1.3 }}>{api.name}</div>
-      <div style={{ fontSize: 12, color: 'var(--text2)', lineHeight: 1.5, marginBottom: 12, minHeight: 32 }}>{api.desc}</div>
+      <div style={{ fontSize: 12, color: '#7aa8c7', lineHeight: 1.55, marginBottom: 12, minHeight: 32 }}>{api.desc}</div>
 
       {/* Card footer */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6 }}>
@@ -1587,18 +1619,18 @@ const ApiCard = ({ api, onClick, onCompare, compareSelected, user, collections, 
         </span>
 
         {/* Right: actions */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 5, flexShrink: 0 }}>
           {/* Compare */}
           {onCompare && (
             <button onClick={e => { e.stopPropagation(); onCompare() }}
               title={compareSelected ? 'Remove from comparison' : 'Add to comparison'}
-              style={{ padding: '3px 8px', borderRadius: 6, fontSize: 10, fontWeight: 600, background: compareSelected ? 'rgba(129,140,248,0.2)' : 'transparent', border: `1px solid ${compareSelected ? '#818cf8' : '#1a3050'}`, color: compareSelected ? '#818cf8' : '#4a6278', cursor: 'pointer', transition: 'all 0.15s', whiteSpace: 'nowrap' }}>
-              {compareSelected ? '✓' : '⇄'}
+              style={{ padding: '5px 10px', borderRadius: 7, fontSize: 11, fontWeight: 700, background: compareSelected ? 'rgba(129,140,248,0.2)' : 'rgba(129,140,248,0.08)', border: `1px solid ${compareSelected ? '#818cf8' : 'rgba(129,140,248,0.3)'}`, color: compareSelected ? '#818cf8' : '#818cf8', cursor: 'pointer', transition: 'all 0.15s', whiteSpace: 'nowrap' }}>
+              {compareSelected ? '✓ Added' : '⇄'}
             </button>
           )}
           {/* Copy URL */}
           <button onClick={copy} title="Copy API URL"
-            style={{ padding: '3px 8px', borderRadius: 6, fontSize: 10, fontWeight: 600, background: copied ? 'rgba(52,211,153,0.15)' : 'transparent', border: `1px solid ${copied ? '#065f46' : '#1a3050'}`, color: copied ? '#34d399' : '#4a6278', cursor: 'pointer', transition: 'all 0.15s' }}>
+            style={{ padding: '5px 10px', borderRadius: 7, fontSize: 11, fontWeight: 700, background: copied ? 'rgba(52,211,153,0.2)' : 'rgba(56,189,248,0.08)', border: `1px solid ${copied ? '#34d399' : 'rgba(56,189,248,0.3)'}`, color: copied ? '#34d399' : '#38bdf8', cursor: 'pointer', transition: 'all 0.15s' }}>
             {copied ? '✓' : '⎘'}
           </button>
           {/* Rating */}
@@ -2628,10 +2660,10 @@ const PersonalDashboard = ({ user }: { user: ReturnType<typeof useAuth>['user'] 
 }
 
 // ─── Code Playground ─────────────────────────────────────────────────────────
-const CodePlayground = ({ onClose, user }: { onClose: () => void; user: ReturnType<typeof useAuth>['user'] }) => {
-  const [lang, setLang] = useState<'javascript' | 'python' | 'curl'>('javascript')
+const CodePlayground = ({ onClose, user, initialCode }: { onClose: () => void; user: ReturnType<typeof useAuth>['user']; initialCode?: {code:string;lang:'javascript'|'python'|'curl'} | null }) => {
+  const [lang, setLang] = useState<'javascript' | 'python' | 'curl'>(initialCode?.lang || 'javascript')
   const [activePane, setActivePane] = useState<'editor' | 'output'>('editor')
-  const [code, setCode] = useState(`// 🔥 Roast as a Service (RaaS) — by Lorapok
+  const [code, setCode] = useState(initialCode?.code || `// 🔥 Roast as a Service (RaaS) — by Lorapok
 // Static API served over GitHub Pages CDN — zero backend, zero cold starts
 // Docs: https://maijied.github.io/roast-as-a-service/
 
@@ -2665,6 +2697,19 @@ return { en: roast.text, bn: bnRoast.text };`)
     if (!user) return
     getSnippets(user.uid).then(s => setSavedSnippets(s.sort((a,b) => b.ts - a.ts))).catch(() => {})
   }, [user])
+
+  // Listen for "open-playground" event from ApiModal code snippets
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const { code: c, lang: l } = (e as CustomEvent).detail
+      setCode(c)
+      setLang(l)
+      setOutput('')
+      setError('')
+    }
+    window.addEventListener('open-playground', handler)
+    return () => window.removeEventListener('open-playground', handler)
+  }, [])
 
   const saveCurrentSnippet = async () => {
     if (!user || !snippetName.trim() || !code.trim()) return
@@ -2782,8 +2827,13 @@ curl --request GET \\
               style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '7px 14px', borderRadius: 8, background: running ? 'rgba(74,222,128,0.3)' : '#4ade80', border: 'none', color: '#000', fontSize: 12, fontWeight: 700, cursor: running ? 'wait' : 'pointer' }}>
               <Play size={13} fill="currentColor" /> {running ? 'Running…' : 'Run'}
             </button>
+            <button onClick={() => { setCode(''); setOutput(''); setError('') }}
+              title="Clear editor"
+              style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '7px 12px', borderRadius: 8, background: 'rgba(248,113,113,0.1)', border: '1px solid rgba(248,113,113,0.3)', color: '#f87171', fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>
+              <Trash2 size={13} /> Clear
+            </button>
             <button onClick={onClose}
-              style={{ width: 32, height: 32, borderRadius: 8, background: 'rgba(248,113,113,0.1)', border: '1px solid rgba(248,113,113,0.3)', color: '#f87171', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              style={{ width: 34, height: 34, borderRadius: 8, background: 'rgba(248,113,113,0.12)', border: '1px solid rgba(248,113,113,0.35)', color: '#f87171', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               <X size={15} />
             </button>
           </div>
@@ -2814,23 +2864,23 @@ curl --request GET \\
                 if (e.key === 'Tab') { e.preventDefault(); const s = e.currentTarget.selectionStart; const v = code; setCode(v.slice(0, s) + '  ' + v.slice(e.currentTarget.selectionEnd)); setTimeout(() => { e.currentTarget.selectionStart = e.currentTarget.selectionEnd = s + 2 }, 0) }
                 if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) run()
               }} />
-            <div style={{ padding: '6px 14px', borderTop: '1px solid #1a3050', fontSize: 10, color: '#334d63', flexShrink: 0, display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span>Ctrl+Enter to run · Tab for indent</span>
+            <div style={{ padding: '10px 16px', borderTop: '1px solid #1a3050', fontSize: 12, color: '#4a6278', flexShrink: 0, display: 'flex', alignItems: 'center', gap: 10, background: 'rgba(0,0,0,0.2)' }}>
+              <span style={{ fontSize: 11 }}>Ctrl+Enter to run · Tab for indent</span>
               {user && (
-                <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 6 }}>
-                  {savedMsg && <span style={{ fontSize: 10, color: '#34d399', fontWeight: 700 }}>{savedMsg}</span>}
+                <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 8 }}>
+                  {savedMsg && <span style={{ fontSize: 11, color: '#34d399', fontWeight: 700 }}>{savedMsg}</span>}
                   <input value={snippetName} onChange={e => setSnippetName(e.target.value)}
                     onKeyDown={e => e.key === 'Enter' && saveCurrentSnippet()}
                     placeholder="Snippet name…"
-                    style={{ background: '#0c1828', border: '1px solid #1a3050', borderRadius: 6, padding: '3px 8px', color: '#e2e8f0', fontSize: 10, outline: 'none', width: 120 }}
+                    style={{ background: '#0c1828', border: '1px solid #1a3050', borderRadius: 7, padding: '5px 10px', color: '#e2e8f0', fontSize: 12, outline: 'none', width: 140 }}
                     onFocus={e => (e.target.style.borderColor = '#34d399')} onBlur={e => (e.target.style.borderColor = '#1a3050')} />
                   <button onClick={saveCurrentSnippet} disabled={!snippetName.trim() || saving}
-                    style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '3px 8px', borderRadius: 6, background: snippetName.trim() ? 'rgba(52,211,153,0.15)' : 'transparent', border: `1px solid ${snippetName.trim() ? '#34d399' : '#1a3050'}`, color: snippetName.trim() ? '#34d399' : '#334d63', fontSize: 10, fontWeight: 700, cursor: snippetName.trim() ? 'pointer' : 'default' }}>
-                    <Bookmark size={10} /> Save
+                    style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 12px', borderRadius: 7, background: snippetName.trim() ? 'rgba(52,211,153,0.15)' : 'transparent', border: `1px solid ${snippetName.trim() ? '#34d399' : '#1a3050'}`, color: snippetName.trim() ? '#34d399' : '#334d63', fontSize: 12, fontWeight: 700, cursor: snippetName.trim() ? 'pointer' : 'default' }}>
+                    <Bookmark size={12} /> Save
                   </button>
                   <button onClick={() => setShowSnippets(v => !v)}
-                    style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '3px 8px', borderRadius: 6, background: showSnippets ? 'rgba(52,211,153,0.15)' : 'transparent', border: `1px solid ${showSnippets ? '#34d399' : '#1a3050'}`, color: showSnippets ? '#34d399' : '#334d63', fontSize: 10, fontWeight: 700, cursor: 'pointer' }}>
-                    <BookmarkCheck size={10} /> Load {savedSnippets.length > 0 && `(${savedSnippets.length})`}
+                    style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 12px', borderRadius: 7, background: showSnippets ? 'rgba(52,211,153,0.15)' : 'transparent', border: `1px solid ${showSnippets ? '#34d399' : '#1a3050'}`, color: showSnippets ? '#34d399' : '#4a6278', fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>
+                    <BookmarkCheck size={12} /> Load {savedSnippets.length > 0 && `(${savedSnippets.length})`}
                   </button>
                 </div>
               )}
@@ -3488,6 +3538,17 @@ export default function App() {
 
   const [filtersOpen, setFiltersOpen] = useState(true)
   const [showPlayground, setShowPlayground] = useState(false)
+  const [playgroundInit, setPlaygroundInit] = useState<{code:string;lang:'javascript'|'python'|'curl'}|null>(null)
+
+  // Listen for "open-playground" events from code snippets
+  useEffect(() => {
+    const handler = (e: Event) => {
+      setPlaygroundInit((e as CustomEvent).detail)
+      setShowPlayground(true)
+    }
+    window.addEventListener('open-playground', handler)
+    return () => window.removeEventListener('open-playground', handler)
+  }, [])
   const [showWelcome, setShowWelcome] = useState(() => !localStorage.getItem('lorapok_welcomed'))
   const [showStarPopup, setShowStarPopup] = useState(false)
   const [showHowTo, setShowHowTo] = useState(false)
@@ -3773,7 +3834,7 @@ export default function App() {
 
       {/* Code Playground */}
       <AnimatePresence>
-        {showPlayground && <CodePlayground onClose={() => setShowPlayground(false)} user={user} />}
+        {showPlayground && <CodePlayground onClose={() => { setShowPlayground(false); setPlaygroundInit(null) }} user={user} initialCode={playgroundInit} />}
       </AnimatePresence>
 
       {/* Welcome Modal */}
