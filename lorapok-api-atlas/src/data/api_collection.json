@@ -5742,6 +5742,146 @@
           "response": [],
           "authRequired": "OAuth",
           "authLink": "https://www.linkedin.com/developers/apps/new"
+        },
+        {
+          "name": "Mailgun Send Email (free)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://api.mailgun.net/v3/YOUR_DOMAIN/messages"
+            },
+            "description": "Send transactional email via Mailgun free tier"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://signup.mailgun.com/"
+        },
+        {
+          "name": "SendGrid Email (free)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://api.sendgrid.com/v3/mail/send"
+            },
+            "description": "Send email via SendGrid free tier (100/day)"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://signup.sendgrid.com/"
+        },
+        {
+          "name": "Resend Email",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://api.resend.com/emails"
+            },
+            "description": "Modern email API \u2014 free tier available"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://resend.com/signup"
+        },
+        {
+          "name": "Brevo (Sendinblue) Email",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://api.brevo.com/v3/smtp/email"
+            },
+            "description": "Send transactional email via Brevo free tier"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://app.brevo.com/account/register"
+        },
+        {
+          "name": "Postmark Email",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://api.postmarkapp.com/email"
+            },
+            "description": "Transactional email via Postmark"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://account.postmarkapp.com/sign_up"
+        },
+        {
+          "name": "Plivo SMS (free trial)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://api.plivo.com/v1/Account/YOUR_AUTH_ID/Message/"
+            },
+            "description": "Send SMS via Plivo free trial"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://console.plivo.com/accounts/register/"
+        },
+        {
+          "name": "Sinch SMS (free trial)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://sms.api.sinch.com/xms/v1/YOUR_SERVICE_PLAN_ID/batches"
+            },
+            "description": "Send SMS via Sinch free trial"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://dashboard.sinch.com/signup"
+        },
+        {
+          "name": "Infobip SMS (free trial)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://YOUR_BASE_URL.api.infobip.com/sms/2/text/advanced"
+            },
+            "description": "Send SMS via Infobip free trial"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.infobip.com/signup"
+        },
+        {
+          "name": "Telnyx SMS (free trial)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://api.telnyx.com/v2/messages"
+            },
+            "description": "Send SMS via Telnyx free trial"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://telnyx.com/sign-up"
+        },
+        {
+          "name": "Bandwidth SMS",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://messaging.bandwidth.com/api/v2/users/YOUR_ACCOUNT_ID/messages"
+            },
+            "description": "Send SMS via Bandwidth"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://dev.bandwidth.com/"
         }
       ]
     },
@@ -8960,6 +9100,250 @@
           "response": [],
           "authRequired": "API Key",
           "authLink": "https://app.travis-ci.com/signup"
+        },
+        {
+          "name": "UUID Generator",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.uuidgenerator.net/api/version4"
+            },
+            "description": "Generate a random UUID v4"
+          },
+          "response": []
+        },
+        {
+          "name": "UUID v1 Generator",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.uuidgenerator.net/api/version1"
+            },
+            "description": "Generate a time-based UUID v1"
+          },
+          "response": []
+        },
+        {
+          "name": "Nano ID Generator",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://nanoid.jormaechea.com.ar/?size=21"
+            },
+            "description": "Generate a URL-safe unique ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Random.org Integers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.random.org/integers/?num=10&min=1&max=100&col=1&base=10&format=plain&rnd=new"
+            },
+            "description": "True random integers from atmospheric noise"
+          },
+          "response": []
+        },
+        {
+          "name": "Random.org Strings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.random.org/strings/?num=5&len=10&digits=on&upperalpha=on&loweralpha=on&unique=on&format=plain&rnd=new"
+            },
+            "description": "True random strings"
+          },
+          "response": []
+        },
+        {
+          "name": "Lorem Ipsum API",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://loripsum.net/api/3/short/plaintext"
+            },
+            "description": "Generate Lorem Ipsum placeholder text"
+          },
+          "response": []
+        },
+        {
+          "name": "Bacon Ipsum",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://baconipsum.com/api/?type=meat-and-filler&paras=2&format=json"
+            },
+            "description": "Meat-themed Lorem Ipsum generator"
+          },
+          "response": []
+        },
+        {
+          "name": "Corporate Ipsum",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://corporatebs-generator.sameerkumar.website/"
+            },
+            "description": "Generate corporate buzzword sentences"
+          },
+          "response": []
+        },
+        {
+          "name": "Hacker News Top Stories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://hacker-news.firebaseio.com/v0/topstories.json"
+            },
+            "description": "Top story IDs from Hacker News"
+          },
+          "response": []
+        },
+        {
+          "name": "Hacker News Item",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://hacker-news.firebaseio.com/v0/item/8863.json"
+            },
+            "description": "Fetch a specific Hacker News item"
+          },
+          "response": []
+        },
+        {
+          "name": "Carbon Code Screenshot",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://carbonara.solopov.dev/api/cook"
+            },
+            "description": "Generate code screenshot images"
+          },
+          "response": []
+        },
+        {
+          "name": "Ray.so Code Image",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://ray.so/api/image"
+            },
+            "description": "Beautiful code screenshots from ray.so"
+          },
+          "response": []
+        },
+        {
+          "name": "Shields.io Badge",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://img.shields.io/badge/build-passing-brightgreen"
+            },
+            "description": "Generate SVG badges for README files"
+          },
+          "response": []
+        },
+        {
+          "name": "Badgen Badge",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://badgen.net/badge/status/passing/green"
+            },
+            "description": "Fast SVG badge generation"
+          },
+          "response": []
+        },
+        {
+          "name": "Readme Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://github-readme-stats.vercel.app/api?username=octocat&show_icons=true"
+            },
+            "description": "GitHub profile stats card for README"
+          },
+          "response": []
+        },
+        {
+          "name": "Wakatime Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://wakatime.com/api/v1/users/current/stats/last_7_days"
+            },
+            "description": "Coding time stats from WakaTime"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://wakatime.com/"
+        },
+        {
+          "name": "Sourcegraph Code Search",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://sourcegraph.com/.api/search/stream?q=repo:github.com/torvalds/linux+main&v=V3"
+            },
+            "description": "Search code across public repos"
+          },
+          "response": []
+        },
+        {
+          "name": "Libraries.io Package",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://libraries.io/api/npm/lodash?api_key=YOUR_API_KEY"
+            },
+            "description": "Package info and dependencies"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://libraries.io/account"
+        },
+        {
+          "name": "Bundlephobia Size",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://bundlephobia.com/api/size?package=react@18.0.0"
+            },
+            "description": "npm package bundle size analysis"
+          },
+          "response": []
+        },
+        {
+          "name": "Packagephobia Install Size",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://packagephobia.com/api.json?p=lodash"
+            },
+            "description": "npm package install size"
+          },
+          "response": []
         }
       ]
     },
@@ -11453,6 +11837,142 @@
           "response": [],
           "authRequired": "API Key",
           "authLink": "https://marketstack.com/signup/free"
+        },
+        {
+          "name": "Luhn Algorithm Validator",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.luhncheck.com/validate/4532015112830366"
+            },
+            "description": "Validate credit card number with Luhn algorithm"
+          },
+          "response": []
+        },
+        {
+          "name": "Stripe Test Mode Tokens",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://api.stripe.com/v1/tokens"
+            },
+            "description": "Create test payment tokens in Stripe"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://dashboard.stripe.com/register"
+        },
+        {
+          "name": "PayPal Sandbox Orders",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://api-m.sandbox.paypal.com/v2/checkout/orders"
+            },
+            "description": "Create test orders in PayPal sandbox"
+          },
+          "response": [],
+          "authRequired": "OAuth",
+          "authLink": "https://developer.paypal.com/"
+        },
+        {
+          "name": "Open Exchange Rates",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://openexchangerates.org/api/latest.json?app_id=YOUR_APP_ID"
+            },
+            "description": "Live currency exchange rates"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://openexchangerates.org/signup"
+        },
+        {
+          "name": "Fixer.io Rates",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://data.fixer.io/api/latest?access_key=YOUR_API_KEY"
+            },
+            "description": "Foreign exchange rates from Fixer"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://fixer.io/product"
+        },
+        {
+          "name": "CurrencyLayer Rates",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.currencylayer.com/live?access_key=YOUR_API_KEY"
+            },
+            "description": "Real-time currency exchange rates"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://currencylayer.com/product"
+        },
+        {
+          "name": "Alpha Vantage Stocks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=YOUR_API_KEY"
+            },
+            "description": "Stock market data"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.alphavantage.co/support/#api-key"
+        },
+        {
+          "name": "Polygon.io Stocks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.polygon.io/v2/aggs/ticker/AAPL/range/1/day/2023-01-09/2023-01-09?apiKey=YOUR_API_KEY"
+            },
+            "description": "Stock aggregates from Polygon"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://polygon.io/"
+        },
+        {
+          "name": "Yahoo Finance Quote",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://query1.finance.yahoo.com/v8/finance/chart/AAPL?interval=1d&range=1mo"
+            },
+            "description": "Stock quotes from Yahoo Finance"
+          },
+          "response": []
+        },
+        {
+          "name": "Twelve Data Stocks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.twelvedata.com/price?symbol=AAPL&apikey=YOUR_API_KEY"
+            },
+            "description": "Real-time stock prices"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://twelvedata.com/"
         }
       ]
     },
@@ -26598,6 +27118,144 @@
           "response": [],
           "authRequired": "API Key",
           "authLink": "https://www.abuseipdb.com/register"
+        },
+        {
+          "name": "HaveIBeenPwned Breaches",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://haveibeenpwned.com/api/v3/breachedaccount/test@example.com"
+            },
+            "description": "Check if email was in a data breach"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://haveibeenpwned.com/API/Key"
+        },
+        {
+          "name": "HaveIBeenPwned Passwords",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.pwnedpasswords.com/range/5BAA6"
+            },
+            "description": "Check if password hash prefix was leaked"
+          },
+          "response": []
+        },
+        {
+          "name": "Shodan Host Info",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.shodan.io/shodan/host/8.8.8.8?key=YOUR_API_KEY"
+            },
+            "description": "Internet-connected device info"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://account.shodan.io/"
+        },
+        {
+          "name": "VirusTotal URL Scan",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://www.virustotal.com/api/v3/urls"
+            },
+            "description": "Scan URL for malware"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.virustotal.com/gui/join-us"
+        },
+        {
+          "name": "AbuseIPDB Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.abuseipdb.com/api/v2/check?ipAddress=118.25.6.39&maxAgeInDays=90"
+            },
+            "description": "Check if IP is reported for abuse"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.abuseipdb.com/register"
+        },
+        {
+          "name": "IPQualityScore Fraud",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://ipqualityscore.com/api/json/ip/YOUR_API_KEY/8.8.8.8"
+            },
+            "description": "IP fraud and proxy detection"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.ipqualityscore.com/"
+        },
+        {
+          "name": "Phishtank URL Check",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://checkurl.phishtank.com/checkurl/"
+            },
+            "description": "Check if URL is a phishing site"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.phishtank.com/api_register.php"
+        },
+        {
+          "name": "URLScan.io Submit",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://urlscan.io/api/v1/scan/"
+            },
+            "description": "Submit URL for security scan"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://urlscan.io/user/signup"
+        },
+        {
+          "name": "Cloudmersive Virus Scan",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://api.cloudmersive.com/virus/scan/url"
+            },
+            "description": "Scan URL for viruses"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://cloudmersive.com/"
+        },
+        {
+          "name": "Dehashed Email Search",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.dehashed.com/search?query=email:test@example.com"
+            },
+            "description": "Search leaked credentials database"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.dehashed.com/"
         }
       ]
     },
@@ -30933,6 +31591,603 @@
           "response": [],
           "authRequired": "API Key",
           "authLink": "https://libsyn.com/"
+        }
+      ]
+    },
+    {
+      "name": "Privacy & Anonymity",
+      "item": [
+        {
+          "name": "Guerrilla Mail",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.guerrillamail.com/ajax.php?f=get_email_address"
+            },
+            "description": "Get a disposable temporary email address instantly"
+          },
+          "response": []
+        },
+        {
+          "name": "Temp Mail (mail.tm)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://api.mail.tm/accounts"
+            },
+            "description": "Create a disposable email account via mail.tm"
+          },
+          "response": []
+        },
+        {
+          "name": "mail.tm Domains",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.mail.tm/domains"
+            },
+            "description": "List available domains for temp email creation"
+          },
+          "response": []
+        },
+        {
+          "name": "Mailnesia",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://mailnesia.com/mailbox/testuser123"
+            },
+            "description": "Anonymous email inbox \u2014 no signup needed"
+          },
+          "response": []
+        },
+        {
+          "name": "DisposableMail Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://open.kickbox.com/v1/disposable/guerrillamail.com"
+            },
+            "description": "Check if an email domain is disposable"
+          },
+          "response": []
+        },
+        {
+          "name": "Temp Mail Address (1secmail)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.1secmail.com/api/v1/?action=genRandomMailbox&count=5"
+            },
+            "description": "Generate random disposable email addresses"
+          },
+          "response": []
+        },
+        {
+          "name": "1secmail Inbox",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.1secmail.com/api/v1/?action=getMessages&login=test&domain=1secmail.com"
+            },
+            "description": "Read messages from a 1secmail inbox"
+          },
+          "response": []
+        },
+        {
+          "name": "Mailsac Disposable",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://mailsac.com/api/addresses/test@mailsac.com/messages"
+            },
+            "description": "Read messages from a Mailsac disposable inbox"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://mailsac.com/"
+        },
+        {
+          "name": "Trashmail Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://trashmail.at/api/v1/inbox/test@trashmail.at"
+            },
+            "description": "Trashmail disposable inbox"
+          },
+          "response": []
+        },
+        {
+          "name": "Yopmail Inbox",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://yopmail.com/en/wm?login=testuser&p=inbox&d=yopmail.com&ctrl=&yj=ZmZqZmZq&yp=ZmZqZmZq"
+            },
+            "description": "Yopmail free disposable email"
+          },
+          "response": []
+        },
+        {
+          "name": "TextBelt OTP (free tier)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://textbelt.com/otp/generate"
+            },
+            "description": "Generate OTP via TextBelt free SMS"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://textbelt.com/"
+        },
+        {
+          "name": "TextBelt SMS Send",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://textbelt.com/text"
+            },
+            "description": "Send SMS via TextBelt (1 free/day with key=textbelt)"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://textbelt.com/"
+        },
+        {
+          "name": "Vonage SMS (free trial)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://rest.nexmo.com/sms/json"
+            },
+            "description": "Send SMS via Vonage/Nexmo free trial"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://dashboard.nexmo.com/sign-up"
+        },
+        {
+          "name": "Twilio SMS (free trial)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://api.twilio.com/2010-04-01/Accounts/YOUR_ACCOUNT_SID/Messages.json"
+            },
+            "description": "Send SMS via Twilio free trial"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.twilio.com/try-twilio"
+        },
+        {
+          "name": "Fast2SMS OTP",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.fast2sms.com/dev/bulkV2?authorization=YOUR_API_KEY&route=otp&variables_values=1234&flash=0&numbers=9999999999"
+            },
+            "description": "Send OTP SMS via Fast2SMS (India)"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.fast2sms.com/"
+        },
+        {
+          "name": "MSG91 OTP",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.msg91.com/api/v5/otp?template_id=YOUR_TEMPLATE_ID&mobile=9999999999&authkey=YOUR_API_KEY"
+            },
+            "description": "Send OTP via MSG91 (India)"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://msg91.com/"
+        },
+        {
+          "name": "Receive SMS Online (smsreceivefree)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://smsreceivefree.com/api/numbers/"
+            },
+            "description": "Get free virtual phone numbers for SMS"
+          },
+          "response": []
+        },
+        {
+          "name": "Receive-smss.com Numbers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://receive-smss.com/api/numbers/"
+            },
+            "description": "Free virtual numbers to receive SMS"
+          },
+          "response": []
+        },
+        {
+          "name": "SMS Activate Numbers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://sms-activate.org/stubs/handler_api.php?api_key=YOUR_API_KEY&action=getNumbersStatus"
+            },
+            "description": "Virtual phone numbers for SMS verification"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://sms-activate.org/"
+        },
+        {
+          "name": "5SIM Virtual Numbers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://5sim.net/v1/guest/products/russia/any"
+            },
+            "description": "Virtual phone numbers for OTP"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://5sim.net/"
+        },
+        {
+          "name": "Faker API",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://fakerapi.it/api/v1/persons?_quantity=5"
+            },
+            "description": "Generate fake person data (name, address, email)"
+          },
+          "response": []
+        },
+        {
+          "name": "Random User Generator",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://randomuser.me/api/?results=5"
+            },
+            "description": "Generate random user profiles with photos"
+          },
+          "response": []
+        },
+        {
+          "name": "JSONPlaceholder Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/users"
+            },
+            "description": "Fake REST API for testing \u2014 users"
+          },
+          "response": []
+        },
+        {
+          "name": "JSONPlaceholder Posts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://jsonplaceholder.typicode.com/posts"
+            },
+            "description": "Fake REST API for testing \u2014 posts"
+          },
+          "response": []
+        },
+        {
+          "name": "Mockaroo Schema",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.mockaroo.com/api/generate.json?count=5&key=YOUR_API_KEY&fields=[{\"name\":\"name\",\"type\":\"Full Name\"}]"
+            },
+            "description": "Generate realistic fake data with custom schema"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://mockaroo.com/"
+        },
+        {
+          "name": "DummyJSON Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://dummyjson.com/users?limit=10"
+            },
+            "description": "Fake users with full profile data"
+          },
+          "response": []
+        },
+        {
+          "name": "DummyJSON Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://dummyjson.com/products?limit=10"
+            },
+            "description": "Fake product catalog for testing"
+          },
+          "response": []
+        },
+        {
+          "name": "DummyJSON Carts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://dummyjson.com/carts?limit=5"
+            },
+            "description": "Fake shopping cart data"
+          },
+          "response": []
+        },
+        {
+          "name": "Reqres Fake Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://reqres.in/api/users?page=1"
+            },
+            "description": "Fake user API for frontend testing"
+          },
+          "response": []
+        },
+        {
+          "name": "Fake Store API",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://fakestoreapi.com/products"
+            },
+            "description": "Fake e-commerce product data"
+          },
+          "response": []
+        },
+        {
+          "name": "Stripe Test Cards",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://stripe.com/docs/testing#cards"
+            },
+            "description": "Stripe test card numbers for payment testing"
+          },
+          "response": []
+        },
+        {
+          "name": "Braintree Test Cards",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://developer.paypal.com/braintree/docs/guides/credit-cards/testing-go-live/php"
+            },
+            "description": "Braintree/PayPal test card numbers"
+          },
+          "response": []
+        },
+        {
+          "name": "Luhn Check (freeformatter)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.freeformatter.com/credit-card-number-generator-validator.html"
+            },
+            "description": "Validate credit card numbers using Luhn algorithm"
+          },
+          "response": []
+        },
+        {
+          "name": "Credit Card Generator (generatedata)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://generatedata.com/api/v1/generate"
+            },
+            "description": "Generate test credit card numbers"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://generatedata.com/"
+        },
+        {
+          "name": "Fake Credit Card (Faker.js)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://fakerapi.it/api/v1/credit_cards?_quantity=5"
+            },
+            "description": "Generate fake credit card data for testing"
+          },
+          "response": []
+        },
+        {
+          "name": "BIN Lookup",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://lookup.binlist.net/45717360"
+            },
+            "description": "Look up bank/card info from BIN number"
+          },
+          "response": []
+        },
+        {
+          "name": "IIN/BIN Database",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.bincodes.com/bin/?format=json&api_key=YOUR_API_KEY&bin=457173"
+            },
+            "description": "BIN/IIN card lookup database"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.bincodes.com/api-bin-checker/"
+        },
+        {
+          "name": "Mailnull Edu Domains",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://mailnull.com/"
+            },
+            "description": "Disposable email with edu-style domains"
+          },
+          "response": []
+        },
+        {
+          "name": "Guerrilla Mail Custom Domain",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.guerrillamail.com/ajax.php?f=set_email_user&email_user=student&lang=en"
+            },
+            "description": "Set custom username for guerrilla mail"
+          },
+          "response": []
+        },
+        {
+          "name": "EmailOnDeck Temp",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://emailondeck.com/api/v1.0/get_temp_email?key=YOUR_API_KEY"
+            },
+            "description": "Temporary email with custom domains"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://emailondeck.com/"
+        },
+        {
+          "name": "Temp Mail Plus",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://tempmail.plus/api/mails?email=test@tempmail.plus&limit=10&epin="
+            },
+            "description": "Temp Mail Plus inbox reader"
+          },
+          "response": []
+        },
+        {
+          "name": "Inboxkitten",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://inboxkitten.com/api/v1/inbox/list?mailbox=test"
+            },
+            "description": "Open-source disposable email service"
+          },
+          "response": []
+        },
+        {
+          "name": "Harakiri Mail",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.harakirimail.com/inbox/test"
+            },
+            "description": "Self-destructing disposable email"
+          },
+          "response": []
+        },
+        {
+          "name": "Spamgourmet",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.spamgourmet.com/index.pl"
+            },
+            "description": "Disposable email with message limits"
+          },
+          "response": []
+        },
+        {
+          "name": "Mailinator Inbox",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://api.mailinator.com/api/v2/domains/mailinator.com/inboxes/test?token=YOUR_API_KEY"
+            },
+            "description": "Read Mailinator public inbox"
+          },
+          "response": [],
+          "authRequired": "API Key",
+          "authLink": "https://www.mailinator.com/"
+        },
+        {
+          "name": "Dispostable",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://www.dispostable.com/inbox/testuser/"
+            },
+            "description": "Simple disposable email inbox"
+          },
+          "response": []
+        },
+        {
+          "name": "Throwam",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://throwam.com/api/inbox/test@throwam.com"
+            },
+            "description": "Throwaway email inbox API"
+          },
+          "response": []
         }
       ]
     }

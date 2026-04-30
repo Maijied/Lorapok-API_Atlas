@@ -6,10 +6,10 @@
 
 **◈ Lorapok · Open Source Intelligence**
 
-*The world's most comprehensive open-source API sandbox — 2000+ curated APIs, AI assistant, live testing, and more.*
+*The world's most comprehensive open-source API sandbox — 2100+ curated APIs, AI assistant, live testing, and more.*
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-4ade80?style=for-the-badge&logo=github)](https://maijied.github.io/Lorapok-API_Atlas/)
-[![APIs](https://img.shields.io/badge/APIs-2000%2B-38bdf8?style=for-the-badge)](https://maijied.github.io/Lorapok-API_Atlas/)
+[![APIs](https://img.shields.io/badge/APIs-2100%2B-38bdf8?style=for-the-badge)](https://maijied.github.io/Lorapok-API_Atlas/)
 [![React](https://img.shields.io/badge/React%2018-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com)
@@ -24,7 +24,7 @@
 
 ## What is Lorapok Atlas?
 
-Lorapok Atlas API Directory is a zero-config web dashboard that lets developers **browse, explore, and live-test 2000+ free and open-source APIs** — all in one place. No backend setup, no Postman required. Just open the app, pick an API, and hit Run Test.
+Lorapok Atlas API Directory is a zero-config web dashboard that lets developers **browse, explore, and live-test 2100+ free and open-source APIs** — all in one place. No backend setup, no Postman required. Just open the app, pick an API, and hit Run Test.
 
 Built around **Vaultie** 🐛 — the AI-powered Atlas Vault Manager — the app provides real-time conversational assistance, live API testing, secure key management, and a full code playground.
 
@@ -33,7 +33,8 @@ Built around **Vaultie** 🐛 — the AI-powered Atlas Vault Manager — the app
 ## Features
 
 ### Core Experience
-- **2000+ curated APIs** across 33 categories — AI, crypto, maps, music, health, space, developer tools, blockchain, sports, food, travel, security, communication, education, images, movies, government, science, IoT, HR, legal, real estate, documents, cloud, streaming, and more
+- **2100+ curated APIs** across 34 categories — AI, crypto, maps, music, health, space, developer tools, blockchain, sports, food, travel, security, communication, education, images, movies, government, science, IoT, HR, legal, real estate, documents, cloud, streaming, privacy & anonymity, and more
+- **Privacy & Anonymity** category — disposable email (Guerrilla Mail, 1secmail, mail.tm), free SMS/OTP (TextBelt, Vonage, Twilio), fake data generators (Faker API, DummyJSON, RandomUser), test card data, and more
 - **Sticky navbar** with ◈ Lorapok · Open Source Intelligence branding and Google sign-in
 - **Hero header** with live stats (total APIs, categories, free/key/OAuth counts, visitor/member counters)
 - **Sticky controls bar** — search, sort, auth filter, multi-row category pills
@@ -87,27 +88,27 @@ Built around **Vaultie** 🐛 — the AI-powered Atlas Vault Manager — the app
 
 ---
 
-## API Categories (33)
+## API Categories (34)
 
 | Category | APIs | Category | APIs |
 |---|---|---|---|
 | 🤖 AI & Machine Learning | 75 | 📰 News & Media | 44 |
-| 💻 Developer Tools | 166 | 🎬 Movies & Entertainment | 102 |
-| 💰 E-Commerce & Finance | 118 | 🌤 Weather & Environment | 46 |
+| 💻 Developer Tools | 186 | 🎬 Movies & Entertainment | 102 |
+| 💰 E-Commerce & Finance | 128 | 🌤 Weather & Environment | 46 |
 | ⛓ Blockchain & Crypto | 101 | ✈️ Travel & Transport | 53 |
 | 🏋️ Sports & Games | 102 | 🐾 Animals & Nature | 57 |
-| 🗺 Maps & Geolocation | 81 | 🔐 Security & Identity | 38 |
+| 🗺 Maps & Geolocation | 81 | 🔐 Security & Identity | 48 |
 | 🎵 Music | 92 | 🚀 Space & Astronomy | 51 |
 | 📚 Education & Knowledge | 81 | 🏛 Government & Public Data | 45 |
 | 📸 Images & Media | 83 | 🔬 Science & Research | 55 |
 | 🏥 Health & Medicine | 63 | ☁️ Cloud & Infrastructure | 37 |
-| 📡 Communication & Social | 46 | 🌍 Language & Translation | 50 |
+| 📡 Communication & Social | 56 | 🌍 Language & Translation | 50 |
 | 🍕 Food & Recipes | 53 | 📄 Documents & PDF | 44 |
 | 🏠 Real Estate & Property | 40 | 🏭 IoT & Hardware | 43 |
 | 🧑‍💼 HR & Productivity | 53 | 📣 Advertising & Marketing | 21 |
 | 🧾 Legal & Compliance | 38 | 🔢 QR & Barcodes | 38 |
 | 📊 Data & Analytics | 32 | 🎨 Art & Culture | 25 |
-| 📺 Streaming & Live | 30 | | |
+| 📺 Streaming & Live | 30 | 🕵️ Privacy & Anonymity | 47 |
 
 ---
 
