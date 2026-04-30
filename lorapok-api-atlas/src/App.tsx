@@ -2327,13 +2327,16 @@ const SubmitApiForm = () => {
   const [url, setUrl] = useState('')
   const [category, setCategory] = useState('')
   const [desc, setDesc] = useState('')
+  const [auth, setAuth] = useState('None')
 
   const submit = () => {
-    const body = encodeURIComponent(`**API Name:** ${name}\n**URL:** ${url}\n**Category:** ${category}\n**Description:** ${desc}\n\n*Submitted via Lorapok Atlas*`)
+    const body = encodeURIComponent(`**API Name:** ${name}\n**URL:** ${url}\n**Category:** ${category}\n**Auth:** ${auth}\n**Description:** ${desc}\n\n*Submitted via Lorapok Atlas*`)
     const title = encodeURIComponent(`[API Submission] ${name}`)
     window.open(`https://github.com/Maijied/Lorapok-API_Atlas/issues/new?title=${title}&body=${body}&labels=api-submission`, '_blank')
-    setOpen(false); setName(''); setUrl(''); setCategory(''); setDesc('')
+    setOpen(false); setName(''); setUrl(''); setCategory(''); setDesc(''); setAuth('None')
   }
+
+  const inputStyle: React.CSSProperties = { width: '100%', boxSizing: 'border-box', background: '#070e18', border: '1px solid #1a3050', borderRadius: 8, padding: '8px 12px', color: '#e2e8f0', fontSize: 13, outline: 'none' }
 
   return (
     <>
@@ -2356,25 +2359,48 @@ const SubmitApiForm = () => {
                 <button onClick={() => setOpen(false)} style={{ background: 'none', border: 'none', color: '#4a6278', cursor: 'pointer' }}><X size={16} /></button>
               </div>
               <div style={{ padding: 20, display: 'flex', flexDirection: 'column', gap: 12 }}>
-                {[
-                  { label: 'API Name', val: name, set: setName, ph: 'e.g. OpenWeatherMap' },
-                  { label: 'API URL', val: url, set: setUrl, ph: 'https://api.example.com/endpoint' },
-                  { label: 'Category', val: category, set: setCategory, ph: 'e.g. Weather & Environment' },
-                ].map(f => (
-                  <div key={f.label}>
-                    <div style={{ fontSize: 10, fontWeight: 700, color: '#4a6278', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 5 }}>{f.label}</div>
-                    <input value={f.val} onChange={e => f.set(e.target.value)} placeholder={f.ph}
-                      style={{ width: '100%', boxSizing: 'border-box', background: '#070e18', border: '1px solid #1a3050', borderRadius: 8, padding: '8px 12px', color: '#e2e8f0', fontSize: 13, outline: 'none' }}
-                      onFocus={e => (e.target.style.borderColor = '#38bdf8')} onBlur={e => (e.target.style.borderColor = '#1a3050')} />
-                  </div>
-                ))}
+                {/* API Name */}
+                <div>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: '#4a6278', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 5 }}>API Name *</div>
+                  <input value={name} onChange={e => setName(e.target.value)} placeholder="e.g. OpenWeatherMap" style={inputStyle}
+                    onFocus={e => (e.target.style.borderColor = '#38bdf8')} onBlur={e => (e.target.style.borderColor = '#1a3050')} />
+                </div>
+                {/* URL */}
+                <div>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: '#4a6278', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 5 }}>API URL *</div>
+                  <input value={url} onChange={e => setUrl(e.target.value)} placeholder="https://api.example.com/endpoint" style={inputStyle}
+                    onFocus={e => (e.target.style.borderColor = '#38bdf8')} onBlur={e => (e.target.style.borderColor = '#1a3050')} />
+                </div>
+                {/* Category dropdown */}
+                <div>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: '#4a6278', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 5 }}>Category</div>
+                  <select value={category} onChange={e => setCategory(e.target.value)}
+                    style={{ ...inputStyle, cursor: 'pointer', appearance: 'none', backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234a6278' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 10px center', paddingRight: 32 }}>
+                    <option value="">— Select a category —</option>
+                    {CATEGORIES.filter(c => c !== 'All').map(c => (
+                      <option key={c} value={c}>{c}</option>
+                    ))}
+                  </select>
+                </div>
+                {/* Auth type */}
+                <div>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: '#4a6278', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 5 }}>Auth Type</div>
+                  <select value={auth} onChange={e => setAuth(e.target.value)}
+                    style={{ ...inputStyle, cursor: 'pointer', appearance: 'none', backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234a6278' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 10px center', paddingRight: 32 }}>
+                    <option value="None">🔓 Free / No Auth</option>
+                    <option value="API Key">🗝 API Key</option>
+                    <option value="OAuth">🔑 OAuth</option>
+                    <option value="Username">👤 Username / Password</option>
+                  </select>
+                </div>
+                {/* Description */}
                 <div>
                   <div style={{ fontSize: 10, fontWeight: 700, color: '#4a6278', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 5 }}>Description</div>
                   <textarea value={desc} onChange={e => setDesc(e.target.value)} placeholder="What does this API do?" rows={3}
-                    style={{ width: '100%', boxSizing: 'border-box', background: '#070e18', border: '1px solid #1a3050', borderRadius: 8, padding: '8px 12px', color: '#e2e8f0', fontSize: 13, outline: 'none', resize: 'none' }}
+                    style={{ ...inputStyle, resize: 'none' }}
                     onFocus={e => (e.target.style.borderColor = '#38bdf8')} onBlur={e => (e.target.style.borderColor = '#1a3050')} />
                 </div>
-                <p style={{ fontSize: 11, color: '#334d63', lineHeight: 1.5 }}>This will open a GitHub Issue pre-filled with your submission. Our team reviews and adds it to the directory.</p>
+                <p style={{ fontSize: 11, color: '#334d63', lineHeight: 1.5, margin: 0 }}>Opens a pre-filled GitHub Issue. Our team reviews and adds it to the directory.</p>
                 <button onClick={submit} disabled={!name || !url}
                   style={{ padding: '10px', borderRadius: 9, background: name && url ? '#4ade80' : 'rgba(74,222,128,0.2)', border: 'none', color: name && url ? '#000' : '#4a6278', fontSize: 13, fontWeight: 700, cursor: name && url ? 'pointer' : 'default' }}>
                   Submit via GitHub Issues →
@@ -2860,10 +2886,13 @@ const AdminPanel = ({ onClose, user }: { onClose: () => void; user: ReturnType<t
   const [authed, setAuthed] = useState(false)
   const [err, setErr] = useState('')
   const [adminRole, setAdminRole] = useState('')
-  const [tab, setTab] = useState<'overview' | 'trending' | 'ratings' | 'admins'>('overview')
+  const [tab, setTab] = useState<'overview' | 'trending' | 'ratings' | 'users' | 'admins'>('overview')
   const [data, setData] = useState<any>(null)
   const [admins, setAdmins] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
+  const [usersData, setUsersData] = useState<{ uid: string; email?: string; apiKeys: { name: string; key: string; url?: string }[] }[]>([])
+  const [usersLoading, setUsersLoading] = useState(false)
+  const [expandedUser, setExpandedUser] = useState<string | null>(null)
   // Add admin form
   const [newEmail, setNewEmail] = useState('')
   const [newRole, setNewRole] = useState<'admin' | 'moderator'>('moderator')
@@ -2875,7 +2904,6 @@ const AdminPanel = ({ onClose, user }: { onClose: () => void; user: ReturnType<t
     if (!user?.email) { setErr('Must be signed in'); return }
     const adminInfo = await isAdmin(user.email)
     if (!adminInfo.allowed) { setErr('Not authorized'); setTimeout(() => setErr(''), 2000); return }
-    // For non-master admins, verify their stored code
     if (user.email !== MASTER_ADMIN) {
       const adminList = await getAdmins()
       const me = adminList.find(a => a.email === user.email)
@@ -2894,6 +2922,42 @@ const AdminPanel = ({ onClose, user }: { onClose: () => void; user: ReturnType<t
       const [d, a] = await Promise.all([getAllUsersData(), getAdmins()])
       setData(d); setAdmins(a)
     } finally { setLoading(false) }
+  }
+
+  const loadUsersData = async () => {
+    setUsersLoading(true)
+    try {
+      // Fetch all user UIDs from stats/trending/ratings — these are the users who have interacted
+      // Then fetch their API keys
+      const snap = await getAllUsersData()
+      // Get unique UIDs from trending (users who tested APIs)
+      // We'll fetch keys for all known users via a broader approach
+      // Since we can't list all users from client SDK, we fetch from the stats doc
+      // and any user subcollections we can discover
+      const result: { uid: string; apiKeys: { name: string; key: string; url?: string }[] }[] = []
+
+      // Try to get user data from Firestore — fetch all docs under users/ collection
+      // This requires a Firestore rule allowing admin reads
+      const { getDocs: _getDocs, collection: _col } = await import('firebase/firestore')
+      const { db: _db } = await import('./firebase')
+      const usersSnap = await _getDocs(_col(_db, 'users'))
+      for (const userDoc of usersSnap.docs) {
+        const uid = userDoc.id
+        const keysSnap = await _getDocs(_col(_db, 'users', uid, 'apikeys'))
+        if (keysSnap.empty) continue
+        const apiKeys = keysSnap.docs.map(d => {
+          const apiName = d.id
+          const key = d.data().key as string
+          // Find the API URL from ALL_APIS
+          const apiInfo = ALL_APIS.find(a => a.name === apiName)
+          return { name: apiName, key, url: apiInfo?.url }
+        })
+        result.push({ uid, apiKeys })
+      }
+      setUsersData(result)
+    } catch (e: any) {
+      console.error('Failed to load users data:', e)
+    } finally { setUsersLoading(false) }
   }
 
   const addNewAdmin = async () => {
@@ -2950,10 +3014,10 @@ const AdminPanel = ({ onClose, user }: { onClose: () => void; user: ReturnType<t
         </div>
         {/* Tabs */}
         <div style={{ display: 'flex', borderBottom: '1px solid #1a3050', flexShrink: 0 }}>
-          {(['overview', 'trending', 'ratings', ...(adminRole === 'master' ? ['admins'] : [])] as const).map((t: any) => (
-            <button key={t} onClick={() => setTab(t)}
+          {(['overview', 'trending', 'ratings', 'users', ...(adminRole === 'master' ? ['admins'] : [])] as const).map((t: any) => (
+            <button key={t} onClick={() => { setTab(t); if (t === 'users' && usersData.length === 0) loadUsersData() }}
               style={{ flex: 1, padding: '10px', fontSize: 12, fontWeight: 700, background: 'none', border: 'none', borderBottom: `2px solid ${tab === t ? '#38bdf8' : 'transparent'}`, color: tab === t ? '#38bdf8' : '#4a6278', cursor: 'pointer', textTransform: 'capitalize' }}>
-              {t}
+              {t === 'users' ? '🔑 Users' : t}
             </button>
           ))}
         </div>
@@ -3020,6 +3084,73 @@ const AdminPanel = ({ onClose, user }: { onClose: () => void; user: ReturnType<t
               ))}
             </div>
           )}
+
+          {/* Users & API Keys tab */}
+          {tab === 'users' && (
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
+                <div style={{ fontSize: 11, fontWeight: 700, color: '#34d399', textTransform: 'uppercase', letterSpacing: '0.1em' }}>🔑 Users & Saved API Keys</div>
+                <button onClick={loadUsersData} style={{ background: 'none', border: '1px solid #1a3050', borderRadius: 6, padding: '4px 10px', color: '#4a6278', cursor: 'pointer', fontSize: 11 }}>↻ Reload</button>
+              </div>
+              {usersLoading && <div style={{ textAlign: 'center', color: '#334d63', padding: '40px 0' }}>Loading user data…</div>}
+              {!usersLoading && usersData.length === 0 && (
+                <div style={{ textAlign: 'center', color: '#334d63', padding: '40px 0', fontSize: 12 }}>
+                  No user key data found.<br />
+                  <span style={{ fontSize: 11 }}>Make sure Firestore rules allow admin reads on <code style={{ color: '#38bdf8' }}>users/</code></span>
+                </div>
+              )}
+              {!usersLoading && usersData.map(u => (
+                <div key={u.uid} style={{ marginBottom: 8, borderRadius: 10, border: '1px solid #1a3050', overflow: 'hidden' }}>
+                  {/* User header */}
+                  <div
+                    onClick={() => setExpandedUser(expandedUser === u.uid ? null : u.uid)}
+                    style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', background: 'rgba(255,255,255,0.03)', cursor: 'pointer' }}>
+                    <span style={{ fontSize: 16 }}>👤</span>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: 12, fontWeight: 700, color: '#d4e4f7', fontFamily: 'monospace' }}>{u.uid}</div>
+                    </div>
+                    <span style={{ fontSize: 10, background: 'rgba(52,211,153,0.15)', color: '#34d399', border: '1px solid rgba(52,211,153,0.3)', borderRadius: 8, padding: '2px 8px', fontWeight: 700 }}>
+                      {u.apiKeys.length} key{u.apiKeys.length !== 1 ? 's' : ''}
+                    </span>
+                    <span style={{ color: '#4a6278', fontSize: 12 }}>{expandedUser === u.uid ? '▲' : '▼'}</span>
+                  </div>
+                  {/* Keys list */}
+                  {expandedUser === u.uid && (
+                    <div style={{ borderTop: '1px solid #1a3050' }}>
+                      {u.apiKeys.map((k, i) => (
+                        <div key={k.name} style={{ padding: '10px 14px', borderBottom: i < u.apiKeys.length - 1 ? '1px solid rgba(26,48,80,0.5)' : 'none', background: 'rgba(0,0,0,0.2)' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: k.url ? 4 : 0 }}>
+                            <Key size={11} style={{ color: '#818cf8', flexShrink: 0 }} />
+                            <span style={{ fontSize: 12, fontWeight: 700, color: '#818cf8' }}>{k.name}</span>
+                          </div>
+                          {/* API URL */}
+                          {k.url && (
+                            <div style={{ fontSize: 10, color: '#4a6278', fontFamily: 'monospace', marginBottom: 4, paddingLeft: 19, wordBreak: 'break-all' }}>
+                              🔗 {k.url}
+                            </div>
+                          )}
+                          {/* Key value — masked */}
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 6, paddingLeft: 19 }}>
+                            <span style={{ fontSize: 11, fontFamily: 'monospace', color: '#34d399', background: 'rgba(52,211,153,0.08)', border: '1px solid rgba(52,211,153,0.2)', borderRadius: 5, padding: '2px 8px', letterSpacing: '0.05em' }}>
+                              {k.key.length > 8 ? k.key.slice(0, 4) + '••••' + k.key.slice(-4) : '••••••••'}
+                            </span>
+                            <button
+                              onClick={() => navigator.clipboard.writeText(k.key)}
+                              style={{ background: 'none', border: 'none', color: '#4a6278', cursor: 'pointer', fontSize: 10, padding: '2px 6px', borderRadius: 4 }}
+                              onMouseEnter={e => (e.currentTarget.style.color = '#34d399')}
+                              onMouseLeave={e => (e.currentTarget.style.color = '#4a6278')}>
+                              ⎘ copy
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
           {!loading && tab === 'admins' && adminRole === 'master' && (
             <div>
               <div style={{ fontSize: 11, fontWeight: 700, color: '#818cf8', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 14 }}>Admin & Moderator Management</div>
