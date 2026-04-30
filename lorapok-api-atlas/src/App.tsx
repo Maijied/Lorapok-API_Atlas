@@ -3627,27 +3627,49 @@ export default function App() {
           </div>
           <div style={{ flexShrink: 0 }}>
             {authLoading ? (
-              <div style={{ width: 100, height: 32, borderRadius: 8, background: 'rgba(255,255,255,0.04)', border: '1px solid #1a3050' }} />
+              <div style={{ width: 110, height: 34, borderRadius: 10, background: 'rgba(255,255,255,0.04)', border: '1px solid #1a3050' }} />
             ) : user ? (
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '4px 10px 4px 5px', borderRadius: 40, background: 'rgba(52,211,153,0.07)', border: '1px solid rgba(52,211,153,0.18)', maxWidth: 180 }}>
-                  {user.photoURL ? <img src={user.photoURL} alt="" style={{ width: 24, height: 24, borderRadius: '50%', border: '1.5px solid rgba(52,211,153,0.4)', flexShrink: 0 }} /> : <div style={{ width: 24, height: 24, borderRadius: '50%', background: 'rgba(52,211,153,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><UserIcon size={12} style={{ color: '#34d399' }} /></div>}
+                {/* User pill */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '5px 12px 5px 5px', borderRadius: 40, background: 'linear-gradient(135deg, rgba(52,211,153,0.1), rgba(56,189,248,0.06))', border: '1px solid rgba(52,211,153,0.25)', maxWidth: 200, cursor: 'default' }}>
+                  {/* Avatar */}
+                  {user.photoURL
+                    ? <img src={user.photoURL} alt={user.displayName || 'User'} referrerPolicy="no-referrer"
+                        style={{ width: 28, height: 28, borderRadius: '50%', border: '2px solid rgba(52,211,153,0.5)', flexShrink: 0, objectFit: 'cover' }} />
+                    : <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'linear-gradient(135deg,#34d399,#38bdf8)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 12, fontWeight: 800, color: '#000' }}>
+                        {(user.displayName || user.email || 'U')[0].toUpperCase()}
+                      </div>
+                  }
                   <div style={{ minWidth: 0 }}>
-                    <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', lineHeight: 1.2 }}>{user.displayName?.split(' ')[0] || 'User'}</div>
-                    <div style={{ fontSize: 9, color: '#34d399', lineHeight: 1.2 }}>● Signed in</div>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: '#d4e4f7', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', lineHeight: 1.3 }}>
+                      {user.displayName || user.email?.split('@')[0] || 'User'}
+                    </div>
+                    <div style={{ fontSize: 9, color: '#34d399', lineHeight: 1.2, display: 'flex', alignItems: 'center', gap: 3 }}>
+                      <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#34d399', display: 'inline-block' }} />
+                      Signed in
+                    </div>
                   </div>
                 </div>
-                <button onClick={signOutUser} style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '5px 10px', borderRadius: 7, background: 'transparent', border: '1px solid #1a3050', color: '#4a6278', fontSize: 11, cursor: 'pointer', transition: 'all 0.15s' }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#f87171'; e.currentTarget.style.color = '#f87171' }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#4a6278' }}>
+                {/* Sign out */}
+                <button onClick={signOutUser}
+                  style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '6px 11px', borderRadius: 8, background: 'transparent', border: '1px solid #1a3050', color: '#4a6278', fontSize: 11, cursor: 'pointer', transition: 'all 0.15s' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#f87171'; e.currentTarget.style.color = '#f87171'; e.currentTarget.style.background = 'rgba(248,113,113,0.06)' }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = '#1a3050'; e.currentTarget.style.color = '#4a6278'; e.currentTarget.style.background = 'transparent' }}>
                   <LogOut size={12} /> Sign out
                 </button>
               </div>
             ) : (
-              <button onClick={signInWithGoogle} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 14px 7px 10px', borderRadius: 9, background: '#fff', border: 'none', color: '#1f2937', fontSize: 12, fontWeight: 600, cursor: 'pointer', boxShadow: '0 1px 4px rgba(0,0,0,0.3)', transition: 'all 0.15s' }}
-                onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 4px 14px rgba(0,0,0,0.4)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
-                onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.3)'; e.currentTarget.style.transform = 'translateY(0)' }}>
-                <svg width="16" height="16" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+              <button onClick={signInWithGoogle}
+                style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '7px 16px 7px 10px', borderRadius: 10, background: '#fff', border: 'none', color: '#1f2937', fontSize: 13, fontWeight: 600, cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.25)', transition: 'all 0.2s' }}
+                onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.35)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+                onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.25)'; e.currentTarget.style.transform = 'translateY(0)' }}>
+                {/* Google G logo */}
+                <svg width="18" height="18" viewBox="0 0 48 48" style={{ flexShrink: 0 }}>
+                  <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                  <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                  <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                  <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+                </svg>
                 Sign in with Google
               </button>
             )}
