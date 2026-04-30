@@ -242,9 +242,6 @@ export async function removeAdmin(email: string) {
 
 // ─── Admin: fetch all users data ──────────────────────────────────────────────
 export async function getAllUsersData() {
-  // Fetch all user subcollections we know about
-  // We can't list all users directly from client SDK, but we can read the stats
-  // and any user data that's been written to known paths
   const statsSnap = await getDoc(doc(db, 'stats', 'global'))
   const stats = statsSnap.exists() ? statsSnap.data() : {}
 
@@ -253,15 +250,22 @@ export async function getAllUsersData() {
   const trending = trendingSnap.docs.map(d => ({ name: d.id, ...d.data() }))
     .sort((a: any, b: any) => (b.count || 0) - (a.count || 0))
 
-  // Get all ratings
-  const ratingsSnap = await getDocs(collection(db, 'ratings'))
-  const ratings: { apiName: string; count: number }[] = []
-  for (const rDoc of ratingsSnap.docs) {
-    const reviewsSnap = await getDocs(collection(db, 'ratings', rDoc.id, 'reviews'))
-    if (reviewsSnap.size > 0) ratings.push({ apiName: rDoc.id, count: reviewsSnap.size })
-  }
+  // Use collectionGroup to find all reviews across all ratings/{apiName}/reviews
+  // This works even when the parent ratings/{apiName} doc doesn't exist as a real document
+  const { collectionGroup } = await import('firebase/firestore')
+  const reviewsSnap = await getDocs(collectionGroup(db, 'reviews'))
+  const ratingCounts: Record<string, number> = {}
+  reviewsSnap.docs.forEach(d => {
+    // Path: ratings/{apiName}/reviews/{uid}
+    const apiName = d.ref.parent.parent?.id
+    if (apiName) ratingCounts[apiName] = (ratingCounts[apiName] || 0) + 1
+  })
+  const ratings = Object.entries(ratingCounts)
+    .map(([apiName, count]) => ({ apiName, count }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 20)
 
-  return { stats, trending: trending.slice(0, 20), ratings: ratings.sort((a, b) => b.count - a.count).slice(0, 20) }
+  return { stats, trending: trending.slice(0, 20), ratings }
 }
 
 // ─── Admin: fetch specific user data ─────────────────────────────────────────

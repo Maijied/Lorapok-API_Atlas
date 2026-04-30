@@ -2927,36 +2927,30 @@ const AdminPanel = ({ onClose, user }: { onClose: () => void; user: ReturnType<t
   const loadUsersData = async () => {
     setUsersLoading(true)
     try {
-      // Fetch all user UIDs from stats/trending/ratings — these are the users who have interacted
-      // Then fetch their API keys
-      const snap = await getAllUsersData()
-      // Get unique UIDs from trending (users who tested APIs)
-      // We'll fetch keys for all known users via a broader approach
-      // Since we can't list all users from client SDK, we fetch from the stats doc
-      // and any user subcollections we can discover
-      const result: { uid: string; apiKeys: { name: string; key: string; url?: string }[] }[] = []
-
-      // Try to get user data from Firestore — fetch all docs under users/ collection
-      // This requires a Firestore rule allowing admin reads
-      const { getDocs: _getDocs, collection: _col } = await import('firebase/firestore')
+      const { collectionGroup, getDocs: _getDocs } = await import('firebase/firestore')
       const { db: _db } = await import('./firebase')
-      const usersSnap = await _getDocs(_col(_db, 'users'))
-      for (const userDoc of usersSnap.docs) {
-        const uid = userDoc.id
-        const keysSnap = await _getDocs(_col(_db, 'users', uid, 'apikeys'))
-        if (keysSnap.empty) continue
-        const apiKeys = keysSnap.docs.map(d => {
-          const apiName = d.id
-          const key = d.data().key as string
-          // Find the API URL from ALL_APIS
-          const apiInfo = ALL_APIS.find(a => a.name === apiName)
-          return { name: apiName, key, url: apiInfo?.url }
-        })
-        result.push({ uid, apiKeys })
-      }
+
+      // Use collectionGroup to query ALL apikeys subcollections across all users
+      // This works without needing to list the root users/ collection
+      const keysSnap = await _getDocs(collectionGroup(_db, 'apikeys'))
+
+      // Group by user UID (parent doc ID)
+      const byUser: Record<string, { name: string; key: string; url?: string }[]> = {}
+      keysSnap.docs.forEach(d => {
+        // Path: users/{uid}/apikeys/{apiName}
+        const uid = d.ref.parent.parent?.id || 'unknown'
+        const apiName = d.id
+        const key = d.data().key as string
+        if (!key) return
+        const apiInfo = ALL_APIS.find(a => a.name === apiName)
+        if (!byUser[uid]) byUser[uid] = []
+        byUser[uid].push({ name: apiName, key, url: apiInfo?.url })
+      })
+
+      const result = Object.entries(byUser).map(([uid, apiKeys]) => ({ uid, apiKeys }))
       setUsersData(result)
     } catch (e: any) {
-      console.error('Failed to load users data:', e)
+      console.error('Failed to load users data:', e?.message || e)
     } finally { setUsersLoading(false) }
   }
 

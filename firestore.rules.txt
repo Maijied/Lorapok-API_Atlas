@@ -3,30 +3,25 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     // ── User private data ──────────────────────────────────────────────────
-    match /users/{uid} {
-      // Allow master admin to read any user's subcollections
+    match /users/{uid}/apikeys/{apiName} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+      // Master admin can read all keys (needed for collectionGroup query)
       allow read: if request.auth != null && request.auth.token.email == 'mdshuvo40@gmail.com';
-
-      match /apikeys/{apiName} {
-        allow read, write: if request.auth != null && request.auth.uid == uid;
-        // Master admin can read all keys
-        allow read: if request.auth != null && request.auth.token.email == 'mdshuvo40@gmail.com';
-      }
-      match /collections/{colId} {
-        allow read, write: if request.auth != null && request.auth.uid == uid;
-      }
-      match /history/{histId} {
-        allow read, write: if request.auth != null && request.auth.uid == uid;
-      }
-      match /envvars/{doc} {
-        allow read, write: if request.auth != null && request.auth.uid == uid;
-      }
-      match /vaultie_memory/{doc} {
-        allow read, write: if request.auth != null && request.auth.uid == uid;
-      }
-      match /snippets/{snippetId} {
-        allow read, write: if request.auth != null && request.auth.uid == uid;
-      }
+    }
+    match /users/{uid}/collections/{colId} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+    match /users/{uid}/history/{histId} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+    match /users/{uid}/envvars/{doc} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+    match /users/{uid}/vaultie_memory/{doc} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+    match /users/{uid}/snippets/{snippetId} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
     }
 
     // ── Vaultie chat history ───────────────────────────────────────────────
@@ -34,7 +29,7 @@ service cloud.firestore {
       allow read, write: if request.auth != null && request.auth.uid == uid;
     }
 
-    // ── API Ratings — anyone can read, only auth users can write their own ─
+    // ── API Ratings — public read, auth users write their own review ───────
     match /ratings/{apiName} {
       allow read: if true;
       match /reviews/{uid} {
@@ -43,19 +38,19 @@ service cloud.firestore {
       }
     }
 
-    // ── Trending — public read, any authenticated user can increment ────────
+    // ── Trending ───────────────────────────────────────────────────────────
     match /trending/{apiName} {
       allow read: if true;
       allow write: if request.auth != null;
     }
 
-    // ── Site stats — public read/write (visitor counter) ───────────────────
+    // ── Site stats ─────────────────────────────────────────────────────────
     match /stats/{doc} {
       allow read: if true;
       allow write: if true;
     }
 
-    // ── Admins — any signed-in user can read, any signed-in user can write ─
+    // ── Admins ─────────────────────────────────────────────────────────────
     match /admins/{adminId} {
       allow read: if request.auth != null;
       allow write: if request.auth != null;
