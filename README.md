@@ -290,6 +290,13 @@ MIT © [Lorapok](https://github.com/Maijied) — see [LICENSE](LICENSE) for deta
 
 ---
 
+## Legal
+
+- [Privacy Policy](https://maijied.github.io/Lorapok-API_Atlas/privacy.html) — what data we collect and how we use it
+- [Terms of Service](https://maijied.github.io/Lorapok-API_Atlas/terms.html) — rules for using the Service
+
+---
+
 <div align="center">
   <sub>Made with 💚 for the open-source community · A product of <strong>Lorapok</strong></sub>
 </div>

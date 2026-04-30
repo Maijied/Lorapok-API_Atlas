@@ -4108,6 +4108,12 @@ export default function App() {
               <span style={{ fontSize: 14, color: '#1e3a52' }}>·</span>
               <a href="https://github.com/Maijied/Lorapok-API_Atlas/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" style={{ fontSize: 14, color: '#334d63', textDecoration: 'none' }}
                 onMouseEnter={e => (e.currentTarget.style.color = '#34d399')} onMouseLeave={e => (e.currentTarget.style.color = '#334d63')}>MIT License</a>
+              <span style={{ fontSize: 14, color: '#1e3a52' }}>·</span>
+              <a href="/Lorapok-API_Atlas/privacy.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: 14, color: '#334d63', textDecoration: 'none' }}
+                onMouseEnter={e => (e.currentTarget.style.color = '#38bdf8')} onMouseLeave={e => (e.currentTarget.style.color = '#334d63')}>Privacy</a>
+              <span style={{ fontSize: 14, color: '#1e3a52' }}>·</span>
+              <a href="/Lorapok-API_Atlas/terms.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: 14, color: '#334d63', textDecoration: 'none' }}
+                onMouseEnter={e => (e.currentTarget.style.color = '#818cf8')} onMouseLeave={e => (e.currentTarget.style.color = '#334d63')}>Terms</a>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 13, color: '#1e3a52' }}>
               Made with <span style={{ fontSize: 15 }}>💚</span> for the open-source community

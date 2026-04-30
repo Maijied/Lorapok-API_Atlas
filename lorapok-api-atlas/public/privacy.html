@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Lorapok Atlas API Directory</title>
+  <link rel="icon" type="image/svg+xml" href="/Lorapok-API_Atlas/logo.svg" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #070e18; color: #d4e4f7; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.7; }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 48px 24px 80px; }
+    .back { display: inline-flex; align-items: center; gap: 8px; color: #38bdf8; text-decoration: none; font-size: 13px; font-weight: 600; margin-bottom: 40px; padding: 8px 14px; border-radius: 8px; border: 1px solid rgba(56,189,248,0.25); background: rgba(56,189,248,0.06); transition: all 0.15s; }
+    .back:hover { background: rgba(56,189,248,0.12); }
+    .logo-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .logo-row img { width: 40px; height: 40px; border-radius: 10px; }
+    .logo-row span { font-size: 13px; color: #4a6278; }
+    h1 { font-size: 32px; font-weight: 900; color: #d4e4f7; margin-bottom: 8px; letter-spacing: -0.02em; }
+    .meta { font-size: 13px; color: #4a6278; margin-bottom: 40px; padding-bottom: 24px; border-bottom: 1px solid #1a3050; }
+    h2 { font-size: 18px; font-weight: 700; color: #38bdf8; margin: 36px 0 12px; }
+    p { color: #7aa8c7; margin-bottom: 14px; font-size: 15px; }
+    ul { color: #7aa8c7; padding-left: 20px; margin-bottom: 14px; font-size: 15px; }
+    ul li { margin-bottom: 6px; }
+    a { color: #38bdf8; }
+    .highlight { background: rgba(56,189,248,0.06); border: 1px solid rgba(56,189,248,0.15); border-radius: 10px; padding: 16px 20px; margin: 20px 0; }
+    .highlight p { margin: 0; color: #d4e4f7; }
+    footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid #1a3050; font-size: 13px; color: #334d63; text-align: center; }
+    footer a { color: #38bdf8; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a href="/Lorapok-API_Atlas/" class="back">← Back to Lorapok Atlas</a>
+
+    <div class="logo-row">
+      <img src="/Lorapok-API_Atlas/logo.svg" alt="Lorapok Atlas" />
+      <span>Lorapok Atlas API Directory</span>
+    </div>
+
+    <h1>Privacy Policy</h1>
+    <p class="meta">Last updated: May 1, 2026 &nbsp;·&nbsp; Effective: May 1, 2026</p>
+
+    <div class="highlight">
+      <p>Lorapok Atlas is a free, open-source tool. We collect minimal data, never sell your information, and you can delete your account data at any time.</p>
+    </div>
+
+    <h2>1. Who We Are</h2>
+    <p>Lorapok Atlas API Directory ("we", "us", "our") is an open-source web application built and maintained by Mohammad Maizied Hasan Majumder. The app is hosted on GitHub Pages at <a href="https://maijied.github.io/Lorapok-API_Atlas/">maijied.github.io/Lorapok-API_Atlas</a>.</p>
+
+    <h2>2. What Data We Collect</h2>
+    <p>We collect only what is necessary to provide the service:</p>
+    <ul>
+      <li><strong>Google Account info</strong> — when you sign in with Google OAuth, we receive your name, email address, and profile photo URL from Google. We store your Google UID to identify your account.</li>
+      <li><strong>API keys you save</strong> — keys you enter in the API Key Manager are stored in Firebase Firestore under your user ID. Only you can read or write your own keys.</li>
+      <li><strong>Usage data</strong> — we track which APIs you test (anonymously for trending), your request history (last 20 entries, stored per user), and aggregate visitor/member counts.</li>
+      <li><strong>Chat history</strong> — conversations with Vaultie AI are optionally saved to Firestore when you are signed in.</li>
+      <li><strong>Collections, snippets, environment variables</strong> — any data you create in the app is stored in Firestore under your user ID.</li>
+    </ul>
+    <p>We do <strong>not</strong> collect passwords, payment information, or any sensitive personal data beyond what Google provides during sign-in.</p>
+
+    <h2>3. How We Use Your Data</h2>
+    <ul>
+      <li>To provide and sync your API keys, collections, and history across devices</li>
+      <li>To power the Vaultie AI chat history feature</li>
+      <li>To show aggregate site statistics (total visitors, registered users)</li>
+      <li>To identify trending APIs based on anonymous test counts</li>
+    </ul>
+    <p>We do <strong>not</strong> use your data for advertising, profiling, or sell it to any third party.</p>
+
+    <h2>4. Third-Party Services</h2>
+    <ul>
+      <li><strong>Firebase (Google)</strong> — authentication and Firestore database. Subject to <a href="https://firebase.google.com/support/privacy" target="_blank">Firebase Privacy Policy</a>.</li>
+      <li><strong>Groq API</strong> — powers Vaultie AI responses. Messages you send to Vaultie are processed by Groq. Subject to <a href="https://groq.com/privacy-policy/" target="_blank">Groq Privacy Policy</a>.</li>
+      <li><strong>GitHub Pages</strong> — hosts the static app. Subject to <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank">GitHub Privacy Statement</a>.</li>
+      <li><strong>CORS Proxies</strong> — when an API is CORS-blocked, requests may be routed through corsproxy.io, allorigins.win, or thingproxy.freeboard.io. These proxies see the API URL and response but not your personal data.</li>
+    </ul>
+
+    <h2>5. Data Storage and Security</h2>
+    <p>All user data is stored in Firebase Firestore with production security rules — only you can read or write your own data. API keys are stored as plain text in Firestore (not encrypted at rest beyond Firebase's own encryption). Do not store highly sensitive credentials in this app.</p>
+
+    <h2>6. Data Retention and Deletion</h2>
+    <p>Your data is retained as long as your account exists. To delete your data:</p>
+    <ul>
+      <li>Sign in and use the Dashboard to clear your history and collections</li>
+      <li>Email <a href="mailto:mdshuvo40@gmail.com">mdshuvo40@gmail.com</a> to request full account deletion from Firestore</li>
+    </ul>
+
+    <h2>7. Cookies and Local Storage</h2>
+    <p>We use browser localStorage and sessionStorage for:</p>
+    <ul>
+      <li>Theme preference (dark/light)</li>
+      <li>Welcome modal shown state</li>
+      <li>Visitor deduplication (session-based)</li>
+      <li>Member counter deduplication (account-based)</li>
+    </ul>
+    <p>We do not use advertising cookies or third-party tracking cookies.</p>
+
+    <h2>8. Children's Privacy</h2>
+    <p>Lorapok Atlas is intended for developers and is not directed at children under 13. We do not knowingly collect data from children under 13.</p>
+
+    <h2>9. Changes to This Policy</h2>
+    <p>We may update this policy as the app evolves. The "Last updated" date at the top will reflect any changes. Continued use of the app after changes constitutes acceptance.</p>
+
+    <h2>10. Contact</h2>
+    <p>Questions about this privacy policy? Contact us at <a href="mailto:mdshuvo40@gmail.com">mdshuvo40@gmail.com</a> or open an issue on <a href="https://github.com/Maijied/Lorapok-API_Atlas/issues" target="_blank">GitHub</a>.</p>
+
+    <footer>
+      <p>© 2026 <a href="https://github.com/Maijied">Lorapok</a> · <a href="/Lorapok-API_Atlas/">Home</a> · <a href="/Lorapok-API_Atlas/terms.html">Terms of Service</a> · MIT License</p>
+    </footer>
+  </div>
+</body>
+</html>
