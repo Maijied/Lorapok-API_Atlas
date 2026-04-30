@@ -1445,7 +1445,7 @@ const ApiCard = ({ api, onClick, onCompare, compareSelected, user, collections, 
 
 // ─── Vaultie helpers ─────────────────────────────────────────────────────────
 
-// Strip <think>...</think> reasoning blocks from qwen3 output
+// Strip <think>...</think> reasoning blocks (kept for model compatibility)
 function stripThink(text: string): string {
   return text.replace(/<think>[\s\S]*?<\/think>/g, '').replace(/^[\s\n]+/, '')
 }
@@ -1646,7 +1646,7 @@ const VaultieSVG = ({ size = 60 }: { size?: number }) => (
 )
 
 // ─── Vaultie — AI Floating Assistant ─────────────────────────────────────────
-const SYSTEM_PROMPT = `You are Vaultie 🐛, the AI assistant and vault manager of the Lorapok Atlas API Directory — the world's most comprehensive open-source API sandbox with 1001+ curated APIs.
+const SYSTEM_PROMPT = `You are Vaultie 🐛, the AI assistant and vault manager of the Lorapok Atlas API Directory — the world's most comprehensive open-source API sandbox with 2000+ curated APIs.
 
 ## About Lorapok Atlas
 - **1001+ APIs** across 32 categories: AI/ML, Weather, Maps, Crypto, Music, Health, Space, Developer Tools, Blockchain, Sports, Food, Travel, Security, Communication, Education, Images, Movies, Government, Science, IoT, HR, Legal, Real Estate, Documents, Cloud, QR/Barcodes, Language, Data Analytics, Advertising, and more
@@ -1779,14 +1779,14 @@ const Vaultie = () => {
           'Authorization': `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`,
         },
         body: JSON.stringify({
-          model: 'qwen/qwen3-32b',
+          model: 'llama-3.1-8b-instant',
           messages: [
             { role: 'system', content: SYSTEM_PROMPT },
             ...apiMessages,
           ],
-          temperature: 0.6,
-          max_completion_tokens: 4096,
-          top_p: 0.95,
+          temperature: 1,
+          max_completion_tokens: 1024,
+          top_p: 1,
           stream: true,
           stop: null,
         }),
@@ -1856,9 +1856,9 @@ const Vaultie = () => {
               </motion.div>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 13, fontWeight: 800, color: '#d4e4f7' }}>Vaultie</div>
-                <div style={{ fontSize: 10, color: '#34d399', display: 'flex', alignItems: 'center', gap: 4 }}>
-                  <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#34d399', display: 'inline-block' }} />
-                  Atlas Vault Manager · Online
+                <div style={{ fontSize: 10, color: loading || streaming ? '#fbbf24' : '#34d399', display: 'flex', alignItems: 'center', gap: 4, transition: 'color 0.3s' }}>
+                  <span style={{ width: 6, height: 6, borderRadius: '50%', background: loading || streaming ? '#fbbf24' : '#34d399', display: 'inline-block', transition: 'background 0.3s' }} />
+                  {loading ? 'Thinking…' : streaming ? 'Streaming…' : 'llama-3.1-8b-instant · Online'}
                 </div>
               </div>
               <button onClick={() => setOpen(false)} style={{ background: 'none', border: 'none', color: '#4a6278', cursor: 'pointer', padding: 4 }}>
@@ -2589,7 +2589,7 @@ const WelcomeModal = ({ onClose, onSignIn }: { onClose: () => void; onSignIn: ()
           Lorapok Atlas API Directory
         </h1>
         <p style={{ fontSize: 14, color: '#4a6278', margin: 0, lineHeight: 1.6, position: 'relative' }}>
-          The world's most comprehensive open-source API sandbox — <strong style={{ color: '#d4e4f7' }}>1001+ curated APIs</strong> across 32 categories, ready to explore and test.
+          The world's most comprehensive open-source API sandbox — <strong style={{ color: '#d4e4f7' }}>2000+ curated APIs</strong> across 33 categories, ready to explore and test.
         </p>
       </div>
       {/* Benefits */}
@@ -3457,7 +3457,7 @@ export default function App() {
               ['🎨', 'Tailwind CSS 3'],
               ['🎞️', 'Framer Motion'],
               ['🔥', 'Firebase + Firestore'],
-              ['🤖', 'Groq AI · Qwen3-32B'],
+              ['🤖', 'Groq AI · Llama 3.1 8B'],
               ['🚀', 'GitHub Pages'],
               ['🔒', 'Google OAuth'],
             ].map(([icon, label]) => (
