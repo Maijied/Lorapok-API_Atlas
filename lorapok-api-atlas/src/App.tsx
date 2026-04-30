@@ -511,21 +511,65 @@ const ResponsePanel = ({ data, isLoading, apiName, baseUrl, api }: { data: any; 
     <CorsPanel api={api} />
   )
 
+  // HTML / redirect response — show friendly message instead of raw HTML dump
+  const isHtmlResponse = typeof data === 'string' && (data.trimStart().startsWith('<') || data.includes('<html') || data.includes('<!DOCTYPE'))
+  if (isHtmlResponse) return (
+    <div className="flex flex-col h-full overflow-y-auto custom-scrollbar p-5 gap-4">
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: '14px', borderRadius: 10, background: 'rgba(251,191,36,0.06)', border: '1px solid rgba(251,191,36,0.2)' }}>
+        <span style={{ fontSize: 24, flexShrink: 0 }}>🔀</span>
+        <div>
+          <div style={{ fontSize: 13, fontWeight: 700, color: '#fbbf24', marginBottom: 4 }}>HTML / Redirect Response</div>
+          <p style={{ fontSize: 12, color: '#4a6278', lineHeight: 1.6, margin: 0 }}>
+            This API returned an HTML page instead of JSON — it's likely redirecting to a login page, Cloudflare challenge, or bot-protection screen.
+          </p>
+        </div>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        {[
+          { icon: '🔑', title: 'Authentication required', desc: 'The API may require a valid API key or session cookie. Add your key in the key manager above.' },
+          { icon: '🤖', title: 'Bot protection (Cloudflare)', desc: 'The server detected an automated request. This API cannot be tested from a browser — use cURL or a server-side proxy.' },
+          { icon: '🔗', title: 'Redirect to login', desc: 'The endpoint redirected to a login/signup page. Check the API docs for the correct endpoint URL.' },
+        ].map(s => (
+          <div key={s.title} style={{ display: 'flex', gap: 10, padding: '10px 12px', borderRadius: 8, background: 'rgba(255,255,255,0.03)', border: '1px solid #1a3050' }}>
+            <span style={{ fontSize: 16, flexShrink: 0 }}>{s.icon}</span>
+            <div>
+              <div style={{ fontSize: 12, fontWeight: 700, color: '#d4e4f7', marginBottom: 2 }}>{s.title}</div>
+              <div style={{ fontSize: 11, color: '#4a6278', lineHeight: 1.5 }}>{s.desc}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+      {/* Show raw HTML collapsed */}
+      <details style={{ borderRadius: 8, border: '1px solid #1a3050', overflow: 'hidden' }}>
+        <summary style={{ padding: '8px 12px', fontSize: 11, color: '#334d63', cursor: 'pointer', background: 'rgba(0,0,0,0.2)' }}>View raw HTML response</summary>
+        <pre style={{ margin: 0, padding: '10px 12px', fontSize: 10, fontFamily: 'monospace', color: '#4a6278', overflowX: 'auto', maxHeight: 200, overflowY: 'auto', whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+          {typeof data === 'string' ? data.slice(0, 2000) : ''}
+        </pre>
+      </details>
+    </div>
+  )
+
   return (
     <div className="flex flex-col overflow-hidden h-full">
-      {/* Visualizer */}
+      {/* Visualizer — auto-expanded */}
       <div className="border-b border-white/10">
         <button onClick={() => setVizOpen(!vizOpen)} className="w-full p-3 flex items-center justify-between hover:bg-white/5 transition-colors">
-          <div className="flex items-center gap-2"><Terminal size={14} className="text-emerald-400" /><span className="text-xs font-bold uppercase tracking-wider">Live Visualizer</span></div>
+          <div className="flex items-center gap-2">
+            <Terminal size={14} className="text-emerald-400" />
+            <span className="text-xs font-bold uppercase tracking-wider">Live Visualizer</span>
+            <span style={{ fontSize: 9, padding: '1px 6px', borderRadius: 8, background: 'rgba(52,211,153,0.15)', color: '#34d399', fontWeight: 700 }}>
+              {Array.isArray(data) ? `${data.length} items` : typeof data === 'object' && data ? `${Object.keys(data).length} keys` : typeof data}
+            </span>
+          </div>
           <div className="flex items-center gap-1">
-            <button onClick={(e) => { e.stopPropagation(); download() }} className="p-1.5 hover:bg-white/10 rounded text-gray-400 hover:text-white transition-all"><Download size={12} /></button>
+            <button onClick={(e) => { e.stopPropagation(); download() }} className="p-1.5 hover:bg-white/10 rounded text-gray-400 hover:text-white transition-all" title="Download JSON"><Download size={12} /></button>
             {vizOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
           </div>
         </button>
         <AnimatePresence>
           {vizOpen && (
             <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden bg-black/30">
-              <div className="p-4 overflow-y-auto max-h-80 custom-scrollbar"><DataVisualizer data={data} baseUrl={baseUrl} /></div>
+              <div className="p-4 overflow-y-auto max-h-96 custom-scrollbar"><DataVisualizer data={data} baseUrl={baseUrl} /></div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -535,16 +579,16 @@ const ResponsePanel = ({ data, isLoading, apiName, baseUrl, api }: { data: any; 
         <button onClick={() => setJsonOpen(!jsonOpen)} className="w-full p-3 flex items-center justify-between hover:bg-white/5 transition-colors">
           <div className="flex items-center gap-2"><Code size={14} className="text-sky-400" /><span className="text-xs font-bold uppercase tracking-wider">Raw JSON</span></div>
           <div className="flex items-center gap-1">
-            <button onClick={copy} className={`p-1.5 hover:bg-white/10 rounded transition-all ${copied ? 'text-emerald-400' : 'text-gray-400 hover:text-white'}`}>{copied ? <Check size={12} /> : <Copy size={12} />}</button>
-            <button onClick={(e) => { e.stopPropagation(); download() }} className="p-1.5 hover:bg-white/10 rounded text-gray-400 hover:text-white transition-all"><Download size={12} /></button>
+            <button onClick={copy} className={`p-1.5 hover:bg-white/10 rounded transition-all ${copied ? 'text-emerald-400' : 'text-gray-400 hover:text-white'}`} title="Copy JSON">{copied ? <Check size={12} /> : <Copy size={12} />}</button>
+            <button onClick={(e) => { e.stopPropagation(); download() }} className="p-1.5 hover:bg-white/10 rounded text-gray-400 hover:text-white transition-all" title="Download"><Download size={12} /></button>
             {jsonOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
           </div>
         </button>
         <AnimatePresence>
           {jsonOpen && (
             <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden bg-black/50">
-              <div className="p-4 overflow-y-auto max-h-80 custom-scrollbar">
-                <pre className="text-[11px] font-mono text-emerald-400">{JSON.stringify(data, null, 2)}</pre>
+              <div className="p-4 overflow-y-auto max-h-96 custom-scrollbar">
+                <pre className="text-[11px] font-mono" style={{ color: '#a5f3c0', lineHeight: 1.6 }}>{JSON.stringify(data, null, 2)}</pre>
               </div>
             </motion.div>
           )}
@@ -760,28 +804,95 @@ const ApiModal = ({ api, onClose, user, onShare, onKeyChange }: { api: FlatApi; 
           </div>
 
           {/* Method + Endpoint */}
-          <div className="grid grid-cols-2 gap-3 p-5 border-b" style={{ borderColor: '#1a3050' }}>
-            <div className="flex items-center gap-3 p-3 rounded-lg" style={{ background: 'rgba(0,0,0,0.3)' }}>
-              <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: 'rgba(129,140,248,0.15)' }}>
-                <Terminal size={16} style={{ color: '#818cf8' }} />
-              </div>
-              <div>
-                <div className="text-[10px] font-bold uppercase tracking-widest" style={{ color: '#4a6278' }}>Method</div>
-                <div className="font-mono font-bold" style={{ color: '#818cf8' }}>{api.method}</div>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 p-3 rounded-lg overflow-hidden" style={{ background: 'rgba(0,0,0,0.3)' }}>
-              <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style={{ background: 'rgba(52,211,153,0.15)' }}>
-                <Globe size={16} style={{ color: '#34d399' }} />
-              </div>
-              <div className="overflow-hidden flex-1">
-                <div className="text-[10px] font-bold uppercase tracking-widest" style={{ color: '#4a6278' }}>Endpoint</div>
-                <div className="font-mono text-sm truncate" style={{ color: '#34d399' }}>
-                  {apiKey ? effectiveUrl : (api.url || 'N/A')}
+          {(() => {
+            const [editUrl, setEditUrl] = React.useState(effectiveUrl)
+            const [urlCopied, setUrlCopied] = React.useState(false)
+            const [showParams, setShowParams] = React.useState(false)
+
+            // Parse query params from URL
+            const parseParams = (u: string) => {
+              try {
+                const idx = u.indexOf('?')
+                if (idx === -1) return []
+                return u.slice(idx + 1).split('&').filter(Boolean).map(p => {
+                  const [k, ...v] = p.split('=')
+                  return { key: decodeURIComponent(k || ''), value: decodeURIComponent(v.join('=') || '') }
+                })
+              } catch { return [] }
+            }
+            const [params, setParams] = React.useState(() => parseParams(effectiveUrl))
+
+            // Rebuild URL when params change
+            const rebuildUrl = (newParams: {key:string;value:string}[]) => {
+              const base = editUrl.split('?')[0]
+              const qs = newParams.filter(p => p.key).map(p => `${encodeURIComponent(p.key)}=${encodeURIComponent(p.value)}`).join('&')
+              return qs ? `${base}?${qs}` : base
+            }
+
+            const methodColors: Record<string, string> = {
+              GET: '#34d399', POST: '#818cf8', PUT: '#fbbf24', PATCH: '#f97316', DELETE: '#f87171', HEAD: '#38bdf8'
+            }
+            const mc = methodColors[api.method] || '#4a6278'
+
+            return (
+              <div style={{ padding: '12px 16px', borderBottom: '1px solid #1a3050', display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {/* URL bar */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  {/* Method badge */}
+                  <span style={{ fontSize: 10, fontWeight: 800, fontFamily: 'monospace', padding: '4px 10px', borderRadius: 6, background: `${mc}18`, border: `1px solid ${mc}40`, color: mc, flexShrink: 0, letterSpacing: '0.05em' }}>
+                    {api.method}
+                  </span>
+                  {/* Editable URL */}
+                  <input
+                    value={editUrl}
+                    onChange={e => { setEditUrl(e.target.value); setParams(parseParams(e.target.value)) }}
+                    style={{ flex: 1, background: 'rgba(0,0,0,0.3)', border: '1px solid #1a3050', borderRadius: 7, padding: '6px 10px', color: '#34d399', fontSize: 11, fontFamily: 'monospace', outline: 'none', minWidth: 0 }}
+                    onFocus={e => (e.target.style.borderColor = '#34d399')}
+                    onBlur={e => (e.target.style.borderColor = '#1a3050')}
+                  />
+                  {/* Copy URL */}
+                  <button
+                    onClick={() => { navigator.clipboard.writeText(editUrl); setUrlCopied(true); setTimeout(() => setUrlCopied(false), 1500) }}
+                    title="Copy URL"
+                    style={{ flexShrink: 0, padding: '6px 10px', borderRadius: 7, background: urlCopied ? 'rgba(52,211,153,0.15)' : 'rgba(255,255,255,0.05)', border: `1px solid ${urlCopied ? '#34d399' : '#1a3050'}`, color: urlCopied ? '#34d399' : '#4a6278', cursor: 'pointer', fontSize: 11, display: 'flex', alignItems: 'center', gap: 4, transition: 'all 0.15s' }}>
+                    {urlCopied ? <Check size={12} /> : <Copy size={12} />}
+                  </button>
+                  {/* Params toggle */}
+                  <button
+                    onClick={() => setShowParams(v => !v)}
+                    title="Edit query parameters"
+                    style={{ flexShrink: 0, padding: '6px 10px', borderRadius: 7, background: showParams ? 'rgba(56,189,248,0.12)' : 'rgba(255,255,255,0.05)', border: `1px solid ${showParams ? '#38bdf8' : '#1a3050'}`, color: showParams ? '#38bdf8' : '#4a6278', cursor: 'pointer', fontSize: 11, display: 'flex', alignItems: 'center', gap: 4, transition: 'all 0.15s' }}>
+                    <Settings size={12} /> Params
+                  </button>
                 </div>
+                {/* Query param editor */}
+                {showParams && (
+                  <div style={{ background: 'rgba(0,0,0,0.25)', border: '1px solid #1a3050', borderRadius: 8, padding: '10px 12px' }}>
+                    <div style={{ fontSize: 10, fontWeight: 700, color: '#4a6278', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Query Parameters</div>
+                    {params.length === 0 && <div style={{ fontSize: 11, color: '#334d63' }}>No query params detected. Add one below.</div>}
+                    {params.map((p, i) => (
+                      <div key={i} style={{ display: 'flex', gap: 6, marginBottom: 6, alignItems: 'center' }}>
+                        <input value={p.key} onChange={e => { const np = [...params]; np[i] = {...np[i], key: e.target.value}; setParams(np); setEditUrl(rebuildUrl(np)) }}
+                          placeholder="key" style={{ width: 120, background: '#070e18', border: '1px solid #1a3050', borderRadius: 6, padding: '5px 8px', color: '#818cf8', fontSize: 11, fontFamily: 'monospace', outline: 'none' }} />
+                        <span style={{ color: '#334d63', fontSize: 12 }}>=</span>
+                        <input value={p.value} onChange={e => { const np = [...params]; np[i] = {...np[i], value: e.target.value}; setParams(np); setEditUrl(rebuildUrl(np)) }}
+                          placeholder="value" style={{ flex: 1, background: '#070e18', border: '1px solid #1a3050', borderRadius: 6, padding: '5px 8px', color: '#34d399', fontSize: 11, fontFamily: 'monospace', outline: 'none' }} />
+                        <button onClick={() => { const np = params.filter((_,j) => j !== i); setParams(np); setEditUrl(rebuildUrl(np)) }}
+                          style={{ background: 'none', border: 'none', color: '#334d63', cursor: 'pointer', padding: 2 }}
+                          onMouseEnter={e => (e.currentTarget.style.color = '#f87171')} onMouseLeave={e => (e.currentTarget.style.color = '#334d63')}>
+                          <X size={12} />
+                        </button>
+                      </div>
+                    ))}
+                    <button onClick={() => { const np = [...params, {key:'',value:''}]; setParams(np) }}
+                      style={{ fontSize: 11, color: '#38bdf8', background: 'none', border: '1px dashed #1a3050', borderRadius: 6, padding: '4px 10px', cursor: 'pointer', marginTop: 4 }}>
+                      + Add param
+                    </button>
+                  </div>
+                )}
               </div>
-            </div>
-          </div>
+            )
+          })()}
 
           {/* Body: Docs + Response */}
           <div className="flex-1 modal-body overflow-hidden" style={{ minHeight: 0, display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
