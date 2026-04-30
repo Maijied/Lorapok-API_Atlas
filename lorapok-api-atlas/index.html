@@ -187,6 +187,21 @@
     <link rel="preconnect" href="https://api.groq.com" />
     <link rel="dns-prefetch" href="https://corsproxy.io" />
     <link rel="dns-prefetch" href="https://api.allorigins.win" />
+
+    <!-- ── Google Analytics 4 ─────────────────────────────────────────────── -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="preconnect" href="https://www.google-analytics.com" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX', {
+        page_title: 'Lorapok Atlas API Directory',
+        page_location: window.location.href,
+        send_page_view: true
+      });
+    </script>
   </head>
   <body style="background:#070e18;margin:0">
     <div id="root"></div>
