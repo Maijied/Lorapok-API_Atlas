@@ -2368,20 +2368,27 @@ const PersonalDashboard = ({ user }: { user: ReturnType<typeof useAuth>['user'] 
 const CodePlayground = ({ onClose, user }: { onClose: () => void; user: ReturnType<typeof useAuth>['user'] }) => {
   const [lang, setLang] = useState<'javascript' | 'python' | 'curl'>('javascript')
   const [activePane, setActivePane] = useState<'editor' | 'output'>('editor')
-  const [code, setCode] = useState(`// JavaScript Playground
-// Write and test your API integration code here
+  const [code, setCode] = useState(`// 🔥 Roast as a Service (RaaS) — by Lorapok
+// Static API served over GitHub Pages CDN — zero backend, zero cold starts
+// Docs: https://maijied.github.io/roast-as-a-service/
 
-async function testApi() {
-  const response = await fetch('https://api.example.com/data', {
-    method: 'GET',
-    headers: { 'Accept': 'application/json' }
-  });
-  const data = await response.json();
-  console.log(data);
-  return data;
-}
+// Load the RaaS client SDK
+const script = document.createElement('script');
+script.src = 'https://maijied.github.io/roast-as-a-service/api/client.js';
+document.head.appendChild(script);
 
-testApi();`)
+await new Promise(resolve => script.onload = resolve);
+
+// Get a random English roast
+const roast = await RaaS.getRandomRoast({ lang: 'en' });
+console.log('🔥 Roast:', roast.text);
+
+// Get a Bangla roast with intensity filter
+const bnRoast = await RaaS.getRandomRoast({ lang: 'bn', intensity: 2 });
+console.log('🔥 Bangla Roast:', bnRoast.text);
+
+// Return both
+return { en: roast.text, bn: bnRoast.text };`)
   const [output, setOutput] = useState('')
   const [running, setRunning] = useState(false)
   const [error, setError] = useState('')
@@ -2415,26 +2422,51 @@ testApi();`)
   }
 
   const TEMPLATES: Record<string, string> = {
-    javascript: `// JavaScript — fetch any API
-async function testApi() {
-  const response = await fetch('https://api.adviceslip.com/advice', {
-    headers: { 'Accept': 'application/json' }
-  });
-  const data = await response.json();
-  console.log(JSON.stringify(data, null, 2));
-  return data;
-}
-testApi();`,
-    python: `# Python — requests example
-import requests
+    javascript: `// 🔥 Roast as a Service (RaaS) — by Lorapok
+// Static API served over GitHub Pages CDN — zero backend, zero cold starts
+// Docs: https://maijied.github.io/roast-as-a-service/
 
-url = "https://api.adviceslip.com/advice"
-headers = {"Accept": "application/json"}
+// Load the RaaS client SDK
+const script = document.createElement('script');
+script.src = 'https://maijied.github.io/roast-as-a-service/api/client.js';
+document.head.appendChild(script);
 
-response = requests.get(url, headers=headers)
-print(response.json())`,
-    curl: `curl --request GET \\
-  --url 'https://api.adviceslip.com/advice' \\
+await new Promise(resolve => script.onload = resolve);
+
+// Get a random English roast
+const roast = await RaaS.getRandomRoast({ lang: 'en' });
+console.log('🔥 Roast:', roast.text);
+
+// Get a Bangla roast with intensity filter
+const bnRoast = await RaaS.getRandomRoast({ lang: 'bn', intensity: 2 });
+console.log('🔥 Bangla Roast:', bnRoast.text);
+
+// Return both
+return { en: roast.text, bn: bnRoast.text };`,
+    python: `# 🔥 Roast as a Service (RaaS) — Python
+# Install: pip install roast-api
+# Docs: https://maijied.github.io/roast-as-a-service/
+
+from roast_api import get_random_roast
+
+# Get a random English roast
+roast = get_random_roast(lang='en')
+print('🔥 Roast:', roast['text'])
+
+# Get a Bangla roast with intensity filter
+bn_roast = get_random_roast(lang='bn', intensity=2)
+print('🔥 Bangla Roast:', bn_roast['text'])`,
+    curl: `# 🔥 Roast as a Service (RaaS) — cURL
+# Docs: https://maijied.github.io/roast-as-a-service/
+
+# Fetch the English roast shard directly
+curl --request GET \\
+  --url 'https://maijied.github.io/roast-as-a-service/api/shards/en/shard-0.json' \\
+  --header 'Accept: application/json'
+
+# Fetch the Bangla roast shard
+curl --request GET \\
+  --url 'https://maijied.github.io/roast-as-a-service/api/shards/bn/shard-0.json' \\
   --header 'Accept: application/json'`,
   }
 
