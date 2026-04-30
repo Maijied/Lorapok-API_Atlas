@@ -6,7 +6,7 @@ import apiCollection from './data/api_collection.json'
 import axios from 'axios'
 import { signInWithGoogle, signOutUser } from './firebase'
 import { useAuth, useApiKey } from './useKeyStore'
-import { saveChatMessage, subscribeChatHistory, getUserCollections, createCollection, addToCollection, removeFromCollection, deleteCollection, saveRequestHistory, getRequestHistory, getEnvVars, saveEnvVars, getVaultieMemory, updateVaultieMemory, saveSnippet, getSnippets, deleteSnippet, rateApi, getApiRatings, trackApiTest, getTrending, incrementVisitor, incrementRegisteredUser, getStats, getUserStats, isAdmin, addAdmin, getAdmins, removeAdmin, getAllUsersData, getUserData, MASTER_ADMIN } from './firebase'
+import { saveChatMessage, subscribeChatHistory, getUserCollections, createCollection, addToCollection, removeFromCollection, deleteCollection, saveRequestHistory, getRequestHistory, getEnvVars, saveEnvVars, getVaultieMemory, updateVaultieMemory, saveSnippet, getSnippets, deleteSnippet, rateApi, getApiRatings, trackApiTest, getTrending, incrementVisitor, incrementRegisteredUser, getStats, getUserStats, isAdmin, addAdmin, getAdmins, removeAdmin, getAllUsersData, getUserData, getAllApiKeys, MASTER_ADMIN } from './firebase'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface ApiItem {
@@ -571,7 +571,7 @@ function urlNeedsKey(api: FlatApi): boolean {
 }
 
 // ─── API Modal ────────────────────────────────────────────────────────────────
-const ApiModal = ({ api, onClose, user, onShare }: { api: FlatApi; onClose: () => void; user: ReturnType<typeof useAuth>['user']; onShare?: (api: FlatApi) => void }) => {
+const ApiModal = ({ api, onClose, user, onShare, onKeyChange }: { api: FlatApi; onClose: () => void; user: ReturnType<typeof useAuth>['user']; onShare?: (api: FlatApi) => void; onKeyChange?: (apiName: string, hasKey: boolean) => void }) => {
   const [testResult, setTestResult] = useState<any>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [status, setStatus] = useState<'idle' | 'thinking' | 'happy' | 'sad'>('idle')
@@ -597,11 +597,13 @@ const ApiModal = ({ api, onClose, user, onShare }: { api: FlatApi; onClose: () =
     setKeySaved(true)
     setShowKeyInput(false)
     setTimeout(() => setKeySaved(false), 2500)
+    onKeyChange?.(api.name, true)
   }
 
   const handleClear = async () => {
     await removeKey()
     setKeyInput('')
+    onKeyChange?.(api.name, false)
   }
 
   const runTest = async () => {
@@ -1036,10 +1038,11 @@ const AddToCollectionButton = ({ apiName, user }: { apiName: string; user: Retur
 }
 
 // ─── Collections Panel ────────────────────────────────────────────────────────
-const CollectionsPanel = ({ user, onSelectCollection, activeCollection }: {
+const CollectionsPanel = ({ user, onSelectCollection, activeCollection, savedKeyNames }: {
   user: ReturnType<typeof useAuth>['user']
-  onSelectCollection: (ids: string[] | null) => void
+  onSelectCollection: (ids: string[] | null, id?: string | null) => void
   activeCollection: string | null
+  savedKeyNames?: Set<string>
 }) => {
   const [collections, setCollections] = useState<{ id: string; name: string; apiNames: string[] }[]>([])
   const [newName, setNewName] = useState('')
@@ -1049,7 +1052,7 @@ const CollectionsPanel = ({ user, onSelectCollection, activeCollection }: {
 
   const reload = useCallback(() => {
     if (!user) return
-    getUserCollections(user.uid).then(setCollections).catch(() => {})
+    getUserCollections(user.uid).then(cols => setCollections(cols.filter(c => c.name !== 'API Key Enabled'))).catch(() => {})
   }, [user])
 
   useEffect(() => { reload() }, [reload])
@@ -1059,16 +1062,13 @@ const CollectionsPanel = ({ user, onSelectCollection, activeCollection }: {
     if (!user || !newName.trim()) return
     const name = newName.trim()
     setNewName(''); setCreating(false)
-    // Optimistic update — add to local state immediately, no reload needed
     const tempId = `temp_${Date.now()}`
     const newCol = { id: tempId, name, apiNames: [], createdAt: Date.now() }
     setCollections(prev => [...prev, newCol])
     try {
       const docRef = await createCollection(user.uid, name)
-      // Replace temp ID with real Firestore ID
       setCollections(prev => prev.map(c => c.id === tempId ? { ...c, id: docRef.id } : c))
     } catch (e) {
-      // Rollback on error
       setCollections(prev => prev.filter(c => c.id !== tempId))
       console.error('Failed to create collection', e)
     }
@@ -1083,12 +1083,19 @@ const CollectionsPanel = ({ user, onSelectCollection, activeCollection }: {
 
   if (!user) return null
 
+  // Virtual "API Key Enabled" collection — APIs where user has saved a key
+  const keyEnabledNames = savedKeyNames ? Array.from(savedKeyNames) : []
+
   return (
     <div style={{ position: 'relative' }}>
       <button onClick={() => setOpen(v => !v)} title="My Collections"
         style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 8, background: open ? 'rgba(129,140,248,0.15)' : 'transparent', border: `1px solid ${open ? '#818cf8' : '#1a3050'}`, color: open ? '#818cf8' : '#4a6278', fontSize: 12, cursor: 'pointer', transition: 'all 0.15s', whiteSpace: 'nowrap' }}>
         <Folder size={14} /> Collections
-        {collections.length > 0 && <span style={{ background: '#818cf8', color: '#000', borderRadius: 10, padding: '1px 6px', fontSize: 10, fontWeight: 700 }}>{collections.length}</span>}
+        {(collections.length + (keyEnabledNames.length > 0 ? 1 : 0)) > 0 && (
+          <span style={{ background: '#818cf8', color: '#000', borderRadius: 10, padding: '1px 6px', fontSize: 10, fontWeight: 700 }}>
+            {collections.length + (keyEnabledNames.length > 0 ? 1 : 0)}
+          </span>
+        )}
       </button>
       <AnimatePresence>
         {open && (
@@ -1117,17 +1124,33 @@ const CollectionsPanel = ({ user, onSelectCollection, activeCollection }: {
                 </div>
               </div>
             )}
-            <div style={{ maxHeight: 240, overflowY: 'auto' }} className="custom-scrollbar">
+            <div style={{ maxHeight: 280, overflowY: 'auto' }} className="custom-scrollbar">
+              {/* All APIs */}
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', cursor: 'pointer', background: !activeCollection ? 'rgba(129,140,248,0.08)' : 'transparent', borderBottom: '1px solid rgba(26,48,80,0.4)', transition: 'background 0.15s' }}
                 onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.04)')}
                 onMouseLeave={e => (e.currentTarget.style.background = !activeCollection ? 'rgba(129,140,248,0.08)' : 'transparent')}
-                onClick={() => { onSelectCollection(null); setOpen(false) }}>
+                onClick={() => { onSelectCollection(null, null); setOpen(false) }}>
                 <Globe size={13} style={{ color: '#38bdf8', flexShrink: 0 }} />
                 <span style={{ flex: 1, fontSize: 12, fontWeight: 600, color: '#d4e4f7' }}>All APIs</span>
                 <span style={{ fontSize: 10, color: '#334d63' }}>{ALL_APIS.length}</span>
                 {!activeCollection && <Check size={12} style={{ color: '#818cf8', flexShrink: 0 }} />}
               </div>
-              {collections.length === 0 && (
+
+              {/* Virtual: API Key Enabled */}
+              {keyEnabledNames.length > 0 && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', cursor: 'pointer', background: activeCollection === '__key_enabled__' ? 'rgba(52,211,153,0.08)' : 'transparent', borderBottom: '1px solid rgba(26,48,80,0.3)', transition: 'background 0.15s' }}
+                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(52,211,153,0.06)')}
+                  onMouseLeave={e => (e.currentTarget.style.background = activeCollection === '__key_enabled__' ? 'rgba(52,211,153,0.08)' : 'transparent')}
+                  onClick={() => { onSelectCollection(keyEnabledNames, '__key_enabled__'); setOpen(false) }}>
+                  <Key size={13} style={{ color: '#34d399', flexShrink: 0 }} />
+                  <span style={{ flex: 1, fontSize: 12, fontWeight: 700, color: '#34d399' }}>🔑 API Key Enabled</span>
+                  <span style={{ fontSize: 10, background: 'rgba(52,211,153,0.15)', color: '#34d399', border: '1px solid rgba(52,211,153,0.3)', borderRadius: 8, padding: '1px 6px', fontWeight: 700 }}>{keyEnabledNames.length}</span>
+                  {activeCollection === '__key_enabled__' && <Check size={12} style={{ color: '#34d399', flexShrink: 0 }} />}
+                </div>
+              )}
+
+              {/* User collections */}
+              {collections.length === 0 && keyEnabledNames.length === 0 && (
                 <div style={{ padding: '20px 14px', fontSize: 12, color: '#334d63', textAlign: 'center', lineHeight: 1.6 }}>
                   No collections yet.<br />Click <strong style={{ color: '#818cf8' }}>+ New</strong> to create one.
                 </div>
@@ -1136,7 +1159,7 @@ const CollectionsPanel = ({ user, onSelectCollection, activeCollection }: {
                 <div key={col.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', cursor: 'pointer', background: activeCollection === col.id ? 'rgba(129,140,248,0.08)' : 'transparent', borderBottom: '1px solid rgba(26,48,80,0.3)', transition: 'background 0.15s' }}
                   onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.04)')}
                   onMouseLeave={e => (e.currentTarget.style.background = activeCollection === col.id ? 'rgba(129,140,248,0.08)' : 'transparent')}
-                  onClick={() => { onSelectCollection(col.apiNames); setOpen(false) }}>
+                  onClick={() => { onSelectCollection(col.apiNames, col.id); setOpen(false) }}>
                   <Folder size={13} style={{ color: '#818cf8', flexShrink: 0 }} />
                   <span style={{ flex: 1, fontSize: 12, color: '#d4e4f7', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{col.name}</span>
                   <span style={{ fontSize: 10, color: '#334d63', flexShrink: 0, marginRight: 4 }}>{col.apiNames.length}</span>
@@ -3084,24 +3107,31 @@ export default function App() {
   const [shareToast, setShareToast] = useState(false)
   const [envVars, setEnvVars] = useState<Record<string, string>>({})
 
+  // Track which API names the user has saved keys for (drives "API Key Enabled" virtual collection)
+  const [savedKeyNames, setSavedKeyNames] = useState<Set<string>>(new Set())
+
   // Load collections when user signs in
   useEffect(() => {
-    if (!user) { setCollections([]); return }
-    getUserCollections(user.uid).then(async cols => {
-      setCollections(cols)
-      // Auto-create "API Key Enabled" collection if it doesn't exist
-      const hasKeyCol = cols.some(c => c.name === 'API Key Enabled')
-      if (!hasKeyCol) {
-        const keyApis = ALL_APIS.filter(a => a.authRequired === 'API Key').map(a => a.name)
-        const ref = await createCollection(user.uid, 'API Key Enabled')
-        // Add all key-required APIs to it
-        for (const name of keyApis.slice(0, 50)) {
-          await addToCollection(user.uid, ref.id, name).catch(() => {})
-        }
-        getUserCollections(user.uid).then(setCollections)
-      }
+    if (!user) { setCollections([]); setSavedKeyNames(new Set()); return }
+    // Load real collections (excluding the virtual one)
+    getUserCollections(user.uid).then(cols => {
+      setCollections(cols.filter(c => c.name !== 'API Key Enabled'))
     })
+    // Load all saved keys → populate the virtual "API Key Enabled" collection
+    getAllApiKeys(user.uid).then(keys => {
+      setSavedKeyNames(new Set(Object.keys(keys).filter(k => keys[k])))
+    }).catch(() => {})
   }, [user])
+
+  // Called by ApiModal whenever a key is saved or removed
+  const handleKeyChange = useCallback((apiName: string, hasKey: boolean) => {
+    setSavedKeyNames(prev => {
+      const next = new Set(prev)
+      if (hasKey) next.add(apiName)
+      else next.delete(apiName)
+      return next
+    })
+  }, [])
 
   // Load env vars
   useEffect(() => {
@@ -3193,13 +3223,16 @@ export default function App() {
       const matchSearch = api.name.toLowerCase().includes(q) || api.desc.toLowerCase().includes(q) || api.category.toLowerCase().includes(q)
       const matchCat = activeCategory === 'All' || api.category === activeCategory
       const matchAuth = authFilter === 'All' || (authFilter === 'None' ? !api.authRequired : api.authRequired === authFilter)
-      const matchCollection = !collectionFilter || collectionFilter.includes(api.name)
+      // For the virtual "API Key Enabled" collection, filter live from savedKeyNames
+      const matchCollection = activeCollectionId === '__key_enabled__'
+        ? savedKeyNames.has(api.name)
+        : !collectionFilter || collectionFilter.includes(api.name)
       return matchSearch && matchCat && matchAuth && matchCollection
     })
     if (sortBy === 'name') result = [...result].sort((a, b) => a.name.localeCompare(b.name))
     else if (sortBy === 'category') result = [...result].sort((a, b) => a.category.localeCompare(b.category))
     return result
-  }, [search, activeCategory, authFilter, sortBy, collectionFilter])
+  }, [search, activeCategory, authFilter, sortBy, collectionFilter, activeCollectionId, savedKeyNames])
 
   const freeCount = ALL_APIS.filter(a => !a.authRequired).length
   const keyCount = ALL_APIS.filter(a => a.authRequired === 'API Key').length
@@ -3326,7 +3359,8 @@ export default function App() {
                 <span style={{ display: 'none' }} className="sm-show"> / {ALL_APIS.length}</span>
               </span>
               <CollectionsPanel user={user} activeCollection={activeCollectionId}
-                onSelectCollection={(names) => { setCollectionFilter(names); setActiveCollectionId(names ? 'active' : null) }} />
+                savedKeyNames={savedKeyNames}
+                onSelectCollection={(names, id) => { setCollectionFilter(names); setActiveCollectionId(id ?? (names ? 'active' : null)) }} />
               <HistoryPanel user={user} onSelect={handleSelectFromHistory} />
               <EnvVarsPanel user={user} />
               <SnippetsPanel user={user} onLoad={() => {}} />
@@ -3427,7 +3461,7 @@ export default function App() {
       </div>
 
       {/* Modal */}
-      {selectedApi && <ApiModal api={selectedApi} onClose={() => setSelectedApi(null)} user={user} onShare={handleShare} />}
+      {selectedApi && <ApiModal api={selectedApi} onClose={() => setSelectedApi(null)} user={user} onShare={handleShare} onKeyChange={handleKeyChange} />}
 
       {/* Code Playground */}
       <AnimatePresence>
