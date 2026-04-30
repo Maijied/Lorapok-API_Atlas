@@ -6,10 +6,10 @@
 
 **◈ Lorapok · Open Source Intelligence**
 
-*The world's most comprehensive open-source API sandbox — 1036+ curated APIs, AI assistant, live testing, and more.*
+*The world's most comprehensive open-source API sandbox — 2000+ curated APIs, AI assistant, live testing, and more.*
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-4ade80?style=for-the-badge&logo=github)](https://maijied.github.io/Lorapok-API_Atlas/)
-[![APIs](https://img.shields.io/badge/APIs-1036%2B-38bdf8?style=for-the-badge)](https://maijied.github.io/Lorapok-API_Atlas/)
+[![APIs](https://img.shields.io/badge/APIs-2000%2B-38bdf8?style=for-the-badge)](https://maijied.github.io/Lorapok-API_Atlas/)
 [![React](https://img.shields.io/badge/React%2018-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com)
@@ -24,7 +24,7 @@
 
 ## What is Lorapok Atlas?
 
-Lorapok Atlas API Directory is a zero-config web dashboard that lets developers **browse, explore, and live-test 1036+ free and open-source APIs** — all in one place. No backend setup, no Postman required. Just open the app, pick an API, and hit Run Test.
+Lorapok Atlas API Directory is a zero-config web dashboard that lets developers **browse, explore, and live-test 2000+ free and open-source APIs** — all in one place. No backend setup, no Postman required. Just open the app, pick an API, and hit Run Test.
 
 Built around **Vaultie** 🐛 — the AI-powered Atlas Vault Manager — the app provides real-time conversational assistance, live API testing, secure key management, and a full code playground.
 
@@ -33,11 +33,12 @@ Built around **Vaultie** 🐛 — the AI-powered Atlas Vault Manager — the app
 ## Features
 
 ### Core Experience
-- **1036+ curated APIs** across 32+ categories — weather, AI, crypto, maps, music, health, space, developer tools, blockchain, sports, food, travel, security, communication, education, images, movies, government, science, IoT, HR, legal, real estate, documents, cloud, and more
+- **2000+ curated APIs** across 33 categories — AI, crypto, maps, music, health, space, developer tools, blockchain, sports, food, travel, security, communication, education, images, movies, government, science, IoT, HR, legal, real estate, documents, cloud, streaming, and more
 - **Sticky navbar** with ◈ Lorapok · Open Source Intelligence branding and Google sign-in
 - **Hero header** with live stats (total APIs, categories, free/key/OAuth counts, visitor/member counters)
 - **Sticky controls bar** — search, sort, auth filter, multi-row category pills
 - **Responsive card grid** — auto-fill layout, hover animations, auth badges, star ratings
+- **Dark / Light theme toggle** — deep navy dark mode + soft lavender light mode
 
 ### Live API Testing
 - **One-click Run Test** — real HTTP requests from the browser
@@ -55,57 +56,58 @@ Built around **Vaultie** 🐛 — the AI-powered Atlas Vault Manager — the app
 
 ### Vaultie AI Assistant 🐛
 - **Floating animated SVG mascot** — custom-drawn larva with mechanical details
-- **Powered by Groq + Qwen3-32B** — streaming responses
+- **Powered by Groq + Qwen3-32B** — streaming responses with `<think>` block stripping
 - **4 AI modes**: Find API, Explain Response, Error Diagnosis, Auto-generate Code
 - **Quick action chips** — "Find me an API", "Generate code", "Trending APIs"
 - **Firebase chat history** — conversations saved to Firestore, restored on sign-in
-- **Ask Vaultie** button on errors — auto-opens with error context
+- **Ask Vaultie** button on errors — auto-opens with error context pre-filled
 
 ### Collections & Organization
 - **Collections** — create named API groups, filter grid by collection
-- **API Key Enabled** — auto-created collection with all key-required APIs
+- **API Key Enabled** — auto-created collection with all key-required APIs on sign-in
 - **Request History** — last 20 tests with status icons, click to reopen
-- **Saved Snippets** — save API calls with custom params/headers/body
-- **Environment Variables** — global `{{KEY}}` injection into URLs
+- **Saved Snippets** — save API calls with custom params/headers/body to Firestore
+- **Environment Variables** — global `{{KEY}}` injection into all URLs
 
 ### Developer Tools
-- **Code Playground** — write and run JavaScript in the browser, Python/cURL templates, save snippets
+- **Code Playground** — write and run JavaScript in the browser, Python/cURL templates, save/load snippets
 - **API Comparison** — select 2 APIs and run them side-by-side
 - **Share links** — copy `?api=Name` URL to share any API directly
-- **Trending APIs** — track most-tested APIs
-- **Submit API form** — GitHub Issue pre-filled with API details
+- **Trending APIs** — track most-tested APIs, shown in a dedicated panel
+- **Submit API form** — GitHub Issue pre-filled with API details, no need to leave the app
 
 ### Community
-- **API Ratings & Reviews** — star ratings on every card
-- **Visitor & Member counters** — live stats in hero and footer
+- **API Ratings & Reviews** — star ratings and short reviews on every API
+- **Visitor & Member counters** — live stats in hero and footer (session/account deduped)
 
 ### Onboarding
-- **Welcome modal** — animated Lorapok logo, feature grid, sign-in benefits (first visit)
+- **Welcome modal** — animated Lorapok logo, feature grid, sign-in benefits (first visit only)
 - **Star popup** — appears after 2 minutes, once per session
-- **How to Use guide** — 📖 Guide button with 13 feature explanations
+- **How to Use guide** — 📖 Guide button with full feature walkthrough
 
 ---
 
-## API Categories (32+)
+## API Categories (33)
 
 | Category | APIs | Category | APIs |
 |---|---|---|---|
-| 🤖 AI & Machine Learning | 23+ | 📰 News & Media | 16+ |
-| 💻 Developer Tools | 23+ | 🎬 Movies & Entertainment | 16+ |
-| 📡 Communication & Social | 21+ | 🌤 Weather & Environment | 16+ |
-| 💰 E-Commerce & Finance | 21+ | ✈️ Travel & Transport | 16+ |
-| 🏋️ Sports & Games | 21+ | 🐾 Animals & Nature | 16+ |
-| 🗺 Maps & Geolocation | 20+ | 🔐 Security & Identity | 18+ |
-| 🎵 Music | 18+ | 🚀 Space & Astronomy | 15+ |
-| 📚 Education & Knowledge | 18+ | 🏛 Government & Public Data | 15+ |
-| 🏦 Blockchain & Crypto | 15+ | 🔬 Science & Research | 15+ |
-| 🏥 Health & Medicine | 17+ | ☁️ Cloud & Infrastructure | 11+ |
-| 📸 Images & Media | 15+ | 🌍 Language & Translation | 11+ |
-| 📊 Data & Analytics | 11+ | 📄 Documents & PDF | 10+ |
-| 🏠 Real Estate & Property | 9+ | 🏭 IoT & Hardware | 10+ |
-| 🧑‍💼 HR & Productivity | 13+ | 📣 Advertising & Marketing | 11+ |
-| 🧾 Legal & Compliance | 8+ | 🔢 QR & Barcodes | 8+ |
-| 🍕 Food & Recipes | 13+ | 📺 Streaming & Live | 5+ |
+| 🤖 AI & Machine Learning | 75 | 📰 News & Media | 44 |
+| 💻 Developer Tools | 166 | 🎬 Movies & Entertainment | 102 |
+| 💰 E-Commerce & Finance | 118 | 🌤 Weather & Environment | 46 |
+| ⛓ Blockchain & Crypto | 101 | ✈️ Travel & Transport | 53 |
+| 🏋️ Sports & Games | 102 | 🐾 Animals & Nature | 57 |
+| 🗺 Maps & Geolocation | 81 | 🔐 Security & Identity | 38 |
+| 🎵 Music | 92 | 🚀 Space & Astronomy | 51 |
+| 📚 Education & Knowledge | 81 | 🏛 Government & Public Data | 45 |
+| 📸 Images & Media | 83 | 🔬 Science & Research | 55 |
+| 🏥 Health & Medicine | 63 | ☁️ Cloud & Infrastructure | 37 |
+| 📡 Communication & Social | 46 | 🌍 Language & Translation | 50 |
+| 🍕 Food & Recipes | 53 | 📄 Documents & PDF | 44 |
+| 🏠 Real Estate & Property | 40 | 🏭 IoT & Hardware | 43 |
+| 🧑‍💼 HR & Productivity | 53 | 📣 Advertising & Marketing | 21 |
+| 🧾 Legal & Compliance | 38 | 🔢 QR & Barcodes | 38 |
+| 📊 Data & Analytics | 32 | 🎨 Art & Culture | 25 |
+| 📺 Streaming & Live | 30 | | |
 
 ---
 
@@ -122,7 +124,7 @@ Built around **Vaultie** 🐛 — the AI-powered Atlas Vault Manager — the app
 | Auth | Firebase Google OAuth |
 | Database | Firebase Firestore |
 | AI Assistant | Groq API (Qwen3-32B) |
-| Deployment | GitHub Pages via GitHub Actions |
+| Deployment | GitHub Pages via GitHub Actions (Node 24) |
 
 ---
 
@@ -157,9 +159,9 @@ VITE_GROQ_API_KEY=your_groq_api_key
 
 ### 3. Firebase setup
 
-**Authentication** → Enable Google sign-in
+**Authentication** → Enable Google sign-in provider
 
-**Firestore** → Production mode → Rules:
+**Firestore** → Start in production mode → Paste these rules:
 
 ```
 rules_version = '2';
@@ -175,7 +177,7 @@ service cloud.firestore {
     match /ratings/{apiName}/reviews/{uid} { allow read: if true; allow write: if request.auth != null && request.auth.uid == uid; }
     match /trending/{apiName} { allow read: if true; allow write: if request.auth != null; }
     match /stats/{doc} { allow read: if true; allow write: if true; }
-    match /admins/{adminId} { allow read: if request.auth != null; allow write: if request.auth != null && request.auth.token.email == 'mdshuvo40@gmail.com'; }
+    match /admins/{adminId} { allow read: if request.auth != null; allow write: if request.auth != null; }
     match /{document=**} { allow read, write: if false; }
   }
 }
@@ -206,7 +208,7 @@ VITE_FIREBASE_APP_ID
 VITE_GROQ_API_KEY
 ```
 
-Push to `main` — GitHub Actions builds and deploys automatically.
+Push to `main` — GitHub Actions builds and deploys automatically to GitHub Pages.
 
 ---
 
@@ -218,16 +220,15 @@ Push to `main` — GitHub Actions builds and deploys automatically.
 ├── AGENTS.md                        # AI agent instructions
 ├── lorapok-api-atlas/
 │   ├── src/
-│   │   ├── App.tsx                  # Entire UI (single-file architecture, ~2500 lines)
+│   │   ├── App.tsx                  # Entire UI (single-file architecture)
 │   │   ├── firebase.ts              # Firebase Auth + Firestore helpers
 │   │   ├── useKeyStore.ts           # useAuth + useApiKey hooks
-│   │   ├── vite-env.d.ts            # VITE_ env var type declarations
 │   │   └── data/
-│   │       └── api_collection.json  # API data (Postman Collection v2.1 schema)
+│   │       └── api_collection.json  # 2000+ APIs (Postman Collection v2.1 schema)
 │   ├── scripts/
 │   │   ├── repair_and_validate.py   # Patches + validates api_collection.json
 │   │   └── deep_validate.py         # Live endpoint validation
-│   ├── public/logo.svg              # Lorapok mascot SVG icon
+│   ├── public/logo.svg
 │   └── package.json
 └── README.md
 ```
@@ -236,7 +237,7 @@ Push to `main` — GitHub Actions builds and deploys automatically.
 
 ## Adding New APIs
 
-Edit `lorapok-api-atlas/src/data/api_collection.json` directly, or run:
+Edit `lorapok-api-atlas/src/data/api_collection.json` directly following the Postman Collection v2.1 schema, or run the repair script after adding raw entries:
 
 ```bash
 python3 lorapok-api-atlas/scripts/repair_and_validate.py
@@ -291,4 +292,3 @@ MIT © [Lorapok](https://github.com/Maijied) — see [LICENSE](LICENSE) for deta
 <div align="center">
   <sub>Made with 💚 for the open-source community · A product of <strong>Lorapok</strong></sub>
 </div>
-
