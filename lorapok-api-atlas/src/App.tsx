@@ -669,13 +669,46 @@ const ApiModal = ({ api, onClose, user, onShare, onKeyChange }: { api: FlatApi; 
     } catch (err: any) {
       const isNetworkError = !err.response && (err.message === 'Network Error' || err.code === 'ERR_NETWORK')
       if (isNetworkError) {
-        setTestResult({ error: 'CORS / Network Error', detail: 'This API does not allow direct browser requests (missing CORS headers). The API itself works fine — use the curl snippet in your terminal instead.', tip: 'Copy the cURL command above and run it locally, or use a server-side proxy.' })
-        if (user) saveRequestHistory(user.uid, { apiName: api.name, url: effectiveUrl, status: 'cors', preview: 'CORS blocked' }).catch(() => {})
+        // Auto-retry through CORS proxies before giving up
+        const proxies = [
+          (u: string) => `https://corsproxy.io/?${encodeURIComponent(u)}`,
+          (u: string) => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+          (u: string) => `https://thingproxy.freeboard.io/fetch/${u}`,
+        ]
+        let proxied = false
+        for (const makeProxy of proxies) {
+          try {
+            const proxyUrl = makeProxy(effectiveUrl)
+            const proxyRes = await axios.get(proxyUrl, { responseType: 'arraybuffer', timeout: 8000 })
+            const ct = typeof proxyRes.headers['content-type'] === 'string' ? proxyRes.headers['content-type'] : ''
+            if (ct.includes('image/')) {
+              const blob = new Blob([proxyRes.data], { type: ct })
+              const reader = new FileReader()
+              reader.onloadend = () => { setTestResult(reader.result); setStatus('happy') }
+              reader.readAsDataURL(blob)
+            } else {
+              const text = new TextDecoder('utf-8').decode(proxyRes.data)
+              let parsed: any
+              try { parsed = JSON.parse(text) } catch { parsed = text }
+              setTestResult(parsed)
+              setStatus('happy')
+              if (user) saveRequestHistory(user.uid, { apiName: api.name, url: effectiveUrl, status: 'success', preview: typeof parsed === 'object' ? JSON.stringify(parsed).slice(0, 80) : String(parsed).slice(0, 80) }).catch(() => {})
+              trackApiTest(api.name).catch(() => {})
+            }
+            proxied = true
+            break
+          } catch { /* try next proxy */ }
+        }
+        if (!proxied) {
+          setTestResult({ error: 'CORS / Network Error', detail: 'This API does not allow direct browser requests (missing CORS headers). The API itself works fine — use the curl snippet in your terminal instead.', tip: 'Copy the cURL command above and run it locally, or use a server-side proxy.' })
+          if (user) saveRequestHistory(user.uid, { apiName: api.name, url: effectiveUrl, status: 'cors', preview: 'CORS blocked' }).catch(() => {})
+          setStatus('sad')
+        }
       } else {
         setTestResult({ error: err.message, status: err.response?.status, detail: err.response?.data })
         if (user) saveRequestHistory(user.uid, { apiName: api.name, url: effectiveUrl, status: 'error', preview: `${err.response?.status || ''} ${err.message}`.slice(0, 80) }).catch(() => {})
+        setStatus('sad')
       }
-      setStatus('sad')
     } finally {
       setIsLoading(false)
     }
@@ -2753,8 +2786,19 @@ curl --request GET \\
   )
 }
 
-// ─── Encrypted admin code (obfuscated) ───────────────────────────────────────
-const _a = () => { const k=[53,54,53,48]; return k.map(c=>String.fromCharCode(c)).join('') }
+// ─── Encrypted admin command (XOR + base64 obfuscation) ─────────────────────
+const _a = (() => {
+  const _e = 'Mjs2IQ=='  // XOR-encoded, base64-wrapped secret
+  const _k = [7, 13, 3, 17]
+  const _d = atob(_e).split('').map((c, i) => String.fromCharCode(c.charCodeAt(0) ^ _k[i % _k.length]))
+  return () => _d.join('')
+})()
+// Admin trigger command (obfuscated)
+const _ac = (() => {
+  const _e = 'KSMsPmRvb3pp'
+  const _k = [7,13,3,17,5,11,2,19]
+  return atob(_e).split('').map((c,i) => String.fromCharCode(c.charCodeAt(0) ^ _k[i%_k.length])).join('')
+})()
 
 // ─── Welcome Modal ────────────────────────────────────────────────────────────
 const WelcomeModal = ({ onClose, onSignIn }: { onClose: () => void; onSignIn: () => void }) => (
@@ -3334,7 +3378,7 @@ export default function App() {
 
   // Admin panel trigger via search
   useEffect(() => {
-    if (search === '..//admin') {
+    if (search === _ac) {
       setSearch('')
       setShowAdmin(true)
     }
