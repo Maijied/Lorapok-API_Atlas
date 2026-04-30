@@ -2077,10 +2077,16 @@ const RatingWidget = ({ apiName, user, popupDirection = 'down' }: { apiName: str
     setOpen(v => !v)
   }
 
+  const [submitErr, setSubmitErr] = useState('')
   const submit = async () => {
     if (!user || !rating) return
-    await rateApi(user.uid, user.displayName || 'User', apiName, rating, review)
-    setSubmitted(true); setOpen(false)
+    setSubmitErr('')
+    try {
+      await rateApi(user.uid, user.displayName || 'User', apiName, rating, review)
+      setSubmitted(true); setOpen(false)
+    } catch (e: any) {
+      setSubmitErr(e?.code === 'permission-denied' ? 'Permission denied — check Firestore rules.' : 'Failed to submit. Try again.')
+    }
   }
 
   return (
@@ -2118,6 +2124,7 @@ const RatingWidget = ({ apiName, user, popupDirection = 'down' }: { apiName: str
                     style={{ width: '100%', padding: '7px', borderRadius: 7, background: rating ? '#fde047' : 'rgba(253,224,71,0.15)', border: 'none', color: rating ? '#000' : '#4a6278', fontSize: 11, fontWeight: 700, cursor: rating ? 'pointer' : 'default' }}>
                     Submit Rating
                   </button>
+                  {submitErr && <div style={{ fontSize: 10, color: '#f87171', marginTop: 6, textAlign: 'center' }}>{submitErr}</div>}
                 </>
               )}
             </motion.div>
