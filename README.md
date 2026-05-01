@@ -273,10 +273,17 @@ python3 lorapok-api-atlas/scripts/repair_and_validate.py
 
 <div align="center">
 
+<a href="https://gravatar.com/lorapok" target="_blank">
+  <img src="https://0.gravatar.com/avatar/7c901cfacc79334975b520600a357d97cf33eff6646608a0f91786744eda6c37?s=120&d=initials" width="120" height="120" style="border-radius:50%" alt="Mohammad Maizied Hasan Majumder" />
+</a>
+
 **Mohammad Maizied Hasan Majumder**
 
-Full Stack Developer · Open Source Enthusiast
+Founder, Lorapok Labs · Dhaka, Bangladesh
 
+*Lorapok is an open-source ecosystem of tools, applications, and platforms focused on high-performance computing, modern interfaces, and experimental digital experiences.*
+
+[![Gravatar](https://img.shields.io/badge/Gravatar-lorapok-1a1a2e?style=flat-square&logo=gravatar&logoColor=white)](https://gravatar.com/lorapok)
 [![GitHub](https://img.shields.io/badge/GitHub-maijied-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/maijied)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-maizied-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/maizied/)
 

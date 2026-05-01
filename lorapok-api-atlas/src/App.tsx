@@ -4072,12 +4072,24 @@ export default function App() {
               <div style={{ fontSize: 10, fontWeight: 800, color: '#818cf8', letterSpacing: '0.2em', textTransform: 'uppercase' }}>Developer</div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16, padding: '14px', borderRadius: 10, background: 'rgba(255,255,255,0.03)', border: '1px solid #1a3050' }}>
-              <img src="https://raw.githubusercontent.com/Maijied/Maijied/main/avatar.jpg" alt="Maizied" style={{ width: 48, height: 48, borderRadius: '50%', border: '2px solid rgba(129,140,248,0.4)', flexShrink: 0, objectFit: 'cover' }}
-                onError={e => { (e.target as HTMLImageElement).src = '/Lorapok-API_Atlas/logo.svg'; (e.target as HTMLImageElement).style.borderRadius = '10px' }} />
+              <a href="https://gravatar.com/lorapok" target="_blank" rel="noopener noreferrer" style={{ flexShrink: 0 }}>
+                <img
+                  src="https://0.gravatar.com/avatar/7c901cfacc79334975b520600a357d97cf33eff6646608a0f91786744eda6c37?s=96&d=initials"
+                  alt="Lorapok — Mohammad Maizied"
+                  style={{ width: 52, height: 52, borderRadius: '50%', border: '2px solid rgba(129,140,248,0.5)', objectFit: 'cover', display: 'block' }}
+                  onError={e => { (e.target as HTMLImageElement).src = '/Lorapok-API_Atlas/logo.svg'; (e.target as HTMLImageElement).style.borderRadius = '10px' }}
+                />
+              </a>
               <div>
                 <div style={{ fontSize: 13, fontWeight: 800, color: '#d4e4f7', lineHeight: 1.2 }}>Mohammad Maizied</div>
                 <div style={{ fontSize: 11, color: '#4a6278', marginTop: 2 }}>Hasan Majumder</div>
-                <div style={{ fontSize: 10, color: '#334d63', marginTop: 4 }}>Full Stack Developer · OSS Enthusiast</div>
+                <div style={{ fontSize: 10, color: '#334d63', marginTop: 3 }}>Founder, Lorapok Labs · Dhaka, Bangladesh</div>
+                <a href="https://gravatar.com/lorapok" target="_blank" rel="noopener noreferrer"
+                  style={{ fontSize: 10, color: '#818cf8', marginTop: 4, display: 'inline-block', textDecoration: 'none' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = '#a5b4fc')}
+                  onMouseLeave={e => (e.currentTarget.style.color = '#818cf8')}>
+                  gravatar.com/lorapok →
+                </a>
               </div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
