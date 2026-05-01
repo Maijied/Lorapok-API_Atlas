@@ -204,27 +204,30 @@
     </script>
   </head>
   <body style="background:#070e18;margin:0">
-    <!-- Static content for Google/crawlers that don't execute JavaScript -->
+    <!-- Static content for Google/crawlers — explains app purpose for OAuth verification -->
+    <div id="app-description" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">
+      <h1>Lorapok Atlas API Directory</h1>
+      <p>Lorapok Atlas is a free open-source web application that allows developers to browse, explore, and live-test 2100+ public REST APIs across 34 categories including AI, weather, maps, crypto, music, health, space, developer tools, sports, food, travel, security, communication, education, and privacy tools. Users can run live HTTP requests, view real-time responses, generate code snippets in cURL, JavaScript, Python, and Go, manage API keys securely via Google sign-in, and chat with Vaultie — an AI assistant powered by Groq. The app is built with React, TypeScript, Firebase, and deployed on GitHub Pages. It is completely free to use with no backend required.</p>
+      <p>Application name: Lorapok Atlas API Directory. Developer: Mohammad Maizied Hasan Majumder. License: MIT.</p>
+    </div>
+    <!-- Noscript fallback -->
     <noscript>
       <div style="font-family:sans-serif;background:#070e18;color:#d4e4f7;padding:40px;max-width:800px;margin:0 auto">
-        <img src="/Lorapok-API_Atlas/logo.svg" alt="Lorapok Atlas" width="80" height="80" style="border-radius:16px;margin-bottom:16px" />
+        <img src="/Lorapok-API_Atlas/logo.svg" alt="Lorapok Atlas API Directory" width="80" height="80" style="border-radius:16px;margin-bottom:16px" />
         <h1 style="font-size:32px;margin:0 0 12px;color:#d4e4f7">Lorapok Atlas API Directory</h1>
         <p style="font-size:16px;color:#7aa8c7;line-height:1.6;margin:0 0 16px">
-          Browse, explore, and live-test 2100+ free open-source APIs across 34 categories.
-          Real-time response visualization, code snippets in 4 languages, AI assistant Vaultie,
-          and secure API key management. Zero config — no backend required.
+          Lorapok Atlas is a free open-source web application for browsing and live-testing 2100+ public APIs.
+          Explore APIs across 34 categories, run real HTTP requests, generate code snippets, and manage API keys securely.
         </p>
         <p style="font-size:14px;color:#4a6278">
-          Categories include: AI &amp; Machine Learning, Weather, Maps, Crypto, Music, Health,
-          Space, Developer Tools, Sports, Food, Travel, Security, Communication, Education,
-          Privacy &amp; Anonymity, and more.
+          Categories: AI, Weather, Maps, Crypto, Music, Health, Space, Developer Tools, Sports, Food, Travel,
+          Security, Communication, Education, Privacy &amp; Anonymity, and more.
         </p>
         <p style="font-size:14px;color:#4a6278;margin-top:16px">
           Built by <a href="https://github.com/maijied" style="color:#38bdf8">Mohammad Maizied Hasan Majumder</a> ·
           <a href="https://maijied.github.io/Lorapok-API_Atlas/privacy.html" style="color:#38bdf8">Privacy Policy</a> ·
           <a href="https://maijied.github.io/Lorapok-API_Atlas/terms.html" style="color:#38bdf8">Terms of Service</a>
         </p>
-        <p style="font-size:13px;color:#334d63;margin-top:8px">Please enable JavaScript to use Lorapok Atlas.</p>
       </div>
     </noscript>
     <div id="root"></div>
