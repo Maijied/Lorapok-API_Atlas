@@ -199,9 +199,24 @@ function renderPrimitive(val: any, key?: string): React.ReactNode {
 const DataVisualizer = ({ data, baseUrl }: { data: any; baseUrl?: string }) => {
   if (data === null || data === undefined || data === '') return <span className="text-gray-500 italic text-xs">N/A</span>
   const isHtml = (v: any) => typeof v === 'string' && (v.trim().startsWith('<!DOCTYPE') || v.trim().startsWith('<html') || v.includes('<body'))
-  const isBin = (v: any) => typeof v === 'string' && (v.startsWith('data:image/') || v.includes('PNG') || v.includes('JFIF') || (v.length > 100 && v.includes('IHDR')))
+  const isBin = (v: any) => typeof v === 'string' && (
+    v.startsWith('data:image/') ||
+    v.startsWith('data:') ||
+    (v.length > 50 && /[\x00-\x08\x0e-\x1f\x7f-\x9f]/.test(v.slice(0, 100))) ||
+    v.includes('\x89PNG') || v.includes('JFIF') || v.includes('IHDR')
+  )
   if (isHtml(data)) return <HtmlVisualizer html={data} baseUrl={baseUrl} />
   if (isBin(data)) return <BinaryImageVisualizer data={data} />
+  // Garbled/binary string — show truncated with warning
+  if (typeof data === 'string' && data.length > 0) {
+    const hasBinaryChars = /[^\x09\x0a\x0d\x20-\x7e\x80-\xff]/.test(data.slice(0, 200))
+    if (hasBinaryChars) return (
+      <div style={{ padding: '12px', borderRadius: 8, background: 'rgba(251,191,36,0.06)', border: '1px solid rgba(251,191,36,0.2)' }}>
+        <div style={{ fontSize: 12, fontWeight: 700, color: '#fbbf24', marginBottom: 6 }}>⚠️ Binary / Encoded Response</div>
+        <p style={{ fontSize: 11, color: '#4a6278', margin: 0 }}>This API returned binary or encoded data that can't be displayed as text. Try opening it directly in the browser.</p>
+      </div>
+    )
+  }
   if (typeof data !== 'object') return renderPrimitive(data) as JSX.Element
   if (Object.keys(data).length === 0) return <span className="text-gray-500 italic text-xs">Empty Object</span>
   if (Array.isArray(data)) {
@@ -2796,11 +2811,41 @@ curl --request GET \\
     console.log = (...args) => { capture(...args); origLog(...args) }
     console.warn = (...args) => { capture('⚠️', ...args); origWarn(...args) }
     console.error = (...args) => { capture('❌', ...args); origError(...args) }
+
+    // CORS-proxy-aware fetch for the playground
+    const proxies = [
+      (u: string) => `https://corsproxy.io/?${encodeURIComponent(u)}`,
+      (u: string) => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+      (u: string) => `https://thingproxy.freeboard.io/fetch/${u}`,
+    ]
+    const origFetch = window.fetch
+    const proxyFetch = async (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
+      const url = typeof input === 'string' ? input : input instanceof URL ? input.href : (input as Request).url
+      // Try direct first
+      try {
+        const res = await origFetch(input, init)
+        return res
+      } catch {
+        // CORS failed — try proxies
+        for (const makeProxy of proxies) {
+          try {
+            const proxyUrl = makeProxy(url)
+            const res = await origFetch(proxyUrl, { method: 'GET' })
+            if (res.ok) {
+              capture(`ℹ️ CORS blocked — fetched via proxy: ${proxyUrl.split('?')[0]}`)
+              return res
+            }
+          } catch { /* try next */ }
+        }
+        throw new Error(`Failed to fetch (CORS blocked, all proxies failed): ${url}`)
+      }
+    }
+    ;(window as any).fetch = proxyFetch
+
     try {
       const fn = new Function(`return (async () => { ${code} })()`)
       const result = await fn()
-      // Wait a tick for any .then() chains that logged asynchronously
-      await new Promise(r => setTimeout(r, 50))
+      await new Promise(r => setTimeout(r, 100))
       if (result !== undefined && result !== null) {
         logs.push(typeof result === 'object' ? JSON.stringify(result, null, 2) : String(result))
       }
@@ -2812,6 +2857,7 @@ curl --request GET \\
       console.log = origLog
       console.warn = origWarn
       console.error = origError
+      ;(window as any).fetch = origFetch
       setRunning(false)
     }
   }
