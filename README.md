@@ -305,6 +305,65 @@ api_collection.json → flattenCollection() → ALL_APIS[]
 
 ---
 
+## Ecosystem
+
+Lorapok Atlas ships as multiple packages — use the data programmatically, in AI assistants, or as a REST API.
+
+### `lorapok-atlas` — npm package
+
+```bash
+npm install lorapok-atlas
+```
+
+```ts
+import { searchApis, getApi, getSnippets, getCategories } from 'lorapok-atlas'
+
+// Find free weather APIs
+const apis = searchApis('weather', { authType: 'free', limit: 5 })
+
+// Get code snippets
+const api = getApi('Open-Meteo Forecast')
+const { javascript, python, curl } = getSnippets(api!)
+```
+
+→ [Full docs](packages/lorapok-atlas-client/README.md)
+
+---
+
+### `lorapok-atlas-mcp` — MCP Server for AI assistants
+
+Gives Claude, Cursor, Kiro, and other MCP-compatible AI tools direct access to the API directory.
+
+```json
+{
+  "mcpServers": {
+    "lorapok-atlas": {
+      "command": "npx",
+      "args": ["lorapok-atlas-mcp"]
+    }
+  }
+}
+```
+
+**Available tools:** `search_apis`, `get_api`, `get_code_snippet`, `list_categories`, `get_apis_by_category`, `get_random_api`, `get_stats`
+
+→ [Full docs](packages/lorapok-atlas-mcp/README.md)
+
+---
+
+### REST API — Cloudflare Worker
+
+```bash
+GET https://api.lorapok.dev/apis?q=weather&auth=free
+GET https://api.lorapok.dev/apis/Open-Meteo%20Forecast
+GET https://api.lorapok.dev/categories
+GET https://api.lorapok.dev/stats
+```
+
+→ [Full docs](packages/lorapok-atlas-api/README.md) · [Deploy your own](packages/lorapok-atlas-api)
+
+---
+
 ## Open Source — Contributing
 
 We welcome contributions from the community! Here's how to get involved:
@@ -345,6 +404,9 @@ The fastest way to contribute is adding APIs to `api_collection.json`:
 Add it inside the appropriate category's `item` array. Run `python3 lorapok-api-atlas/scripts/repair_and_validate.py` to validate.
 
 ### Roadmap / Ideas
+- [x] npm package (`lorapok-atlas`)
+- [x] MCP server (`lorapok-atlas-mcp`)
+- [x] REST API (Cloudflare Worker)
 - [ ] OpenAPI/Swagger import
 - [ ] API health monitor (GitHub Actions cron)
 - [ ] Webhook tester

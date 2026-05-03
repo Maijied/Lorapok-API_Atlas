@@ -1,0 +1,16 @@
+{
+  "name": "lorapok-atlas-api",
+  "version": "1.0.0",
+  "description": "Cloudflare Worker REST API for Lorapok Atlas",
+  "main": "src/worker.ts",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "build": "wrangler deploy --dry-run"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.0.0",
+    "wrangler": "^3.0.0",
+    "typescript": "^5.0.0"
+  }
+}

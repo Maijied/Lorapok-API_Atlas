@@ -1,0 +1,38 @@
+{
+  "name": "lorapok-atlas",
+  "version": "1.0.0",
+  "description": "2100+ curated free & open-source APIs — programmatic access to the Lorapok Atlas API directory",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "api", "api-directory", "open-source", "free-apis", "rest-api",
+    "api-collection", "developer-tools", "lorapok", "api-testing"
+  ],
+  "author": "Mohammad Maizied Hasan Majumder <lorapokdev@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://maijied.github.io/Lorapok-API_Atlas/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Maijied/Lorapok-API_Atlas.git",
+    "directory": "packages/lorapok-atlas-client"
+  },
+  "bugs": { "url": "https://github.com/Maijied/Lorapok-API_Atlas/issues" },
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0"
+  }
+}

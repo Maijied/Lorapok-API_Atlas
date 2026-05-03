@@ -4106,6 +4106,25 @@ export default function App() {
               </div>
             ))}
           </div>
+
+          {/* Ecosystem */}
+          <div>
+            <div style={{ fontSize: 10, fontWeight: 800, color: '#fde047', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 18, display: 'flex', alignItems: 'center', gap: 6 }}>
+              <span style={{ width: 16, height: 1, background: '#fde047', display: 'inline-block' }} /> Ecosystem
+            </div>
+            {[
+              { l: '📦 npm: lorapok-atlas', h: 'https://www.npmjs.com/package/lorapok-atlas', badge: 'npm' },
+              { l: '🤖 MCP Server', h: 'https://www.npmjs.com/package/lorapok-atlas-mcp', badge: 'mcp' },
+              { l: '🌐 REST API', h: 'https://github.com/Maijied/Lorapok-API_Atlas/tree/main/packages/lorapok-atlas-api', badge: 'api' },
+              { l: '📖 npm Docs', h: 'https://github.com/Maijied/Lorapok-API_Atlas/tree/main/packages/lorapok-atlas-client', badge: null },
+              { l: '🔌 MCP Docs', h: 'https://github.com/Maijied/Lorapok-API_Atlas/tree/main/packages/lorapok-atlas-mcp', badge: null },
+              { l: '☁️ Deploy Worker', h: 'https://github.com/Maijied/Lorapok-API_Atlas/tree/main/packages/lorapok-atlas-api', badge: null },
+            ].map(lk => (
+              <a key={lk.l} href={lk.h} target="_blank" rel="noopener noreferrer"
+                style={{ display: 'block', fontSize: 12, color: '#4a6278', marginBottom: 10, textDecoration: 'none', transition: 'color 0.15s' }}
+                onMouseEnter={e => (e.currentTarget.style.color = '#fde047')} onMouseLeave={e => (e.currentTarget.style.color = '#4a6278')}>{lk.l}</a>
+            ))}
+          </div>
         </div>
 
         {/* ── Divider ── */}
