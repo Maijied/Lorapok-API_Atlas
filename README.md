@@ -309,9 +309,21 @@ api_collection.json → flattenCollection() → ALL_APIS[]
 
 ## Ecosystem
 
-Lorapok Atlas ships as multiple packages — use the data programmatically, in AI assistants, or as a REST API.
+Lorapok Atlas ships as multiple packages — use the data programmatically, in AI assistants, a REST API, or directly inside VS Code.
 
-### `lorapok-atlas` — npm package
+| Package | Install | Description |
+|---|---|---|
+| [`lorapok-atlas`](https://www.npmjs.com/package/lorapok-atlas) | `npm i lorapok-atlas` | JS/TS library — search, filter, get snippets |
+| [`lorapok-atlas-mcp`](https://www.npmjs.com/package/lorapok-atlas-mcp) | `npx lorapok-atlas-mcp` | MCP server for Claude, Cursor, Kiro |
+| `lorapok-atlas` (VS Code) | VS Marketplace | Sidebar panel — search & insert snippets |
+| REST API | `api.lorapok.dev` | Cloudflare Worker REST endpoint |
+
+---
+
+### 📦 `lorapok-atlas` — npm package
+
+[![npm](https://img.shields.io/npm/v/lorapok-atlas?style=flat-square&color=38bdf8)](https://www.npmjs.com/package/lorapok-atlas)
+[![downloads](https://img.shields.io/npm/dm/lorapok-atlas?style=flat-square&color=34d399)](https://www.npmjs.com/package/lorapok-atlas)
 
 ```bash
 npm install lorapok-atlas
@@ -320,40 +332,47 @@ npm install lorapok-atlas
 ```ts
 import { searchApis, getApi, getSnippets, getCategories } from 'lorapok-atlas'
 
-// Find free weather APIs
 const apis = searchApis('weather', { authType: 'free', limit: 5 })
-
-// Get code snippets
 const api = getApi('Open-Meteo Forecast')
 const { javascript, python, curl } = getSnippets(api!)
 ```
 
-→ [Full docs](packages/lorapok-atlas-client/README.md)
+→ [npm](https://www.npmjs.com/package/lorapok-atlas) · [docs](packages/lorapok-atlas-client/README.md)
 
 ---
 
-### `lorapok-atlas-mcp` — MCP Server for AI assistants
+### 🤖 `lorapok-atlas-mcp` — MCP Server
 
-Gives Claude, Cursor, Kiro, and other MCP-compatible AI tools direct access to the API directory.
+[![npm](https://img.shields.io/npm/v/lorapok-atlas-mcp?style=flat-square&color=818cf8)](https://www.npmjs.com/package/lorapok-atlas-mcp)
+[![downloads](https://img.shields.io/npm/dm/lorapok-atlas-mcp?style=flat-square&color=34d399)](https://www.npmjs.com/package/lorapok-atlas-mcp)
 
 ```json
 {
   "mcpServers": {
-    "lorapok-atlas": {
-      "command": "npx",
-      "args": ["lorapok-atlas-mcp"]
-    }
+    "lorapok-atlas": { "command": "npx", "args": ["lorapok-atlas-mcp"] }
   }
 }
 ```
 
-**Available tools:** `search_apis`, `get_api`, `get_code_snippet`, `list_categories`, `get_apis_by_category`, `get_random_api`, `get_stats`
+Tools: `search_apis` · `get_api` · `get_code_snippet` · `list_categories` · `get_random_api` · `get_stats`
 
-→ [Full docs](packages/lorapok-atlas-mcp/README.md)
+→ [npm](https://www.npmjs.com/package/lorapok-atlas-mcp) · [docs](packages/lorapok-atlas-mcp/README.md)
 
 ---
 
-### REST API — Cloudflare Worker
+### 🧩 VS Code Extension
+
+Search APIs and insert code snippets directly into your editor from the Activity Bar.
+
+```
+ext install lorapok.lorapok-atlas
+```
+
+→ [VS Marketplace](https://marketplace.visualstudio.com/items?itemName=lorapok.lorapok-atlas) · [docs](packages/lorapok-atlas-vscode/README.md)
+
+---
+
+### 🌐 REST API — Cloudflare Worker
 
 ```bash
 GET https://api.lorapok.dev/apis?q=weather&auth=free
@@ -362,7 +381,7 @@ GET https://api.lorapok.dev/categories
 GET https://api.lorapok.dev/stats
 ```
 
-→ [Full docs](packages/lorapok-atlas-api/README.md) · [Deploy your own](packages/lorapok-atlas-api)
+→ [docs](packages/lorapok-atlas-api/README.md) · [deploy your own](packages/lorapok-atlas-api)
 
 ---
 
@@ -409,8 +428,11 @@ Add it inside the appropriate category's `item` array. Run `python3 lorapok-api-
 - [x] npm package (`lorapok-atlas`)
 - [x] MCP server (`lorapok-atlas-mcp`)
 - [x] REST API (Cloudflare Worker)
+- [x] VS Code Extension
 - [ ] OpenAPI/Swagger import
 - [ ] API health monitor (GitHub Actions cron)
+- [ ] More language snippets (Ruby, PHP, Rust)
+- [ ] Community collections (public shareable)
 - [ ] Webhook tester
 - [ ] Community collections (public shareable)
 - [ ] More language snippets (Ruby, PHP, Rust)

@@ -1,0 +1,239 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Dark blue rounded frame gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0d1f3c"/>
+      <stop offset="100%" stop-color="#060e1e"/>
+    </radialGradient>
+
+    <!-- Neon green glow for larva -->
+    <radialGradient id="larvaGlow" cx="50%" cy="60%" r="50%">
+      <stop offset="0%" stop-color="#4ade80" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#4ade80" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Larva body gradient -->
+    <linearGradient id="larvaBody" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6ee7b7"/>
+      <stop offset="50%" stop-color="#4ade80"/>
+      <stop offset="100%" stop-color="#16a34a"/>
+    </linearGradient>
+
+    <!-- Segment highlight -->
+    <linearGradient id="segHighlight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#bbf7d0" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#4ade80" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Mechanical ring gradient -->
+    <linearGradient id="mechRing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+
+    <!-- Frame border gradient -->
+    <linearGradient id="frameBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#818cf8" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#34d399" stop-opacity="0.8"/>
+    </linearGradient>
+
+    <!-- Network node glow -->
+    <filter id="nodeGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Larva glow filter -->
+    <filter id="larvaGlowFilter" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Outer frame glow -->
+    <filter id="frameGlow" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <clipPath id="roundClip">
+      <rect x="16" y="16" width="480" height="480" rx="96" ry="96"/>
+    </clipPath>
+  </defs>
+
+  <!-- Outer frame glow ring -->
+  <rect x="8" y="8" width="496" height="496" rx="104" ry="104" fill="none" stroke="url(#frameBorder)" stroke-width="3" opacity="0.5" filter="url(#frameGlow)"/>
+
+  <!-- Main background -->
+  <rect x="16" y="16" width="480" height="480" rx="96" ry="96" fill="url(#bgGrad)"/>
+
+  <!-- Frame border -->
+  <rect x="16" y="16" width="480" height="480" rx="96" ry="96" fill="none" stroke="url(#frameBorder)" stroke-width="2.5"/>
+
+  <!-- ── Network mesh background ── -->
+  <g clip-path="url(#roundClip)" opacity="0.22">
+    <!-- Grid lines horizontal -->
+    <line x1="16" y1="80"  x2="496" y2="80"  stroke="#38bdf8" stroke-width="0.4"/>
+    <line x1="16" y1="144" x2="496" y2="144" stroke="#38bdf8" stroke-width="0.4"/>
+    <line x1="16" y1="208" x2="496" y2="208" stroke="#38bdf8" stroke-width="0.4"/>
+    <line x1="16" y1="272" x2="496" y2="272" stroke="#38bdf8" stroke-width="0.4"/>
+    <line x1="16" y1="336" x2="496" y2="336" stroke="#38bdf8" stroke-width="0.4"/>
+    <line x1="16" y1="400" x2="496" y2="400" stroke="#38bdf8" stroke-width="0.4"/>
+    <line x1="16" y1="432" x2="496" y2="432" stroke="#38bdf8" stroke-width="0.4"/>
+    <!-- Grid lines vertical -->
+    <line x1="80"  y1="16" x2="80"  y2="496" stroke="#38bdf8" stroke-width="0.4"/>
+    <line x1="144" y1="16" x2="144" y2="496" stroke="#38bdf8" stroke-width="0.4"/>
+    <line x1="208" y1="16" x2="208" y2="496" stroke="#38bdf8" stroke-width="0.4"/>
+    <line x1="272" y1="16" x2="272" y2="496" stroke="#38bdf8" stroke-width="0.4"/>
+    <line x1="336" y1="16" x2="336" y2="496" stroke="#38bdf8" stroke-width="0.4"/>
+    <line x1="400" y1="16" x2="400" y2="496" stroke="#38bdf8" stroke-width="0.4"/>
+    <line x1="432" y1="16" x2="432" y2="496" stroke="#38bdf8" stroke-width="0.4"/>
+
+    <!-- Diagonal network connections -->
+    <line x1="80"  y1="80"  x2="208" y2="144" stroke="#818cf8" stroke-width="0.6"/>
+    <line x1="208" y1="144" x2="336" y2="80"  stroke="#818cf8" stroke-width="0.6"/>
+    <line x1="336" y1="80"  x2="432" y2="208" stroke="#818cf8" stroke-width="0.6"/>
+    <line x1="432" y1="208" x2="400" y2="336" stroke="#818cf8" stroke-width="0.6"/>
+    <line x1="400" y1="336" x2="272" y2="400" stroke="#818cf8" stroke-width="0.6"/>
+    <line x1="272" y1="400" x2="144" y2="336" stroke="#818cf8" stroke-width="0.6"/>
+    <line x1="144" y1="336" x2="80"  y2="208" stroke="#818cf8" stroke-width="0.6"/>
+    <line x1="80"  y1="208" x2="208" y2="272" stroke="#818cf8" stroke-width="0.6"/>
+    <line x1="208" y1="272" x2="336" y2="208" stroke="#818cf8" stroke-width="0.6"/>
+    <line x1="336" y1="208" x2="432" y2="336" stroke="#818cf8" stroke-width="0.6"/>
+    <line x1="144" y1="144" x2="272" y2="272" stroke="#34d399" stroke-width="0.5"/>
+    <line x1="272" y1="272" x2="400" y2="144" stroke="#34d399" stroke-width="0.5"/>
+    <line x1="80"  y1="336" x2="208" y2="400" stroke="#34d399" stroke-width="0.5"/>
+    <line x1="336" y1="336" x2="432" y2="432" stroke="#34d399" stroke-width="0.5"/>
+
+    <!-- Network nodes -->
+    <circle cx="80"  cy="80"  r="3.5" fill="#38bdf8" filter="url(#nodeGlow)"/>
+    <circle cx="208" cy="144" r="3"   fill="#818cf8" filter="url(#nodeGlow)"/>
+    <circle cx="336" cy="80"  r="3.5" fill="#38bdf8" filter="url(#nodeGlow)"/>
+    <circle cx="432" cy="208" r="3"   fill="#34d399" filter="url(#nodeGlow)"/>
+    <circle cx="400" cy="336" r="3.5" fill="#818cf8" filter="url(#nodeGlow)"/>
+    <circle cx="272" cy="400" r="3"   fill="#38bdf8" filter="url(#nodeGlow)"/>
+    <circle cx="144" cy="336" r="3.5" fill="#34d399" filter="url(#nodeGlow)"/>
+    <circle cx="80"  cy="208" r="3"   fill="#818cf8" filter="url(#nodeGlow)"/>
+    <circle cx="208" cy="272" r="4"   fill="#38bdf8" filter="url(#nodeGlow)"/>
+    <circle cx="336" cy="208" r="3"   fill="#34d399" filter="url(#nodeGlow)"/>
+    <circle cx="144" cy="144" r="3"   fill="#38bdf8" filter="url(#nodeGlow)"/>
+    <circle cx="400" cy="144" r="3"   fill="#818cf8" filter="url(#nodeGlow)"/>
+    <circle cx="80"  cy="336" r="3"   fill="#34d399" filter="url(#nodeGlow)"/>
+    <circle cx="432" cy="432" r="3.5" fill="#38bdf8" filter="url(#nodeGlow)"/>
+    <circle cx="272" cy="272" r="4.5" fill="#4ade80" filter="url(#nodeGlow)"/>
+  </g>
+
+  <!-- Larva ambient glow -->
+  <ellipse cx="256" cy="290" rx="110" ry="90" fill="url(#larvaGlow)"/>
+
+  <!-- ── Lorapok Larva Mascot ── -->
+  <g filter="url(#larvaGlowFilter)">
+
+    <!-- Tail segment (bottom) -->
+    <ellipse cx="256" cy="390" rx="28" ry="22" fill="url(#larvaBody)" opacity="0.85"/>
+    <ellipse cx="256" cy="383" rx="22" ry="10" fill="url(#segHighlight)" opacity="0.4"/>
+    <!-- Tail mechanical ring -->
+    <ellipse cx="256" cy="390" rx="28" ry="22" fill="none" stroke="#38bdf8" stroke-width="1.2" opacity="0.6"/>
+    <line x1="228" y1="390" x2="284" y2="390" stroke="#38bdf8" stroke-width="0.8" opacity="0.5"/>
+
+    <!-- Body segment 3 -->
+    <ellipse cx="256" cy="348" rx="36" ry="26" fill="url(#larvaBody)" opacity="0.9"/>
+    <ellipse cx="256" cy="340" rx="28" ry="12" fill="url(#segHighlight)" opacity="0.4"/>
+    <ellipse cx="256" cy="348" rx="36" ry="26" fill="none" stroke="#38bdf8" stroke-width="1.2" opacity="0.5"/>
+    <!-- Segment rivets -->
+    <circle cx="232" cy="348" r="2.5" fill="#38bdf8" opacity="0.7"/>
+    <circle cx="280" cy="348" r="2.5" fill="#38bdf8" opacity="0.7"/>
+
+    <!-- Body segment 2 -->
+    <ellipse cx="256" cy="302" rx="44" ry="30" fill="url(#larvaBody)"/>
+    <ellipse cx="256" cy="292" rx="34" ry="14" fill="url(#segHighlight)" opacity="0.45"/>
+    <ellipse cx="256" cy="302" rx="44" ry="30" fill="none" stroke="#38bdf8" stroke-width="1.4" opacity="0.55"/>
+    <!-- Mechanical details on mid segment -->
+    <circle cx="224" cy="302" r="3" fill="#38bdf8" opacity="0.8"/>
+    <circle cx="288" cy="302" r="3" fill="#38bdf8" opacity="0.8"/>
+    <line x1="224" y1="302" x2="212" y2="290" stroke="#38bdf8" stroke-width="1" opacity="0.6"/>
+    <line x1="288" y1="302" x2="300" y2="290" stroke="#38bdf8" stroke-width="1" opacity="0.6"/>
+    <!-- Mini circuit lines on body -->
+    <line x1="240" y1="298" x2="272" y2="298" stroke="#bbf7d0" stroke-width="0.8" opacity="0.5"/>
+    <line x1="256" y1="294" x2="256" y2="310" stroke="#bbf7d0" stroke-width="0.8" opacity="0.5"/>
+    <circle cx="256" cy="302" r="3.5" fill="none" stroke="#bbf7d0" stroke-width="0.8" opacity="0.6"/>
+
+    <!-- Body segment 1 (upper) -->
+    <ellipse cx="256" cy="256" rx="50" ry="34" fill="url(#larvaBody)"/>
+    <ellipse cx="256" cy="244" rx="38" ry="16" fill="url(#segHighlight)" opacity="0.5"/>
+    <ellipse cx="256" cy="256" rx="50" ry="34" fill="none" stroke="#38bdf8" stroke-width="1.5" opacity="0.6"/>
+    <!-- Arm stubs -->
+    <path d="M206 252 Q188 244 178 252 Q188 260 206 260 Z" fill="url(#larvaBody)" stroke="#38bdf8" stroke-width="1" opacity="0.8"/>
+    <path d="M306 252 Q324 244 334 252 Q324 260 306 260 Z" fill="url(#larvaBody)" stroke="#38bdf8" stroke-width="1" opacity="0.8"/>
+    <!-- Arm tip dots -->
+    <circle cx="178" cy="252" r="3.5" fill="#38bdf8" opacity="0.9"/>
+    <circle cx="334" cy="252" r="3.5" fill="#38bdf8" opacity="0.9"/>
+
+    <!-- Neck -->
+    <rect x="238" y="218" width="36" height="18" rx="8" fill="url(#larvaBody)"/>
+    <rect x="238" y="218" width="36" height="18" rx="8" fill="none" stroke="#38bdf8" stroke-width="1.2" opacity="0.6"/>
+
+    <!-- Head -->
+    <ellipse cx="256" cy="200" rx="54" ry="50" fill="url(#larvaBody)"/>
+    <ellipse cx="256" cy="182" rx="42" ry="22" fill="url(#segHighlight)" opacity="0.5"/>
+    <ellipse cx="256" cy="200" rx="54" ry="50" fill="none" stroke="#38bdf8" stroke-width="2" opacity="0.7"/>
+
+    <!-- Mechanical head band -->
+    <path d="M202 188 Q256 178 310 188" fill="none" stroke="url(#mechRing)" stroke-width="2.5" opacity="0.8"/>
+    <!-- Band rivets -->
+    <circle cx="206" cy="189" r="3" fill="#38bdf8"/>
+    <circle cx="256" cy="179" r="3" fill="#818cf8"/>
+    <circle cx="306" cy="189" r="3" fill="#38bdf8"/>
+
+    <!-- Antenna left -->
+    <line x1="228" y1="154" x2="210" y2="124" stroke="#38bdf8" stroke-width="2" opacity="0.9"/>
+    <circle cx="210" cy="124" r="5.5" fill="#38bdf8" opacity="0.9"/>
+    <circle cx="210" cy="124" r="3" fill="#e0f2fe"/>
+
+    <!-- Antenna right -->
+    <line x1="284" y1="154" x2="302" y2="124" stroke="#818cf8" stroke-width="2" opacity="0.9"/>
+    <circle cx="302" cy="124" r="5.5" fill="#818cf8" opacity="0.9"/>
+    <circle cx="302" cy="124" r="3" fill="#e0e7ff"/>
+
+    <!-- Eyes -->
+    <!-- Left eye -->
+    <ellipse cx="232" cy="196" rx="14" ry="14" fill="#0a1628"/>
+    <ellipse cx="232" cy="196" rx="14" ry="14" fill="none" stroke="#38bdf8" stroke-width="1.5"/>
+    <circle cx="232" cy="196" r="9" fill="#38bdf8" opacity="0.15"/>
+    <circle cx="232" cy="196" r="6" fill="#38bdf8" opacity="0.9"/>
+    <circle cx="229" cy="193" r="2.5" fill="#e0f2fe"/>
+    <!-- Eye scan line -->
+    <line x1="218" y1="196" x2="246" y2="196" stroke="#38bdf8" stroke-width="0.8" opacity="0.4"/>
+
+    <!-- Right eye -->
+    <ellipse cx="280" cy="196" rx="14" ry="14" fill="#0a1628"/>
+    <ellipse cx="280" cy="196" rx="14" ry="14" fill="none" stroke="#818cf8" stroke-width="1.5"/>
+    <circle cx="280" cy="196" r="9" fill="#818cf8" opacity="0.15"/>
+    <circle cx="280" cy="196" r="6" fill="#818cf8" opacity="0.9"/>
+    <circle cx="277" cy="193" r="2.5" fill="#e0e7ff"/>
+    <!-- Eye scan line -->
+    <line x1="266" y1="196" x2="294" y2="196" stroke="#818cf8" stroke-width="0.8" opacity="0.4"/>
+
+    <!-- Smile -->
+    <path d="M238 218 Q256 228 274 218" fill="none" stroke="#bbf7d0" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+
+    <!-- Cheek blush dots -->
+    <circle cx="218" cy="212" r="6" fill="#4ade80" opacity="0.25"/>
+    <circle cx="294" cy="212" r="6" fill="#4ade80" opacity="0.25"/>
+
+    <!-- Head circuit details -->
+    <line x1="256" y1="154" x2="256" y2="166" stroke="#34d399" stroke-width="1" opacity="0.5"/>
+    <circle cx="256" cy="166" r="2" fill="#34d399" opacity="0.7"/>
+  </g>
+
+  <!-- Corner accent marks (cyber frame detail) -->
+  <g opacity="0.6" stroke="url(#mechRing)" stroke-width="2" fill="none">
+    <path d="M40 80 L40 40 L80 40"/>
+    <path d="M432 40 L472 40 L472 80"/>
+    <path d="M40 432 L40 472 L80 472"/>
+    <path d="M432 472 L472 472 L472 432"/>
+  </g>
+
+  <!-- Bottom label -->
+  <text x="256" y="476" text-anchor="middle" font-family="'Courier New', monospace" font-size="18" font-weight="700" letter-spacing="3" fill="url(#mechRing)" opacity="0.75">LORAPOK</text>
+</svg>

@@ -1,0 +1,63 @@
+{
+  "name": "lorapok-atlas",
+  "displayName": "Lorapok Atlas — API Directory",
+  "description": "Browse, search, and insert code snippets from 2100+ free open-source APIs directly in VS Code",
+  "version": "1.0.0",
+  "publisher": "lorapok",
+  "icon": "media/icon.png",
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Other", "Snippets"],
+  "keywords": ["api", "rest", "snippets", "developer tools", "lorapok"],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "lorapok-atlas",
+          "title": "Lorapok Atlas",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "lorapok-atlas": [
+        {
+          "type": "webview",
+          "id": "lorapok-atlas.panel",
+          "name": "API Directory"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "lorapok-atlas.openPanel",
+        "title": "Lorapok Atlas: Open API Directory"
+      },
+      {
+        "command": "lorapok-atlas.insertSnippet",
+        "title": "Lorapok Atlas: Insert API Snippet"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",
+    "watch": "npm run build -- --watch",
+    "package": "vsce package",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^20.0.0",
+    "esbuild": "^0.20.0",
+    "typescript": "^5.0.0",
+    "@vscode/vsce": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Maijied/Lorapok-API_Atlas.git",
+    "directory": "packages/lorapok-atlas-vscode"
+  },
+  "homepage": "https://maijied.github.io/Lorapok-API_Atlas/",
+  "license": "MIT"
+}

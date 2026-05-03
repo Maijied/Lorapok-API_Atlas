@@ -27,5 +27,17 @@ dist-ssr
 lorapok-api-atlas/node_modules
 lorapok-api-atlas/dist
 
-# Reference files
+# Package build outputs
+packages/*/dist
+packages/*/node_modules
+packages/*/*.vsix
+
+# Temp scripts
+add_*.py
+new_apis.json
+lorapok-atlas-banner.*
+firestore.rules.txt
+
+# Reference files (removed)
 OpenSourceAPIDirectory.jsx
+GEMINI.md

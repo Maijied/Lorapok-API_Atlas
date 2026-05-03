@@ -4115,6 +4115,7 @@ export default function App() {
             {[
               { l: '📦 npm: lorapok-atlas', h: 'https://www.npmjs.com/package/lorapok-atlas', badge: 'npm' },
               { l: '🤖 MCP Server', h: 'https://www.npmjs.com/package/lorapok-atlas-mcp', badge: 'mcp' },
+              { l: '🧩 VS Code Extension', h: 'https://marketplace.visualstudio.com/items?itemName=lorapok.lorapok-atlas', badge: 'vscode' },
               { l: '🌐 REST API', h: 'https://github.com/Maijied/Lorapok-API_Atlas/tree/main/packages/lorapok-atlas-api', badge: 'api' },
               { l: '📖 npm Docs', h: 'https://github.com/Maijied/Lorapok-API_Atlas/tree/main/packages/lorapok-atlas-client', badge: null },
               { l: '🔌 MCP Docs', h: 'https://github.com/Maijied/Lorapok-API_Atlas/tree/main/packages/lorapok-atlas-mcp', badge: null },
