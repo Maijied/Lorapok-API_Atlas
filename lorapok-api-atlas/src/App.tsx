@@ -238,7 +238,8 @@ const CodeSnippets = ({ api, onOpenPlayground }: { api: FlatApi; onOpenPlaygroun
   --header 'Accept: application/json'${isPost ? ` \\
   --header 'Content-Type: application/json' \\
   --data '${bodyStr}'` : ''}`,
-    javascript: `fetch('${url}', {
+    javascript: `// Playground-ready: async/await style
+const response = await fetch('${url}', {
   method: '${method}',
   headers: {
     'Accept': 'application/json',${api.authRequired ? `
@@ -246,9 +247,10 @@ const CodeSnippets = ({ api, onOpenPlayground }: { api: FlatApi; onOpenPlaygroun
     'Content-Type': 'application/json',` : ''}
   },${isPost ? `
   body: JSON.stringify(${bodyStr}),` : ''}
-})
-.then(r => r.json())
-.then(data => console.log(data))`,
+});
+const data = await response.json();
+console.log(data);
+return data;`,
     python: `import requests${isPost ? '\nimport json' : ''}
 
 response = requests.${method.toLowerCase()}(
@@ -2786,17 +2788,30 @@ curl --request GET \\
     setRunning(true); setOutput(''); setError('')
     const logs: string[] = []
     const origLog = console.log
-    console.log = (...args) => { logs.push(args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ')); origLog(...args) }
+    const origWarn = console.warn
+    const origError = console.error
+    const capture = (...args: any[]) => {
+      logs.push(args.map(a => typeof a === 'object' && a !== null ? JSON.stringify(a, null, 2) : String(a)).join(' '))
+    }
+    console.log = (...args) => { capture(...args); origLog(...args) }
+    console.warn = (...args) => { capture('⚠️', ...args); origWarn(...args) }
+    console.error = (...args) => { capture('❌', ...args); origError(...args) }
     try {
       const fn = new Function(`return (async () => { ${code} })()`)
       const result = await fn()
-      if (result !== undefined) logs.push(typeof result === 'object' ? JSON.stringify(result, null, 2) : String(result))
+      // Wait a tick for any .then() chains that logged asynchronously
+      await new Promise(r => setTimeout(r, 50))
+      if (result !== undefined && result !== null) {
+        logs.push(typeof result === 'object' ? JSON.stringify(result, null, 2) : String(result))
+      }
       setOutput(logs.join('\n') || '✓ Executed successfully (no output)')
-      setActivePane('output') // auto-switch to output on mobile
+      setActivePane('output')
     } catch (e: any) {
       setError(e.message)
     } finally {
       console.log = origLog
+      console.warn = origWarn
+      console.error = origError
       setRunning(false)
     }
   }
