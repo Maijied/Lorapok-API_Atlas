@@ -1,4 +1,4 @@
-import collection from '../../lorapok-api-atlas/src/data/api_collection.json'
+import collection from './api_collection.json'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 

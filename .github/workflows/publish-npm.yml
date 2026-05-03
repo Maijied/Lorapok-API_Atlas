@@ -26,6 +26,12 @@ jobs:
       - name: Install global build tools
         run: npm install -g tsup typescript
 
+      # ── Sync API data into packages ───────────────────────────────────────
+      - name: Sync api_collection.json into packages
+        run: |
+          cp lorapok-api-atlas/src/data/api_collection.json packages/lorapok-atlas-client/src/api_collection.json
+          cp lorapok-api-atlas/src/data/api_collection.json packages/lorapok-atlas-api/src/api_collection.json
+
       # ── lorapok-atlas (client) ────────────────────────────────────────────
       - name: Install & build lorapok-atlas
         run: |

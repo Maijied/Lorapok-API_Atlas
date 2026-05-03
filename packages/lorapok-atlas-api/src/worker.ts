@@ -12,7 +12,7 @@
  *   GET /search?q=           → Search APIs
  */
 
-import collection from '../../../lorapok-api-atlas/src/data/api_collection.json'
+import collection from './api_collection.json'
 
 interface ApiEntry {
   name: string
