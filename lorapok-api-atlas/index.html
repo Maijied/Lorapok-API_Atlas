@@ -204,30 +204,49 @@
     </script>
   </head>
   <body style="background:#070e18;margin:0">
-    <!-- Static content for Google/crawlers — explains app purpose for OAuth verification -->
-    <div id="app-description" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap">
-      <h1>Lorapok Atlas API Directory</h1>
-      <p>Lorapok Atlas is a free open-source web application that allows developers to browse, explore, and live-test 2100+ public REST APIs across 34 categories including AI, weather, maps, crypto, music, health, space, developer tools, sports, food, travel, security, communication, education, and privacy tools. Users can run live HTTP requests, view real-time responses, generate code snippets in cURL, JavaScript, Python, and Go, manage API keys securely via Google sign-in, and chat with Vaultie — an AI assistant powered by Groq. The app is built with React, TypeScript, Firebase, and deployed on GitHub Pages. It is completely free to use with no backend required.</p>
-      <p>Application name: Lorapok Atlas API Directory. Developer: Mohammad Maizied Hasan Majumder. License: MIT.</p>
+    <!-- Pre-render content: visible to Google crawler before React loads -->
+    <div id="pre-render" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#070e18;color:#d4e4f7;padding:32px 24px;max-width:900px;margin:0 auto">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+        <img src="/Lorapok-API_Atlas/logo.svg" alt="Lorapok Atlas" width="48" height="48" style="border-radius:12px" />
+        <div>
+          <h1 style="font-size:24px;font-weight:900;margin:0;color:#d4e4f7">Lorapok Atlas API Directory</h1>
+          <p style="font-size:12px;color:#38bdf8;margin:2px 0 0;letter-spacing:0.15em">◈ LORAPOK · OPEN SOURCE INTELLIGENCE</p>
+        </div>
+      </div>
+      <p style="font-size:15px;color:#7aa8c7;line-height:1.7;margin:0 0 16px">
+        <strong style="color:#d4e4f7">Lorapok Atlas</strong> is a free, open-source web application that lets developers browse, explore, and live-test <strong style="color:#4ade80">2100+ curated public REST APIs</strong> across 34 categories — all in one place. No backend setup required.
+      </p>
+      <p style="font-size:14px;color:#7aa8c7;line-height:1.7;margin:0 0 16px">
+        Features include: real-time API testing with response visualization, code snippet generation in cURL, JavaScript, Python and Go, secure API key management via Google sign-in and Firebase Firestore, an AI assistant (Vaultie) powered by Groq, API collections, request history, a code playground, and community ratings.
+      </p>
+      <p style="font-size:13px;color:#4a6278;margin:0 0 8px">
+        API categories: AI &amp; Machine Learning · Weather · Maps · Crypto · Music · Health · Space · Developer Tools · Sports · Food · Travel · Security · Communication · Education · Privacy &amp; Anonymity · and 19 more.
+      </p>
+      <p style="font-size:12px;color:#334d63;margin:0">
+        Built by <a href="https://github.com/maijied" style="color:#38bdf8">Mohammad Maizied Hasan Majumder</a> ·
+        <a href="https://maijied.github.io/Lorapok-API_Atlas/privacy.html" style="color:#38bdf8">Privacy Policy</a> ·
+        <a href="https://maijied.github.io/Lorapok-API_Atlas/terms.html" style="color:#38bdf8">Terms of Service</a> ·
+        <a href="https://github.com/Maijied/Lorapok-API_Atlas" style="color:#38bdf8">GitHub</a> · MIT License
+      </p>
     </div>
+    <script>
+      // Remove pre-render content once React has loaded
+      document.addEventListener('DOMContentLoaded', function() {
+        var pre = document.getElementById('pre-render');
+        if (pre) {
+          setTimeout(function() {
+            var root = document.getElementById('root');
+            if (root && root.children.length > 0) pre.style.display = 'none';
+          }, 500);
+        }
+      });
+    </script>
     <!-- Noscript fallback -->
     <noscript>
       <div style="font-family:sans-serif;background:#070e18;color:#d4e4f7;padding:40px;max-width:800px;margin:0 auto">
-        <img src="/Lorapok-API_Atlas/logo.svg" alt="Lorapok Atlas API Directory" width="80" height="80" style="border-radius:16px;margin-bottom:16px" />
-        <h1 style="font-size:32px;margin:0 0 12px;color:#d4e4f7">Lorapok Atlas API Directory</h1>
-        <p style="font-size:16px;color:#7aa8c7;line-height:1.6;margin:0 0 16px">
-          Lorapok Atlas is a free open-source web application for browsing and live-testing 2100+ public APIs.
-          Explore APIs across 34 categories, run real HTTP requests, generate code snippets, and manage API keys securely.
-        </p>
-        <p style="font-size:14px;color:#4a6278">
-          Categories: AI, Weather, Maps, Crypto, Music, Health, Space, Developer Tools, Sports, Food, Travel,
-          Security, Communication, Education, Privacy &amp; Anonymity, and more.
-        </p>
-        <p style="font-size:14px;color:#4a6278;margin-top:16px">
-          Built by <a href="https://github.com/maijied" style="color:#38bdf8">Mohammad Maizied Hasan Majumder</a> ·
-          <a href="https://maijied.github.io/Lorapok-API_Atlas/privacy.html" style="color:#38bdf8">Privacy Policy</a> ·
-          <a href="https://maijied.github.io/Lorapok-API_Atlas/terms.html" style="color:#38bdf8">Terms of Service</a>
-        </p>
+        <h1 style="font-size:28px;margin:0 0 12px">Lorapok Atlas API Directory</h1>
+        <p style="font-size:15px;color:#7aa8c7;line-height:1.6">Free open-source web app for browsing and live-testing 2100+ public APIs. Please enable JavaScript to use the app.</p>
+        <p><a href="privacy.html" style="color:#38bdf8">Privacy Policy</a> · <a href="terms.html" style="color:#38bdf8">Terms of Service</a></p>
       </div>
     </noscript>
     <div id="root"></div>
