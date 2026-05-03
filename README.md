@@ -10,6 +10,8 @@
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-4ade80?style=for-the-badge&logo=github)](https://maijied.github.io/Lorapok-API_Atlas/)
 [![APIs](https://img.shields.io/badge/APIs-2100%2B-38bdf8?style=for-the-badge)](https://maijied.github.io/Lorapok-API_Atlas/)
+[![npm](https://img.shields.io/npm/v/lorapok-atlas?style=for-the-badge&color=38bdf8&label=npm)](https://www.npmjs.com/package/lorapok-atlas)
+[![MCP](https://img.shields.io/npm/v/lorapok-atlas-mcp?style=for-the-badge&color=818cf8&label=mcp)](https://www.npmjs.com/package/lorapok-atlas-mcp)
 [![React](https://img.shields.io/badge/React%2018-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com)

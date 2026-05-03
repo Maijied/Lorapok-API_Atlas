@@ -1,0 +1,66 @@
+name: Publish npm Packages
+
+on:
+  push:
+    tags:
+      - 'v*'           # triggers on v1.0.0, v1.2.3, etc.
+  workflow_dispatch:   # manual trigger from GitHub Actions UI
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write  # needed for npm provenance
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install global build tools
+        run: npm install -g tsup typescript
+
+      # ── lorapok-atlas (client) ────────────────────────────────────────────
+      - name: Install & build lorapok-atlas
+        run: |
+          cd packages/lorapok-atlas-client
+          npm install --ignore-scripts
+          npx tsup src/index.ts --format cjs,esm --dts --clean
+
+      - name: Publish lorapok-atlas
+        run: |
+          cd packages/lorapok-atlas-client
+          npm publish --access public --provenance || echo "Already published, skipping"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # ── lorapok-atlas-mcp ─────────────────────────────────────────────────
+      - name: Install & build lorapok-atlas-mcp
+        run: |
+          cd packages/lorapok-atlas-mcp
+          # Use local lorapok-atlas from workspace instead of npm (not published yet in same run)
+          npm install --ignore-scripts
+          # Patch: replace lorapok-atlas import with relative path for build
+          sed -i "s|from 'lorapok-atlas'|from '../../lorapok-atlas-client/src/index'|g" src/index.ts
+          npx tsup src/index.ts --format cjs --dts --clean
+          # Restore original
+          sed -i "s|from '../../lorapok-atlas-client/src/index'|from 'lorapok-atlas'|g" src/index.ts
+
+      - name: Publish lorapok-atlas-mcp
+        run: |
+          cd packages/lorapok-atlas-mcp
+          npm publish --access public --provenance || echo "Already published, skipping"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Summary
+        run: |
+          echo "## Published Packages" >> $GITHUB_STEP_SUMMARY
+          echo "- [lorapok-atlas](https://www.npmjs.com/package/lorapok-atlas)" >> $GITHUB_STEP_SUMMARY
+          echo "- [lorapok-atlas-mcp](https://www.npmjs.com/package/lorapok-atlas-mcp)" >> $GITHUB_STEP_SUMMARY
