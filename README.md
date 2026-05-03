@@ -216,42 +216,141 @@ Push to `main` — GitHub Actions builds and deploys automatically to GitHub Pag
 ## Project Structure
 
 ```
-/
-├── .github/workflows/deploy.yml     # CI/CD — build & deploy to GitHub Pages
-├── AGENTS.md                        # AI agent instructions
-├── lorapok-api-atlas/
+Lorapok-API_Atlas/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml              # CI/CD — auto build & deploy to GitHub Pages on push to main
+├── lorapok-api-atlas/              # Main application (all dev work here)
+│   ├── public/
+│   │   ├── logo.svg                # Lorapok larva mascot (512×512 SVG)
+│   │   ├── logo-120.png            # OAuth consent screen logo
+│   │   ├── logo-512.png            # Social/OG image
+│   │   ├── banner.png              # Social media banner (1200×630)
+│   │   ├── sitemap.xml             # SEO sitemap
+│   │   ├── robots.txt              # Search engine crawl rules
+│   │   ├── privacy.html            # Privacy Policy page
+│   │   └── terms.html              # Terms of Service page
 │   ├── src/
-│   │   ├── App.tsx                  # Entire UI (single-file architecture)
-│   │   ├── firebase.ts              # Firebase Auth + Firestore helpers
-│   │   ├── useKeyStore.ts           # useAuth + useApiKey hooks
+│   │   ├── App.tsx                 # ★ Entire UI — single-file component architecture (~4000 lines)
+│   │   ├── firebase.ts             # Firebase Auth + Firestore helpers + encryption utils
+│   │   ├── useKeyStore.ts          # useAuth + useApiKey React hooks
+│   │   ├── main.tsx                # React entry point
+│   │   ├── index.css               # Global styles + custom scrollbar + light theme vars
+│   │   ├── vite-env.d.ts           # VITE_ env var type declarations
 │   │   └── data/
-│   │       └── api_collection.json  # 2000+ APIs (Postman Collection v2.1 schema)
+│   │       └── api_collection.json # 2100+ APIs in Postman Collection v2.1 schema
 │   ├── scripts/
-│   │   ├── repair_and_validate.py   # Patches + validates api_collection.json
-│   │   └── deep_validate.py         # Live endpoint validation
-│   ├── public/logo.svg
+│   │   ├── repair_and_validate.py  # Patches + validates api_collection.json
+│   │   └── deep_validate.py        # Live endpoint validation script
+│   ├── index.html                  # Entry HTML — SEO meta, JSON-LD, GA4, pre-render content
+│   ├── vite.config.ts              # Vite config — base path, @/ alias
+│   ├── tailwind.config.js          # Tailwind config
+│   ├── tsconfig.json               # TypeScript strict config
 │   └── package.json
+├── AGENTS.md                       # AI agent instructions for this codebase
 └── README.md
 ```
 
 ---
 
-## Adding New APIs
+## Architecture
 
-Edit `lorapok-api-atlas/src/data/api_collection.json` directly following the Postman Collection v2.1 schema, or run the repair script after adding raw entries:
-
-```bash
-python3 lorapok-api-atlas/scripts/repair_and_validate.py
 ```
+┌─────────────────────────────────────────────────────────────────┐
+│                        Browser (Client)                          │
+│                                                                  │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │                      App.tsx (React SPA)                  │   │
+│  │                                                           │   │
+│  │  ┌─────────────┐  ┌──────────────┐  ┌────────────────┐  │   │
+│  │  │  API Grid   │  │  ApiModal    │  │  Vaultie AI    │  │   │
+│  │  │  (cards)    │  │  (test/docs) │  │  (chat widget) │  │   │
+│  │  └─────────────┘  └──────────────┘  └────────────────┘  │   │
+│  │                                                           │   │
+│  │  ┌─────────────┐  ┌──────────────┐  ┌────────────────┐  │   │
+│  │  │ Collections │  │  Playground  │  │  Admin Panel   │  │   │
+│  │  │  + History  │  │  (JS runner) │  │  (encrypted)   │  │   │
+│  │  └─────────────┘  └──────────────┘  └────────────────┘  │   │
+│  └──────────────────────────────────────────────────────────┘   │
+│                           │                                      │
+│              ┌────────────┼────────────┐                        │
+│              ▼            ▼            ▼                        │
+│  ┌──────────────┐  ┌──────────┐  ┌──────────────────────────┐  │
+│  │  Firebase    │  │  Groq    │  │  Public APIs (2100+)     │  │
+│  │  Auth +      │  │  API     │  │  via Axios + CORS proxies│  │
+│  │  Firestore   │  │  (AI)    │  │  (corsproxy.io, etc.)    │  │
+│  └──────────────┘  └──────────┘  └──────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────┘
+
+Data Flow:
+api_collection.json → flattenCollection() → ALL_APIS[]
+                                                │
+                              ┌─────────────────┼──────────────────┐
+                              ▼                 ▼                  ▼
+                         ApiCard           ApiModal           Vaultie AI
+                         (grid)         (test + docs)      (context-aware)
+```
+
+### Key Design Decisions
+
+| Decision | Rationale |
+|---|---|
+| Single-file UI (`App.tsx`) | Simpler to navigate, no component import hell, easier for contributors |
+| Postman Collection v2.1 schema | Industry standard, easy to import/export, tooling support |
+| Static hosting (GitHub Pages) | Zero ops, free, fast CDN, no server to maintain |
+| Firebase for auth/storage | Free tier generous, Google OAuth built-in, real-time sync |
+| Groq for AI | Fastest inference available, free tier, Llama 3.1 quality |
+| CORS proxy cascade | 3 fallback proxies — maximizes API testability from browser |
+| XOR+base64 for admin codes | Obfuscation without a backend secret store |
 
 ---
 
-## Contributing
+## Open Source — Contributing
+
+We welcome contributions from the community! Here's how to get involved:
+
+### Ways to contribute
+- **Add APIs** — edit `api_collection.json` following the Postman v2.1 schema
+- **Fix bugs** — check [open issues](https://github.com/Maijied/Lorapok-API_Atlas/issues)
+- **Improve UI** — all UI is in `App.tsx`, styles in `index.css`
+- **Add features** — check the roadmap below
+- **Improve docs** — README, code comments, AGENTS.md
+
+### Contribution steps
 
 1. Fork the repo
 2. Create a branch: `git checkout -b feat/your-feature`
 3. Commit: `git commit -m "feat: add your feature"`
 4. Push and open a Pull Request
+
+### Adding APIs
+
+The fastest way to contribute is adding APIs to `api_collection.json`:
+
+```json
+{
+  "name": "Your API Name",
+  "request": {
+    "method": "GET",
+    "header": [],
+    "url": { "raw": "https://api.example.com/endpoint" },
+    "description": "What this API does"
+  },
+  "authRequired": "API Key",
+  "authLink": "https://example.com/signup",
+  "response": []
+}
+```
+
+Add it inside the appropriate category's `item` array. Run `python3 lorapok-api-atlas/scripts/repair_and_validate.py` to validate.
+
+### Roadmap / Ideas
+- [ ] OpenAPI/Swagger import
+- [ ] API health monitor (GitHub Actions cron)
+- [ ] Webhook tester
+- [ ] Community collections (public shareable)
+- [ ] More language snippets (Ruby, PHP, Rust)
+- [ ] API versioning tracker
 
 ---
 
