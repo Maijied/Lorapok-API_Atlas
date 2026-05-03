@@ -50,13 +50,19 @@ jobs:
       - name: Install & build lorapok-atlas-mcp
         run: |
           cd packages/lorapok-atlas-mcp
-          # Use local lorapok-atlas from workspace instead of npm (not published yet in same run)
           npm install --ignore-scripts
           # Patch: replace lorapok-atlas import with relative path for build
           sed -i "s|from 'lorapok-atlas'|from '../../lorapok-atlas-client/src/index'|g" src/index.ts
-          npx tsup src/index.ts --format cjs --dts --clean
+          # Build CJS only, no DTS needed for CLI binary, use nodenext resolution
+          npx tsup src/index.ts --format cjs --no-dts --clean \
+            --tsconfig tsconfig.json \
+            --external @modelcontextprotocol/sdk
           # Restore original
           sed -i "s|from '../../lorapok-atlas-client/src/index'|from 'lorapok-atlas'|g" src/index.ts
+          # Make binary executable
+          chmod +x dist/index.js
+          # Add shebang if missing
+          head -1 dist/index.js | grep -q '#!/usr/bin/env node' || sed -i '1s/^/#!/usr\/bin\/env node\n/' dist/index.js
 
       - name: Publish lorapok-atlas-mcp
         run: |
