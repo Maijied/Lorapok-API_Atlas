@@ -203,7 +203,8 @@ const DataVisualizer = ({ data, baseUrl }: { data: any; baseUrl?: string }) => {
     v.startsWith('data:image/') ||
     v.startsWith('data:') ||
     (v.length > 50 && /[\x00-\x08\x0e-\x1f\x7f-\x9f]/.test(v.slice(0, 100))) ||
-    v.includes('\x89PNG') || v.includes('JFIF') || v.includes('IHDR')
+    v.includes('\x89PNG') || v.includes('JFIF') || v.includes('IHDR') ||
+    v.startsWith('\x1f\x8b') // gzip magic bytes
   )
   if (isHtml(data)) return <HtmlVisualizer html={data} baseUrl={baseUrl} />
   if (isBin(data)) return <BinaryImageVisualizer data={data} />
@@ -730,7 +731,17 @@ const ApiModal = ({ api, onClose, user, onShare, onKeyChange }: { api: FlatApi; 
         reader.readAsDataURL(blob)
         if (user) saveRequestHistory(user.uid, { apiName: api.name, url: effectiveUrl, status: 'success', preview: 'Image response' }).catch(() => {})
       } else {
-        const text = new TextDecoder('utf-8').decode(res.data)
+        // Check for gzip magic bytes (1f 8b) — means browser didn't decompress
+        const bytes = new Uint8Array(res.data as ArrayBuffer)
+        const isGzip = bytes[0] === 0x1f && bytes[1] === 0x8b
+        let text: string
+        if (isGzip) {
+          // Re-fetch without arraybuffer so browser auto-decompresses
+          const res2 = await axios.get(effectiveUrl, { headers, responseType: 'text' })
+          text = typeof res2.data === 'string' ? res2.data : JSON.stringify(res2.data)
+        } else {
+          text = new TextDecoder('utf-8').decode(res.data)
+        }
         let parsed: any
         try { parsed = JSON.parse(text) } catch { parsed = text }
         setTestResult(parsed)
@@ -759,7 +770,15 @@ const ApiModal = ({ api, onClose, user, onShare, onKeyChange }: { api: FlatApi; 
               reader.onloadend = () => { setTestResult(reader.result); setStatus('happy') }
               reader.readAsDataURL(blob)
             } else {
-              const text = new TextDecoder('utf-8').decode(proxyRes.data)
+              const bytes2 = new Uint8Array(proxyRes.data as ArrayBuffer)
+              const isGzip2 = bytes2[0] === 0x1f && bytes2[1] === 0x8b
+              let text: string
+              if (isGzip2) {
+                const res3 = await axios.get(proxyUrl, { responseType: 'text', timeout: 8000 })
+                text = typeof res3.data === 'string' ? res3.data : JSON.stringify(res3.data)
+              } else {
+                text = new TextDecoder('utf-8').decode(proxyRes.data)
+              }
               let parsed: any
               try { parsed = JSON.parse(text) } catch { parsed = text }
               setTestResult(parsed)
