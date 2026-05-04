@@ -2,12 +2,23 @@
   "name": "lorapok-atlas",
   "displayName": "Lorapok Atlas — API Directory",
   "description": "Browse, search, and insert code snippets from 2100+ free open-source APIs directly in VS Code",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "publisher": "Lorapok",
   "icon": "media/icon.png",
-  "engines": { "vscode": "^1.85.0" },
-  "categories": ["Other", "Snippets"],
-  "keywords": ["api", "rest", "snippets", "developer tools", "lorapok"],
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "Snippets"
+  ],
+  "keywords": [
+    "api",
+    "rest",
+    "snippets",
+    "developer tools",
+    "lorapok"
+  ],
   "main": "./dist/extension.js",
   "activationEvents": [],
   "contributes": {
@@ -45,9 +56,10 @@
     ]
   },
   "scripts": {
+    "prebuild": "npm version patch --no-git-tag-version",
     "build": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node",
     "watch": "npm run build -- --watch",
-    "package": "npx @vscode/vsce package --no-dependencies",
+    "package": "npm run build && npx @vscode/vsce package --no-dependencies",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
