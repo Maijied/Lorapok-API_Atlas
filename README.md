@@ -315,7 +315,7 @@ Lorapok Atlas ships as multiple packages — use the data programmatically, in A
 |---|---|---|
 | [`lorapok-atlas`](https://www.npmjs.com/package/lorapok-atlas) | `npm i lorapok-atlas` | JS/TS library — search, filter, get snippets |
 | [`lorapok-atlas-mcp`](https://www.npmjs.com/package/lorapok-atlas-mcp) | `npx lorapok-atlas-mcp` | MCP server for Claude, Cursor, Kiro |
-| `lorapok-atlas` (VS Code) | VS Marketplace | Sidebar panel — search & insert snippets |
+| `lorapok-atlas` (VS Code) | `Ctrl+P` → `ext install Lorapok.lorapok-atlas` | Sidebar panel — search & insert snippets |
 | REST API | `api.lorapok.dev` | Cloudflare Worker REST endpoint |
 
 ---
@@ -364,11 +364,13 @@ Tools: `search_apis` · `get_api` · `get_code_snippet` · `list_categories` · 
 
 Search APIs and insert code snippets directly into your editor from the Activity Bar.
 
+**Installation:** Launch VS Code Quick Open (`Ctrl+P`), paste the command below, and press Enter:
+
 ```
-ext install lorapok.lorapok-atlas
+ext install Lorapok.lorapok-atlas
 ```
 
-→ [VS Marketplace](https://marketplace.visualstudio.com/items?itemName=lorapok.lorapok-atlas) · [docs](packages/lorapok-atlas-vscode/README.md)
+→ [VS Marketplace](https://marketplace.visualstudio.com/items?itemName=Lorapok.lorapok-atlas) · [docs](packages/lorapok-atlas-vscode/README.md)
 
 ---
 

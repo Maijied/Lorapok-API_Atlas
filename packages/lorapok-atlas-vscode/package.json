@@ -3,13 +3,13 @@
   "displayName": "Lorapok Atlas — API Directory",
   "description": "Browse, search, and insert code snippets from 2100+ free open-source APIs directly in VS Code",
   "version": "1.0.0",
-  "publisher": "lorapok",
+  "publisher": "Lorapok",
   "icon": "media/icon.png",
   "engines": { "vscode": "^1.85.0" },
   "categories": ["Other", "Snippets"],
   "keywords": ["api", "rest", "snippets", "developer tools", "lorapok"],
-  "activationEvents": [],
   "main": "./dist/extension.js",
+  "activationEvents": [],
   "contributes": {
     "viewsContainers": {
       "activitybar": [
