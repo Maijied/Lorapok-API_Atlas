@@ -57,146 +57,194 @@ function buildHtml(apis: any[], categories: string[], byCategory: Record<string,
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<meta http-equiv="Content-Security-Policy" content="default-src 'none';style-src 'unsafe-inline';script-src 'unsafe-inline';connect-src *;img-src * data:;"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none';style-src 'unsafe-inline';script-src 'unsafe-inline';connect-src *;img-src * data: blob:;"/>
 <title>Lorapok Atlas</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#070e18;--card:#0c1828;--card2:#091220;--border:#1a3050;--border2:#264560;--text:#d4e4f7;--muted:#4a6278;--dim:#334d63;--green:#4ade80;--sky:#38bdf8;--indigo:#818cf8;--red:#f87171;--yellow:#fbbf24}
-body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;height:100vh;display:flex;flex-direction:column;overflow:hidden}
-nav{flex-shrink:0;height:50px;background:#060d18;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 14px;gap:10px}
-.nav-toggle{background:transparent;border:1px solid var(--border);border-radius:6px;color:var(--muted);cursor:pointer;padding:4px 8px;font-size:14px;flex-shrink:0;transition:all .15s}
-.nav-toggle:hover{border-color:var(--sky);color:var(--sky)}
-.nav-logo{display:flex;align-items:center;gap:8px;flex-shrink:0}
-.nav-logo svg{width:28px;height:28px}
-.nav-brand{font-size:14px;font-weight:900;background:linear-gradient(90deg,#4ade80,#38bdf8,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.nav-tag{font-size:8px;color:var(--dim);letter-spacing:1px;text-transform:uppercase}
-.nav-search{flex:1;position:relative;min-width:0}
-.nav-search input{width:100%;background:#0c1828;border:1px solid var(--border);border-radius:7px;padding:6px 10px 6px 30px;color:var(--text);font-size:12px;outline:none;transition:border-color .15s}
-.nav-search input:focus{border-color:var(--sky)}
-.nav-search .si{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--dim);font-size:12px;pointer-events:none}
-.nav-stats{display:flex;gap:10px;flex-shrink:0}
-.stat{text-align:center}
-.stat-n{font-size:13px;font-weight:800;color:var(--green);line-height:1}
-.stat-l{font-size:8px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px}
-.layout{flex:1;display:flex;overflow:hidden}
-/* Sidebar */
-.sidebar{width:200px;flex-shrink:0;border-right:1px solid var(--border);overflow-y:auto;background:#060d18;transition:width .2s,opacity .2s}
-.sidebar.collapsed{width:0;opacity:0;overflow:hidden}
-.sidebar-hdr{padding:8px 12px 5px;font-size:8px;font-weight:700;color:var(--dim);letter-spacing:1.5px;text-transform:uppercase;border-bottom:1px solid #0d1e30;white-space:nowrap}
-.cat-row{display:flex;align-items:center;gap:7px;padding:5px 12px;cursor:pointer;transition:background .12s;border-bottom:1px solid #0a1520;white-space:nowrap}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;display:flex;flex-direction:column}
+
+/* ── Top bar ── */
+.topbar{flex-shrink:0;background:#060d18;border-bottom:1px solid var(--border);padding:8px 10px;display:flex;flex-direction:column;gap:6px}
+.logo-row{display:flex;align-items:center;gap:8px}
+.larva-wrap{width:32px;height:32px;flex-shrink:0;cursor:pointer}
+.larva-wrap svg{width:32px;height:32px}
+.brand{flex:1}
+.brand-name{font-size:13px;font-weight:900;background:linear-gradient(90deg,#4ade80,#38bdf8,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.2}
+.brand-tag{font-size:8px;color:var(--dim);letter-spacing:1px;text-transform:uppercase}
+.stats-row{display:flex;gap:8px}
+.stat{flex:1;background:#0c1828;border:1px solid var(--border);border-radius:6px;padding:4px 6px;text-align:center}
+.stat-n{font-size:12px;font-weight:800;color:var(--green);line-height:1}
+.stat-l{font-size:8px;color:var(--dim);text-transform:uppercase;letter-spacing:.3px}
+.search-wrap{position:relative}
+.search-wrap input{width:100%;background:#0c1828;border:1px solid var(--border);border-radius:7px;padding:6px 10px 6px 28px;color:var(--text);font-size:11px;outline:none;transition:border-color .15s}
+.search-wrap input:focus{border-color:var(--sky)}
+.search-wrap .si{position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--dim);font-size:11px;pointer-events:none}
+.filter-row{display:flex;gap:4px;flex-wrap:wrap}
+.fb{padding:3px 8px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:9px;cursor:pointer;transition:all .15s;white-space:nowrap}
+.fb.active{border-color:var(--sky);color:var(--sky);background:rgba(56,189,248,.1)}
+
+/* ── Layout ── */
+.layout{flex:1;display:flex;overflow:hidden;min-height:0}
+
+/* ── Sidebar ── */
+.sidebar{width:130px;flex-shrink:0;border-right:1px solid var(--border);overflow-y:auto;background:#060d18;transition:width .2s}
+.sidebar.hide{width:0;overflow:hidden}
+.cat-row{display:flex;align-items:center;gap:5px;padding:5px 8px;cursor:pointer;border-bottom:1px solid #0a1520;transition:background .12s}
 .cat-row:hover{background:rgba(255,255,255,.03)}
 .cat-row.active{background:rgba(56,189,248,.08);border-left:2px solid var(--sky)}
-.cat-icon{font-size:12px;width:16px;text-align:center;flex-shrink:0}
-.cat-name{flex:1;font-size:10px;color:#8aaccc;overflow:hidden;text-overflow:ellipsis}
-.cat-count{font-size:8px;color:var(--dim);background:#0c1828;border:1px solid var(--border);border-radius:6px;padding:1px 4px;flex-shrink:0}
-/* Main */
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
-.toolbar{flex-shrink:0;padding:6px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px;background:#060d18;flex-wrap:wrap}
-.filter-btn{padding:3px 9px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:10px;cursor:pointer;transition:all .15s;white-space:nowrap}
-.filter-btn.active{border-color:var(--sky);color:var(--sky);background:rgba(56,189,248,.1)}
-.sort-sel{background:#0c1828;border:1px solid var(--border);border-radius:5px;color:var(--muted);font-size:10px;padding:3px 6px;outline:none;cursor:pointer}
-.rcount{margin-left:auto;font-size:10px;color:var(--dim)}
-.grid-wrap{flex:1;overflow-y:auto;padding:10px 12px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px}
-.card{background:linear-gradient(135deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:9px;padding:11px 13px;cursor:pointer;transition:all .18s}
-.card:hover{border-color:var(--border2);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.4)}
+.cat-icon{font-size:11px;flex-shrink:0}
+.cat-name{font-size:9px;color:#8aaccc;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.cat-count{font-size:8px;color:var(--dim);background:#0c1828;border:1px solid var(--border);border-radius:5px;padding:0 3px;flex-shrink:0}
+
+/* ── Grid ── */
+.grid-wrap{flex:1;overflow-y:auto;padding:8px;min-width:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:7px}
+.card{background:linear-gradient(135deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:8px;padding:10px 11px;cursor:pointer;transition:all .18s}
+.card:hover{border-color:var(--border2);transform:translateY(-1px);box-shadow:0 3px 14px rgba(0,0,0,.5)}
 .card.selected{border-color:var(--sky)}
 .card-name{font-size:11px;font-weight:700;color:var(--text);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .card-cat{font-size:9px;color:var(--muted);margin-bottom:3px}
-.card-desc{font-size:10px;color:var(--muted);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:7px;min-height:28px}
-.card-foot{display:flex;align-items:center;gap:5px}
-.method{font-size:8px;font-weight:800;font-family:monospace;padding:2px 5px;border-radius:3px}
+.card-desc{font-size:10px;color:var(--muted);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:6px;min-height:26px}
+.card-foot{display:flex;align-items:center;gap:4px}
+.method{font-size:8px;font-weight:800;font-family:monospace;padding:1px 5px;border-radius:3px}
 .m-GET{background:rgba(52,211,153,.15);color:#34d399}.m-POST{background:rgba(129,140,248,.15);color:#818cf8}
 .m-PUT{background:rgba(251,191,36,.15);color:#fbbf24}.m-DELETE{background:rgba(248,113,113,.15);color:#f87171}
 .m-PATCH{background:rgba(56,189,248,.15);color:#38bdf8}
-.badge{font-size:8px;font-weight:700;padding:2px 5px;border-radius:6px}
+.badge{font-size:8px;font-weight:700;padding:1px 5px;border-radius:6px}
 .b-free{background:#0d2b1a;color:#34d399;border:1px solid #065f46}
 .b-key{background:#1a1a2e;color:#818cf8;border:1px solid #3730a3}
 .b-oauth{background:#2d1b1b;color:#f87171;border:1px solid #991b1b}
-.empty{grid-column:1/-1;padding:50px 20px;text-align:center;color:var(--dim);font-size:12px}
-/* Modal */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;display:none;align-items:center;justify-content:center}
+.empty{grid-column:1/-1;padding:40px 10px;text-align:center;color:var(--dim);font-size:11px}
+
+/* ── Modal ── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;display:none;align-items:center;justify-content:center;padding:12px}
 .overlay.show{display:flex}
-.modal{background:linear-gradient(135deg,#0c1828,#091220);border:1px solid var(--border2);border-radius:12px;width:min(700px,96vw);max-height:90vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.8)}
-.modal-hdr{padding:18px 20px 0;display:flex;align-items:flex-start;gap:10px}
+.modal{background:linear-gradient(135deg,#0d1a2e,#091220);border:1px solid var(--border2);border-radius:12px;width:100%;max-width:660px;max-height:92vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.9);display:flex;flex-direction:column}
+.modal-hdr{padding:16px 18px 0;display:flex;align-items:flex-start;gap:10px;flex-shrink:0}
 .modal-method{font-size:10px;font-weight:800;font-family:monospace;padding:3px 7px;border-radius:4px;flex-shrink:0;margin-top:2px}
-.modal-title{flex:1}
-.modal-name{font-size:15px;font-weight:800;color:var(--text);margin-bottom:3px}
+.modal-info{flex:1;min-width:0}
+.modal-name{font-size:15px;font-weight:800;color:var(--text);margin-bottom:2px;word-break:break-word}
 .modal-cat{font-size:10px;color:var(--muted)}
-.modal-close{background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:17px;padding:0;line-height:1;flex-shrink:0}
+.modal-close{background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:18px;padding:0;line-height:1;flex-shrink:0;transition:color .12s}
 .modal-close:hover{color:var(--red)}
-.modal-url{font-family:monospace;font-size:10px;color:#34d399;background:#050c18;border:1px solid var(--border);border-radius:6px;padding:9px 12px;margin:12px 20px;word-break:break-all;line-height:1.5}
-.modal-desc{font-size:11px;color:#8aaccc;line-height:1.6;padding:0 20px 12px}
-.modal-tabs{display:flex;border-bottom:1px solid var(--border);margin:0 20px 14px;gap:0}
-.modal-tab{padding:7px 14px;font-size:11px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;background:transparent;border-top:none;border-left:none;border-right:none}
-.modal-tab.active{color:var(--sky);border-bottom-color:var(--sky)}
-.tab-pane{display:none;padding:0 20px 16px}
-.tab-pane.active{display:block}
+.modal-url{font-family:monospace;font-size:10px;color:#34d399;background:#050c18;border:1px solid var(--border);border-radius:6px;padding:8px 12px;margin:10px 18px;word-break:break-all;line-height:1.5;flex-shrink:0}
+.modal-desc{font-size:11px;color:#8aaccc;line-height:1.6;padding:0 18px 10px;flex-shrink:0}
+.modal-tabs{display:flex;border-bottom:1px solid var(--border);padding:0 18px;flex-shrink:0}
+.mtab{padding:7px 12px;font-size:11px;font-weight:700;color:var(--muted);cursor:pointer;border:none;border-bottom:2px solid transparent;background:transparent;transition:all .15s}
+.mtab.active{color:var(--sky);border-bottom-color:var(--sky)}
+.tab-body{padding:14px 18px;flex:1}
+.tab-pane{display:none}.tab-pane.active{display:block}
+/* Snippet tab */
 .lang-tabs{display:flex;gap:5px;margin-bottom:8px}
 .lt{padding:3px 10px;border-radius:5px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:10px;font-weight:700;cursor:pointer;text-transform:uppercase;transition:all .12s}
 .lt.active{border-color:#34d399;color:#34d399;background:rgba(52,211,153,.1)}
-.snippet{background:#050c18;border:1px solid var(--border);border-radius:7px;padding:12px;font-family:monospace;font-size:10px;color:#a5f3fc;white-space:pre;overflow-x:auto;max-height:180px;overflow-y:auto;line-height:1.6}
-/* Live test */
-.test-url-row{display:flex;gap:6px;margin-bottom:10px}
-.test-url-input{flex:1;background:#050c18;border:1px solid var(--border);border-radius:6px;padding:7px 10px;color:#34d399;font-family:monospace;font-size:10px;outline:none;min-width:0}
-.test-url-input:focus{border-color:var(--sky)}
-.btn-run{padding:7px 16px;border-radius:6px;border:none;background:var(--green);color:#000;font-size:11px;font-weight:800;cursor:pointer;flex-shrink:0;transition:all .15s}
-.btn-run:hover{background:#34d399}
-.btn-run:disabled{background:#1a3050;color:var(--dim);cursor:not-allowed}
-.test-status{font-size:10px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
-.status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.status-ok{background:#34d399}.status-err{background:#f87171}.status-loading{background:#fbbf24;animation:pulse 1s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.test-response{background:#050c18;border:1px solid var(--border);border-radius:7px;padding:12px;font-family:monospace;font-size:10px;color:#a5f3fc;white-space:pre-wrap;overflow-x:auto;max-height:220px;overflow-y:auto;line-height:1.5;word-break:break-all}
-.cors-note{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.2);border-radius:6px;padding:8px 10px;font-size:10px;color:#f87171;line-height:1.5;margin-top:8px}
-.modal-actions{display:flex;gap:7px;padding:0 20px 18px;flex-wrap:wrap}
-.btn{padding:7px 16px;border-radius:7px;border:none;font-size:11px;font-weight:700;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px}
+.snippet{background:#050c18;border:1px solid var(--border);border-radius:7px;padding:12px;font-family:monospace;font-size:10px;color:#a5f3fc;white-space:pre;overflow-x:auto;max-height:160px;overflow-y:auto;line-height:1.6}
+/* Test tab */
+.test-row{display:flex;gap:6px;margin-bottom:10px;align-items:center}
+.test-method{font-size:10px;font-weight:800;font-family:monospace;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:#050c18;color:var(--muted);flex-shrink:0}
+.test-url{flex:1;background:#050c18;border:1px solid var(--border);border-radius:6px;padding:7px 10px;color:#34d399;font-family:monospace;font-size:10px;outline:none;min-width:0;transition:border-color .15s}
+.test-url:focus{border-color:var(--sky)}
+.btn-run{padding:7px 16px;border-radius:6px;border:none;background:var(--green);color:#000;font-size:11px;font-weight:800;cursor:pointer;flex-shrink:0;transition:all .15s;white-space:nowrap}
+.btn-run:hover{background:#34d399}.btn-run:disabled{background:#1a3050;color:var(--dim);cursor:not-allowed}
+.test-headers{margin-bottom:8px}
+.test-headers-title{font-size:9px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
+.header-row{display:flex;gap:5px;margin-bottom:4px}
+.header-input{flex:1;background:#050c18;border:1px solid var(--border);border-radius:5px;padding:5px 8px;color:var(--text);font-size:10px;outline:none;font-family:monospace}
+.header-input:focus{border-color:var(--sky)}
+.btn-add-hdr{padding:4px 8px;border-radius:5px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:10px;cursor:pointer}
+.btn-add-hdr:hover{border-color:var(--sky);color:var(--sky)}
+.btn-del-hdr{padding:4px 7px;border-radius:5px;border:none;background:rgba(248,113,113,.1);color:var(--red);font-size:10px;cursor:pointer;flex-shrink:0}
+.test-body-wrap{margin-bottom:10px}
+.test-body-title{font-size:9px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
+.test-body{width:100%;background:#050c18;border:1px solid var(--border);border-radius:6px;padding:8px;color:#a5f3fc;font-family:monospace;font-size:10px;outline:none;resize:vertical;min-height:60px;line-height:1.5}
+.test-body:focus{border-color:var(--sky)}
+.test-status{display:none;align-items:center;gap:7px;margin-bottom:8px;font-size:10px}
+.sdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.s-ok{background:#34d399}.s-err{background:#f87171}.s-loading{background:#fbbf24;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.resp-tabs{display:flex;gap:4px;margin-bottom:6px}
+.rt{padding:2px 8px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:9px;font-weight:700;cursor:pointer;text-transform:uppercase}
+.rt.active{border-color:var(--sky);color:var(--sky);background:rgba(56,189,248,.1)}
+.test-response{display:none;background:#050c18;border:1px solid var(--border);border-radius:7px;padding:10px;font-family:monospace;font-size:10px;color:#a5f3fc;white-space:pre-wrap;overflow-x:auto;max-height:200px;overflow-y:auto;line-height:1.5;word-break:break-all}
+.cors-note{display:none;background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.2);border-radius:6px;padding:8px 10px;font-size:10px;color:#f87171;line-height:1.5;margin-top:6px}
+/* Actions */
+.modal-actions{display:flex;gap:6px;padding:0 18px 16px;flex-wrap:wrap;flex-shrink:0}
+.btn{padding:7px 14px;border-radius:7px;border:none;font-size:11px;font-weight:700;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px}
 .btn-ins{background:var(--green);color:#000}.btn-ins:hover{background:#34d399}
 .btn-cpy{background:rgba(56,189,248,.15);color:var(--sky);border:1px solid rgba(56,189,248,.3)}.btn-cpy:hover{background:rgba(56,189,248,.25)}
 .btn-auth{background:rgba(129,140,248,.15);color:var(--indigo);border:1px solid rgba(129,140,248,.3)}.btn-auth:hover{background:rgba(129,140,248,.25)}
+/* Scrollbar */
 ::-webkit-scrollbar{width:3px;height:3px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:#1a3050;border-radius:2px}
+/* Larva animation */
+@keyframes wiggle{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@keyframes blink{0%,90%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+.larva-wrap:hover svg{animation:wiggle .5s ease-in-out infinite}
+.eye-l{animation:blink 4s ease-in-out infinite}
+.eye-r{animation:blink 4s ease-in-out 0.15s infinite}
 </style>
 </head>
 <body>
-<nav>
-  <button class="nav-toggle" onclick="toggleSidebar()" title="Toggle categories">☰</button>
-  <div class="nav-logo">
-    <svg viewBox="0 0 32 32" fill="none"><defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#6ee7b7"/><stop offset="100%" stop-color="#16a34a"/></linearGradient><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#818cf8"/></linearGradient></defs>
-    <ellipse cx="16" cy="25" rx="4" ry="3" fill="url(#g1)" opacity=".65"/><ellipse cx="16" cy="20" rx="5" ry="3.5" fill="url(#g1)" opacity=".8"/><ellipse cx="16" cy="14.5" rx="6" ry="4" fill="url(#g1)"/><ellipse cx="16" cy="9" rx="6" ry="5.5" fill="url(#g1)"/>
-    <circle cx="13.5" cy="8.2" r="1.5" fill="#0a1628"/><circle cx="13.5" cy="8.2" r=".8" fill="#38bdf8"/><circle cx="18.5" cy="8.2" r="1.5" fill="#0a1628"/><circle cx="18.5" cy="8.2" r=".8" fill="#818cf8"/>
-    <line x1="13" y1="4.2" x2="11" y2="2" stroke="url(#g2)" stroke-width="1.2" stroke-linecap="round"/><circle cx="10.5" cy="1.5" r="1" fill="#38bdf8"/>
-    <line x1="19" y1="4.2" x2="21" y2="2" stroke="url(#g2)" stroke-width="1.2" stroke-linecap="round"/><circle cx="21.5" cy="1.5" r="1" fill="#818cf8"/>
-    <path d="M10 14.5 Q7.5 14 7 15 Q7.5 16 10 15.5" fill="url(#g1)" opacity=".8"/><path d="M22 14.5 Q24.5 14 25 15 Q24.5 16 22 15.5" fill="url(#g1)" opacity=".8"/>
-    </svg>
-    <div><div class="nav-brand">Lorapok Atlas</div><div class="nav-tag">◈ Open Source Intelligence</div></div>
+<!-- Top bar -->
+<div class="topbar">
+  <div class="logo-row">
+    <div class="larva-wrap" onclick="toggleSidebar()" title="Toggle categories">
+      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#6ee7b7"/><stop offset="100%" stop-color="#16a34a"/></linearGradient>
+          <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#818cf8"/></linearGradient>
+        </defs>
+        <ellipse cx="16" cy="26" rx="3.5" ry="2.5" fill="url(#g1)" opacity=".6"/>
+        <ellipse cx="16" cy="21.5" rx="4.5" ry="3" fill="url(#g1)" opacity=".75"/>
+        <ellipse cx="16" cy="16.5" rx="5.5" ry="3.5" fill="url(#g1)" opacity=".9"/>
+        <ellipse cx="16" cy="10.5" rx="6" ry="5" fill="url(#g1)"/>
+        <circle cx="13.5" cy="9.5" r="1.8" fill="#0a1628"/>
+        <circle class="eye-l" cx="13.5" cy="9.5" r="1" fill="#38bdf8"/>
+        <circle cx="18.5" cy="9.5" r="1.8" fill="#0a1628"/>
+        <circle class="eye-r" cx="18.5" cy="9.5" r="1" fill="#818cf8"/>
+        <line x1="13" y1="5.5" x2="11" y2="3" stroke="url(#g2)" stroke-width="1.2" stroke-linecap="round"/>
+        <circle cx="10.5" cy="2.5" r="1.1" fill="#38bdf8"/>
+        <line x1="19" y1="5.5" x2="21" y2="3" stroke="url(#g2)" stroke-width="1.2" stroke-linecap="round"/>
+        <circle cx="21.5" cy="2.5" r="1.1" fill="#818cf8"/>
+        <path d="M10.5 16 Q8 15.5 7.5 16.5 Q8 17.5 10.5 17" fill="url(#g1)" opacity=".8"/>
+        <path d="M21.5 16 Q24 15.5 24.5 16.5 Q24 17.5 21.5 17" fill="url(#g1)" opacity=".8"/>
+        <path d="M13 13.5 Q16 15 19 13.5" fill="none" stroke="#bbf7d0" stroke-width=".8" opacity=".7"/>
+      </svg>
+    </div>
+    <div class="brand">
+      <div class="brand-name">Lorapok Atlas</div>
+      <div class="brand-tag">◈ Open Source Intelligence</div>
+    </div>
   </div>
-  <div class="nav-search"><span class="si">🔍</span><input id="search" placeholder="Search 2100+ APIs…" oninput="onSearch()" autocomplete="off"/></div>
-  <div class="nav-stats">
+  <div class="stats-row">
     <div class="stat"><div class="stat-n" id="s-total">0</div><div class="stat-l">APIs</div></div>
     <div class="stat"><div class="stat-n" id="s-cats">0</div><div class="stat-l">Cats</div></div>
     <div class="stat"><div class="stat-n" id="s-free">0</div><div class="stat-l">Free</div></div>
   </div>
-</nav>
+  <div class="search-wrap">
+    <span class="si">🔍</span>
+    <input id="search" placeholder="Search 2100+ APIs…" oninput="onSearch()" autocomplete="off"/>
+  </div>
+  <div class="filter-row">
+    <button class="fb active" id="f-all" onclick="setAuth('all')">All</button>
+    <button class="fb" id="f-free" onclick="setAuth('free')">🔓 Free</button>
+    <button class="fb" id="f-key" onclick="setAuth('key')">🗝 Key</button>
+    <button class="fb" id="f-oauth" onclick="setAuth('oauth')">🔑 OAuth</button>
+    <select style="background:#0c1828;border:1px solid var(--border);border-radius:5px;color:var(--muted);font-size:9px;padding:2px 5px;outline:none;cursor:pointer;margin-left:auto" id="sort" onchange="render()">
+      <option value="default">Default</option>
+      <option value="az">A→Z</option>
+      <option value="za">Z→A</option>
+    </select>
+  </div>
+</div>
+<!-- Layout -->
 <div class="layout">
   <div class="sidebar" id="sidebar">
-    <div class="sidebar-hdr">Categories</div>
     <div id="cat-list"></div>
   </div>
-  <div class="main">
-    <div class="toolbar">
-      <button class="filter-btn active" id="f-all" onclick="setAuth('all')">All</button>
-      <button class="filter-btn" id="f-free" onclick="setAuth('free')">🔓 Free</button>
-      <button class="filter-btn" id="f-key" onclick="setAuth('key')">🗝 Key</button>
-      <button class="filter-btn" id="f-oauth" onclick="setAuth('oauth')">🔑 OAuth</button>
-      <select class="sort-sel" id="sort" onchange="render()">
-        <option value="default">Default</option>
-        <option value="az">A → Z</option>
-        <option value="za">Z → A</option>
-        <option value="method">Method</option>
-      </select>
-      <span class="rcount" id="rcount"></span>
-    </div>
-    <div class="grid-wrap"><div class="grid" id="grid"></div></div>
+  <div class="grid-wrap">
+    <div class="grid" id="grid"></div>
   </div>
 </div>
 <!-- Modal -->
@@ -204,54 +252,74 @@ nav{flex-shrink:0;height:50px;background:#060d18;border-bottom:1px solid var(--b
   <div class="modal" id="modal">
     <div class="modal-hdr">
       <span class="modal-method" id="m-method"></span>
-      <div class="modal-title"><div class="modal-name" id="m-name"></div><div class="modal-cat" id="m-cat"></div></div>
+      <div class="modal-info">
+        <div class="modal-name" id="m-name"></div>
+        <div class="modal-cat" id="m-cat"></div>
+      </div>
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
     <div class="modal-url" id="m-url"></div>
     <div class="modal-desc" id="m-desc"></div>
     <div class="modal-tabs">
-      <button class="modal-tab active" onclick="switchTab('snippet',this)">Code Snippet</button>
-      <button class="modal-tab" onclick="switchTab('test',this)">▶ Run Test</button>
+      <button class="mtab active" onclick="switchTab('snippet',this)">Code Snippet</button>
+      <button class="mtab" onclick="switchTab('test',this)">▶ Run Test</button>
     </div>
-    <div class="tab-pane active" id="tab-snippet">
-      <div class="lang-tabs">
-        <button class="lt active" onclick="setLang('javascript',this)">JavaScript</button>
-        <button class="lt" onclick="setLang('python',this)">Python</button>
-        <button class="lt" onclick="setLang('curl',this)">cURL</button>
+    <div class="tab-body">
+      <div class="tab-pane active" id="tab-snippet">
+        <div class="lang-tabs">
+          <button class="lt active" onclick="setLang('javascript',this)">JS</button>
+          <button class="lt" onclick="setLang('python',this)">Python</button>
+          <button class="lt" onclick="setLang('curl',this)">cURL</button>
+        </div>
+        <pre class="snippet" id="m-snippet"></pre>
       </div>
-      <pre class="snippet" id="m-snippet"></pre>
-    </div>
-    <div class="tab-pane" id="tab-test">
-      <div class="test-url-row">
-        <input class="test-url-input" id="test-url" placeholder="URL"/>
-        <button class="btn-run" id="btn-run" onclick="runTest()">▶ Run</button>
+      <div class="tab-pane" id="tab-test">
+        <div class="test-row">
+          <span class="test-method" id="t-method">GET</span>
+          <input class="test-url" id="t-url" placeholder="https://…"/>
+          <button class="btn-run" id="btn-run" onclick="runTest()">▶ Run</button>
+        </div>
+        <div class="test-headers">
+          <div class="test-headers-title">Headers <button class="btn-add-hdr" onclick="addHeader()">+ Add</button></div>
+          <div id="headers-list"></div>
+        </div>
+        <div class="test-body-wrap" id="body-wrap" style="display:none">
+          <div class="test-body-title">Request Body (JSON)</div>
+          <textarea class="test-body" id="t-body" placeholder='{"key": "value"}'></textarea>
+        </div>
+        <div class="test-status" id="t-status">
+          <span class="sdot" id="t-dot"></span>
+          <span id="t-text"></span>
+          <span id="t-time" style="margin-left:auto;color:var(--dim)"></span>
+        </div>
+        <div class="resp-tabs" id="resp-tabs" style="display:none">
+          <button class="rt active" onclick="setRespTab('pretty',this)">Pretty</button>
+          <button class="rt" onclick="setRespTab('raw',this)">Raw</button>
+        </div>
+        <pre class="test-response" id="t-response"></pre>
+        <div class="cors-note" id="cors-note">🚧 CORS blocked — the API doesn't allow browser requests.<br>Try the cURL snippet in your terminal instead.</div>
       </div>
-      <div class="test-status" id="test-status" style="display:none">
-        <span class="status-dot" id="status-dot"></span>
-        <span id="status-text"></span>
-      </div>
-      <pre class="test-response" id="test-response" style="display:none"></pre>
-      <div class="cors-note" id="cors-note" style="display:none">🚧 CORS blocked — the API doesn't allow browser requests. Use the cURL snippet in your terminal instead.</div>
     </div>
     <div class="modal-actions" id="m-actions"></div>
   </div>
 </div>
 <script>
-const vscode = acquireVsCodeApi();
-const ALL = ${apisJ};
-const CATS = ${catsJ};
-const BY_CAT = ${byCatJ};
-const ICONS = ${iconsJ};
+const vscode=acquireVsCodeApi();
+const ALL=${apisJ};
+const CATS=${catsJ};
+const BY_CAT=${byCatJ};
+const ICONS=${iconsJ};
 let activeCat='All',activeAuth='all',activeLang='javascript',query='',selectedApi=null,sidebarOpen=true;
+let rawResp='',prettyResp='',activeRespTab='pretty';
 
 document.getElementById('s-total').textContent=ALL.length;
 document.getElementById('s-cats').textContent=CATS.length;
 document.getElementById('s-free').textContent=ALL.filter(a=>!a.authRequired).length;
 
-function toggleSidebar(){sidebarOpen=!sidebarOpen;document.getElementById('sidebar').classList.toggle('collapsed',!sidebarOpen);}
+function toggleSidebar(){sidebarOpen=!sidebarOpen;document.getElementById('sidebar').classList.toggle('hide',!sidebarOpen);}
 
 function buildSidebar(){
-  let h=\`<div class="cat-row \${activeCat==='All'?'active':''}" onclick="setCat('All')"><span class="cat-icon">🌐</span><span class="cat-name">All APIs</span><span class="cat-count">\${ALL.length}</span></div>\`;
+  let h=\`<div class="cat-row \${activeCat==='All'?'active':''}" onclick="setCat('All')"><span class="cat-icon">🌐</span><span class="cat-name">All</span><span class="cat-count">\${ALL.length}</span></div>\`;
   for(const c of CATS){const n=(BY_CAT[c]||[]).length;h+=\`<div class="cat-row \${activeCat===c?'active':''}" onclick="setCat('\${c.replace(/'/g,"\\\\'")}')"><span class="cat-icon">\${ICONS[c]||'📦'}</span><span class="cat-name">\${c}</span><span class="cat-count">\${n}</span></div>\`;}
   document.getElementById('cat-list').innerHTML=h;
 }
@@ -267,7 +335,6 @@ function filtered(){
   const s=document.getElementById('sort').value;
   if(s==='az')r=[...r].sort((a,b)=>a.name.localeCompare(b.name));
   if(s==='za')r=[...r].sort((a,b)=>b.name.localeCompare(a.name));
-  if(s==='method')r=[...r].sort((a,b)=>a.method.localeCompare(b.method));
   return r;
 }
 function badgeHtml(auth){
@@ -277,10 +344,9 @@ function badgeHtml(auth){
 }
 function render(){
   const results=filtered();
-  document.getElementById('rcount').textContent=results.length+' APIs';
   const grid=document.getElementById('grid');
   if(!results.length){grid.innerHTML='<div class="empty">🔍 No APIs found</div>';return;}
-  grid.innerHTML=results.slice(0,200).map(a=>{
+  grid.innerHTML=results.slice(0,300).map(a=>{
     const idx=ALL.indexOf(a);
     return \`<div class="card \${selectedApi===a?'selected':''}" onclick="openModal(\${idx})">
       <div class="card-name">\${a.name}</div><div class="card-cat">\${a.category}</div>
@@ -307,19 +373,32 @@ function openModal(idx){
   document.querySelectorAll('.lt').forEach((t,i)=>t.classList.toggle('active',i===0));
   activeLang='javascript';
   document.getElementById('m-snippet').textContent=getSnippet(a,activeLang);
-  document.getElementById('test-url').value=a.url;
-  document.getElementById('test-status').style.display='none';
-  document.getElementById('test-response').style.display='none';
+  // Test tab setup
+  document.getElementById('t-method').textContent=a.method;
+  document.getElementById('t-method').style.color=MT[a.method]||MT.GET;
+  document.getElementById('t-url').value=a.url;
+  document.getElementById('t-status').style.display='none';
+  document.getElementById('t-response').style.display='none';
+  document.getElementById('resp-tabs').style.display='none';
   document.getElementById('cors-note').style.display='none';
-  switchTab('snippet',document.querySelector('.modal-tab'));
+  document.getElementById('headers-list').innerHTML='';
+  const isPost=['POST','PUT','PATCH'].includes(a.method);
+  document.getElementById('body-wrap').style.display=isPost?'block':'none';
+  if(a.authRequired)addHeader('Authorization','Bearer YOUR_KEY');
+  switchTab('snippet',document.querySelector('.mtab'));
   let btns=\`<button class="btn btn-ins" onclick="insertSnippet()">⬆ Insert</button><button class="btn btn-cpy" onclick="copySnippet()">⎘ Copy</button>\`;
   if(a.authLink)btns+=\`<a href="\${a.authLink}" target="_blank" style="text-decoration:none"><button class="btn btn-auth">🔑 Get API Key</button></a>\`;
   document.getElementById('m-actions').innerHTML=btns;
   document.getElementById('overlay').classList.add('show');
 }
+function addHeader(k='',v=''){
+  const row=document.createElement('div');row.className='header-row';
+  row.innerHTML=\`<input class="header-input" placeholder="Header name" value="\${k}"/><input class="header-input" placeholder="Value" value="\${v}"/><button class="btn-del-hdr" onclick="this.parentElement.remove()">✕</button>\`;
+  document.getElementById('headers-list').appendChild(row);
+}
 function switchTab(tab,btn){
   document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.modal-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.mtab').forEach(t=>t.classList.remove('active'));
   document.getElementById('tab-'+tab).classList.add('active');
   if(btn)btn.classList.add('active');
 }
@@ -329,38 +408,58 @@ function setLang(lang,btn){
   if(btn)btn.classList.add('active');
   if(selectedApi)document.getElementById('m-snippet').textContent=getSnippet(selectedApi,lang);
 }
+function setRespTab(tab,btn){
+  activeRespTab=tab;
+  document.querySelectorAll('.rt').forEach(t=>t.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  document.getElementById('t-response').textContent=tab==='pretty'?prettyResp:rawResp;
+}
 async function runTest(){
-  const url=document.getElementById('test-url').value.trim();
-  if(!url)return;
-  const btn=document.getElementById('btn-run');
-  const statusEl=document.getElementById('test-status');
-  const dotEl=document.getElementById('status-dot');
-  const textEl=document.getElementById('status-text');
-  const respEl=document.getElementById('test-response');
-  const corsEl=document.getElementById('cors-note');
-  btn.disabled=true;btn.textContent='…';
-  statusEl.style.display='flex';dotEl.className='status-dot status-loading';textEl.textContent='Sending request…';
-  respEl.style.display='none';corsEl.style.display='none';
+  const url=document.getElementById('t-url').value.trim();if(!url)return;
   const method=selectedApi?.method||'GET';
+  const btn=document.getElementById('btn-run');
+  const statusEl=document.getElementById('t-status');
+  const dotEl=document.getElementById('t-dot');
+  const textEl=document.getElementById('t-text');
+  const timeEl=document.getElementById('t-time');
+  const respEl=document.getElementById('t-response');
+  const corsEl=document.getElementById('cors-note');
+  const respTabsEl=document.getElementById('resp-tabs');
+  btn.disabled=true;btn.textContent='…';
+  statusEl.style.display='flex';dotEl.className='sdot s-loading';textEl.textContent='Sending…';timeEl.textContent='';
+  respEl.style.display='none';corsEl.style.display='none';respTabsEl.style.display='none';
+  // Build headers
+  const headers={'Accept':'application/json'};
+  document.querySelectorAll('#headers-list .header-row').forEach(row=>{
+    const inputs=row.querySelectorAll('input');
+    const k=inputs[0].value.trim();const v=inputs[1].value.trim();
+    if(k&&v)headers[k]=v;
+  });
+  const bodyVal=document.getElementById('t-body').value.trim();
+  const isPost=['POST','PUT','PATCH'].includes(method);
+  const opts={method,headers};
+  if(isPost&&bodyVal){opts.body=bodyVal;headers['Content-Type']='application/json';}
   const proxies=['','https://corsproxy.io/?','https://api.allorigins.win/raw?url='];
   let lastErr='';
+  const t0=Date.now();
   for(const proxy of proxies){
     try{
       const fetchUrl=proxy?proxy+encodeURIComponent(url):url;
-      const opts={method,headers:{'Accept':'application/json'}};
       const res=await fetch(fetchUrl,opts);
+      const elapsed=Date.now()-t0;
       const ct=res.headers.get('content-type')||'';
-      let body;
-      if(ct.includes('json'))body=JSON.stringify(await res.json(),null,2);
-      else body=await res.text();
-      dotEl.className='status-dot status-'+(res.ok?'ok':'err');
-      textEl.textContent=\`HTTP \${res.status} \${res.statusText}\${proxy?' (via proxy)':''}\`;
-      respEl.textContent=body.slice(0,4000)+(body.length>4000?'\\n…truncated':'');
+      rawResp=await res.text();
+      try{prettyResp=JSON.stringify(JSON.parse(rawResp),null,2);}catch{prettyResp=rawResp;}
+      dotEl.className='sdot '+(res.ok?'s-ok':'s-err');
+      textEl.textContent=\`\${res.status} \${res.statusText}\${proxy?' · via proxy':''}\`;
+      timeEl.textContent=elapsed+'ms';
+      respEl.textContent=(activeRespTab==='pretty'?prettyResp:rawResp).slice(0,6000);
       respEl.style.display='block';
+      respTabsEl.style.display='flex';
       btn.disabled=false;btn.textContent='▶ Run';return;
     }catch(e){lastErr=String(e);}
   }
-  dotEl.className='status-dot status-err';textEl.textContent='Request failed';
+  dotEl.className='sdot s-err';textEl.textContent='Failed — '+lastErr.slice(0,60);
   corsEl.style.display='block';
   btn.disabled=false;btn.textContent='▶ Run';
 }
@@ -376,7 +475,6 @@ buildSidebar();render();
 
 export function activate(context: vscode.ExtensionContext) {
   const { apis, categories, byCategory } = loadApis()
-  let panel: vscode.WebviewPanel | undefined
   let lastEditor: vscode.TextEditor | undefined = vscode.window.activeTextEditor
 
   context.subscriptions.push(
@@ -385,37 +483,48 @@ export function activate(context: vscode.ExtensionContext) {
     })
   )
 
-  function openPanel() {
-    if (panel) { panel.reveal(vscode.ViewColumn.One); return }
+  const handleMessage = async (msg: any) => {
+    if (msg.type === 'insert') {
+      const editor = lastEditor ?? vscode.window.visibleTextEditors.find(e => e.document.uri.scheme === 'file')
+      if (!editor) { vscode.window.showWarningMessage('Open a file first to insert a snippet.'); return }
+      await editor.edit(b => b.insert(editor.selection.active, msg.code))
+      await vscode.window.showTextDocument(editor.document, editor.viewColumn)
+      vscode.window.showInformationMessage('✓ Snippet inserted!')
+    }
+    if (msg.type === 'copy') {
+      await vscode.env.clipboard.writeText(msg.code)
+      vscode.window.showInformationMessage('✓ Copied to clipboard!')
+    }
+  }
 
-    panel = vscode.window.createWebviewPanel(
-      'lorapok-atlas',
-      '🐛 Lorapok Atlas',
-      vscode.ViewColumn.One,
-      { enableScripts: true, retainContextWhenHidden: true }
-    )
-
-    panel.webview.html = buildHtml(apis, categories, byCategory)
-
-    panel.webview.onDidReceiveMessage(async (msg) => {
-      if (msg.type === 'insert') {
-        const editor = lastEditor ?? vscode.window.visibleTextEditors.find(e => e.document.uri.scheme === 'file')
-        if (!editor) { vscode.window.showWarningMessage('Open a file first to insert a snippet.'); return }
-        await editor.edit(b => b.insert(editor.selection.active, msg.code))
-        await vscode.window.showTextDocument(editor.document, editor.viewColumn)
-        vscode.window.showInformationMessage('✓ Snippet inserted!')
-      }
-      if (msg.type === 'copy') {
-        await vscode.env.clipboard.writeText(msg.code)
-        vscode.window.showInformationMessage('✓ Copied to clipboard!')
-      }
-    })
-
-    panel.onDidDispose(() => { panel = undefined })
+  // Sidebar webview provider
+  const sidebarProvider: vscode.WebviewViewProvider = {
+    resolveWebviewView(webviewView) {
+      webviewView.webview.options = { enableScripts: true }
+      webviewView.webview.html = buildHtml(apis, categories, byCategory)
+      webviewView.webview.onDidReceiveMessage(handleMessage)
+    }
   }
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('lorapok-atlas.open', openPanel)
+    vscode.window.registerWebviewViewProvider('lorapok-atlas.sidebar', sidebarProvider, {
+      webviewOptions: { retainContextWhenHidden: true }
+    })
+  )
+
+  // Also support opening as a full panel via command / keybinding
+  let panel: vscode.WebviewPanel | undefined
+  context.subscriptions.push(
+    vscode.commands.registerCommand('lorapok-atlas.open', () => {
+      if (panel) { panel.reveal(vscode.ViewColumn.One); return }
+      panel = vscode.window.createWebviewPanel(
+        'lorapok-atlas', '🐛 Lorapok Atlas', vscode.ViewColumn.One,
+        { enableScripts: true, retainContextWhenHidden: true }
+      )
+      panel.webview.html = buildHtml(apis, categories, byCategory)
+      panel.webview.onDidReceiveMessage(handleMessage)
+      panel.onDidDispose(() => { panel = undefined })
+    })
   )
 }
 
