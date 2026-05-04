@@ -377,10 +377,10 @@ ext install Lorapok.lorapok-atlas
 ### 🌐 REST API — Cloudflare Worker
 
 ```bash
-GET https://api.lorapok.dev/apis?q=weather&auth=free
-GET https://api.lorapok.dev/apis/Open-Meteo%20Forecast
-GET https://api.lorapok.dev/categories
-GET https://api.lorapok.dev/stats
+GET https://lorapok-atlas-api.mdshuvo40.workers.dev/apis?q=weather&auth=free
+GET https://lorapok-atlas-api.mdshuvo40.workers.dev/apis/Open-Meteo%20Forecast
+GET https://lorapok-atlas-api.mdshuvo40.workers.dev/categories
+GET https://lorapok-atlas-api.mdshuvo40.workers.dev/stats
 ```
 
 → [docs](packages/lorapok-atlas-api/README.md) · [deploy your own](packages/lorapok-atlas-api)
