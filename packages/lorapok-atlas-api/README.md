@@ -5,7 +5,7 @@
 ## Base URL
 
 ```
-https://api.lorapok.dev
+https://lorapok-atlas-api.mdshuvo40.workers.dev
 ```
 
 ## Endpoints
@@ -28,16 +28,16 @@ GET /search?q=weather          Search endpoint
 
 ```bash
 # Search for weather APIs
-curl https://api.lorapok.dev/apis?q=weather&auth=free
+curl "https://lorapok-atlas-api.mdshuvo40.workers.dev/apis?q=weather&auth=free"
 
 # Get a specific API
-curl https://api.lorapok.dev/apis/Open-Meteo%20Forecast
+curl "https://lorapok-atlas-api.mdshuvo40.workers.dev/apis/Open-Meteo%20Forecast"
 
 # List all categories
-curl https://api.lorapok.dev/categories
+curl "https://lorapok-atlas-api.mdshuvo40.workers.dev/categories"
 
 # Get stats
-curl https://api.lorapok.dev/stats
+curl "https://lorapok-atlas-api.mdshuvo40.workers.dev/stats"
 ```
 
 ## Deploy your own

@@ -316,7 +316,7 @@ Lorapok Atlas ships as multiple packages — use the data programmatically, in A
 | [`lorapok-atlas`](https://www.npmjs.com/package/lorapok-atlas) | `npm i lorapok-atlas` | JS/TS library — search, filter, get snippets |
 | [`lorapok-atlas-mcp`](https://www.npmjs.com/package/lorapok-atlas-mcp) | `npx lorapok-atlas-mcp` | MCP server for Claude, Cursor, Kiro |
 | `lorapok-atlas` (VS Code) | `Ctrl+P` → `ext install Lorapok.lorapok-atlas` | Sidebar panel — search & insert snippets |
-| REST API | `api.lorapok.dev` | Cloudflare Worker REST endpoint |
+| REST API | `lorapok-atlas-api.mdshuvo40.workers.dev` | Cloudflare Worker REST endpoint |
 
 ---
 

@@ -393,7 +393,7 @@ function openModal(idx){
   if(a.authRequired)addHeader('Authorization','Bearer YOUR_KEY');
   switchTab('snippet',document.querySelector('.mtab'));
   let btns=\`<button class="btn btn-ins" onclick="insertSnippet()">⬆ Insert</button><button class="btn btn-cpy" onclick="copySnippet()">⎘ Copy</button>\`;
-  if(a.authLink)btns+=\`<a href="\${a.authLink}" target="_blank" style="text-decoration:none"><button class="btn btn-auth">🔑 Get API Key</button></a>\`;
+  if(a.authLink)btns+=\`<button class="btn btn-auth" onclick="window.open('\${a.authLink}','_blank')">🔑 Get API Key</button>\`;
   document.getElementById('m-actions').innerHTML=btns;
   document.getElementById('overlay').classList.add('show');
 }

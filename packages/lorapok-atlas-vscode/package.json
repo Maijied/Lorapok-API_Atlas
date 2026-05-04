@@ -2,7 +2,7 @@
   "name": "lorapok-atlas",
   "displayName": "Lorapok Atlas — API Directory",
   "description": "Browse, search, and insert code snippets from 2100+ free open-source APIs directly in VS Code",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "publisher": "Lorapok",
   "icon": "media/icon.png",
   "engines": {
