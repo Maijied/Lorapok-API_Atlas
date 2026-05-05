@@ -41,3 +41,6 @@ firestore.rules.txt
 # Reference files (removed)
 OpenSourceAPIDirectory.jsx
 GEMINI.md
+
+# Local resources (social posts, banners, etc.)
+resources/
