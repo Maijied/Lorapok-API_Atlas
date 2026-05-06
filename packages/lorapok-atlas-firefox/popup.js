@@ -117,6 +117,18 @@ function bindEvents() {
   );
   document.getElementById('btn-run').addEventListener('click', runTest);
   document.getElementById('btn-add-hdr').addEventListener('click', () => addHeader());
+
+  // Author modal
+  document.getElementById('btn-author').addEventListener('click', () => {
+    document.getElementById('author-overlay').classList.add('show');
+  });
+  document.getElementById('author-close').addEventListener('click', () => {
+    document.getElementById('author-overlay').classList.remove('show');
+  });
+  document.getElementById('author-overlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('author-overlay'))
+      document.getElementById('author-overlay').classList.remove('show');
+  });
 }
 
 // ── Sidebar ──────────────────────────────────────────────────
