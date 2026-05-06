@@ -12,7 +12,11 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "lorapok-atlas@lorapok.github.io",
-      "strict_min_version": "109.0"
+      "strict_min_version": "109.0",
+      "data_collection_permissions": {
+        "required": [],
+        "optional": []
+      }
     }
   },
   "browser_action": {
@@ -30,9 +34,5 @@
   "permissions": [
     "clipboardWrite",
     "storage"
-  ],
-  "data_collection_permissions": {
-    "required": [],
-    "optional": []
-  }
+  ]
 }
