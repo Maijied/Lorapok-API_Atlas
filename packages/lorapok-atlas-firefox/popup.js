@@ -90,8 +90,16 @@ function initUI() {
   document.getElementById('s-total').textContent = ALL.length;
   document.getElementById('s-cats').textContent  = CATS.length;
   document.getElementById('s-free').textContent  = ALL.filter(a=>!a.authRequired).length;
+  const fc = document.getElementById('footer-api-count');
+  if (fc) fc.textContent = ALL.length + ' APIs live';
   buildSidebar(); render(); bindEvents();
   initWeather();
+  initVisitorCount();
+  // Set version from manifest
+  fetch('manifest.json').then(r=>r.json()).then(m=>{
+    const v = document.getElementById('footer-version');
+    if (v) v.textContent = 'v' + m.version;
+  }).catch(()=>{});
 }
 
 function bindEvents() {
@@ -274,11 +282,13 @@ function openModal(idx) {
   document.getElementById('m-url').textContent  = a.url;
   document.getElementById('m-desc').textContent = a.description || '';
 
-  // Set visit site link
+  // Set visit site link — use authLink (docs) or base domain
   const visitEl = document.getElementById('m-visit');
-  visitEl.href = a.url;
+  const visitUrl = a.authLink || (()=>{try{return new URL(a.url).origin;}catch(_){return null;}})();
+  if (visitUrl) { visitEl.href = visitUrl; visitEl.style.display = 'flex'; }
+  else { visitEl.style.display = 'none'; }
 
-  // Reset inline test
+  // Reset inline test — hide it
   document.getElementById('inline-test').style.display = 'none';
 
   document.querySelectorAll('.lt').forEach((t,i) => t.classList.toggle('active', i===0));
@@ -293,11 +303,11 @@ function openModal(idx) {
   document.getElementById('t-response').style.display = 'none';
   document.getElementById('resp-tabs').style.display  = 'none';
   document.getElementById('cors-note').style.display  = 'none';
+  // Clear headers FIRST, then add defaults once
   clearEl(document.getElementById('headers-list'));
-
   document.getElementById('body-wrap').style.display =
     ['POST','PUT','PATCH'].includes(a.method) ? 'block' : 'none';
-
+  addHeader('Accept', 'application/json');
   if (a.authRequired) addHeader('Authorization', 'Bearer YOUR_KEY');
 
   // Build action buttons with DOM (no innerHTML)
@@ -371,14 +381,19 @@ async function runTest() {
   const dotEl = document.getElementById('t-dot');
   const textEl = document.getElementById('t-text');
   const timeEl = document.getElementById('t-time');
+  const wrapEl = document.getElementById('t-response-wrap');
   const respEl = document.getElementById('t-response');
+  const vizEl  = document.getElementById('t-visualizer');
   const corsEl = document.getElementById('cors-note');
   const respTabsEl = document.getElementById('resp-tabs');
 
-  btn.disabled=true; btn.textContent='…';
+  btn.disabled=true;
+  startLarvaLoading(btn);
   statusEl.style.display='flex'; dotEl.className='sdot s-loading';
   textEl.textContent='Sending…'; timeEl.textContent='';
-  respEl.style.display='none'; corsEl.style.display='none'; respTabsEl.style.display='none';
+  if(wrapEl)wrapEl.style.display='none';
+  corsEl.style.display='none';
+  if(respTabsEl)respTabsEl.style.display='none';
 
   const headers = {'Accept':'application/json'};
   document.querySelectorAll('#headers-list .header-row').forEach(row => {
@@ -407,8 +422,10 @@ async function runTest() {
       textEl.textContent=`${res.status} ${res.statusText}${proxy?' · via proxy':''}`;
       timeEl.textContent=elapsed+'ms';
       respEl.textContent=(activeRespTab==='pretty'?prettyResp:rawResp).slice(0,6000);
-      respEl.style.display='block'; respTabsEl.style.display='flex';
-      btn.disabled=false; btn.textContent='▶ Run';
+      if(vizEl)renderVisualizer(vizEl,rawResp);
+      if(wrapEl)wrapEl.style.display='flex';
+      if(respTabsEl)respTabsEl.style.display='flex';
+      stopLarvaLoading(btn);
       return;
     } catch(e) { lastErr=String(e); }
   }
@@ -416,7 +433,64 @@ async function runTest() {
   dotEl.className='sdot s-err';
   textEl.textContent='Failed — '+lastErr.slice(0,60);
   corsEl.style.display='block';
-  btn.disabled=false; btn.textContent='▶ Run';
+  stopLarvaLoading(btn);
+}
+
+// Larva loading animation
+let larvaLoadInterval=null;
+const larvaFrames=['🐛','🌀','🐛','✨'];
+function startLarvaLoading(btn){
+  let f=0;btn.classList.add('loading');btn.textContent=larvaFrames[0];
+  larvaLoadInterval=setInterval(()=>{f=(f+1)%larvaFrames.length;btn.textContent=larvaFrames[f];},300);
+}
+function stopLarvaLoading(btn){
+  clearInterval(larvaLoadInterval);larvaLoadInterval=null;
+  btn.classList.remove('loading');btn.disabled=false;btn.textContent='▶ Run';
+}
+
+// Response visualizer
+function renderVisualizer(container,raw){
+  clearEl(container);
+  let parsed;
+  try{parsed=JSON.parse(raw);}catch(_){
+    const p=el('div','viz-raw');p.textContent=raw.slice(0,500);container.appendChild(p);return;
+  }
+  container.appendChild(renderJsonNode(parsed,0));
+}
+function renderJsonNode(val,depth){
+  if(depth>4)return el('span','viz-ellipsis','…');
+  if(val===null)return el('span','viz-null','null');
+  if(typeof val==='boolean')return el('span','viz-bool',String(val));
+  if(typeof val==='number')return el('span','viz-num',String(val));
+  if(typeof val==='string'){
+    if(/^https?:\/\//i.test(val)){
+      const a=document.createElement('a');a.className='viz-url';
+      a.textContent=val.length>50?val.slice(0,50)+'…':val;a.href=val;a.target='_blank';return a;
+    }
+    return el('span','viz-str','"'+val.slice(0,80)+(val.length>80?'…':'')+'"');
+  }
+  if(Array.isArray(val)){
+    const wrap=el('div','viz-arr');
+    const label=el('span','viz-arr-label','[ '+val.length+' items ]');
+    const toggle=el('button','viz-toggle','▶');
+    const content=el('div','viz-content');content.style.display='none';
+    toggle.addEventListener('click',()=>{const open=content.style.display!=='none';content.style.display=open?'none':'block';toggle.textContent=open?'▶':'▼';});
+    val.slice(0,20).forEach((item,i)=>{const row=el('div','viz-row');row.appendChild(el('span','viz-key',i+': '));row.appendChild(renderJsonNode(item,depth+1));content.appendChild(row);});
+    if(val.length>20)content.appendChild(el('div','viz-more','… and '+(val.length-20)+' more'));
+    wrap.appendChild(toggle);wrap.appendChild(label);wrap.appendChild(content);return wrap;
+  }
+  if(typeof val==='object'){
+    const keys=Object.keys(val);
+    const wrap=el('div','viz-obj');
+    const label=el('span','viz-obj-label','{ '+keys.length+' keys }');
+    const toggle=el('button','viz-toggle',depth===0?'▼':'▶');
+    const content=el('div','viz-content');content.style.display=depth===0?'block':'none';
+    toggle.addEventListener('click',()=>{const open=content.style.display!=='none';content.style.display=open?'none':'block';toggle.textContent=open?'▶':'▼';});
+    keys.slice(0,30).forEach(k=>{const row=el('div','viz-row');row.appendChild(el('span','viz-key',k+': '));row.appendChild(renderJsonNode(val[k],depth+1));content.appendChild(row);});
+    if(keys.length>30)content.appendChild(el('div','viz-more','… and '+(keys.length-30)+' more'));
+    wrap.appendChild(toggle);wrap.appendChild(label);wrap.appendChild(content);return wrap;
+  }
+  return el('span','viz-unknown',String(val));
 }
 
 // ── Clipboard ────────────────────────────────────────────────
@@ -451,146 +525,143 @@ function flashBtn(id, label) {
   setTimeout(() => { btn.textContent=orig; }, 1500);
 }
 
+// ── Visitor count — browser.storage.local ────────────────────
+function initVisitorCount(){
+  try{
+    browser.storage.local.get('visits').then(result=>{
+      const count=(result.visits||0)+1;
+      browser.storage.local.set({visits:count});
+      const el2=document.getElementById('visitor-count');
+      if(el2){
+        clearEl(el2);
+        const txt=el('span','vc-text','');
+        txt.innerHTML=`<span class="vc-num">${count.toLocaleString()}</span> opens`;
+        el2.appendChild(txt);
+      }
+    }).catch(()=>{});
+  }catch(_){
+    try{
+      const count=(parseInt(localStorage.getItem('lorapok_visits')||'0'))+1;
+      localStorage.setItem('lorapok_visits',count);
+      const el2=document.getElementById('visitor-count');
+      if(el2)el2.textContent=count+' opens';
+    }catch(_){}
+  }
+}
+
 // ── Weather ──────────────────────────────────────────────────
 function initWeather() {
-  // Use Open-Meteo free API - no key needed
-  // Get user's approximate location via IP geolocation first
-  fetch('https://ipapi.co/json/')
+  updateWeatherTime();
+  setInterval(updateWeatherTime, 30000);
+  // wttr.in supports CORS from extensions
+  fetch('https://wttr.in/?format=j1')
     .then(r => r.json())
-    .then(loc => {
-      const lat = loc.latitude || 23.8103;
-      const lon = loc.longitude || 90.4125;
-      const city = loc.city || 'Dhaka';
-      return fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weathercode,windspeed_10m&timezone=auto`)
-        .then(r => r.json())
-        .then(data => ({ data, city, lat, lon }));
-    })
-    .then(({ data, city }) => {
-      const temp = Math.round(data.current.temperature_2m);
-      const code = data.current.weathercode;
-      const desc = getWeatherDesc(code);
+    .then(data => {
+      const cur = data.current_condition[0];
+      const temp = parseInt(cur.temp_C);
+      const code = mapWttrCode(parseInt(cur.weatherCode));
+      const city = data.nearest_area[0].areaName[0].value;
       document.getElementById('weather-temp').textContent = temp + '°C';
-      document.getElementById('weather-desc').textContent = city + ' · ' + desc;
-      updateWeatherTime();
-      drawWeatherCanvas(code, temp);
-      setInterval(updateWeatherTime, 60000);
+      document.getElementById('weather-desc').textContent = city + ' · ' + getWeatherDesc(code);
+      wCode = code; wTemp = temp; wCity = city;
+      initWeatherParticles(); startWeatherAnim();
     })
     .catch(() => {
-      document.getElementById('weather-desc').textContent = 'Weather unavailable';
-      drawWeatherCanvas(0, null);
+      // Fallback: Open-Meteo with London coords
+      fetch('https://api.open-meteo.com/v1/forecast?latitude=51.5&longitude=-0.1&current=temperature_2m,weathercode&timezone=auto')
+        .then(r => r.json())
+        .then(data => {
+          wTemp = Math.round(data.current.temperature_2m);
+          wCode = data.current.weathercode;
+          document.getElementById('weather-temp').textContent = wTemp + '°C';
+          document.getElementById('weather-desc').textContent = 'London · ' + getWeatherDesc(wCode);
+          initWeatherParticles(); startWeatherAnim();
+        })
+        .catch(() => {
+          document.getElementById('weather-desc').textContent = 'Offline';
+          wCode = 0; initWeatherParticles(); startWeatherAnim();
+        });
     });
 }
 
-function updateWeatherTime() {
-  const now = new Date();
-  document.getElementById('weather-time').textContent =
-    now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+function mapWttrCode(c){
+  if(c===113)return 0;if(c===116)return 2;if(c===119||c===122)return 3;
+  if(c>=143&&c<=248)return 45;if(c>=263&&c<=281)return 51;
+  if(c>=293&&c<=321)return 61;if(c>=323&&c<=377)return 71;
+  if(c>=386&&c<=395)return 95;return 0;
 }
 
-function getWeatherDesc(code) {
-  if (code === 0) return 'Clear sky';
-  if (code <= 3) return 'Partly cloudy';
-  if (code <= 9) return 'Foggy';
-  if (code <= 19) return 'Drizzle';
-  if (code <= 29) return 'Rain';
-  if (code <= 39) return 'Snow';
-  if (code <= 49) return 'Fog';
-  if (code <= 59) return 'Drizzle';
-  if (code <= 69) return 'Rain';
-  if (code <= 79) return 'Snow';
-  if (code <= 84) return 'Rain showers';
-  if (code <= 94) return 'Thunderstorm';
-  return 'Storm';
+function updateWeatherTime(){
+  const el2=document.getElementById('weather-time');
+  if(el2)el2.textContent=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
 }
 
-function drawWeatherCanvas(code, temp) {
-  const canvas = document.getElementById('weather-canvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const W = 120, H = 40;
-  ctx.clearRect(0, 0, W, H);
+function getWeatherDesc(code){
+  if(code===0)return 'Clear sky';if(code<=3)return 'Partly cloudy';
+  if(code<=9)return 'Foggy';if(code<=29)return 'Drizzle';
+  if(code<=39)return 'Rain';if(code<=49)return 'Fog';
+  if(code<=59)return 'Drizzle';if(code<=69)return 'Rain';
+  if(code<=79)return 'Snow';if(code<=84)return 'Showers';
+  if(code<=94)return 'Thunderstorm';return 'Storm';
+}
 
-  const now = new Date();
-  const hour = now.getHours();
-  const isNight = hour < 6 || hour >= 20;
+// ── Weather animation state & canvas ─────────────────────────
+let wCode=0,wTemp=null,wCity='';
+let wCloudX=80,wCloudDir=1,wRainDrops=[],wSnowFlakes=[],wSunAngle=0,wLightningT=0,wStarTwinkle=[];
+let wAnimFrame=null,moonPhase=0.5;
+(function(){const known=new Date('2000-01-06');const now=new Date();const days=(now-known)/(1000*60*60*24);moonPhase=(days%29.53)/29.53;})();
 
-  // Background gradient
-  const grad = ctx.createLinearGradient(0, 0, W, H);
-  if (isNight) {
-    grad.addColorStop(0, '#0a0e1a');
-    grad.addColorStop(1, '#0d1528');
-  } else if (code <= 3) {
-    grad.addColorStop(0, '#0a1628');
-    grad.addColorStop(1, '#0d2040');
+function initWeatherParticles(){
+  wRainDrops=[];wSnowFlakes=[];wStarTwinkle=[];
+  const W=140,H=44;
+  if(wCode>=51&&wCode<=79){for(let i=0;i<18;i++)wRainDrops.push({x:Math.random()*W,y:Math.random()*H,speed:2+Math.random()*2,len:4+Math.random()*4});}
+  if(wCode>=71&&wCode<=79){for(let i=0;i<12;i++)wSnowFlakes.push({x:Math.random()*W,y:Math.random()*H,r:1+Math.random()*1.5,speed:0.5+Math.random(),drift:Math.random()*0.5-0.25});}
+  for(let i=0;i<20;i++)wStarTwinkle.push({x:Math.random()*140,y:Math.random()*44,a:Math.random(),da:0.02+Math.random()*0.03});
+}
+
+function startWeatherAnim(){
+  if(wAnimFrame)cancelAnimationFrame(wAnimFrame);
+  const canvas=document.getElementById('weather-canvas');if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  function frame(){drawWeatherFrame(ctx,140,44);wAnimFrame=requestAnimationFrame(frame);}
+  frame();
+}
+
+function drawWeatherFrame(ctx,W,H){
+  ctx.clearRect(0,0,W,H);
+  const h=new Date().getHours();const isNight=h<6||h>=20;
+  const grad=ctx.createLinearGradient(0,0,0,H);
+  if(isNight){grad.addColorStop(0,'#050a18');grad.addColorStop(1,'#0a1428');}
+  else if(wCode<=3){grad.addColorStop(0,'#0a1e3a');grad.addColorStop(1,'#0d2a50');}
+  else{grad.addColorStop(0,'#0c1828');grad.addColorStop(1,'#0e2030');}
+  ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+  if(isNight){
+    wStarTwinkle.forEach(s=>{s.a+=s.da;if(s.a>1||s.a<0)s.da*=-1;ctx.fillStyle=`rgba(255,255,255,${s.a*0.8})`;ctx.beginPath();ctx.arc(s.x,s.y,0.7,0,Math.PI*2);ctx.fill();});
+    const moonR=7+moonPhase*3,mx=W-22,my=H/2;
+    const mg=ctx.createRadialGradient(mx,my,0,mx,my,moonR*2.5);mg.addColorStop(0,'rgba(255,220,100,0.15)');mg.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=mg;ctx.beginPath();ctx.arc(mx,my,moonR*2.5,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#ffd166';ctx.beginPath();ctx.arc(mx,my,moonR,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#050a18';ctx.beginPath();ctx.arc(mx+moonR*0.4,my-moonR*0.2,moonR*0.85,0,Math.PI*2);ctx.fill();
   } else {
-    grad.addColorStop(0, '#0c1a2e');
-    grad.addColorStop(1, '#0a1520');
+    wSunAngle+=0.02;const sx=W-22,sy=H/2;
+    const sg=ctx.createRadialGradient(sx,sy,0,sx,sy,18);sg.addColorStop(0,'rgba(255,220,80,0.2)');sg.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=sg;ctx.beginPath();ctx.arc(sx,sy,18,0,Math.PI*2);ctx.fill();
+    if(wCode<=3){ctx.strokeStyle='rgba(255,209,102,0.45)';ctx.lineWidth=1.5;for(let i=0;i<8;i++){const a=wSunAngle+(i*Math.PI/4);ctx.beginPath();ctx.moveTo(sx+Math.cos(a)*10,sy+Math.sin(a)*10);ctx.lineTo(sx+Math.cos(a)*14,sy+Math.sin(a)*14);ctx.stroke();}}
+    ctx.fillStyle='#ffd166';ctx.beginPath();ctx.arc(sx,sy,8,0,Math.PI*2);ctx.fill();
+    if(wCode===0){ctx.fillStyle='#0a1628';ctx.beginPath();ctx.arc(sx-2.5,sy-1.5,1.2,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(sx+2.5,sy-1.5,1.2,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#0a1628';ctx.lineWidth=1;ctx.beginPath();ctx.arc(sx,sy+1,2.5,0.2,Math.PI-0.2);ctx.stroke();}
   }
-  ctx.fillStyle = grad;
-  ctx.roundRect(0, 0, W, H, 6);
-  ctx.fill();
+  if(wCode>=2){
+    wCloudX+=wCloudDir*0.3;if(wCloudX>W-20)wCloudDir=-1;if(wCloudX<20)wCloudDir=1;
+    const alpha=wCode>=50?0.75:0.5;
+    drawCloud(ctx,wCloudX,H*0.45,wCode>=50?`rgba(80,110,140,${alpha})`:`rgba(160,190,220,${alpha})`,1.0);
+    if(wCode>=3)drawCloud(ctx,wCloudX-35,H*0.55,wCode>=50?`rgba(80,110,140,${alpha*0.7})`:`rgba(160,190,220,${alpha*0.7})`,0.7);
+  }
+  if(wCode>=51&&wCode<=79){ctx.strokeStyle='rgba(56,189,248,0.55)';ctx.lineWidth=1;wRainDrops.forEach(d=>{d.y+=d.speed;d.x-=0.5;if(d.y>H){d.y=-d.len;d.x=Math.random()*W;}ctx.beginPath();ctx.moveTo(d.x,d.y);ctx.lineTo(d.x-1,d.y+d.len);ctx.stroke();});}
+  if(wCode>=71&&wCode<=79){ctx.fillStyle='rgba(200,230,255,0.85)';wSnowFlakes.forEach(s=>{s.y+=s.speed;s.x+=s.drift;if(s.y>H){s.y=-5;s.x=Math.random()*W;}ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();});}
+  if(wCode>=95){wLightningT++;if(wLightningT%90<5){ctx.strokeStyle='rgba(255,220,50,0.9)';ctx.lineWidth=1.5;const lx=20+Math.random()*60;ctx.beginPath();ctx.moveTo(lx,5);ctx.lineTo(lx-4,16);ctx.lineTo(lx+2,16);ctx.lineTo(lx-5,30);ctx.stroke();}}
+}
 
-  if (isNight) {
-    // Stars
-    ctx.fillStyle = 'rgba(255,255,255,0.7)';
-    [[10,8],[25,5],[40,12],[55,6],[70,10],[85,4],[100,8],[110,14]].forEach(([x,y]) => {
-      ctx.beginPath(); ctx.arc(x, y, 0.8, 0, Math.PI*2); ctx.fill();
-    });
-    // Moon
-    ctx.fillStyle = '#ffd166';
-    ctx.beginPath(); ctx.arc(95, 20, 8, 0, Math.PI*2); ctx.fill();
-    ctx.fillStyle = '#0a0e1a';
-    ctx.beginPath(); ctx.arc(99, 18, 6, 0, Math.PI*2); ctx.fill();
-  } else if (code <= 3) {
-    // Sun
-    ctx.fillStyle = 'rgba(255,209,102,0.15)';
-    ctx.beginPath(); ctx.arc(95, 20, 14, 0, Math.PI*2); ctx.fill();
-    ctx.fillStyle = '#ffd166';
-    ctx.beginPath(); ctx.arc(95, 20, 9, 0, Math.PI*2); ctx.fill();
-    // Sun rays
-    ctx.strokeStyle = 'rgba(255,209,102,0.5)';
-    ctx.lineWidth = 1.5;
-    for (let i = 0; i < 8; i++) {
-      const a = (i * Math.PI) / 4;
-      ctx.beginPath();
-      ctx.moveTo(95 + Math.cos(a)*12, 20 + Math.sin(a)*12);
-      ctx.lineTo(95 + Math.cos(a)*16, 20 + Math.sin(a)*16);
-      ctx.stroke();
-    }
-  }
-
-  // Clouds for cloudy/rainy
-  if (code >= 2) {
-    const cloudX = code <= 3 ? 60 : 70;
-    ctx.fillStyle = code >= 50 ? 'rgba(100,130,160,0.7)' : 'rgba(150,180,210,0.5)';
-    [[cloudX,22,10],[cloudX+10,18,8],[cloudX+20,22,10],[cloudX-8,24,7]].forEach(([x,y,r]) => {
-      ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI*2); ctx.fill();
-    });
-  }
-
-  // Rain drops
-  if (code >= 50 && code <= 79) {
-    ctx.strokeStyle = 'rgba(56,189,248,0.6)';
-    ctx.lineWidth = 1;
-    [[20,28,26,36],[35,30,31,38],[50,27,46,35],[65,31,61,39],[80,28,76,36]].forEach(([x1,y1,x2,y2]) => {
-      ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
-    });
-  }
-
-  // Snow
-  if (code >= 70 && code <= 79) {
-    ctx.fillStyle = 'rgba(200,230,255,0.8)';
-    [[20,30],[35,34],[50,28],[65,32],[80,30]].forEach(([x,y]) => {
-      ctx.beginPath(); ctx.arc(x, y, 2, 0, Math.PI*2); ctx.fill();
-    });
-  }
-
-  // Lightning for thunderstorm
-  if (code >= 80) {
-    ctx.strokeStyle = '#ffd166';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(30, 20); ctx.lineTo(25, 28); ctx.lineTo(30, 28); ctx.lineTo(24, 38);
-    ctx.stroke();
-  }
+function drawCloud(ctx,cx,cy,color,scale){
+  ctx.fillStyle=color;
+  [[0,0,10],[10,-5,8],[20,0,10],[-8,2,7]].forEach(([dx,dy,r])=>{ctx.beginPath();ctx.arc(cx+dx*scale,cy+dy*scale,r*scale,0,Math.PI*2);ctx.fill();});
 }
