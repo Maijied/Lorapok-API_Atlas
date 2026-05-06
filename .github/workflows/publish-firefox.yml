@@ -7,11 +7,16 @@ on:
       - 'packages/lorapok-atlas-firefox/**'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node 20
         uses: actions/setup-node@v4
@@ -27,7 +32,12 @@ jobs:
       - name: Bump version
         working-directory: packages/lorapok-atlas-firefox
         run: |
-          VERSION=$(node -e "const m=require('./manifest.json');const p=m.version.split('.');p[2]=parseInt(p[2]||0)+1;console.log(p.join('.'))")
+          VERSION=$(node -e "
+            const m=require('./manifest.json');
+            const p=m.version.split('.');
+            p[2]=parseInt(p[2]||0)+1;
+            console.log(p.join('.'));
+          ")
           node -e "
             const fs=require('fs');
             const m=JSON.parse(fs.readFileSync('manifest.json','utf8'));
@@ -42,7 +52,7 @@ jobs:
           zip -r lorapok-atlas-firefox-${{ env.VERSION }}.zip \
             manifest.json popup.html popup.js popup.css data/ icons/ README.md
 
-      - name: Sign & Publish to AMO
+      - name: Sign & Submit to AMO
         working-directory: packages/lorapok-atlas-firefox
         run: |
           web-ext sign \
@@ -50,7 +60,8 @@ jobs:
             --api-secret=${{ secrets.AMO_API_SECRET }} \
             --channel=listed \
             --source-dir=. \
-            --artifacts-dir=./artifacts
+            --artifacts-dir=./artifacts \
+            --timeout=0
         continue-on-error: true
 
       - name: Upload ZIP artifact
@@ -65,4 +76,4 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add packages/lorapok-atlas-firefox/manifest.json
           git diff --staged --quiet || git commit -m "chore(firefox): bump version to ${{ env.VERSION }}"
-          git push
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
