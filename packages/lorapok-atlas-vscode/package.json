@@ -4,6 +4,11 @@
   "description": "Browse, search, and insert code snippets from 2100+ free open-source APIs directly in VS Code",
   "version": "1.4.4",
   "publisher": "Lorapok",
+  "author": {
+    "name": "Mohammad Maizied Hasan Majumder",
+    "email": "lorapokdev@gmail.com",
+    "url": "https://lorapok.github.io"
+  },
   "icon": "media/icon.png",
   "engines": {
     "vscode": "^1.85.0"

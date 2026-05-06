@@ -3,6 +3,12 @@
   "name": "Lorapok Atlas — API Directory",
   "version": "1.0.0",
   "description": "Browse, search, and live-test 2100+ free open-source APIs directly in Firefox",
+  "author": "Mohammad Maizied Hasan Majumder",
+  "developer": {
+    "name": "Mohammad Maizied Hasan Majumder",
+    "url": "https://lorapok.github.io"
+  },
+  "homepage_url": "https://maijied.github.io/Lorapok-API_Atlas/",
   "browser_specific_settings": {
     "gecko": {
       "id": "lorapok-atlas@lorapok.github.io",
@@ -24,5 +30,9 @@
   "permissions": [
     "clipboardWrite",
     "storage"
-  ]
+  ],
+  "data_collection_permissions": {
+    "required": [],
+    "optional": []
+  }
 }
