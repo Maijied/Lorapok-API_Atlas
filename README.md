@@ -318,6 +318,7 @@ Lorapok Atlas ships as multiple packages — use the data programmatically, in A
 | [`lorapok-atlas`](https://www.npmjs.com/package/lorapok-atlas) | `npm i lorapok-atlas` | JS/TS library — search, filter, get snippets |
 | [`lorapok-atlas-mcp`](https://www.npmjs.com/package/lorapok-atlas-mcp) | `npx lorapok-atlas-mcp` | MCP server for Claude, Cursor, Kiro |
 | `lorapok-atlas` (VS Code) | `Ctrl+P` → `ext install Lorapok.lorapok-atlas` | Sidebar panel — search & insert snippets |
+| `lorapok-atlas` (Firefox) | [Install on Firefox](https://addons.mozilla.org/en-US/firefox/addon/lorapok-atlas-api-directory/) | Firefox popup — browse, test & copy snippets |
 | REST API | `lorapok-atlas-api.mdshuvo40.workers.dev` | Cloudflare Worker REST endpoint |
 
 ---
@@ -373,6 +374,16 @@ ext install Lorapok.lorapok-atlas
 ```
 
 → [VS Marketplace](https://marketplace.visualstudio.com/items?itemName=Lorapok.lorapok-atlas) · [docs](packages/lorapok-atlas-vscode/README.md)
+
+---
+
+### 🦊 Firefox Extension
+
+Browse, search, and live-test APIs directly in Firefox. Full website-style popup with sidebar categories, live HTTP testing, code snippets, and response visualizer.
+
+**→ Install:** [addons.mozilla.org/en-US/firefox/addon/lorapok-atlas-api-directory/](https://addons.mozilla.org/en-US/firefox/addon/lorapok-atlas-api-directory/)
+
+→ [docs](packages/lorapok-atlas-firefox/README.md)
 
 ---
 
