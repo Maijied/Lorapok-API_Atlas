@@ -2,6 +2,8 @@
 
 <img src="lorapok-api-atlas/public/logo.svg" width="100" height="100" alt="Lorapok Atlas Logo" />
 
+[![RepoRanker](https://reporanker.com/badge/Maijied/Lorapok-API_Atlas)](https://reporanker.com/repos/Maijied/Lorapok-API_Atlas)
+
 # Lorapok Atlas API Directory
 
 **◈ Lorapok · Open Source Intelligence**
