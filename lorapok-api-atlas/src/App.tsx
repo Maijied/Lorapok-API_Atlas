@@ -3032,7 +3032,7 @@ curl --request GET \\
 
 // ─── Encrypted admin command (XOR + base64 obfuscation) ─────────────────────
 const _a = (() => {
-  const _e = 'Mjs2IQ=='  // XOR-encoded, base64-wrapped secret
+  const _e = 'Mjs2IT86'  // XOR-encoded, base64-wrapped secret (565087)
   const _k = [7, 13, 3, 17]
   const _d = atob(_e).split('').map((c, i) => String.fromCharCode(c.charCodeAt(0) ^ _k[i % _k.length]))
   return () => _d.join('')
@@ -3054,7 +3054,7 @@ const WelcomeModal = ({ onClose, onSignIn }: { onClose: () => void; onSignIn: ()
       <div style={{ padding: '40px 32px 24px', background: 'linear-gradient(160deg, #0a1628, #070e18)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(circle, rgba(100,110,200,0.08) 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
         <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }} style={{ position: 'relative' }}>
-          <img src="/Lorapok-API_Atlas/logo.svg" alt="Lorapok" style={{ width: 80, height: 80, borderRadius: 20, margin: '0 auto 16px', display: 'block' }} />
+          <img src="/logo.svg" alt="Lorapok" style={{ width: 80, height: 80, borderRadius: 20, margin: '0 auto 16px', display: 'block' }} />
         </motion.div>
         <div style={{ fontSize: 10, letterSpacing: '0.3em', color: '#38bdf8', textTransform: 'uppercase', marginBottom: 10, position: 'relative' }}>◈ Welcome to</div>
         <h1 style={{ fontSize: 'clamp(22px, 5vw, 32px)', fontWeight: 900, margin: '0 0 10px', background: 'linear-gradient(120deg, #38bdf8, #818cf8, #34d399)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', letterSpacing: '-0.02em', position: 'relative' }}>
@@ -3695,7 +3695,7 @@ export default function App() {
       <nav style={{ position: 'sticky', top: 0, zIndex: 40, background: 'var(--nav-bg)', backdropFilter: 'blur(20px)', borderBottom: '1px solid var(--border)', padding: '0 16px' }}>
         <div style={{ maxWidth: 1400, margin: '0 auto', height: 58, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
-            <motion.img src="/Lorapok-API_Atlas/logo.svg" alt="Lorapok" animate={{ y: [0,-3,0] }} transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }} style={{ width: 34, height: 34, borderRadius: 8 }} />
+            <motion.img src="/logo.svg" alt="Lorapok" animate={{ y: [0,-3,0] }} transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }} style={{ width: 34, height: 34, borderRadius: 8 }} />
             <div>
               <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', lineHeight: 1.1 }}>Lorapok Atlas</div>
               <div style={{ fontSize: 9, color: '#334d63', letterSpacing: '0.18em', textTransform: 'uppercase' }}>API Directory</div>
@@ -4017,7 +4017,7 @@ export default function App() {
           {/* Brand */}
           <div style={{ gridColumn: 'span 2' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
-              <img src="/Lorapok-API_Atlas/logo.svg" alt="Lorapok" style={{ width: 46, height: 46, borderRadius: 12 }} />
+              <img src="/logo.svg" alt="Lorapok" style={{ width: 46, height: 46, borderRadius: 12 }} />
               <div>
                 <div style={{ fontWeight: 900, fontSize: 17, color: '#d4e4f7', letterSpacing: '-0.02em', lineHeight: 1.1 }}>Lorapok Atlas</div>
                 <div style={{ fontSize: 9, color: '#334d63', letterSpacing: '0.22em', textTransform: 'uppercase', marginTop: 2 }}>API Directory</div>
@@ -4181,7 +4181,7 @@ export default function App() {
                   src="https://0.gravatar.com/avatar/7c901cfacc79334975b520600a357d97cf33eff6646608a0f91786744eda6c37?s=96&d=initials"
                   alt="Lorapok — Mohammad Maizied"
                   style={{ width: 52, height: 52, borderRadius: '50%', border: '2px solid rgba(129,140,248,0.5)', objectFit: 'cover', display: 'block' }}
-                  onError={e => { (e.target as HTMLImageElement).src = '/Lorapok-API_Atlas/logo.svg'; (e.target as HTMLImageElement).style.borderRadius = '10px' }}
+                  onError={e => { (e.target as HTMLImageElement).src = '/logo.svg'; (e.target as HTMLImageElement).style.borderRadius = '10px' }}
                 />
               </a>
               <div>
@@ -4216,7 +4216,7 @@ export default function App() {
         <div style={{ position: 'relative', borderTop: '1px solid rgba(26,48,80,0.6)', padding: '18px 24px' }}>
           <div style={{ maxWidth: 1400, margin: '0 auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 14 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <img src="/Lorapok-API_Atlas/logo.svg" alt="" style={{ width: 22, height: 22, borderRadius: 6, opacity: 0.7 }} />
+              <img src="/logo.svg" alt="" style={{ width: 22, height: 22, borderRadius: 6, opacity: 0.7 }} />
               <span style={{ fontSize: 14, color: '#334d63' }}>© {new Date().getFullYear()}</span>
               <a href="https://github.com/Maijied" target="_blank" rel="noopener noreferrer" style={{ fontSize: 14, fontWeight: 700, color: '#38bdf8', textDecoration: 'none' }}>Lorapok</a>
               <span style={{ fontSize: 14, color: '#1e3a52' }}>·</span>
@@ -4225,10 +4225,10 @@ export default function App() {
               <a href="https://github.com/Maijied/Lorapok-API_Atlas/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" style={{ fontSize: 14, color: '#334d63', textDecoration: 'none' }}
                 onMouseEnter={e => (e.currentTarget.style.color = '#34d399')} onMouseLeave={e => (e.currentTarget.style.color = '#334d63')}>MIT License</a>
               <span style={{ fontSize: 14, color: '#1e3a52' }}>·</span>
-              <a href="/Lorapok-API_Atlas/privacy.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: 14, color: '#334d63', textDecoration: 'none' }}
+              <a href="/privacy.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: 14, color: '#334d63', textDecoration: 'none' }}
                 onMouseEnter={e => (e.currentTarget.style.color = '#38bdf8')} onMouseLeave={e => (e.currentTarget.style.color = '#334d63')}>Privacy</a>
               <span style={{ fontSize: 14, color: '#1e3a52' }}>·</span>
-              <a href="/Lorapok-API_Atlas/terms.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: 14, color: '#334d63', textDecoration: 'none' }}
+              <a href="/terms.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: 14, color: '#334d63', textDecoration: 'none' }}
                 onMouseEnter={e => (e.currentTarget.style.color = '#818cf8')} onMouseLeave={e => (e.currentTarget.style.color = '#334d63')}>Terms</a>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 13, color: '#1e3a52' }}>

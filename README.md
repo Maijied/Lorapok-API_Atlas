@@ -14,8 +14,8 @@
 
 [![Featured on Product Hunt](https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1139854&theme=light&t=1778009983625)](https://www.producthunt.com/products/lorapok-atlas-api-directory?utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-lorapok-atlas-api-directory)
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-4ade80?style=for-the-badge&logo=github)](https://maijied.github.io/Lorapok-API_Atlas/)
-[![APIs](https://img.shields.io/badge/APIs-2100%2B-38bdf8?style=for-the-badge)](https://maijied.github.io/Lorapok-API_Atlas/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-4ade80?style=for-the-badge&logo=github)](https://atlas.lorapok.tech/)
+[![APIs](https://img.shields.io/badge/APIs-2100%2B-38bdf8?style=for-the-badge)](https://atlas.lorapok.tech/)
 [![npm](https://img.shields.io/npm/v/lorapok-atlas?style=for-the-badge&color=38bdf8&label=npm)](https://www.npmjs.com/package/lorapok-atlas)
 [![MCP](https://img.shields.io/npm/v/lorapok-atlas-mcp?style=for-the-badge&color=818cf8&label=mcp)](https://www.npmjs.com/package/lorapok-atlas-mcp)
 [![React](https://img.shields.io/badge/React%2018-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev)
@@ -24,7 +24,7 @@
 [![Groq AI](https://img.shields.io/badge/Groq%20AI-F55036?style=for-the-badge)](https://groq.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-34d399?style=for-the-badge)](LICENSE)
 
-[**→ Open Live App**](https://maijied.github.io/Lorapok-API_Atlas/) · [Report Bug](https://github.com/Maijied/Lorapok-API_Atlas/issues) · [Request Feature](https://github.com/Maijied/Lorapok-API_Atlas/issues) · [Contribute](https://github.com/Maijied/Lorapok-API_Atlas/pulls)
+[**→ Open Live App**](https://atlas.lorapok.tech/) · [Report Bug](https://github.com/Maijied/Lorapok-API_Atlas/issues) · [Request Feature](https://github.com/Maijied/Lorapok-API_Atlas/issues) · [Contribute](https://github.com/Maijied/Lorapok-API_Atlas/pulls)
 
 </div>
 
@@ -200,6 +200,13 @@ service cloud.firestore {
 npm run dev
 # → http://localhost:5173/Lorapok-API_Atlas/
 ```
+
+### 5. Sitemap generator
+
+A sitemap is generated automatically during build from `lorapok-api-atlas/src/data/api_collection.json`.
+
+- `npm run generate:sitemap` writes `lorapok-api-atlas/public/sitemap.xml`
+- `npm run build` now runs sitemap generation first, so the published site includes the latest API links
 
 ---
 
@@ -503,8 +510,8 @@ MIT © [Lorapok](https://github.com/Maijied) — see [LICENSE](LICENSE) for deta
 
 ## Legal
 
-- [Privacy Policy](https://maijied.github.io/Lorapok-API_Atlas/privacy.html) — what data we collect and how we use it
-- [Terms of Service](https://maijied.github.io/Lorapok-API_Atlas/terms.html) — rules for using the Service
+- [Privacy Policy](https://atlas.lorapok.tech/privacy.html) — what data we collect and how we use it
+- [Terms of Service](https://atlas.lorapok.tech/terms.html) — rules for using the Service
 
 ---
 

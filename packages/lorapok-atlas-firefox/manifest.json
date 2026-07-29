@@ -6,9 +6,10 @@
   "author": "Mohammad Maizied Hasan Majumder",
   "developer": {
     "name": "Mohammad Maizied Hasan Majumder",
-    "url": "https://lorapok.github.io"
+    "url": "https://lorapok.github.io",
+    "website": "https://lorapok.tech/"
   },
-  "homepage_url": "https://maijied.github.io/Lorapok-API_Atlas/",
+  "homepage_url": "https://atlas.lorapok.tech/",
   "browser_specific_settings": {
     "gecko": {
       "id": "lorapok-atlas@lorapok.github.io",
