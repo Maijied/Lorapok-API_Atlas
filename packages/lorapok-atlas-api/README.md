@@ -1,6 +1,6 @@
 # lorapok-atlas-api
 
-> Cloudflare Worker REST API for [Lorapok Atlas](https://maijied.github.io/Lorapok-API_Atlas/) — serves 2100+ APIs as a REST endpoint.
+> Cloudflare Worker REST API for [Lorapok Atlas](https://atlas.lorapok.tech/) — serves 2100+ APIs as a REST endpoint.
 
 [![Featured on Product Hunt](https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1139854&theme=light&t=1778009983625)](https://www.producthunt.com/products/lorapok-atlas-api-directory?utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-lorapok-atlas-api-directory)
 

@@ -186,7 +186,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         return {
           content: [{
             type: 'text',
-            text: `**Lorapok Atlas Stats**\nTotal APIs: ${getCount()}\nCategories: ${cats.length}\nFree (no auth): ${free}\nAPI Key required: ${keyed}\nOAuth required: ${oauth}\n\nWebsite: https://maijied.github.io/Lorapok-API_Atlas/\nGitHub: https://github.com/Maijied/Lorapok-API_Atlas`,
+            text: `**Lorapok Atlas Stats**\nTotal APIs: ${getCount()}\nCategories: ${cats.length}\nFree (no auth): ${free}\nAPI Key required: ${keyed}\nOAuth required: ${oauth}\n\nWebsite: https://atlas.lorapok.tech/\nGitHub: https://github.com/Maijied/Lorapok-API_Atlas`,
           }],
         }
       }

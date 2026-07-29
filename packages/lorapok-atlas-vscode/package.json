@@ -79,6 +79,6 @@
     "url": "https://github.com/Maijied/Lorapok-API_Atlas.git",
     "directory": "packages/lorapok-atlas-vscode"
   },
-  "homepage": "https://maijied.github.io/Lorapok-API_Atlas/",
+  "homepage": "https://atlas.lorapok.tech/",
   "license": "MIT"
 }
